@@ -91,3 +91,78 @@ exports.bookAppointmentPipeline = (masterId, serviceId, date) => [
     },
   },
 ];
+
+exports.profileAndReviewPipeline = (masterId) => [
+  //get profile
+  {
+    $match: {
+      _id: masterId,
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      email: 0,
+      password: 0,
+      isConfirmed: 0,
+      role: 0,
+      createdAt: 0,
+    },
+  },
+  // get review stats(avg, review counters by value)
+  {
+    $lookup: {
+      from: 'reviews',
+      let: {
+        masterId,
+      },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$masterId', '$$masterId'] },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            value: 1,
+          },
+        },
+        {
+          $group: {
+            _id: '$value',
+            counter: { $sum: 1 },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            ratingCounters: { $push: { value: '$_id', counter: '$counter' } },
+            sumRating: { $sum: { $multiply: ['$_id', '$counter'] } },
+            overallReviewsCounter: { $sum: '$counter' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            ratingCounters: 1,
+            overallReviewsCounter: 1,
+            avgRating: { $divide: ['$sumRating', '$overallReviewsCounter'] },
+          },
+        },
+      ],
+      as: 'ratingStatsArray',
+    },
+  },
+  {
+    $addFields: {
+      ratingStats: { $arrayElemAt: ['$ratingStatsArray', 0] },
+    },
+  },
+  {
+    $project: {
+      ratingStatsArray: 0,
+      // avatarImage: 1,
+    },
+  },
+];

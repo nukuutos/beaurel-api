@@ -1,6 +1,6 @@
 const getDb = require('../utils/database').getDb;
 
-const { bookAppointmentPipeline } = require('./pipelines/user');
+const { bookAppointmentPipeline, profileAndReviewPipeline } = require('./pipelines/user');
 
 // http error when update
 // check updated service
@@ -37,10 +37,24 @@ class User {
 
   static async updateOne(query, update) {
     const db = getDb();
+    console.log(query, update);
+    // try {
+    await db.collection('users').updateOne(query, { $set: update });
+    // } catch (error) {
+    //   throw new Error();
+    // }
+  }
+
+  static async getMasterProfile(masterId) {
+    const db = getDb();
 
     try {
-      await db.collection('users').updateOne(query, { $set: update });
+      const profile = await db.collection('users').aggregate(profileAndReviewPipeline(masterId)).toArray();
+      // for (let {value, counter} of profile.reviewStats.reviewCounters
+
+      return profile[0];
     } catch (error) {
+      console.log(error.message);
       throw new Error();
     }
   }

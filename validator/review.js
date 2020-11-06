@@ -1,14 +1,15 @@
 const { check } = require('express-validator');
 const { paramId, fieldId } = require('./utils/id');
 
-const ratingId = paramId('ratingId', 'Rating Id');
+const reviewId = paramId('reviewId', 'Review Id');
+const userId = paramId('userId', 'User Id');
 const masterId = fieldId('masterId', 'Master Id');
 
 const value = check('value')
   .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('Rating value is required.')
+  .withMessage('Review value is required.')
   .isInt(1, 5)
-  .withMessage('Not correcting rating value')
+  .withMessage('Not correcting review value')
   .customSanitizer((value) => Number(value));
 
 const comment = check('comment')
@@ -23,7 +24,8 @@ const reply = check('reply')
   .isString()
   .withMessage('Comment is incorrect');
 
-exports.addRating = [masterId, value, comment];
-exports.updateRating = [ratingId, masterId, value, comment];
-exports.upsertReply = [ratingId, reply];
-exports.ratingId = [ratingId];
+exports.addReview = [masterId, value, comment];
+exports.updateReview = [reviewId, masterId, value, comment];
+exports.upsertReply = [reviewId, reply];
+exports.reviewId = [reviewId];
+exports.userId = [userId];

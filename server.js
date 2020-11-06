@@ -9,7 +9,7 @@ const profileRoutes = require('./routes/profile');
 const appointmentRoutes = require('./routes/appointment');
 const serviceRoutes = require('./routes/service');
 const timetableRoutes = require('./routes/timetable');
-const ratingRoutes = require('./routes/rating');
+const reviewRoutes = require('./routes/review');
 
 const auth = require('./middleware/auth');
 const master = require('./middleware/master');
@@ -31,9 +31,9 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/appointment', auth, appointmentRoutes);
 app.use('/api/v1/service', auth, master, serviceRoutes);
 app.use('/api/v1/timetable', auth, master, timetableRoutes);
-app.use('/api/v1/profile', auth, profileRoutes);
+app.use('/api/v1/profile', profileRoutes);
 // app.use('/api/v1/profile',  profileRoutes);
-app.use('/api/v1/rating', auth, ratingRoutes);
+app.use('/api/v1/review', auth, reviewRoutes);
 
 // updateTimetableJob.start();
 // updateServiceJob.start();

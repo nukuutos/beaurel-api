@@ -23,7 +23,8 @@ module.exports = (req, res, next) => {
     return next(new HttpError(error.message, 401));
   }
 
-  req.user.id = new ObjectId(req.user.id);
+  // req.user.id = new ObjectId(req.user.id);
+  // req.user.id = new ObjectId(req.user.id);
 
   next();
 };
