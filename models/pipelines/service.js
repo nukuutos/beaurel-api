@@ -49,8 +49,9 @@ exports.serviceByMasterIdPipeline = (masterId) => [
     $group: {
       _id: '$title',
       title: { $first: '$title' },
-      parameters: {
+      subServices: {
         $push: {
+          id: '$_id',
           parameter: '$parameter',
           duration: '$duration',
           price: '$price',
@@ -64,3 +65,93 @@ exports.serviceByMasterIdPipeline = (masterId) => [
     },
   },
 ];
+
+// exports.serviceByMasterIdPipeline = (masterId) => [
+//   {
+//     $match: {
+//       masterId,
+//     },
+//   },
+//   {
+//     $facet: {
+//       services: [
+//         {
+//           // this stage for services like
+//           // hair cut for 10sm
+//           //              20sm
+//           //              ....
+//           $group: {
+//             _id: '$title',
+//             title: { $first: '$title' },
+//             subServices: {
+//               $push: {
+//                 id: '$_id',
+//                 parameter: '$parameter',
+//                 duration: '$duration',
+//                 price: '$price',
+//               },
+//             },
+//           },
+//         },
+//         {
+//           $project: {
+//             _id: 0,
+//           },
+//         },
+//       ],
+//       // get timetable with help of one service document
+//       timetable: [
+//         { $limit: 1 },
+//         {
+//           $lookup: {
+//             from: 'timetables',
+//             localField: 'masterId',
+//             foreignField: 'masterId',
+//             as: 'timetable',
+//           },
+//         },
+//         {
+//           $addFields: {
+//             timetable: { $arrayElemAt: ['$timetable', 0] },
+//           },
+//         },
+//         {
+//           $project: {
+//             _id: 0,
+//             sessionTime: '$timetable.sessionTime',
+//             update: '$timetable.update',
+//           },
+//         },
+//       ],
+//     },
+//   },
+//   {
+//     $addFields: {
+//       timetable: { $arrayElemAt: ['$timetable', 0] },
+//     },
+//   },
+
+// {
+//   // this stage for services like
+//   // hair cut for 10sm
+//   //              20sm
+//   //              ....
+//   $group: {
+//     _id: '$title',
+//     title: { $first: '$title' },
+//     subServices: {
+//       $push: {
+//         id: '$_id',
+//         parameter: '$parameter',
+//         duration: '$duration',
+//         price: '$price',
+//       },
+//     },
+//   },
+// },
+// {
+//   $project: {
+//     _id: 0,
+//   },
+// },
+// ];

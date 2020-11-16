@@ -24,7 +24,7 @@ class Timetable {
   static async findOne(query, projection = null) {
     const db = getDb();
     try {
-      return await db.collection('users').findOne(query, { projection: projection });
+      return await db.collection('timetables').findOne(query, { projection: projection });
     } catch (error) {
       throw new Error();
     }

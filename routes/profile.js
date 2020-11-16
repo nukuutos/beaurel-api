@@ -7,6 +7,9 @@ const validator = require('../validator/profile');
 const validate = require('../middleware/validate');
 
 const reviewRouter = require('./review');
+const serviceRouter = require('./service');
+const timetableRouter = require('./timetable');
+
 const auth = require('../middleware/auth');
 const isItYou = require('../middleware/is-it-you');
 
@@ -14,6 +17,8 @@ const router = express.Router();
 
 // Re-route to the other resourse routers
 router.use('/:userId/review', reviewRouter);
+router.use('/:userId/service', serviceRouter);
+router.use('/:userId/timetable', timetableRouter);
 
 // @route     Get /api/v1/profile/:userId
 // @desc      Get profile

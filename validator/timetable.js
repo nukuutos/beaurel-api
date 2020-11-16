@@ -2,6 +2,7 @@ const { check } = require('express-validator');
 const { paramId } = require('./utils/id');
 
 const timetableId = paramId('timetableId', 'Timetable Id');
+const userId = paramId('userId', 'User Id');
 
 const workingDayStartAt = check('workingDay.startAt')
   .trim()
@@ -52,3 +53,4 @@ const date = check('date')
 exports.createTimetable = [workingDayStartAt, workingDayEndAt, sessionTime, weekends];
 exports.updateTimetable = [timetableId, workingDayStartAt, workingDayEndAt, sessionTime, weekends, date];
 exports.deleteTimetableUpdate = [timetableId];
+exports.getTimetable = [userId];

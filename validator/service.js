@@ -1,7 +1,9 @@
 const { check } = require('express-validator');
-const { paramId } = require('./utils/id');
+const { paramId, paramStringOrId } = require('./utils/id');
 
+const userId = paramId('userId', 'User Id');
 const serviceId = paramId('serviceId', 'Service Id');
+const serviceTitleAndId = paramStringOrId('serviceId', 'Service');
 
 const title = check('title')
   .trim()
@@ -43,7 +45,7 @@ const date = check('date')
 // if (Date.now() > date.getTime()) throw new Error('Update date is incorrect');
 //   return true;
 // }),
-
+exports.getServices = [userId];
 exports.addService = [title, duration, price, parameter];
-exports.updateService = [serviceId, title, duration, price, parameter, date];
-exports.deleteService = [serviceId];
+exports.updateService = [userId, serviceTitleAndId];
+exports.deleteService = [userId, serviceTitleAndId];

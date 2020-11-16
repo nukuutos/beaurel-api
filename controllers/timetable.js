@@ -8,6 +8,16 @@ const asyncHandler = require('../middleware/async-handler');
 
 const { generatePossibleAppointmentsTime, detectTimetableChanges } = require('./utils/timetable');
 
+exports.getTimetable = asyncHandler(async (req, res, next) => {
+  const { userId } = req.params;
+
+  let timetable = await Timetable.findOne({ masterId: userId }, { _id: 0 });
+
+  if (!timetable) return next(new HttpError('There is no timetable', 400));
+
+  return res.json({ timetable });
+});
+
 exports.createTimetable = asyncHandler(async (req, res, next) => {
   const masterId = req.user.id;
   const { workingDay, sessionTime, weekends } = req.body;
