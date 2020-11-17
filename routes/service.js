@@ -5,6 +5,7 @@ const controller = require('../controllers/service');
 const validator = require('../validator/service');
 
 const validate = require('../middleware/validate');
+const auth = require('../middleware/auth');
 
 const router = express.Router({ mergeParams: true });
 
@@ -16,7 +17,7 @@ router.get('/', validator.getServices, validate, controller.getServices);
 // @route     Post /api/profile/:userId/service
 // @desc      Add service
 // @access    Private(master)
-router.post('/', validator.getServices, validate, controller.addService);
+router.post('/', auth, validator.getServices, validate, controller.addService);
 
 // @route     Put /api/profile/:userId/service/:service
 // @desc      Add update to service, :service can be an id (ordinary service or sub parameters) or title (group of service parameters)

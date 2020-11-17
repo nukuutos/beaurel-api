@@ -80,7 +80,7 @@ exports.updateService = asyncHandler(async (req, res, next) => {
   // check title
   // if it is service parameter of service (not sub service)
   if (service.title) {
-    const isTitle = await Service.findOne({ masterId: userId, title }, { _id: 1 });
+    const isTitle = await Service.findOne({ _id: { $ne: serviceId }, masterId: userId, title }, { _id: 1 });
     if (isTitle) return next(new HttpError('You already have service with this title'));
   }
   // Check has service unsuitable date or not
