@@ -1,6 +1,10 @@
 const getDb = require('../utils/database').getDb;
 
-const { serviceAndTimetablePipeline, serviceByMasterIdPipeline } = require('./pipelines/service');
+const {
+  serviceAndTimetablePipeline,
+  serviceByMasterIdPipeline,
+  servicesAndTimetablePipeline,
+} = require('./pipelines/service');
 
 class Service {
   constructor(masterId, title, duration, price, parameter = null) {
@@ -44,6 +48,17 @@ class Service {
     } catch (error) {
       throw new Error();
     }
+  }
+
+  static async getServicesAndTimetable(masterId) {
+    const db = getDb();
+
+    const servicesAndTimetable = await db
+      .collection('timetables')
+      .aggregate(servicesAndTimetablePipeline(masterId))
+      .toArray();
+
+    return servicesAndTimetable[0];
   }
 
   static async findOne(query, projection = null) {

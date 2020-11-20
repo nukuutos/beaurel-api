@@ -6,6 +6,7 @@ const validator = require('../validator/service');
 
 const validate = require('../middleware/validate');
 const auth = require('../middleware/auth');
+const decodeUser = require('../middleware/decode-user');
 
 const router = express.Router({ mergeParams: true });
 

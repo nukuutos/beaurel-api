@@ -11,23 +11,9 @@ const { getCorrectSessionTime } = require('./utils/service');
 exports.getServices = asyncHandler(async (req, res, next) => {
   const { userId } = req.params;
 
-  const services = await Service.getServicesByMasterId(userId);
-  // facet?
-  const reshapedServices = services.map((service) => {
-    const { subServices } = service;
-
-    if (subServices[0].parameter === null) {
-      service.duration = subServices[0].duration;
-      service.price = subServices[0].price;
-      service.id = subServices[0].id;
-
-      delete service.subServices;
-    }
-
-    return service;
-  });
-
-  return res.json({ services: reshapedServices });
+  const servicesAndTimetable = await Service.getServicesAndTimetable(userId); // without master id
+  console.log(servicesAndTimetable);
+  return res.json(servicesAndTimetable);
 });
 
 exports.addService = asyncHandler(async (req, res, next) => {
