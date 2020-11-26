@@ -6,16 +6,16 @@ const asyncHandler = require('../middleware/async-handler');
 const { sendTokenResponse } = require('./utils/auth');
 
 exports.getProfile = asyncHandler(async (req, res, next) => {
-  const { userId } = req.params;
+  const { masterId } = req.params;
 
-  const profile = await User.getMasterProfile(userId);
+  const profile = await User.getMasterProfile(masterId);
   return res.status(200).json(profile);
 });
 
 exports.updateProfile = asyncHandler(async (req, res, next) => {
-  const { userId } = req.params;
+  const { masterId } = req.params;
 
-  await User.updateOne({ _id: userId }, { ...req.body });
+  await User.updateOne({ _id: masterId }, { ...req.body });
   return res.status(200).json({ message: 'Profile is updated!', type: 'success' });
 });
 

@@ -10,7 +10,7 @@ const specializationElements = check('specialization.*')
   .isAlpha()
   .withMessage('Specialization must be only strings');
 
-exports.userId = [userId];
-exports.updateProfile = [userId, aboutText];
-exports.upgradeMaster = [userId, specializationArray, specializationElements];
+exports.getProfile = [masterId];
+exports.updateProfile = [masterId, aboutText];
+exports.upgradeMaster = [masterId, specializationArray, specializationElements];
 exports.starMaster = [userId, masterId];

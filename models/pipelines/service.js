@@ -67,12 +67,14 @@ exports.servicesAndTimetablePipeline = (masterId) => [
                 $group: {
                   _id: '$title',
                   title: { $first: '$title' },
+                  order: { $first: '$order' },
                   subServices: {
                     $push: {
                       id: '$_id',
                       parameter: '$parameter',
                       duration: '$duration',
                       price: '$price',
+                      subOrder: '$subOrder',
                     },
                   },
                 },
@@ -122,32 +124,50 @@ exports.servicesAndTimetablePipeline = (masterId) => [
   },
 ];
 
-// pipeline: [
-//   {
-//     $match: {
-//       $expr: { $eq: ['$masterId', '$$masterId'] },
-//     },
-//   },
-//   {
-//     $group: {
-//       _id: '$title',
-//       title: { $first: '$title' },
-//       subServices: {
-//         $push: {
-//           id: '$_id',
-//           parameter: '$parameter',
-//           duration: '$duration',
-//           price: '$price',
-//         },
-//       },
-//     },
-//   },
-//   {
-//     $project: {
-//       _id: 0,
-//     },
-//   },
-// ],
+exports.servicesCountAndIsTitleExists = (masterId, title) => [
+  { $match: { masterId } },
+  //
+  {
+    $facet: {
+      // get services count with params
+      servicesCount: [
+        {
+          $group: {
+            _id: '$title',
+          },
+        },
+        { $count: 'servicesCount' },
+      ],
+      // servicesParameter: [
+      //   {
+      //     $match: {
+      //       $expr: { $ne: ['$parameter', null] },
+      //     },
+      //   },
+      //   {
+      //     $group: {
+      //       _id: '$title',
+      //       title: { $first: '$title' },
+      //       subServicesCount: { $sum: 1 },
+      //     },
+      //   },
+      //   {
+      //     $project: {
+      //       _id: 0,
+      //     },
+      //   },
+      // ],
+      isTitle: [{ $match: { title } }, { $project: { _id: 1 } }],
+    },
+  },
+  {
+    $project: {
+      servicesCount: { $arrayElemAt: ['$servicesCount.servicesCount', 0] }, // break nesting with this trick
+      isTitle: { $arrayElemAt: ['$isTitle._id', 0] },
+      // servicesParameter: 1,
+    },
+  },
+];
 
 exports.serviceByMasterIdPipeline = (masterId) => [
   {
@@ -176,6 +196,34 @@ exports.serviceByMasterIdPipeline = (masterId) => [
   {
     $project: {
       _id: 0,
+    },
+  },
+];
+
+// add sub Service
+exports.serviceParameterPipeline = (masterId, title) => [
+  {
+    $match: {
+      masterId,
+      title,
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      order: { $first: '$order' },
+      subServices: {
+        $push: {
+          parameter: '$parameter',
+        },
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      // order: { $arrayElemAt: ['$servicesCount.servicesCount', 0] },
+      // subServicesCount: { $arrayElemAt: ['$servicesCount.servicesCount', 0] },
     },
   },
 ];
