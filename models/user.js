@@ -1,6 +1,9 @@
 const getDb = require('../utils/database').getDb;
 
 const { bookAppointmentPipeline, profileAndReviewPipeline } = require('./pipelines/user');
+const mastersAndRating = require('./pipelines/user/masters-and-rating');
+const masters = require('./pipelines/user/masters');
+const favoriteMasters = require('./pipelines/user/favorite-masters');
 
 // http error when update
 // check updated service
@@ -26,23 +29,38 @@ class User {
     }
   }
 
+  static async findMasters(query) {
+    const db = getDb();
+    const data = await db.collection('users').aggregate(mastersAndRating(query)).toArray();
+    return data;
+  }
+
   static async findOne(query, projection = null) {
     const db = getDb();
-    try {
-      return await db.collection('users').findOne(query, { projection: projection });
-    } catch (error) {
-      throw new Error();
-    }
+    return await db.collection('users').findOne(query, { projection: projection });
   }
 
   static async updateOne(query, update) {
     const db = getDb();
-    console.log(query, update);
-    // try {
-    await db.collection('users').updateOne(query, { $set: update });
-    // } catch (error) {
-    //   throw new Error();
-    // }
+
+    await db.collection('users').updateOne(query, update);
+  }
+
+  static async getMasters(userId) {
+    // get favorite and not favorite masters
+    const db = getDb();
+
+    const data = await db.collection('users').aggregate(masters(userId)).toArray();
+    return data[0];
+  }
+
+  static async getFavoriteMasters(userId) {
+    // get favorite and not favorite masters
+    const db = getDb();
+
+    const data = await db.collection('users').aggregate(favoriteMasters(userId)).toArray();
+
+    return data[0];
   }
 
   static async getMasterProfile(masterId) {

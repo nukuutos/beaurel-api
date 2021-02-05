@@ -1,4 +1,5 @@
 const Service = require('../models/service');
+const ServiceParameter = require('../models/service-parameter');
 const Timetable = require('../models/timetable');
 const HttpError = require('../models/http-error');
 
@@ -10,7 +11,7 @@ exports.addSubService = asyncHandler(async (req, res, next) => {
   const { masterId, serviceTitle } = req.params;
   let { service, date } = req.body;
 
-  const { order, subServices } = await Service.getServiceParameter(masterId, serviceTitle); // we need  service parameter length and order
+  const { order, subServices } = await ServiceParameter.get(masterId, serviceTitle); // we need  service parameter length and order
 
   const subServicesCount = subServices.length;
   for (let i = 0; i < subServicesCount; i++) {
@@ -26,7 +27,7 @@ exports.addSubService = asyncHandler(async (req, res, next) => {
   const { duration, price, parameter } = service;
   if (duration % sessionTime !== 0) return next(new HttpError('Incorrect duration'));
 
-  service = new Service(masterId, serviceTitle, duration, price, order, subServicesCount, parameter);
+  service = new ServiceParameter(masterId, serviceTitle, duration, price, order, subServicesCount, parameter);
   const { insertedId } = await service.save();
   // can i do id instead of ids here?
   return res.json({ ids: insertedId, message: 'Sub Service is added!', type: 'success' });
@@ -38,7 +39,7 @@ exports.addServiceParameter = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
   const { service, date } = req.body;
 
-  const { isTitle, servicesCount } = await Service.getServiceCounterAndIsTitleExists(masterId, service.title);
+  const { isTitle, servicesCount } = await ServiceParameter.getServiceCounterAndIsTitleExists(masterId, service.title);
 
   if (isTitle) return next(new HttpError('You already have service with this title'));
 
@@ -57,7 +58,7 @@ exports.addServiceParameter = asyncHandler(async (req, res, next) => {
     service.subServices[i].subOrder = i;
   }
 
-  const { insertedIds } = await Service.saveServiceParameter(service, masterId); // insertedIds object
+  const { insertedIds } = await ServiceParameter.save(service, masterId); // insertedIds object
 
   return res.json({ ids: insertedIds, message: 'Service is added!', type: 'success' });
 });
@@ -75,7 +76,7 @@ exports.updateSubService = asyncHandler(async (req, res, next) => {
 
   if (duration % sessionTime !== 0) return next(new HttpError('Duration is incorrect', 400));
 
-  await Service.updateOne({ _id: subServiceId }, { ...service });
+  await ServiceParameter.updateOne({ _id: subServiceId }, { ...service });
 
   return res.json({ message: 'Service is updated', type: 'success' });
 });
@@ -84,7 +85,7 @@ exports.updateServiceParameter = asyncHandler(async (req, res, next) => {
   const { masterId, serviceTitle } = req.params; // old title
   const { title } = req.body.service; // new title
 
-  const isTitleExisted = await Service.findOne({ masterId, title }, { _id: 1 });
+  const isTitleExisted = await ServiceParameter.findOne({ masterId, title }, { _id: 1 });
   if (isTitleExisted) return next(new HttpError('You already have service with this title'));
 
   await Service.updateMany({ masterId, title: serviceTitle }, { title });
@@ -95,7 +96,7 @@ exports.updateServiceParameter = asyncHandler(async (req, res, next) => {
 exports.deleteSubService = asyncHandler(async (req, res, next) => {
   const { subServiceId } = req.params;
 
-  await Service.deleteOne({ _id: subServiceId });
+  await ServiceParameter.deleteOne({ _id: subServiceId });
 
   return res.json({ message: 'Sub-service is deleted', type: 'success' });
 });
@@ -104,7 +105,7 @@ exports.deleteServiceParameter = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
   const { serviceTitle } = req.params;
 
-  await Service.deleteMany({ masterId, title: serviceTitle });
+  await ServiceParameter.deleteMany({ masterId, title: serviceTitle });
 
   return res.json({ message: 'Service is deleted', type: 'success' });
 });

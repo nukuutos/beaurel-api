@@ -29,7 +29,7 @@ exports.sendTokenResponse = (user, res) => {
   const accessToken = createAccessToken(user);
   const refreshToken = createRefreshToken(user);
 
-  const { role } = user;
+  const { _id, role } = user;
 
   const options = {
     httpOnly: true,
@@ -39,5 +39,5 @@ exports.sendTokenResponse = (user, res) => {
     sameSite: true,
   };
 
-  return res.cookie('refreshToken', refreshToken, options).json({ accessToken, role });
+  return res.cookie('refreshToken', refreshToken, options).json({ accessToken, role, id: _id });
 };

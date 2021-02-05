@@ -22,7 +22,7 @@ exports.reviewsAndCustomersPipeline = (masterId) => [
             id: '$_id',
             firstName: 1,
             lastName: 1,
-            avatarImage: 1,
+            avatar: 1,
           },
         },
       ],
@@ -32,7 +32,7 @@ exports.reviewsAndCustomersPipeline = (masterId) => [
   {
     $project: {
       _id: 0,
-      review: { comment: '$comment', value: '$value' },
+      review: { comment: '$comment', value: '$value', date: '$date' },
       customer: { $arrayElemAt: ['$customer', 0] },
       // 'customer.id': '$customerId',
       // value: 1,

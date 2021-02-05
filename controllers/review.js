@@ -9,8 +9,8 @@ const asyncHandler = require('../middleware/async-handler');
 
 exports.getReviews = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
-
   const reviews = await Review.find(masterId);
+  console.log(reviews);
   return res.json({ reviews });
 });
 

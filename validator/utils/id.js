@@ -17,7 +17,9 @@ exports.paramId = (paramName, name) =>
     .withMessage(`${name} is required.`)
     .isMongoId()
     .withMessage(`Not correcting ${name}.`)
-    .customSanitizer((id) => new ObjectId(id));
+    .customSanitizer((id) => {
+      return new ObjectId(id);
+    });
 
 exports.titleId = (paramName, name) =>
   param(paramName).exists({ checkFalsy: true }).withMessage(`${name} is required.`);

@@ -11,6 +11,9 @@ const specializationElements = check('specialization.*')
   .withMessage('Specialization must be only strings');
 
 exports.getProfile = [masterId];
+exports.updateAvatar = [masterId];
 exports.updateProfile = [masterId, aboutText];
 exports.upgradeMaster = [masterId, specializationArray, specializationElements];
-exports.starMaster = [userId, masterId];
+exports.addMaster = [userId, masterId];
+exports.deleteMaster = [userId, masterId];
+exports.getMasters = [userId];

@@ -45,7 +45,7 @@ exports.addService = asyncHandler(async (req, res, next) => {
   service = new Service(masterId, title, duration, price, servicesCount || 0);
   const { insertedId } = await service.save();
   // can i do id instead of ids here?
-  return res.json({ ids: insertedId, message: 'Service is added!', type: 'success' });
+  return res.json({ id: insertedId, message: 'Service is added!', type: 'success' });
 });
 
 // server get service with order
@@ -105,8 +105,7 @@ exports.deleteService = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
-  const { services } = req.body;
-  // All master services or only changed?
-  // batch.. service.id and service.(order/subOrder);
-  // await Service.updateMany()
+  const { newOrder } = req.body;
+  await Service.updateOrder(newOrder);
+  res.json({ message: "Service's order is updated", type: 'success' });
 });

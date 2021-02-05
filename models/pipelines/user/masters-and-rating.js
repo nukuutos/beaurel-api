@@ -1,0 +1,42 @@
+module.exports = (matchQuery) => [
+  {
+    $match: matchQuery,
+  },
+
+  {
+    $project: {
+      firstName: 1,
+      lastName: 1,
+      avatar: 1,
+      placeOfwork: 1,
+    },
+  },
+  // rating
+  {
+    $lookup: {
+      from: 'reviews',
+      let: {
+        masterId: '$_id',
+      },
+      pipeline: [
+        {
+          $match: {
+            $expr: { $eq: ['$masterId', '$$masterId'] },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            rating: { $avg: '$value' },
+          },
+        },
+      ],
+      as: 'rating',
+    },
+  },
+  {
+    $addFields: {
+      rating: { $arrayElemAt: ['$rating.rating', 0] },
+    },
+  },
+];

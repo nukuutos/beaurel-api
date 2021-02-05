@@ -2,7 +2,6 @@ const { check } = require('express-validator');
 const { paramId, fieldId } = require('./utils/id');
 
 const reviewId = paramId('reviewId', 'Review Id');
-const userId = paramId('userId', 'User Id');
 const masterId = fieldId('masterId', 'Master Id');
 
 const value = check('value')
@@ -28,4 +27,4 @@ exports.addReview = [masterId, value, comment];
 exports.updateReview = [reviewId, masterId, value, comment];
 exports.upsertReply = [reviewId, reply];
 exports.reviewId = [reviewId];
-exports.userId = [userId];
+exports.getReviews = [masterId];

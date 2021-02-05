@@ -3,8 +3,8 @@ const { check } = require('express-validator');
 const { fieldId, paramId } = require('./utils/id');
 
 const appointmentId = paramId('appointmentId', 'Appointment Id');
+const masterId = paramId('masterId', 'Master Id');
 const serviceId = fieldId('serviceId', 'Service Id');
-const masterId = fieldId('masterId', 'Master Id');
 
 const timeStartAt = check('time.startAt')
   .trim()

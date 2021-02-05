@@ -34,9 +34,9 @@ router.put('/:serviceId', validator.updateService, validate, controller.updateSe
 // @access    Private(master)
 router.delete('/:serviceId', validator.deleteService, validate, controller.deleteService);
 
-// @route     Put /api/profile/:masterId/service/order
+// @route     Patch /api/profile/:masterId/service/order
 // @desc      Update services' order
 // @access    Private(master)
-router.patch('/order', validator.updateService, validate, controller.updateServicesOrder);
+router.patch('/order', validator.updateServicesOrder, validate, controller.updateServicesOrder);
 
 module.exports = router;

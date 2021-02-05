@@ -1,6 +1,7 @@
 const { getDb } = require('../utils/database');
 
 const { getTimetableAndAppointmentsForUpdate } = require('./pipelines/timetable');
+const timetableAndAppointments = require('./pipelines/timetable/timetable-and-appointments');
 
 class Timetable {
   constructor(masterId, workingDay, sessionTime, weekends, possibleAppointmentsTime) {
@@ -37,6 +38,13 @@ class Timetable {
     } catch (error) {
       throw new Error();
     }
+  }
+
+  static async getTimetableAndAppointments(masterId) {
+    const db = getDb();
+    const resp = await db.collection('timetables').aggregate(timetableAndAppointments(masterId)).toArray();
+    console.log(resp);
+    return resp[0];
   }
 
   // static async getTimetableAndAppointments(masterId, serviceId, date) {

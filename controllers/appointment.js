@@ -7,11 +7,15 @@ const asyncHandler = require('../middleware/async-handler');
 
 const { getWorkingTimetable, searchFreeAppointmentsTime } = require('./utils/appointment');
 
-exports.bookAppointment = asyncHandler(async (req, res, next) => {
-  const customerId = req.user.id;
-  const { masterId, serviceId, time, date } = req.body;
-  const { startAt, endAt } = time;
+//  get controller (appointments with timetable)
+// exports.getAppointmetns;
 
+exports.bookAppointment = asyncHandler(async (req, res, next) => {
+  const { masterId } = req.params;
+  const { serviceId, time, date } = req.body;
+  const customerId = req.user.id;
+
+  const { startAt, endAt } = time;
   // Get correct service by its date
   const { timetable, bookedAppointments, service } = await User.getInfoForBookingAppointment(masterId, serviceId, date);
 
@@ -23,7 +27,7 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
 
   const { sessionTime, weekends, possibleAppointmentsTime } = workingTimetable;
 
-  // Check if appoiment duration is correct
+  // Check if appointment duration is correct
   if (endAt - startAt !== service.duration) {
     return next(new HttpError('Appointment duration does not correspond to service duration'), 400);
   }
@@ -49,7 +53,7 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
 
   await appointment.save();
 
-  return res.json({ message: 'Appointment is added' });
+  return res.json({ message: 'Appointment is added', type: 'success' });
 });
 
 exports.updateAppointment = asyncHandler(async (req, res, next) => {

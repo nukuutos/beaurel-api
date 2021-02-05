@@ -10,10 +10,10 @@ const validate = require('../middleware/validate');
 
 const router = express.Router({ mergeParams: true });
 
-// @route     Post /api/v1/profile/:userId/review/
+// @route     Post /api/v1/profile/:profileId/review/
 // @desc      Get reviews
 // @access    Public
-router.get('/', validator.userId, controller.getReviews);
+router.get('/', validator.getReviews, validate, controller.getReviews);
 
 // @route     Post /api/v1/review/
 // @desc      Add review to master by customer
