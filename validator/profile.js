@@ -10,6 +10,10 @@ const specializationElements = check('specialization.*')
   .isAlpha()
   .withMessage('Specialization must be only strings');
 
+const name = check('name')
+  .trim()
+  .customSanitizer((string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // $& means the whole matched string);
+
 exports.getProfile = [masterId];
 exports.updateAvatar = [masterId];
 exports.updateProfile = [masterId, aboutText];
@@ -17,3 +21,4 @@ exports.upgradeMaster = [masterId, specializationArray, specializationElements];
 exports.addMaster = [userId, masterId];
 exports.deleteMaster = [userId, masterId];
 exports.getMasters = [userId];
+exports.getMastersByQuery = [name];

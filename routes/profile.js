@@ -27,7 +27,7 @@ router.use('/:masterId/appointment', appointmentRouter);
 // @route     Get /api/v1/profile
 // @desc      Get masters by query
 // @access    Public
-router.get('/', controller.getMasters); // add validation
+router.get('/', validator.getMastersByQuery, controller.getMasters); // add validation for specia zation
 
 // @route     Get /api/v1/profile/:masterId
 // @desc      Get profile
