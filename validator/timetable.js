@@ -4,29 +4,7 @@ const { paramId } = require('./utils/id');
 const timetableId = paramId('timetableId', 'Timetable Id');
 const masterId = paramId('masterId', 'Master Id');
 
-const workingDayStartAt = check('workingDay.startAt')
-  .trim()
-  .exists({ checkFalsy: true })
-  .withMessage('Start day time is required')
-  .isInt({ min: 0, max: 86400000 }) //add min and max ms
-  .withMessage('Start day time must be numeric')
-  .customSanitizer((num) => Number(num));
-
-const workingDayEndAt = check('workingDay.endAt')
-  .trim()
-  .exists({ checkFalsy: true })
-  .withMessage('End day time is required')
-  .isInt({ min: 0, max: 86400000 }) //add min and max ms
-  .withMessage('End day time must be numeric')
-  .customSanitizer((num) => Number(num))
-  .custom((endAt, { req }) => {
-    const { startAt } = req.body.workingDay;
-    if (endAt < startAt) {
-      throw new Error('End day time cant be lesser than start day time');
-    }
-    return true;
-  });
-
+// general
 const sessionTime = check('sessionTime')
   .trim()
   .exists({ checkFalsy: true })
@@ -35,11 +13,41 @@ const sessionTime = check('sessionTime')
   .withMessage('Session Time must be numeric')
   .customSanitizer((num) => Number(num));
 
-const weekends = check('weekends.*')
+// type
+
+// auto
+const workingDayStartAt = check('auto.workingDay.startAt')
+  .trim()
+  .exists({ checkFalsy: true })
+  .withMessage('Start day time is required')
+  .isInt({ min: 0, max: 86400000 }) //add min and max ms
+  .withMessage('Start day time must be numeric')
+  .customSanitizer((num) => Number(num));
+
+const workingDayEndAt = check('auto.workingDay.endAt')
+  .trim()
+  .exists({ checkFalsy: true })
+  .withMessage('End day time is required')
+  .isInt({ min: 0, max: 86400000 }) //add min and max ms
+  .withMessage('End day time must be numeric')
+  .customSanitizer((num) => Number(num))
+  .custom((endAt, { req }) => {
+    const { startAt } = req.body.auto.workingDay;
+    if (endAt < startAt) {
+      throw new Error('End day time cant be lesser than start day time');
+    }
+    return true;
+  });
+
+const weekends = check('auto.weekends.*')
   .trim()
   .isInt(0, 6)
   .withMessage('Weekends must be int from 0 to 6')
   .customSanitizer((num) => Number(num));
+
+// exceptions
+
+// manually, appointments
 
 const date = check('date')
   .isISO8601()
@@ -50,8 +58,8 @@ const date = check('date')
     return date;
   });
 
-exports.createTimetable = [workingDayStartAt, workingDayEndAt, sessionTime, weekends];
-exports.updateTimetable = [masterId, timetableId, workingDayStartAt, workingDayEndAt, sessionTime, weekends, date];
-exports.deleteTimetableUpdate = [timetableId];
 exports.getTimetable = [masterId];
+exports.updateTimetable = [masterId, timetableId, workingDayStartAt, workingDayEndAt, sessionTime, weekends, date];
+exports.deleteTimetableUpdate = [masterId, timetableId];
+// exports.createTimetable = [workingDayStartAt, workingDayEndAt, sessionTime, weekends];
 exports.getTimetableAndAppointments = [masterId];

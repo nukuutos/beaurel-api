@@ -3,13 +3,45 @@ const { getDb } = require('../utils/database');
 const { getTimetableAndAppointmentsForUpdate } = require('./pipelines/timetable');
 const timetableAndAppointments = require('./pipelines/timetable/timetable-and-appointments');
 
+// sturture
+// const timetable = {
+//   sessionTime: 60,
+//   type: 'auto',
+//   auto: {
+//     weekends: ['5', '6'],
+//     workingDay: {
+//       startAt: 600,
+//       endAt: 1020,
+//     },
+//     exceptions: { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }, // from 0=mon to 6=sun
+//   },
+//   manually: {
+//     appointments: { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }, // from 0=mon to 6=sun
+//   },
+//   update: {
+//     date: null,
+//     same what above
+// };
+
 class Timetable {
-  constructor(masterId, workingDay, sessionTime, weekends, possibleAppointmentsTime) {
+  constructor(masterId, workingDay, sessionTime, weekends, possibleAppointmentsTime, type, exceptions, appointments) {
     this.masterId = masterId;
-    this.workingDay = workingDay;
+
     this.sessionTime = sessionTime;
-    this.weekends = weekends;
-    this.possibleAppointmentsTime = possibleAppointmentsTime;
+
+    this.type = type;
+
+    this.auto = {
+      weekends,
+      workingDay,
+      exceptions, // { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }, from 0=mon to 6=sun
+      possibleAppointmentsTime,
+    };
+
+    this.manually = {
+      appointments, // { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] }, from 0=mon to 6=sun
+    };
+
     this.update = null;
   }
 
