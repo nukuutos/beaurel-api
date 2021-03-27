@@ -12,8 +12,10 @@ exports.bookAppointmentPipeline = (masterId, serviceId, date) => [
       timetable: {
         workingDay: '$workingDay',
         sessionTime: '$sessionTime',
-        weekends: '$weekends',
-        possibleAppointmentsTime: '$possibleAppointmentsTime',
+        auto: '$auto',
+        manually: '$manually',
+        // weekends: '$weekends',
+        // possibleAppointmentsTime: '$possibleAppointmentsTime',
         update: '$update',
       },
     },

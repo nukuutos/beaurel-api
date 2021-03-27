@@ -50,11 +50,11 @@ const weekends = check('auto.weekends.*')
 // manually, appointments
 
 const date = check('date')
-  .isISO8601()
-  .withMessage('Incorrect date')
+  // .isISO8601()
+  // .withMessage('Incorrect date')
   .customSanitizer((date) => {
     date = new Date(date);
-    date.setUTCHours(0, 0, 0, 0);
+    // date.setUTCHours(0, 0, 0, 0);
     return date;
   });
 

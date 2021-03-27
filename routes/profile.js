@@ -22,6 +22,7 @@ router.use('/:masterId/review', reviewRouter);
 router.use('/:masterId/service', serviceRouter);
 router.use('/:masterId/timetable', timetableRouter);
 router.use('/:masterId/work', workRouter);
+// booking instead of appointment ? i can extend /:masterId/booking/appointment
 router.use('/:masterId/appointment', appointmentRouter);
 
 // @route     Get /api/v1/profile

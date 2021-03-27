@@ -61,7 +61,7 @@ module.exports = (masterId) => [
       timetable: {
         sessionTime: '$sessionTime',
         auto: '$auto',
-        manually: '$type',
+        manually: '$manually',
         type: '$type',
         update: '$update',
         // weekends: '$autoweekends',

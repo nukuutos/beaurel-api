@@ -9,6 +9,7 @@ const asyncHandler = require('../middleware/async-handler');
 const { getCorrectSessionTime } = require('./utils/service');
 
 exports.getServices = asyncHandler(async (req, res, next) => {
+  // delete/get rid of timetable from request(aggregation)
   const { masterId } = req.params;
 
   let { services, timetable } = await Service.getServicesAndTimetable(masterId);
