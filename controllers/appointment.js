@@ -13,6 +13,7 @@ const { getWorkingTimetable, searchFreeAppointmentsTime, getWeekdayIndexRU } = r
 exports.bookAppointment = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
   const { serviceId, time, date } = req.body;
+
   const customerId = req.user.id;
 
   const { startAt, endAt } = time;
@@ -81,7 +82,9 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
     }
   }
 
-  const appointment = new Appointment(masterId, customerId, service, time, date);
+  const { _id, masterId: weDontNeedIt, ...restServiceProps } = service;
+
+  const appointment = new Appointment(masterId, customerId, restServiceProps, time, date);
 
   await appointment.save();
 
@@ -129,7 +132,7 @@ exports.updateAppointment = asyncHandler(async (req, res, next) => {
 
   await Appointment.updateOne({ _id: appointmentId, masterId }, { service, time, date });
 
-  return res.json({ message: 'Appointment is changed' });
+  return res.json({ type: 'success', message: 'Appointment is changed' });
 });
 
 exports.updateStatus = asyncHandler(async (req, res, next) => {
@@ -139,11 +142,11 @@ exports.updateStatus = asyncHandler(async (req, res, next) => {
   const role = req.user.role;
   const userId = req.user.id; // it can be master or customer(user)
 
-  const statusList = role === 'master' ? ['confirmed', 'cancelled'] : ['cancelled'];
+  const statusList = role === 'master' ? ['confirmed', 'rejected'] : ['cancelled'];
 
   if (!statusList.includes(status)) return next(new HttpError('Incorrect status', 400));
 
   await Appointment.updateOne({ _id: appointmentId, $or: [{ masterId: userId }, { customerId: userId }] }, { status });
 
-  return res.json({ message: `Appointment is ${status}` });
+  return res.json({ type: 'success', message: `Appointment is ${status}` });
 });

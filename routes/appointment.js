@@ -20,9 +20,9 @@ router.post('/', auth, validator.bookAppointment, validate, controller.bookAppoi
 // @access    Private
 // router.put('/:appointmentId', master, validator.updateAppointment, validate, controller.updateAppointment); // protect
 
-// @route     patch /api/appointment/:appointmentId/status
+// @route     put /api/profile/:masterId/appointment/:appointmentId/status
 // @desc      Update appointment status
 // @access    Private
-// router.patch('/:appointmentId/status', validator.appointmentId, validate, controller.updateStatus); // check status in the body
+router.put('/:appointmentId/status', auth, validator.appointmentId, validate, controller.updateStatus); // check status in the body
 
 module.exports = router;

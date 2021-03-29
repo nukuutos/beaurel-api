@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const ObjectId = require('mongodb').ObjectID;
+const { ObjectId } = require('mongodb');
 
 const HttpError = require('../models/http-error');
 
@@ -19,12 +19,10 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_KEY_ACCESS);
     req.user = decoded.user; // user
+    req.user.id = new ObjectId(req.user.id);
   } catch (error) {
     return next(new HttpError(error.message, 401));
   }
-
-  // req.user.id = new ObjectId(req.user.id);
-  // req.user.id = new ObjectId(req.user.id);
 
   next();
 };
