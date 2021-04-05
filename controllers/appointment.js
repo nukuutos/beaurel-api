@@ -5,10 +5,30 @@ const HttpError = require('../models/http-error');
 
 const asyncHandler = require('../middleware/async-handler');
 
-const { getWorkingTimetable, searchFreeAppointmentsTime, getWeekdayIndexRU } = require('./utils/appointment');
+const {
+  getWorkingTimetable,
+  searchFreeAppointmentsTime,
+  getWeekdayIndexRU,
+  getStatuses,
+} = require('./utils/appointment');
 
-//  get controller (appointments with timetable)
-// exports.getAppointmetns;
+exports.getMasterAppointments = asyncHandler(async (req, res, next) => {
+  const { id: masterId } = req.user;
+  const { category } = req.query;
+
+  const appointments = await Appointment.getAppointmentsAsMaster(masterId, category);
+
+  return res.json({ appointments });
+});
+
+exports.getCustomerAppointments = asyncHandler(async (req, res, next) => {
+  const { id: customerId } = req.user;
+  const { category } = req.query;
+
+  const appointments = await Appointment.getAppointmentsAsCustomer(customerId, category);
+
+  return res.json({ appointments });
+});
 
 exports.bookAppointment = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
@@ -135,18 +155,32 @@ exports.updateAppointment = asyncHandler(async (req, res, next) => {
   return res.json({ type: 'success', message: 'Appointment is changed' });
 });
 
-exports.updateStatus = asyncHandler(async (req, res, next) => {
+exports.updateStatusByMaster = asyncHandler(async (req, res, next) => {
   const { appointmentId } = req.params;
   const { status } = req.body;
 
-  const role = req.user.role;
-  const userId = req.user.id; // it can be master or customer(user)
+  const masterId = req.user.id; // it can be master or customer(user)
 
-  const statusList = role === 'master' ? ['confirmed', 'rejected'] : ['cancelled'];
+  const statusList = ['confirmed', 'rejected'];
 
   if (!statusList.includes(status)) return next(new HttpError('Incorrect status', 400));
 
-  await Appointment.updateOne({ _id: appointmentId, $or: [{ masterId: userId }, { customerId: userId }] }, { status });
+  await Appointment.updateOne({ _id: appointmentId, masterId }, { status });
+
+  return res.json({ type: 'success', message: `Appointment is ${status}` });
+});
+
+exports.updateStatusByCustomer = asyncHandler(async (req, res, next) => {
+  const { appointmentId } = req.params;
+  const { status } = req.body;
+
+  const customerId = req.user.id; // it can be master or customer(user)
+
+  const statusList = ['cancelled'];
+
+  if (!statusList.includes(status)) return next(new HttpError('Incorrect status', 400));
+
+  await Appointment.updateOne({ _id: appointmentId, customerId }, { status });
 
   return res.json({ type: 'success', message: `Appointment is ${status}` });
 });

@@ -7,6 +7,11 @@ const {
   toUnsuitableByWeekends,
 } = require('./utils/appointment');
 
+const masterAppointmentsAndCustomers = require('./pipelines/appointments/master-appointments-and-customers');
+
+const masters = require('./pipelines/user/masters');
+const customerAppointmentsAndMasters = require('./pipelines/appointments/customer-appointments-and-masters');
+
 class Appointment {
   constructor(masterId, customerId, service, time, date) {
     this.masterId = masterId;
@@ -20,32 +25,47 @@ class Appointment {
 
   async save() {
     const db = getDb();
-    try {
-      await db.collection('appointments').insertOne(this);
-    } catch (error) {
-      throw new Error();
-    }
+    await db.collection('appointments').insertOne(this);
   }
+
+  static async getAppointmentsAsMaster(masterId, category) {
+    const db = getDb();
+
+    const appointments = await db
+      .collection('appointments')
+      .aggregate(masterAppointmentsAndCustomers(masterId, category))
+      .toArray();
+
+    return appointments;
+  }
+
+  static async getAppointmentsAsCustomer(customerId, category) {
+    const db = getDb();
+
+    const appointments = await db
+      .collection('appointments')
+      .aggregate(customerAppointmentsAndMasters(customerId, category))
+      .toArray();
+
+    return appointments;
+  }
+  // static async find(query, projection = null) {
+  //   const db = getDb();
+  //   const appointments = await db.collection('appointments').find(query, { projection: projection }).toArray();
+  //   return appointments;
+  // }
 
   static async updateOne(query, update) {
     const db = getDb();
-    try {
-      await db.collection('appointments').updateOne(query, { $set: update });
-    } catch (error) {
-      throw new Error();
-    }
+    await db.collection('appointments').updateOne(query, { $set: update });
   }
 
   static async toConfirmed(masterId, date) {
     const db = getDb();
 
-    try {
-      await db
-        .collection('appointments')
-        .updateMany({ masterId, date: { $gte: date } }, { $set: { status: 'confirmed' } });
-    } catch (error) {
-      throw new Error();
-    }
+    await db
+      .collection('appointments')
+      .updateMany({ masterId, date: { $gte: date } }, { $set: { status: 'confirmed' } });
   }
 
   // correct appointments by changes in timetable
@@ -80,11 +100,7 @@ class Appointment {
     // Appoinments to unsuitable by weeekends
     if (isWeekendsChanged) toUnsuitableByWeekends(masterId, date, weekends, batch);
 
-    try {
-      await batch.execute();
-    } catch (error) {
-      throw new Error();
-    }
+    await batch.execute();
   }
 }
 

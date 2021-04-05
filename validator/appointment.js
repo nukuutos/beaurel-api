@@ -43,6 +43,7 @@ const date = check('date')
     return true;
   });
 
+exports.getMasterAppointments = [masterId]; // check type here
 exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];
 exports.updateAppointment = [appointmentId, timeStartAt, timeEndAt, date];
 exports.appointmentId = [appointmentId];

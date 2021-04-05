@@ -1,3 +1,13 @@
+exports.getStatuses = (category) => {
+  switch (category) {
+    case 'history':
+      return ['expired', 'ended', 'cancelled', 'rejected'];
+
+    default:
+      return [category];
+  }
+};
+
 exports.getWorkingTimetable = (timetable, date) => {
   const { update, ...currentTimetable } = timetable;
 
