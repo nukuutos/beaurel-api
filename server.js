@@ -6,21 +6,15 @@ const path = require('path');
 const { mongoConnect } = require('./utils/database');
 
 const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/profile');
-const appointmentRoutes = require('./routes/appointment');
-const serviceRoutes = require('./routes/service');
-const timetableRoutes = require('./routes/timetable');
-const reviewRoutes = require('./routes/review');
+const profileRoutes = require('./routes/profile/profile');
+const masterRoutes = require('./routes/master/master');
 
-const auth = require('./middleware/auth');
-const master = require('./middleware/master');
 const multer = require('multer');
 
 // const { updateTimetableJob, updateServiceJob, updateAppointmentJob } = require('./utils/scheduleJob');
 const app = express();
 
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
-// path to images
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const memoryStorage = multer.memoryStorage();
@@ -46,11 +40,8 @@ app.use('/', (req, res, next) => {
 });
 
 app.use('/api/v1/auth', authRoutes);
-// app.use('/api/v1/appointment', auth, appointmentRoutes);
-app.use('/api/v1/service', auth, master, serviceRoutes);
-app.use('/api/v1/timetable', auth, master, timetableRoutes);
 app.use('/api/v1/profile', profileRoutes);
-app.use('/api/v1/review', auth, reviewRoutes);
+app.use('/api/v1/master', masterRoutes);
 
 // updateTimetableJob.start();
 // updateServiceJob.start();

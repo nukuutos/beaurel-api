@@ -1,6 +1,6 @@
 const express = require('express');
 
-const controller = require('../controllers/auth');
+const controller = require('../controllers/auth/auth');
 
 const validator = require('../validator/auth');
 
