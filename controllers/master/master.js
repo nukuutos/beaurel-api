@@ -9,7 +9,7 @@ exports.getMasterProfile = asyncHandler(async (req, res, next) => {
 });
 
 exports.getMasters = asyncHandler(async (req, res, next) => {
-  const { specialization, name } = req.query;
+  const { specialization, name, page } = req.query;
 
   // search by query
   const query = { role: 'master' };
@@ -28,7 +28,7 @@ exports.getMasters = asyncHandler(async (req, res, next) => {
     query.$or = [{ firstName: regexName }, { lastName: regexName }];
   }
 
-  const data = await Master.findMasters(query);
+  const data = await Master.findMasters(query, page);
 
   console.log(query, data);
 

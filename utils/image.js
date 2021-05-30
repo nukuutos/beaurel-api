@@ -25,10 +25,10 @@ exports.createImageName = (id) => {
 };
 
 exports.deleteImage = (imageUrl) => {
-  const imagePath = path.join(__dirname, '..', '..', imageUrl);
+  const imagePath = path.join(__dirname, '..', imageUrl);
   // or unlink sync?
   fs.unlinkSync(imagePath, (error) => {
-    if (error) throw new Error('Work is not deleted');
+    if (error) throw new Error('Image is not deleted');
   });
 };
 

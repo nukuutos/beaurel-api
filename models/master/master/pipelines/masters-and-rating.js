@@ -1,8 +1,7 @@
-module.exports = (matchQuery) => [
+module.exports = (matchQuery, page) => [
   {
     $match: matchQuery,
   },
-
   {
     $project: {
       firstName: 1,
@@ -12,6 +11,8 @@ module.exports = (matchQuery) => [
       specialization: 1,
     },
   },
+  { $skip: page * 10 },
+  { $limit: 10 },
   // rating
   {
     $lookup: {

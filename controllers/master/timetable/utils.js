@@ -21,3 +21,31 @@ exports.detectTimetableChanges = (currentTimetable, updatedTimetable) => {
 
   return { isWorkingDayChanged, isSessionTimeChanged, isWeekendsChanged, isTimetableUpdateChanges: false };
 };
+
+const getDifference = (obj1, obj2) => {
+  const differences = {};
+
+  for (let key in obj1) {
+    const areKeysEqual = isEqual(obj1[key], obj2[key]);
+    if (!areKeysEqual) differences[key] = 1;
+  }
+
+  return differences;
+};
+
+exports.compareTimetables = (currentTimetable, updatedTimetable) => {
+  const { sessionTime: currentSessionTime, type: currentType } = currentTimetable;
+  const { sessionTime: updatedSessionTime, type: updatedType } = updatedTimetable;
+
+  let differences = {};
+
+  if (currentSessionTime !== updatedSessionTime) differences['sessionTime'] = 1;
+
+  if (currentType === updatedType) {
+    return { ...differences, ...getDifference(currentTimetable[currentType], updatedTimetable[updatedType]) };
+  }
+
+  differences['type'] = 1;
+
+  return differences;
+};

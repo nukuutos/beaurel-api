@@ -5,6 +5,9 @@ const HttpError = require('../../../models/http-error');
 const asyncHandler = require('../../../middleware/async-handler');
 
 const { getCorrectSessionTime } = require('./utils');
+const isEqual = require('lodash.isequal');
+const sessionTimeAndServicesIds = require('../../../models/master/service/pipelines/session-time-and-services-ids');
+const { ObjectId } = require('mongodb');
 
 exports.getServices = asyncHandler(async (req, res, next) => {
   // delete/get rid of timetable from request(aggregation)
@@ -107,4 +110,43 @@ exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
   const { newOrder } = req.body;
   await Service.updateOrder(newOrder);
   res.json({ message: "Service's order is updated", type: 'success' });
+});
+
+exports.getUnsuitableServices = asyncHandler(async (req, res, next) => {
+  const { id: masterId } = req.user;
+
+  // const unsuitableServices = await Service.find({ masterId, 'update.status': 'unsuitable' }, {});
+  const unsuitableServices = await Service.getUnsuitableServices(masterId);
+
+  res.json({ unsuitableServices });
+});
+
+exports.putUpdateToServices = asyncHandler(async (req, res, next) => {
+  const { services } = req.body; // [{id, duration}]
+  const { id: masterId } = req.user;
+
+  // get session time
+  // get services' id that are unsuitable
+  const { sessionTime, services: servicesIds } = await Service.getDataForUpdate(masterId);
+
+  if (!sessionTime) return next(new HttpError('No updated session time'));
+
+  // check amount of services from client and bd
+  if (services.length !== servicesIds.length) return next(new HttpError('Incorrect services to update'));
+
+  // compare ids that we received from bd
+  const idsFromClient = services.map(({ id }) => id);
+  const areIdsEqual = isEqual(idsFromClient.sort(), servicesIds.sort());
+
+  if (!areIdsEqual) next(new HttpError("Incorrect services' duration"));
+
+  // check duration by session time
+  if (!services.every(({ duration }) => duration % sessionTime === 0)) {
+    return next(new HttpError("Incorrect services' duration"));
+  }
+
+  // object id in validator
+  await Service.putUpdateToServices(services.map(({ id, duration }) => ({ id: new ObjectId(id), duration })));
+
+  res.json({ message: 'Services are updated!', type: 'success' });
 });

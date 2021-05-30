@@ -1,6 +1,7 @@
 const getDb = require('../../../utils/database').getDb;
 
 const profileAndReviews = require('./pipelines/profile-and-reviews');
+const mastersAndRating = require('./pipelines/masters-and-rating');
 // const masters = require('./pipelines/masters');
 
 class Master {
@@ -25,9 +26,9 @@ class Master {
     }
   }
 
-  static async findMasters(query) {
+  static async findMasters(query, page = 0) {
     const db = getDb();
-    const data = await db.collection('users').aggregate(mastersAndRating(query)).toArray();
+    const data = await db.collection('users').aggregate(mastersAndRating(query, page)).toArray();
     return data;
   }
 

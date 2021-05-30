@@ -1,11 +1,11 @@
-const isEqual = require('lodash.isequal');
-
 const Timetable = require('../../../models/master/timetable/timetable');
 const HttpError = require('../../../models/http-error');
 
 const asyncHandler = require('../../../middleware/async-handler');
 
-const { generatePossibleAppointmentsTime, detectTimetableChanges } = require('./utils');
+const { generatePossibleAppointmentsTime, compareTimetables } = require('./utils');
+const Service = require('../../../models/master/service/service');
+const Appointment = require('../../../models/master/appointment/appointment');
 
 exports.getTimetable = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
@@ -47,121 +47,107 @@ exports.getTimetableAndAppointments = asyncHandler(async (req, res, next) => {
 //   return res.json({ message: 'Timetable is created' });
 // });
 
-// // prevoius status?
+const checkManuallyAppointmentsTime = (current, next = null, prev = null, sessionTime) => {
+  if (prev && prev + sessionTime > current) return false;
+  if (next && current + sessionTime > next) return false;
+  return true;
+};
+
 exports.updateTimetable = asyncHandler(async (req, res, next) => {
-  console.log(req.body);
   const { masterId, timetableId } = req.params;
+
   const { sessionTime, auto, manually, type, date } = req.body;
-  const { weekends, workingDay, exceptions } = auto;
-  const { appointments } = manually;
 
   // check date of update
   if (Date.now() > date.getTime()) return next(new HttpError('Date is expired', 400)); // to validator
 
   const { update, ...currentTimetable } = await Timetable.findOne(
-    { _id: timetableId },
+    { _id: timetableId, masterId },
     {
       _id: 0,
       masterId: 0,
       'auto.possibleAppointmentsTime': 0,
-      'update.auto.possibleAppointmentsTime': 0,
+      // 'update.auto.possibleAppointmentsTime': 0,
     }
   );
+
+  // Check has timetable existed
+  if (!currentTimetable) return next(new HttpError('Your timetable has not existed', 400));
 
   // Check existing update
   if (update) return next(new HttpError('Update has already existed', 400));
 
-  // const updatedTimetable = { workingDay, sessionTime, weekends: weekends.sort() }; // in validator sort it
   const updatedTimetable = { sessionTime, auto, manually, type };
 
-  // Check equality of current timetable and new timetable
-  if (isEqual(currentTimetable, updatedTimetable)) {
+  const difference = compareTimetables(currentTimetable, updatedTimetable);
+
+  if (!Object.keys(difference).length) {
     return next(new HttpError('Updated timetable and current timetable are same', 400));
   }
 
   if (type === 'auto') {
+    const { workingDay, exceptions } = auto;
     const { startAt, endAt } = workingDay;
 
     // Generate possible appointments time
     const possibleAppointmentsTime = generatePossibleAppointmentsTime(startAt, endAt, sessionTime);
     updatedTimetable.auto.possibleAppointmentsTime = possibleAppointmentsTime;
+
+    // check exceptions by sessionTime
+    const areCorrectExceptions = Object.values(exceptions).every((day) =>
+      day.every((exception) => (exception - workingDay.startAt) % sessionTime === 0)
+    );
+
+    if (!areCorrectExceptions) return next(new HttpError('Your exceptions are not correct', 400));
   } else {
-    // check appointments
-    // time between appointments must be greater or equal than sessionTime
+    // manually case
+    const { appointments } = manually;
+
+    const areAppointmentsCorrect = Object.values(appointments).every((day) =>
+      day.every((time, i) => {
+        return checkManuallyAppointmentsTime(time, day[i + 1], day[i - 1], sessionTime);
+      })
+    );
+
+    if (!areAppointmentsCorrect) return next(new HttpError('Your appointments are not correct', 400));
   }
 
-  // Check for update current appointments and services
-  // const changes = detectTimetableChanges(currentTimetable, updatedTimetable);
+  await Appointment.toUnsuitable(masterId, date, updatedTimetable, difference);
 
-  // await Appointment.correctByTimetableChanges(masterId, date, updatedTimetable, changes);
+  let updatedServicesCount = 0;
 
-  await Timetable.updateOne({ _id: timetableId, masterId }, { update: { ...updatedTimetable, date } }); // what if error in correctByTimetabeChanges?
+  if (difference['sessionTime']) {
+    const {
+      result: { n },
+    } = await Service.updateMany(
+      { masterId, duration: { $not: { $mod: [sessionTime, 0] } } },
+      { update: { date, status: 'unsuitable' } }
+    );
 
-  return res.json({ message: 'Timetable is updated', type: 'success' });
+    updatedServicesCount = n;
+  }
+
+  await Timetable.updateOne({ _id: timetableId, masterId }, { update: { ...updatedTimetable, date } });
+
+  return res.json({ message: 'Timetable is updated', updatedServicesCount, type: 'success' });
 });
 
 exports.deleteTimetableUpdate = asyncHandler(async (req, res, next) => {
   const { masterId, timetableId } = req.params;
 
-  await Timetable.updateOne({ _id: timetableId, masterId }, { update: null }); // what if error in correctByTimetabeChanges?
+  const { update } = await Timetable.findById(timetableId, {
+    _id: 0,
+    update: 1,
+  });
+
+  if (!update) return next(new HttpError('Update does not exists', 400));
+
+  // update appointments
+  await Appointment.updateMany({ masterId, status: 'unsuitable' }, { status: 'onConfirmation' });
+  // update services
+  await Service.updateMany({ masterId, update: { $exists: true, $ne: null } }, { update: null });
+
+  await Timetable.updateOne({ _id: timetableId, masterId }, { update: null });
 
   return res.json({ message: 'Timetable is updated', type: 'success' });
 });
-
-// exports.changeTimetableUpdate = asyncHandler(async (req, res, next) => {
-//   const masterId = req.user.id;
-//   const { timetableId } = req.params;
-//   const { workingDay, sessionTime, weekends, date } = req.body;
-
-//   const { update, ...currentTimetable } = await Timetable.findOne(
-//     { _id: timetableId },
-//     {
-//       _id: 0,
-//       masterId: 0,
-//       possibleAppointmentsTime: 0,
-//       'updates.possibleAppointmentsTime': 0,
-//     }
-//   );
-
-//   // Check of existing update
-//   if (!update) return next(new HttpError('Update does not exists', 400));
-
-//   const updatedTimetable = { workingDay, sessionTime, weekends: weekends.sort() }; // in validator sort it
-
-//   // Check equality of current timetable and new timetable
-//   if (isEqual(currentTimetable, updatedTimetable)) {
-//     return next(new HttpError('Updated timetable and current timetable are same', 400));
-//   }
-
-//   const { startAt, endAt } = workingDay;
-
-//   // Generate possible appointments time
-//   const possibleAppointmentsTime = generatePossibleAppointmentsTime(startAt, endAt, sessionTime);
-//   updatedTimetable.possibleAppointmentsTime = possibleAppointmentsTime;
-
-//   // Check for updatie current appointments and services
-//   const changes = { ...detectTimetableChanges(currentTimetable, updatedTimetable), isTimetableUpdateChanges: true };
-
-//   await Appointment.correctByTimetableChanges(masterId, date, updatedTimetable, changes);
-//   await Timetable.updateOne({ _id: timetableId, masterId }, { update: { ...updatedTimetable, date } });
-
-//   return res.json({ message: 'Timetable update is changed' });
-// });
-
-// exports.deleteTimetableUpdate = asyncHandler(async (req, res, next) => {
-//   const masterId = req.user.id;
-//   const { timetableId } = req.params;
-
-//   const { update } = await Timetable.findById(timetableId, {
-//     _id: 0,
-//     update: 1,
-//   });
-
-//   if (!update) return next(new HttpError('Update does not exists', 400));
-
-//   await Appointment.toConfirmed(masterId, update.date);
-//   // await Timetable.update(timetableId, masterId, null);
-//   await Timetable.updateOne({ _id: timetableId, masterId }, { update: null });
-
-//   return res.json({ message: 'Timetable update is deleted' });
-// });

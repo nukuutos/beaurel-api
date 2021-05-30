@@ -1,6 +1,6 @@
 const HttpError = require('../../models/http-error');
 const Work = require('../../models/master/work');
-const { formatImageBuffer, deleteImage } = require('../../utils/image');
+const { formatImageBuffer, deleteImage, saveImageFS } = require('../../utils/image');
 const asyncHandler = require('../../middleware/async-handler');
 
 exports.getWorks = asyncHandler(async (req, res, next) => {
@@ -39,13 +39,19 @@ exports.addWork = asyncHandler(async (req, res, next) => {
 exports.updateWork = asyncHandler(async (req, res, next) => {
   const { title } = req.body;
   const { masterId, workId } = req.params;
+  const { buffer } = req.file;
 
-  // check title
+  // check same titles of master
   const isTitle = await Work.findOne({ _id: { $ne: workId }, masterId, title }, { _id: 1 });
   if (isTitle) return next(new HttpError('Work with this title is already exists', 400));
 
-  console.log(workId, typeof workId);
+  const imageUrl = 'images/works/' + workId + '.png';
+  const formatedBuffer = await formatImageBuffer(buffer);
+
+  deleteImage(imageUrl);
+
   await Work.updateOne({ _id: workId }, { title });
+  await saveImageFS(formatedBuffer, imageUrl);
 
   return res.json({ message: 'Work is updated successfuly!', type: 'success' });
 });

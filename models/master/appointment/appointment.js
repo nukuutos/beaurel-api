@@ -5,6 +5,8 @@ const {
   toUnsuitableByPossibleTime,
   toUnsuitableBySessionTime,
   toUnsuitableByWeekends,
+  toUnsuitableByExceptions,
+  toUnsuitableByAppointments,
 } = require('./utils');
 
 const masterAppointmentsAndCustomers = require('./pipelines/master-appointments-and-customers');
@@ -35,6 +37,8 @@ class Appointment {
       .aggregate(masterAppointmentsAndCustomers(masterId, category))
       .toArray();
 
+    console.log(appointments);
+
     return appointments;
   }
 
@@ -61,6 +65,11 @@ class Appointment {
     await db.collection('appointments').updateOne(query, { $set: update });
   }
 
+  static async updateMany(query, update) {
+    const db = getDb();
+    await db.collection('appointments').updateMany(query, { $set: update });
+  }
+
   static async toConfirmed(masterId, date) {
     const db = getDb();
 
@@ -70,36 +79,42 @@ class Appointment {
   }
 
   // correct appointments by changes in timetable
-  static async correctByTimetableChanges(masterId, date, timetable, changes) {
+  static async toUnsuitable(masterId, date, updatedTimetable, changes) {
     const db = getDb();
     const appointmentsCol = db.collection('appointments');
-
-    const { isWorkingDayChanged, isSessionTimeChanged, isWeekendsChanged, isTimetableUpdateChanges } = changes;
 
     // Init unodered bulk if we don't need return appointments' status back
     let batch = appointmentsCol.initializeUnorderedBulkOp({ useLegacyOps: true });
 
-    if (isTimetableUpdateChanges) {
-      // Init odered bulk if we need return appointments' status back
-      batch = appointmentsCol.initializeOrderedBulkOp();
-      // Return appointments' status back
-      toConfirmed(masterId, date, batch);
-    }
+    const { auto, manually, sessionTime, type } = updatedTimetable;
 
-    const { possibleAppointmentsTime, sessionTime, weekends } = timetable;
-
-    if (isSessionTimeChanged) {
+    if (changes['sessionTime']) {
       // Appoinments to unsuitable by session time
       toUnsuitableBySessionTime(masterId, date, sessionTime, batch);
     }
 
-    if (isWorkingDayChanged) {
-      // Appoinments to unsuitable by possible appointments times
+    if (type === 'auto' && changes['type']) {
       toUnsuitableByPossibleTime(masterId, date, possibleAppointmentsTime, sessionTime, batch);
-    }
+      toUnsuitableByWeekends(masterId, date, weekends, batch);
+      toUnsuitableByExceptions(masterId, date, exceptions, batch);
+    } else if (type === 'auto' && !changes['type']) {
+      const { possibleAppointmentsTime, weekends, exceptions } = auto;
 
-    // Appoinments to unsuitable by weeekends
-    if (isWeekendsChanged) toUnsuitableByWeekends(masterId, date, weekends, batch);
+      if (changes['workingDay']) {
+        // Appoinments to unsuitable by possible appointments times
+        toUnsuitableByPossibleTime(masterId, date, possibleAppointmentsTime, sessionTime, batch);
+      }
+
+      // Appoinments to unsuitable by weeekends
+      if (changes['weekends']) toUnsuitableByWeekends(masterId, date, weekends, batch);
+
+      // Appoinments to unsuitable by exceptions
+      if (changes['exceptions']) toUnsuitableByExceptions(masterId, date, exceptions, batch);
+    } else if (type === 'manually' && (changes['type'] || changes['appointments'])) {
+      const { appointments } = manually;
+
+      toUnsuitableByAppointments(masterId, date, appointments, batch);
+    }
 
     await batch.execute();
   }

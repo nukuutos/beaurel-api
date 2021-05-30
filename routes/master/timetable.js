@@ -23,7 +23,7 @@ router.get('/', validator.getTimetable, controller.getTimetable);
 // @route     POST /api/profile/:masterId/timetable/:timetableId/update
 // @desc      Create Timetable Update
 // @access    Private(master)
-router.post('/:timetableId/update', auth, master, validator.updateTimetable, validate, controller.updateTimetable);
+router.put('/:timetableId/update', auth, master, validator.updateTimetable, validate, controller.updateTimetable);
 
 // @route     Delete /api/profile/:masterId/timetable/:timetableId/update
 // @desc      Delete Timetable Update
@@ -36,27 +36,6 @@ router.delete(
   validate,
   controller.deleteTimetableUpdate
 );
-
-// @route     POST /api/profile/:masterId/timetable/:timetableId/update
-// @desc      Create Timetable Update
-// @access    Private(master)
-// router.delete('/:timetableId/update', master, controller.deleteTimetableUpdate);
-
-// @route     Patch /api/profile/:masterId/timetable/:timetableId/update
-// @desc      Change timetable update
-// @access    Private(master)
-// router.patch('/:timetableId/update', master, validator.updateTimetable, validate, controller.changeTimetableUpdate);
-
-// @route     Delete /api/profile/:masterId/timetable/:timetableId/update
-// @desc      Delete timetable update
-// @access    Private(master)
-// router.delete(
-//   '/:timetableId/update',
-//   master,
-//   validator.deleteTimetableUpdate,
-//   validate,
-//   controller.deleteTimetableUpdate
-// );
 
 // /:masterId/booking ? route
 // @route     GET /api/profile/:masterId/timetable/booking
