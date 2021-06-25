@@ -1,10 +1,11 @@
 const express = require('express');
 
 const favoriteRouter = require('./favorite');
+const appointmentRouter = require('./appointment');
 
 const controller = require('../../controllers/profile/profile');
 
-const validator = require('../../validator/profile');
+const validator = require('../../validator/profile/profile');
 
 const validate = require('../../middleware/validate');
 const auth = require('../../middleware/auth');
@@ -12,6 +13,7 @@ const auth = require('../../middleware/auth');
 const router = express.Router();
 
 router.use('/:profileId/favorite', favoriteRouter);
+router.use('/:profileId/appointment', appointmentRouter);
 
 // @route     Get /api/v1/profile/:masterId
 // @desc      Update profile

@@ -5,29 +5,11 @@ const asyncHandler = require('../../../middleware/async-handler');
 
 const { getWorkingTimetable, searchFreeAppointmentsTime, getWeekdayIndexRU, getStatuses } = require('./utils');
 
-exports.getMasterAppointments = asyncHandler(async (req, res, next) => {
-  const { id: masterId } = req.user;
-  const { category } = req.query;
-
-  const appointments = await Appointment.getAppointmentsAsMaster(masterId, category);
-
-  return res.json({ appointments });
-});
-
-exports.getCustomerAppointments = asyncHandler(async (req, res, next) => {
-  const { id: customerId } = req.user;
-  const { category } = req.query;
-
-  const appointments = await Appointment.getAppointmentsAsCustomer(customerId, category);
-
-  return res.json({ appointments });
-});
-
 exports.bookAppointment = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
   const { serviceId, time, date } = req.body;
 
-  const customerId = req.user.id;
+  const { id: customerId } = req.user;
 
   const { startAt, endAt } = time;
   // Get correct service by its date

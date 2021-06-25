@@ -2,7 +2,7 @@ const express = require('express');
 
 const controller = require('../../controllers/master/timetable/timetable');
 
-const validator = require('../../validator/timetable');
+const validator = require('../../validator/master/timetable');
 
 const master = require('../../middleware/master');
 const auth = require('../../middleware/auth');
@@ -13,7 +13,7 @@ const router = express.Router({ mergeParams: true });
 // @route     Get /api/profile/:masterId/timetable/
 // @desc      Get timetable
 // @access    Public
-router.get('/', validator.getTimetable, controller.getTimetable);
+// router.get('/', validator.getTimetable, controller.getTimetable);
 
 // @route     Post /api/profile/:masterId/timetable/
 // @desc      Create timetable
@@ -23,7 +23,7 @@ router.get('/', validator.getTimetable, controller.getTimetable);
 // @route     POST /api/profile/:masterId/timetable/:timetableId/update
 // @desc      Create Timetable Update
 // @access    Private(master)
-router.put('/:timetableId/update', auth, master, validator.updateTimetable, validate, controller.updateTimetable);
+router.post('/:timetableId/update', auth, master, validator.updateTimetable, validate, controller.updateTimetable);
 
 // @route     Delete /api/profile/:masterId/timetable/:timetableId/update
 // @desc      Delete Timetable Update

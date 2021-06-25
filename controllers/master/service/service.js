@@ -6,7 +6,6 @@ const asyncHandler = require('../../../middleware/async-handler');
 
 const { getCorrectSessionTime } = require('./utils');
 const isEqual = require('lodash.isequal');
-const sessionTimeAndServicesIds = require('../../../models/master/service/pipelines/session-time-and-services-ids');
 const { ObjectId } = require('mongodb');
 
 exports.getServices = asyncHandler(async (req, res, next) => {
@@ -29,7 +28,7 @@ exports.getServices = asyncHandler(async (req, res, next) => {
 });
 
 exports.addService = asyncHandler(async (req, res, next) => {
-  const { masterId } = req.params;
+  const { id: masterId } = req.user;
   let { service, date } = req.body;
 
   const { isTitle, servicesCount } = await Service.getServiceCounterAndIsTitleExists(masterId, service.title);
@@ -56,7 +55,8 @@ exports.addService = asyncHandler(async (req, res, next) => {
 // else inc all and insert
 
 exports.updateService = asyncHandler(async (req, res, next) => {
-  const { masterId, serviceId } = req.params;
+  const { serviceId } = req.params;
+  const { id: masterId } = req.user;
   const { date, service } = req.body;
   const { title } = service;
 
@@ -100,22 +100,25 @@ exports.updateService = asyncHandler(async (req, res, next) => {
 
 exports.deleteService = asyncHandler(async (req, res, next) => {
   const { serviceId } = req.params;
+  const { id: masterId } = req.user;
 
-  await Service.deleteOne({ _id: serviceId });
+  await Service.deleteOne({ _id: serviceId, masterId });
 
   return res.json({ message: 'Service is deleted', type: 'success' });
 });
 
 exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
   const { newOrder } = req.body;
-  await Service.updateOrder(newOrder);
+  const { id: masterId } = req.user;
+
+  await Service.updateOrder(newOrder, masterId);
+
   res.json({ message: "Service's order is updated", type: 'success' });
 });
 
 exports.getUnsuitableServices = asyncHandler(async (req, res, next) => {
   const { id: masterId } = req.user;
 
-  // const unsuitableServices = await Service.find({ masterId, 'update.status': 'unsuitable' }, {});
   const unsuitableServices = await Service.getUnsuitableServices(masterId);
 
   res.json({ unsuitableServices });
@@ -146,7 +149,7 @@ exports.putUpdateToServices = asyncHandler(async (req, res, next) => {
   }
 
   // object id in validator
-  await Service.putUpdateToServices(services.map(({ id, duration }) => ({ id: new ObjectId(id), duration })));
+  await Service.putUpdateToServices(services.map(({ id, duration }) => ({ id, duration })));
 
   res.json({ message: 'Services are updated!', type: 'success' });
 });

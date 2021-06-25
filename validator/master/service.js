@@ -1,11 +1,11 @@
-const { paramId, fieldId } = require('./utils/id');
+const { paramId, fieldId } = require('../utils/id');
 const {
   titleValidation,
   durationValidation,
   priceValidation,
   orderValidation,
   subOrderValidation,
-} = require('./utils/service');
+} = require('../utils/service');
 
 const masterId = paramId('masterId', 'Master Id');
 const serviceId = paramId('serviceId', 'Service Id');
@@ -17,6 +17,10 @@ const durationService = durationValidation('service.duration', "Service's Durati
 const priceService = priceValidation('service.price', "Service's Price");
 const orderService = orderValidation('newOrder.*.order', "Service's Order");
 const subOrderService = subOrderValidation('newOrder.*.subOrder', "Service's Sub-Order");
+
+// update service
+const updatingServiceDuration = durationValidation('services.*.duration', 'Duration of updating service');
+const updatingServiceId = fieldId('services.*.id', 'Id of updating service');
 
 // const date = check('date')
 //   .isISO8601()
@@ -38,8 +42,12 @@ exports.getServices = [masterId];
 
 exports.addService = [masterId, titleService, durationService, priceService];
 
+exports.updateServicesOrder = [masterId, serviceIdOrder, orderService, subOrderService];
+
+exports.getUnsuitableServices = [masterId];
+
+exports.putUpdateToServices = [masterId, updatingServiceId, updatingServiceDuration];
+
 exports.updateService = [masterId, serviceId, titleService, durationService, priceService];
 
 exports.deleteService = [masterId, serviceId];
-
-exports.updateServicesOrder = [masterId, serviceIdOrder, orderService, subOrderService];

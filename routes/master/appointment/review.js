@@ -2,7 +2,7 @@ const express = require('express');
 
 const controller = require('../../../controllers/master/appointment/review');
 
-const validator = require('../../../validator/appointment/review');
+const validator = require('../../../validator/master/appointment/review');
 
 const auth = require('../../../middleware/auth');
 const validate = require('../../../middleware/validate');

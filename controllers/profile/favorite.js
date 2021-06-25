@@ -4,15 +4,14 @@ const HttpError = require('../../models/http-error');
 const asyncHandler = require('../../middleware/async-handler');
 
 exports.getFavorites = asyncHandler(async (req, res, next) => {
-  const { profileId } = req.params;
-  // favorite + not favorite
+  const { id: profileId } = req.user;
   const data = await Favorite.getFavoriteMasters(profileId);
-  console.log(data);
   return res.json({ data, type: 'success' });
 });
 
 exports.addFavorite = asyncHandler(async (req, res, next) => {
-  const { profileId, masterId } = req.params;
+  const { masterId } = req.params;
+  const { id: profileId } = req.user;
 
   const { masters } = await Favorite.findOne({ _id: profileId }, { _id: 0, masters: 1 });
 
@@ -28,7 +27,9 @@ exports.addFavorite = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteFavorite = asyncHandler(async (req, res, next) => {
-  const { profileId, masterId } = req.params;
+  const { masterId } = req.params;
+  const { id: profileId } = req.user;
+
   // $in?
   await Favorite.updateOne({ _id: profileId }, { $pull: { masters: { $in: [masterId] } } });
 

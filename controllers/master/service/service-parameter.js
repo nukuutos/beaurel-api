@@ -8,7 +8,8 @@ const asyncHandler = require('../../../middleware/async-handler');
 const { getCorrectSessionTime } = require('./utils');
 
 exports.addSubService = asyncHandler(async (req, res, next) => {
-  const { masterId, serviceTitle } = req.params;
+  const { serviceTitle } = req.params;
+  const { id: masterId } = req.user;
   let { service, date } = req.body;
 
   const { order, subServices } = await ServiceParameter.get(masterId, serviceTitle); // we need  service parameter length and order
@@ -36,7 +37,7 @@ exports.addSubService = asyncHandler(async (req, res, next) => {
 
 exports.addServiceParameter = asyncHandler(async (req, res, next) => {
   // DRY
-  const { masterId } = req.params;
+  const { id: masterId } = req.user;
   const { service, date } = req.body;
 
   const { isTitle, servicesCount } = await ServiceParameter.getServiceCounterAndIsTitleExists(masterId, service.title);
@@ -64,7 +65,8 @@ exports.addServiceParameter = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateSubService = asyncHandler(async (req, res, next) => {
-  const { masterId, subServiceId } = req.params;
+  const { subServiceId } = req.params;
+  const { id: masterId } = req.user;
   const { date, service } = req.body;
 
   const { duration } = service;
@@ -82,7 +84,8 @@ exports.updateSubService = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateServiceParameter = asyncHandler(async (req, res, next) => {
-  const { masterId, serviceTitle } = req.params; // old title
+  const { serviceTitle } = req.params; // old title
+  const { id: masterId } = req.user;
   const { title } = req.body.service; // new title
 
   const isTitleExisted = await ServiceParameter.findOne({ masterId, title }, { _id: 1 });
@@ -94,15 +97,16 @@ exports.updateServiceParameter = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteSubService = asyncHandler(async (req, res, next) => {
+  const { id: masterId } = req.user;
   const { subServiceId } = req.params;
 
-  await ServiceParameter.deleteOne({ _id: subServiceId });
+  await ServiceParameter.deleteOne({ _id: subServiceId, masterId });
 
   return res.json({ message: 'Sub-service is deleted', type: 'success' });
 });
 
 exports.deleteServiceParameter = asyncHandler(async (req, res, next) => {
-  const { masterId } = req.params;
+  const { id: masterId } = req.user;
   const { serviceTitle } = req.params;
 
   await ServiceParameter.deleteMany({ masterId, title: serviceTitle });

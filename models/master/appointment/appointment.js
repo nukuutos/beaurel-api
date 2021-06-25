@@ -10,8 +10,8 @@ const {
 } = require('./utils');
 
 const masterAppointmentsAndCustomers = require('./pipelines/master-appointments-and-customers');
-
 const customerAppointmentsAndMasters = require('./pipelines/customer-appointments-and-masters');
+const bookingData = require('./pipelines/booking-data');
 
 class Appointment {
   constructor(masterId, customerId, service, time, date) {
@@ -37,8 +37,6 @@ class Appointment {
       .aggregate(masterAppointmentsAndCustomers(masterId, category))
       .toArray();
 
-    console.log(appointments);
-
     return appointments;
   }
 
@@ -49,8 +47,6 @@ class Appointment {
       .collection('appointments')
       .aggregate(customerAppointmentsAndMasters(customerId, category))
       .toArray();
-
-    console.log(appointments);
 
     return appointments;
   }
@@ -121,16 +117,12 @@ class Appointment {
 
   static async getInfoForBookingAppointment(masterId, serviceId, date) {
     const db = getDb();
-    try {
-      const daySchedule = await db // array
-        .collection('timetables')
-        .aggregate(bookAppointmentPipeline(masterId, serviceId, date))
-        .toArray();
+    const data = await db // array
+      .collection('timetables')
+      .aggregate(bookingData(masterId, serviceId, date))
+      .toArray();
 
-      return daySchedule[0];
-    } catch (error) {
-      throw new Error();
-    }
+    return data[0];
   }
 }
 

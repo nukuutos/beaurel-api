@@ -1,5 +1,5 @@
-const { paramId, titleId } = require('./utils/id');
-const { titleValidation, durationValidation, priceValidation, parameterValidation } = require('./utils/service');
+const { paramId, titleId } = require('../utils/id');
+const { titleValidation, durationValidation, priceValidation, parameterValidation } = require('../utils/service');
 const { check } = require('express-validator');
 
 const masterId = paramId('masterId', 'Master Id');

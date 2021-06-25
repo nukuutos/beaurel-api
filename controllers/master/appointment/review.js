@@ -10,7 +10,7 @@ const asyncHandler = require('../../../middleware/async-handler');
 exports.addReview = asyncHandler(async (req, res, next) => {
   const { appointmentId, masterId } = req.params;
   const { value, comment } = req.body;
-  const customerId = req.user.id;
+  const { id: customerId } = req.user;
 
   // aggregate it(look up it)
   // check appointment is ended?

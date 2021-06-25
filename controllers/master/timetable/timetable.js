@@ -114,7 +114,7 @@ exports.updateTimetable = asyncHandler(async (req, res, next) => {
 
   await Appointment.toUnsuitable(masterId, date, updatedTimetable, difference);
 
-  let updatedServicesCount = 0;
+  let unsuitableServicesCount = 0;
 
   if (difference['sessionTime']) {
     const {
@@ -124,21 +124,24 @@ exports.updateTimetable = asyncHandler(async (req, res, next) => {
       { update: { date, status: 'unsuitable' } }
     );
 
-    updatedServicesCount = n;
+    unsuitableServicesCount = n;
   }
 
   await Timetable.updateOne({ _id: timetableId, masterId }, { update: { ...updatedTimetable, date } });
 
-  return res.json({ message: 'Timetable is updated', updatedServicesCount, type: 'success' });
+  return res.json({ message: 'Timetable is updated', unsuitableServicesCount, type: 'success' });
 });
 
 exports.deleteTimetableUpdate = asyncHandler(async (req, res, next) => {
   const { masterId, timetableId } = req.params;
 
-  const { update } = await Timetable.findById(timetableId, {
-    _id: 0,
-    update: 1,
-  });
+  const { update } = await Timetable.findOne(
+    { _id: timetableId },
+    {
+      _id: 0,
+      update: 1,
+    }
+  );
 
   if (!update) return next(new HttpError('Update does not exists', 400));
 

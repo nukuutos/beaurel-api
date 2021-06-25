@@ -5,6 +5,7 @@ const path = require('path');
 
 const { mongoConnect } = require('./utils/database');
 
+const timezoneRoutes = require('./routes/timezone');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile/profile');
 const masterRoutes = require('./routes/master/master');
@@ -42,6 +43,7 @@ app.use('/', (req, res, next) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/master', masterRoutes);
+app.use('/api/v1/timezone', timezoneRoutes);
 
 // updateTimetableJob.start();
 // updateServiceJob.start();

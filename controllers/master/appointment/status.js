@@ -5,11 +5,7 @@ exports.updateStatusByMaster = asyncHandler(async (req, res, next) => {
   const { appointmentId } = req.params;
   const { status } = req.body;
 
-  const masterId = req.user.id; // it can be master or customer(user)
-
-  const statusList = ['confirmed', 'rejected'];
-
-  if (!statusList.includes(status)) return next(new HttpError('Incorrect status', 400));
+  const { id: masterId } = req.user;
 
   await Appointment.updateOne({ _id: appointmentId, masterId }, { status });
 
@@ -20,11 +16,7 @@ exports.updateStatusByCustomer = asyncHandler(async (req, res, next) => {
   const { appointmentId } = req.params;
   const { status } = req.body;
 
-  const customerId = req.user.id; // it can be master or customer(user)
-
-  const statusList = ['cancelled'];
-
-  if (!statusList.includes(status)) return next(new HttpError('Incorrect status', 400));
+  const { id: customerId } = req.user;
 
   await Appointment.updateOne({ _id: appointmentId, customerId }, { status });
 

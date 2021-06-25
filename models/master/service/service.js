@@ -69,12 +69,12 @@ class Service {
     return resp[0];
   }
 
-  static async updateOrder(newOrder) {
+  static async updateOrder(newOrder, masterId) {
     const db = getDb();
     const bulkOp = db.collection('services').initializeOrderedBulkOp();
 
     newOrder.forEach(({ id, ...order }) => {
-      bulkOp.find({ _id: id }).updateOne({ $set: order });
+      bulkOp.find({ _id: id, masterId }).updateOne({ $set: order });
     });
 
     await bulkOp.execute();

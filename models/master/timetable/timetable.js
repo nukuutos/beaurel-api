@@ -56,20 +56,12 @@ class Timetable {
 
   static async findOne(query, projection = null) {
     const db = getDb();
-    try {
-      return await db.collection('timetables').findOne(query, { projection: projection });
-    } catch (error) {
-      throw new Error();
-    }
+    return await db.collection('timetables').findOne(query, { projection: projection });
   }
 
   static async updateOne(query, update) {
     const db = getDb();
-    try {
-      return await db.collection('timetables').updateOne(query, { $set: update });
-    } catch (error) {
-      throw new Error();
-    }
+    return await db.collection('timetables').updateOne(query, { $set: update });
   }
 
   static async getTimetableAndAppointments(masterId) {

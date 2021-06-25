@@ -1,5 +1,5 @@
 const { check } = require('express-validator');
-const { paramId } = require('./utils/id');
+const { paramId } = require('../utils/id');
 
 const workId = paramId('workId', 'Work Id');
 const masterId = paramId('masterId', 'Master Id');

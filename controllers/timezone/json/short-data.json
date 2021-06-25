@@ -1,0 +1,3476 @@
+[
+  {
+    "city": "Абаза",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 52.66901898,
+    "longitude": 90.09536861
+  },
+  {
+    "city": "Абакан",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 53.70368451,
+    "longitude": 91.44500199
+  },
+  {
+    "city": "Агапа",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 71.45037905,
+    "longitude": 89.24999385
+  },
+  {
+    "city": "Агинское",
+    "timezone": "Asia/Chita",
+    "latitude": 51.10306805,
+    "longitude": 114.5228182
+  },
+  {
+    "city": "Алапаевск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.84650657,
+    "longitude": 61.69152095
+  },
+  {
+    "city": "Алатырь",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.8503587,
+    "longitude": 46.59998734
+  },
+  {
+    "city": "Алдан",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 58.60299786,
+    "longitude": 125.38939
+  },
+  {
+    "city": "Алейск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 52.49176882,
+    "longitude": 82.77767574
+  },
+  {
+    "city": "Александровск-Сахалинский",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 50.89749921,
+    "longitude": 142.1561185
+  },
+  {
+    "city": "Алексеевка",
+    "timezone": "Europe/Moscow",
+    "latitude": 50.65348309,
+    "longitude": 38.69307979
+  },
+  {
+    "city": "Алексин",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.5143327,
+    "longitude": 37.09436601
+  },
+  {
+    "city": "Альметьевск",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.90040733,
+    "longitude": 52.31994828
+  },
+  {
+    "city": "Амбарчик",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 69.65100568,
+    "longitude": 162.3335949
+  },
+  {
+    "city": "Амдерма",
+    "timezone": "Europe/Moscow",
+    "latitude": 69.76301434,
+    "longitude": 61.66769812
+  },
+  {
+    "city": "Амурск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 50.22283754,
+    "longitude": 136.8974214
+  },
+  {
+    "city": "Анадырь",
+    "timezone": "Asia/Anadyr",
+    "latitude": 64.73699038,
+    "longitude": 177.4749963
+  },
+  {
+    "city": "Ангарск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 52.56000755,
+    "longitude": 103.9200028
+  },
+  {
+    "city": "Анжеро-Судженск",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 56.08002525,
+    "longitude": 86.04000891
+  },
+  {
+    "city": "Апатиты",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.57307049,
+    "longitude": 33.39304154
+  },
+  {
+    "city": "Апшеронск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.46871848,
+    "longitude": 39.72872717
+  },
+  {
+    "city": "Арзамас",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.39998924,
+    "longitude": 43.80000321
+  },
+  {
+    "city": "Армавир",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.00039146,
+    "longitude": 41.13003699
+  },
+  {
+    "city": "Арсеньев",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 44.16230308,
+    "longitude": 133.2823449
+  },
+  {
+    "city": "Артемовск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 54.34873557,
+    "longitude": 93.43552649
+  },
+  {
+    "city": "Артемовский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.36519228,
+    "longitude": 61.86975297
+  },
+  {
+    "city": "Архангел",
+    "timezone": "Europe/Moscow",
+    "latitude": 64.57495892,
+    "longitude": 40.5450081
+  },
+  {
+    "city": "Асбест",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.02304262,
+    "longitude": 61.45804683
+  },
+  {
+    "city": "Асино",
+    "timezone": "Asia/Tomsk",
+    "latitude": 56.99312197,
+    "longitude": 86.16268876
+  },
+  {
+    "city": "Астрахань",
+    "timezone": "Europe/Astrakhan",
+    "latitude": 46.34865541,
+    "longitude": 48.05498897
+  },
+  {
+    "city": "Аткарск",
+    "timezone": "Europe/Saratov",
+    "latitude": 51.87645754,
+    "longitude": 44.99610592
+  },
+  {
+    "city": "Ахтубинск",
+    "timezone": "Europe/Astrakhan",
+    "latitude": 48.27871848,
+    "longitude": 46.16869584
+  },
+  {
+    "city": "Ачинск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 56.26998781,
+    "longitude": 90.49999508
+  },
+  {
+    "city": "Аша",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.99799827,
+    "longitude": 57.27261755
+  },
+  {
+    "city": "Аян",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 56.45424113,
+    "longitude": 138.1673305
+  },
+  {
+    "city": "Багдарин",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 54.43330406,
+    "longitude": 113.6000321
+  },
+  {
+    "city": "Бакал",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.94588259,
+    "longitude": 58.79588375
+  },
+  {
+    "city": "Балаково",
+    "timezone": "Europe/Saratov",
+    "latitude": 52.02998822,
+    "longitude": 47.80001745
+  },
+  {
+    "city": "Балахна",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.49434104,
+    "longitude": 43.59438269
+  },
+  {
+    "city": "Балашов",
+    "timezone": "Europe/Saratov",
+    "latitude": 51.55350568,
+    "longitude": 43.16309119
+  },
+  {
+    "city": "Барабинск",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 55.35727867,
+    "longitude": 78.35189937
+  },
+  {
+    "city": "Барнаул",
+    "timezone": "Asia/Barnaul",
+    "latitude": 53.35499778,
+    "longitude": 83.74500688
+  },
+  {
+    "city": "Батагай",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 67.65598533,
+    "longitude": 134.6350272
+  },
+  {
+    "city": "Батайск",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.13682436,
+    "longitude": 39.74485022
+  },
+  {
+    "city": "Бежецк",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.76472862,
+    "longitude": 36.68999792
+  },
+  {
+    "city": "Белая Калитва",
+    "timezone": "Europe/Moscow",
+    "latitude": 48.18650189,
+    "longitude": 40.78613033
+  },
+  {
+    "city": "Белгород",
+    "timezone": "Europe/Moscow",
+    "latitude": 50.62999615,
+    "longitude": 36.5999259
+  },
+  {
+    "city": "Белебей",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.12913658,
+    "longitude": 54.11870154
+  },
+  {
+    "city": "Белогорск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 50.91909995,
+    "longitude": 128.4637243
+  },
+  {
+    "city": "Беломорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 64.52522036,
+    "longitude": 34.76582597
+  },
+  {
+    "city": "Березники",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.42000226,
+    "longitude": 56.75998734
+  },
+  {
+    "city": "Беринговский",
+    "timezone": "Asia/Anadyr",
+    "latitude": 63.0654645,
+    "longitude": 179.3066674
+  },
+  {
+    "city": "Бийск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 52.53406598,
+    "longitude": 85.18000972
+  },
+  {
+    "city": "Бикин",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 46.82025454,
+    "longitude": 134.2649206
+  },
+  {
+    "city": "Билибино",
+    "timezone": "Asia/Anadyr",
+    "latitude": 68.0504057,
+    "longitude": 166.3332991
+  },
+  {
+    "city": "Биробиджан",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 48.79742067,
+    "longitude": 132.9507889
+  },
+  {
+    "city": "Бирск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 55.42438051,
+    "longitude": 55.54435095
+  },
+  {
+    "city": "Бирюсинск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 55.96065269,
+    "longitude": 97.81443233
+  },
+  {
+    "city": "Благовещенск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 50.26660748,
+    "longitude": 127.5333418
+  },
+  {
+    "city": "Благодарный",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.10472618,
+    "longitude": 43.43439245
+  },
+  {
+    "city": "Богородицк",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.77468793,
+    "longitude": 38.11435543
+  },
+  {
+    "city": "Боготол",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 56.21647687,
+    "longitude": 89.51840124
+  },
+  {
+    "city": "Бодайбо",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 57.96497479,
+    "longitude": 114.3289799
+  },
+  {
+    "city": "Бологое",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.87216392,
+    "longitude": 34.05176103
+  },
+  {
+    "city": "Большерецк",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 52.43898134,
+    "longitude": 156.3593859
+  },
+  {
+    "city": "Борзя",
+    "timezone": "Asia/Chita",
+    "latitude": 50.38856386,
+    "longitude": 116.518562
+  },
+  {
+    "city": "Борисоглебск",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.36871075,
+    "longitude": 42.08873816
+  },
+  {
+    "city": "Боровичи",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.39781659,
+    "longitude": 33.89740352
+  },
+  {
+    "city": "Боярка",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 70.76698407,
+    "longitude": 97.50003292
+  },
+  {
+    "city": "Братск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.15699729,
+    "longitude": 101.6150272
+  },
+  {
+    "city": "Брянск",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.25999066,
+    "longitude": 34.42998083
+  },
+  {
+    "city": "Бугрино",
+    "timezone": "Europe/Moscow",
+    "latitude": 68.80787884,
+    "longitude": 49.30416337
+  },
+  {
+    "city": "Бугульма",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.55433026,
+    "longitude": 52.79428625
+  },
+  {
+    "city": "Бугуруслан",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 53.66301516,
+    "longitude": 52.43301632
+  },
+  {
+    "city": "Бузулук",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 52.78211285,
+    "longitude": 52.26176062
+  },
+  {
+    "city": "Буйнакск",
+    "timezone": "Europe/Moscow",
+    "latitude": 42.8334953,
+    "longitude": 47.11303096
+  },
+  {
+    "city": "Букачача",
+    "timezone": "Asia/Chita",
+    "latitude": 52.98334088,
+    "longitude": 116.9166255
+  },
+  {
+    "city": "Валуйки",
+    "timezone": "Europe/Moscow",
+    "latitude": 50.20909161,
+    "longitude": 38.09869747
+  },
+  {
+    "city": "Ванино",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 49.08732546,
+    "longitude": 140.2424886
+  },
+  {
+    "city": "Варнек",
+    "timezone": "Europe/Moscow",
+    "latitude": 69.73014813,
+    "longitude": 60.06355831
+  },
+  {
+    "city": "Великие Луки",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.31995892,
+    "longitude": 30.52003861
+  },
+  {
+    "city": "Великий Новгород",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.4999809,
+    "longitude": 31.33001501
+  },
+  {
+    "city": "Великий Устюг",
+    "timezone": "Europe/Moscow",
+    "latitude": 60.76870546,
+    "longitude": 46.29866207
+  },
+  {
+    "city": "Вельск",
+    "timezone": "Europe/Moscow",
+    "latitude": 61.06739524,
+    "longitude": 42.0974198
+  },
+  {
+    "city": "Верхневилюйск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 63.44569969,
+    "longitude": 120.3167281
+  },
+  {
+    "city": "Верхний Уфалей",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.06627932,
+    "longitude": 60.23130001
+  },
+  {
+    "city": "Верхняя Салда",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.05018923,
+    "longitude": 60.54978186
+  },
+  {
+    "city": "Верхоянск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 67.54470013,
+    "longitude": 133.3849743
+  },
+  {
+    "city": "Вилюйск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 63.75526735,
+    "longitude": 121.6247619
+  },
+  {
+    "city": "Витим",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 59.45149904,
+    "longitude": 112.5578218
+  },
+  {
+    "city": "Вихоревка",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.09309938,
+    "longitude": 101.2426985
+  },
+  {
+    "city": "Вичуга",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.21912884,
+    "longitude": 41.92874792
+  },
+  {
+    "city": "Владивосток",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 43.13001467,
+    "longitude": 131.9100256
+  },
+  {
+    "city": "Владикавказ",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.05038129,
+    "longitude": 44.66997595
+  },
+  {
+    "city": "Владимир",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.12997052,
+    "longitude": 40.4099259
+  },
+  {
+    "city": "Волгоград",
+    "timezone": "Europe/Volgograd",
+    "latitude": 48.71000999,
+    "longitude": 44.49996049
+  },
+  {
+    "city": "Волгодонск",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.50997988,
+    "longitude": 42.15994828
+  },
+  {
+    "city": "Волжский",
+    "timezone": "Europe/Volgograd",
+    "latitude": 48.79481101,
+    "longitude": 44.77436234
+  },
+  {
+    "city": "Вологда",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.20998924,
+    "longitude": 39.91998165
+  },
+  {
+    "city": "Волхов",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.92909263,
+    "longitude": 32.33873897
+  },
+  {
+    "city": "Вольск",
+    "timezone": "Europe/Saratov",
+    "latitude": 52.03471661,
+    "longitude": 47.37430701
+  },
+  {
+    "city": "Воркута",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.50000002,
+    "longitude": 64.00998409
+  },
+  {
+    "city": "Воронеж",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.72998069,
+    "longitude": 39.26999548
+  },
+  {
+    "city": "Воронцово",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 71.69832257,
+    "longitude": 83.56419104
+  },
+  {
+    "city": "Воткинск",
+    "timezone": "Europe/Samara",
+    "latitude": 57.03040651,
+    "longitude": 53.99002722
+  },
+  {
+    "city": "Выборг",
+    "timezone": "Europe/Moscow",
+    "latitude": 60.70387738,
+    "longitude": 28.75492672
+  },
+  {
+    "city": "Выска",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.32472251,
+    "longitude": 42.16439245
+  },
+  {
+    "city": "Вышний Волочек",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.58303428,
+    "longitude": 34.56309932
+  },
+  {
+    "city": "Вяземский",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 47.5328467,
+    "longitude": 134.7474751
+  },
+  {
+    "city": "Вязьма",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.21219708,
+    "longitude": 34.29179805
+  },
+  {
+    "city": "Гатчина",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.5706649,
+    "longitude": 30.13334387
+  },
+  {
+    "city": "Гей",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.47472495,
+    "longitude": 58.45430253
+  },
+  {
+    "city": "Геленджик",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.57475852,
+    "longitude": 38.06438432
+  },
+  {
+    "city": "Георгиевск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.15990013,
+    "longitude": 43.46994584
+  },
+  {
+    "city": "Глазов",
+    "timezone": "Europe/Samara",
+    "latitude": 58.12320803,
+    "longitude": 52.62876664
+  },
+  {
+    "city": "Говорово",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 70.21135907,
+    "longitude": 125.9932808
+  },
+  {
+    "city": "Голышманово",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.3819448,
+    "longitude": 68.37147497
+  },
+  {
+    "city": "Горно-Алтайск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 51.96133608,
+    "longitude": 85.95768835
+  },
+  {
+    "city": "Горняк",
+    "timezone": "Asia/Barnaul",
+    "latitude": 50.98808799,
+    "longitude": 81.48767696
+  },
+  {
+    "city": "Грозный",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.31868532,
+    "longitude": 45.69869869
+  },
+  {
+    "city": "Грязи",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.49476605,
+    "longitude": 39.9343477
+  },
+  {
+    "city": "Губаха",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.86913149,
+    "longitude": 57.58872229
+  },
+  {
+    "city": "Губкин",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.27434959,
+    "longitude": 37.38432247
+  },
+  {
+    "city": "Гурьевск",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 54.29814435,
+    "longitude": 85.93768957
+  },
+  {
+    "city": "Гусиноозёрск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 51.28075747,
+    "longitude": 106.5003621
+  },
+  {
+    "city": "Гыда",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 70.88142153,
+    "longitude": 78.46610429
+  },
+  {
+    "city": "Дальнегорск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 44.5372156,
+    "longitude": 135.5172473
+  },
+  {
+    "city": "Дальнереченск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 45.92728579,
+    "longitude": 133.7223181
+  },
+  {
+    "city": "Де-Кастри",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 51.46658592,
+    "longitude": 140.7833341
+  },
+  {
+    "city": "Дербент",
+    "timezone": "Europe/Moscow",
+    "latitude": 42.05780621,
+    "longitude": 48.27740434
+  },
+  {
+    "city": "Дзержинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.25037661,
+    "longitude": 43.46002397
+  },
+  {
+    "city": "Диксон",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 73.50697186,
+    "longitude": 80.54509884
+  },
+  {
+    "city": "Димитровград",
+    "timezone": "Europe/Ulyanovsk",
+    "latitude": 54.25042116,
+    "longitude": 49.56001339
+  },
+  {
+    "city": "Долинск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 47.35042889,
+    "longitude": 142.8000069
+  },
+  {
+    "city": "Домбаровский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 50.75458803,
+    "longitude": 59.54002437
+  },
+  {
+    "city": "Дудинка",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 69.41820335,
+    "longitude": 86.22501054
+  },
+  {
+    "city": "Дятьково",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.5891437,
+    "longitude": 34.33918534
+  },
+  {
+    "city": "Егорьевск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.38479637,
+    "longitude": 39.02939001
+  },
+  {
+    "city": "Ейск",
+    "timezone": "Europe/Moscow",
+    "latitude": 46.69878908,
+    "longitude": 38.26339026
+  },
+  {
+    "city": "Екатеринбург",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.85002993,
+    "longitude": 60.59995967
+  },
+  {
+    "city": "Елец",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.58000633,
+    "longitude": 38.50001664
+  },
+  {
+    "city": "Еманжелинск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.74886619,
+    "longitude": 61.29350907
+  },
+  {
+    "city": "Енисейск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 58.4515084,
+    "longitude": 92.15653479
+  },
+  {
+    "city": "Ерема",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 60.38079632,
+    "longitude": 107.7794055
+  },
+  {
+    "city": "Ессей",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 68.48373842,
+    "longitude": 102.1666215
+  },
+  {
+    "city": "Ефремов",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.14911888,
+    "longitude": 38.12153845
+  },
+  {
+    "city": "Железногорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.3547746,
+    "longitude": 35.40439164
+  },
+  {
+    "city": "Железногорск-Илимский",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.57624819,
+    "longitude": 104.1226778
+  },
+  {
+    "city": "Жиганск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 66.76970868,
+    "longitude": 123.3711153
+  },
+  {
+    "city": "Жилинда",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 70.13368939,
+    "longitude": 114.0000077
+  },
+  {
+    "city": "Заозерный",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 55.96197044,
+    "longitude": 94.70278764
+  },
+  {
+    "city": "Звездный",
+    "timezone": "Asia/Anadyr",
+    "latitude": 70.9565849,
+    "longitude": -179.5899789
+  },
+  {
+    "city": "Зеленодольск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.84055666,
+    "longitude": 48.65500403
+  },
+  {
+    "city": "Зеленокумск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.40910972,
+    "longitude": 43.87870642
+  },
+  {
+    "city": "Земля Бунге",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 74.89830813,
+    "longitude": 142.1050105
+  },
+  {
+    "city": "Зея",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 53.75001243,
+    "longitude": 127.2665881
+  },
+  {
+    "city": "Зима",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 53.93305035,
+    "longitude": 102.0330896
+  },
+  {
+    "city": "Златоуст",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 55.17499005,
+    "longitude": 59.64999182
+  },
+  {
+    "city": "Змеиногорск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 51.15709576,
+    "longitude": 82.19502397
+  },
+  {
+    "city": "Зырянка",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 65.73597333,
+    "longitude": 150.890004
+  },
+  {
+    "city": "Иваново",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.01002016,
+    "longitude": 41.00999263
+  },
+  {
+    "city": "Ивдель",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 60.69364545,
+    "longitude": 60.41325273
+  },
+  {
+    "city": "Игарка",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 67.46710797,
+    "longitude": 86.58333492
+  },
+  {
+    "city": "Игрим",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 63.19331199,
+    "longitude": 64.41941646
+  },
+  {
+    "city": "Ижевск",
+    "timezone": "Europe/Samara",
+    "latitude": 56.85002993,
+    "longitude": 53.23002193
+  },
+  {
+    "city": "Ильпырский",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 59.96738829,
+    "longitude": 164.1720053
+  },
+  {
+    "city": "Индига",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.68975404,
+    "longitude": 49.01659483
+  },
+  {
+    "city": "Инта",
+    "timezone": "Europe/Moscow",
+    "latitude": 66.03742779,
+    "longitude": 60.16742794
+  },
+  {
+    "city": "Иркутск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 52.31997052,
+    "longitude": 104.2450476
+  },
+  {
+    "city": "Исикуль",
+    "timezone": "Asia/Omsk",
+    "latitude": 54.92870017,
+    "longitude": 71.26824906
+  },
+  {
+    "city": "Искитим",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 54.65093935,
+    "longitude": 83.28653357
+  },
+  {
+    "city": "Ишим",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.15022768,
+    "longitude": 69.44980709
+  },
+  {
+    "city": "Йошкар-Ола",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.63539187,
+    "longitude": 47.87494828
+  },
+  {
+    "city": "Кавалерово",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 44.27020347,
+    "longitude": 135.0497823
+  },
+  {
+    "city": "Каваче",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 70.73329104,
+    "longitude": 136.2166361
+  },
+  {
+    "city": "Казань",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.74994204,
+    "longitude": 49.12634477
+  },
+  {
+    "city": "Калачинск",
+    "timezone": "Asia/Omsk",
+    "latitude": 55.04866701,
+    "longitude": 74.56825435
+  },
+  {
+    "city": "Калининград",
+    "timezone": "Europe/Kaliningrad",
+    "latitude": 54.70000612,
+    "longitude": 20.49734289
+  },
+  {
+    "city": "Калуга",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.52037884,
+    "longitude": 36.27002356
+  },
+  {
+    "city": "Камень-на-Оби",
+    "timezone": "Asia/Barnaul",
+    "latitude": 53.7936015,
+    "longitude": 81.33879716
+  },
+  {
+    "city": "Каменка",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.19472333,
+    "longitude": 44.04438106
+  },
+  {
+    "city": "Каменск-Уральский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.42046958,
+    "longitude": 61.9350203
+  },
+  {
+    "city": "Каменск-Шахтинский",
+    "timezone": "Europe/Moscow",
+    "latitude": 48.33176434,
+    "longitude": 40.25179602
+  },
+  {
+    "city": "Камышин",
+    "timezone": "Europe/Volgograd",
+    "latitude": 50.08039146,
+    "longitude": 45.40000891
+  },
+  {
+    "city": "Канаш",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.50912986,
+    "longitude": 47.46866817
+  },
+  {
+    "city": "Кандалакша",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.16433575,
+    "longitude": 32.41439327
+  },
+  {
+    "city": "Канск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 56.19001853,
+    "longitude": 95.71001298
+  },
+  {
+    "city": "Карамкен",
+    "timezone": "Asia/Magadan",
+    "latitude": 60.20041974,
+    "longitude": 151.166628
+  },
+  {
+    "city": "Карасук",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 53.72730064,
+    "longitude": 78.02189368
+  },
+  {
+    "city": "Каргат",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 55.19594484,
+    "longitude": 80.28113562
+  },
+  {
+    "city": "Карпинск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.76016237,
+    "longitude": 60.00981482
+  },
+  {
+    "city": "Карталы",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 53.04739382,
+    "longitude": 60.6819185
+  },
+  {
+    "city": "Касимов",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.9434538,
+    "longitude": 41.39307003
+  },
+  {
+    "city": "Каспийск",
+    "timezone": "Europe/Moscow",
+    "latitude": 42.87473309,
+    "longitude": 47.62436926
+  },
+  {
+    "city": "Кемерово",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 55.33996706,
+    "longitude": 86.08998002
+  },
+  {
+    "city": "Кемь",
+    "timezone": "Europe/Moscow",
+    "latitude": 64.95359214,
+    "longitude": 34.56837032
+  },
+  {
+    "city": "Кизел",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.06436505,
+    "longitude": 57.6343009
+  },
+  {
+    "city": "Кимры",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.86912437,
+    "longitude": 37.34437659
+  },
+  {
+    "city": "Кинешма",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.46996625,
+    "longitude": 42.12997595
+  },
+  {
+    "city": "Киренск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 57.78573509,
+    "longitude": 108.1119433
+  },
+  {
+    "city": "Киров",
+    "timezone": "Europe/Kirov",
+    "latitude": 58.59005292,
+    "longitude": 49.66998083
+  },
+  {
+    "city": "Киров",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.08518577,
+    "longitude": 34.30482051
+  },
+  {
+    "city": "Кирово-Чепецк",
+    "timezone": "Europe/Kirov",
+    "latitude": 58.55437034,
+    "longitude": 50.04437659
+  },
+  {
+    "city": "Кировск",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.60908897,
+    "longitude": 33.66873531
+  },
+  {
+    "city": "Кирс",
+    "timezone": "Europe/Kirov",
+    "latitude": 59.31383303,
+    "longitude": 52.24517248
+  },
+  {
+    "city": "Кирсанов",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.65739178,
+    "longitude": 42.71743363
+  },
+  {
+    "city": "Киселевск",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 54.00002301,
+    "longitude": 86.64002397
+  },
+  {
+    "city": "Кисловодск",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.90996706,
+    "longitude": 42.72001745
+  },
+  {
+    "city": "Клин",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.34305829,
+    "longitude": 36.69873124
+  },
+  {
+    "city": "Клинцы",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.7652405,
+    "longitude": 32.24484289
+  },
+  {
+    "city": "Ключи",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 56.29996014,
+    "longitude": 160.8500162
+  },
+  {
+    "city": "Ковда",
+    "timezone": "Europe/Moscow",
+    "latitude": 66.690282,
+    "longitude": 32.87023108
+  },
+  {
+    "city": "Ковров",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.36036989,
+    "longitude": 41.33002478
+  },
+  {
+    "city": "Когалым",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 62.04462242,
+    "longitude": 74.49409867
+  },
+  {
+    "city": "Кодинский",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 58.69805666,
+    "longitude": 99.17765662
+  },
+  {
+    "city": "Коломна",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.07998293,
+    "longitude": 38.78496049
+  },
+  {
+    "city": "Колпашево",
+    "timezone": "Asia/Tomsk",
+    "latitude": 58.30040651,
+    "longitude": 82.99538855
+  },
+  {
+    "city": "Колпино",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.73000917,
+    "longitude": 30.65000484
+  },
+  {
+    "city": "Комса",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 61.86804405,
+    "longitude": 89.25774532
+  },
+  {
+    "city": "Комсомольск-на-Амуре",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 50.55498781,
+    "longitude": 137.0199979
+  },
+  {
+    "city": "Кондопога",
+    "timezone": "Europe/Moscow",
+    "latitude": 62.20872093,
+    "longitude": 34.28869747
+  },
+  {
+    "city": "Корсаков",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 46.64243593,
+    "longitude": 142.777476
+  },
+  {
+    "city": "Корф",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 60.33206545,
+    "longitude": 165.8183435
+  },
+  {
+    "city": "Кострома",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.77002545,
+    "longitude": 40.94002274
+  },
+  {
+    "city": "Котельнич",
+    "timezone": "Europe/Kirov",
+    "latitude": 58.30412722,
+    "longitude": 48.31373287
+  },
+  {
+    "city": "Котлас",
+    "timezone": "Europe/Moscow",
+    "latitude": 61.26306805,
+    "longitude": 46.66308427
+  },
+  {
+    "city": "Котовск",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.59473411,
+    "longitude": 41.50438106
+  },
+  {
+    "city": "Красино",
+    "timezone": "Europe/Moscow",
+    "latitude": 70.73144845,
+    "longitude": 54.420799
+  },
+  {
+    "city": "Красноармейск",
+    "timezone": "Europe/Saratov",
+    "latitude": 51.01738853,
+    "longitude": 45.69740678
+  },
+  {
+    "city": "Красногорск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 48.4615497,
+    "longitude": 142.0899727
+  },
+  {
+    "city": "Краснодар",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.01997683,
+    "longitude": 39.0000378
+  },
+  {
+    "city": "Краснокаменск",
+    "timezone": "Asia/Chita",
+    "latitude": 50.0664905,
+    "longitude": 118.0264803
+  },
+  {
+    "city": "Краснокамск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.07473553,
+    "longitude": 55.74428707
+  },
+  {
+    "city": "Краснотурьинск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.79478558,
+    "longitude": 60.48477291
+  },
+  {
+    "city": "Красноуральск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.35151451,
+    "longitude": 60.0515177
+  },
+  {
+    "city": "Красноуфимск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.59911501,
+    "longitude": 57.7586344
+  },
+  {
+    "city": "Красноярск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 56.01398277,
+    "longitude": 92.86600053
+  },
+  {
+    "city": "Кропоткин",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.44708254,
+    "longitude": 40.58211177
+  },
+  {
+    "city": "Кудымкар",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.01617678,
+    "longitude": 54.63303707
+  },
+  {
+    "city": "Кузнецк",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.12041262,
+    "longitude": 46.59998734
+  },
+  {
+    "city": "Кулунда",
+    "timezone": "Asia/Barnaul",
+    "latitude": 52.58266766,
+    "longitude": 78.94726355
+  },
+  {
+    "city": "Кумертау",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 52.7747748,
+    "longitude": 55.7843363
+  },
+  {
+    "city": "Кунгур",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.4347746,
+    "longitude": 56.95434241
+  },
+  {
+    "city": "Купина",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 54.35922589,
+    "longitude": 77.27418738
+  },
+  {
+    "city": "Купить",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.48468467,
+    "longitude": 41.52437984
+  },
+  {
+    "city": "Курган",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 55.45995974,
+    "longitude": 65.34499304
+  },
+  {
+    "city": "Курск",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.73998008,
+    "longitude": 36.19002844
+  },
+  {
+    "city": "Куртамыш",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.90867556,
+    "longitude": 64.43326575
+  },
+  {
+    "city": "Кызыл",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 51.70670046,
+    "longitude": 94.38306555
+  },
+  {
+    "city": "Кыштым",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 55.69999676,
+    "longitude": 60.5595487
+  },
+  {
+    "city": "Кяхта",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 50.35267458,
+    "longitude": 106.4526648
+  },
+  {
+    "city": "Лабинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.6347807,
+    "longitude": 40.74427242
+  },
+  {
+    "city": "Лаврентия",
+    "timezone": "Asia/Anadyr",
+    "latitude": 65.58326947,
+    "longitude": -171.0249978
+  },
+  {
+    "city": "Ларяк",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 61.10119163,
+    "longitude": 80.25136999
+  },
+  {
+    "city": "Лениногорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.59869448,
+    "longitude": 52.44872595
+  },
+  {
+    "city": "Ленинск-Кузнецкий",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 54.66000856,
+    "longitude": 86.16997514
+  },
+  {
+    "city": "Ленск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 60.72527142,
+    "longitude": 114.94703
+  },
+  {
+    "city": "Лесозаводск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 45.47475527,
+    "longitude": 133.4297778
+  },
+  {
+    "city": "Лесосибирск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 58.24325238,
+    "longitude": 92.48328487
+  },
+  {
+    "city": "Ливны",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.42479616,
+    "longitude": 37.60436072
+  },
+  {
+    "city": "Липецк",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.62000389,
+    "longitude": 39.63999874
+  },
+  {
+    "city": "Логашкино",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 70.85038983,
+    "longitude": 153.9000012
+  },
+  {
+    "city": "Луга",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.7363489,
+    "longitude": 29.83899491
+  },
+  {
+    "city": "Льгов",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.6947632,
+    "longitude": 35.27437374
+  },
+  {
+    "city": "Магадан",
+    "timezone": "Asia/Magadan",
+    "latitude": 59.57497988,
+    "longitude": 150.8100089
+  },
+  {
+    "city": "Магдагачи",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 53.44997906,
+    "longitude": 125.8000109
+  },
+  {
+    "city": "Магнитогорск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 53.42269391,
+    "longitude": 58.98000688
+  },
+  {
+    "city": "Майкоп",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.60997601,
+    "longitude": 40.12002112
+  },
+  {
+    "city": "Макаров",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 48.63373557,
+    "longitude": 142.8000069
+  },
+  {
+    "city": "Манилы",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 62.54999208,
+    "longitude": 165.3000288
+  },
+  {
+    "city": "Мариинск",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 56.21076662,
+    "longitude": 87.76036902
+  },
+  {
+    "city": "Маточкин Шар",
+    "timezone": "Europe/Moscow",
+    "latitude": 73.26999163,
+    "longitude": 56.44969682
+  },
+  {
+    "city": "Махачкала",
+    "timezone": "Europe/Moscow",
+    "latitude": 42.98002382,
+    "longitude": 47.49998409
+  },
+  {
+    "city": "Мегион",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 61.06075482,
+    "longitude": 76.0953446
+  },
+  {
+    "city": "Медногорск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.41912111,
+    "longitude": 57.57874874
+  },
+  {
+    "city": "Мезень",
+    "timezone": "Europe/Moscow",
+    "latitude": 65.85221946,
+    "longitude": 44.24002803
+  },
+  {
+    "city": "Менкере",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 67.98860069,
+    "longitude": 123.3504964
+  },
+  {
+    "city": "Миасс",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.99541445,
+    "longitude": 60.0949259
+  },
+  {
+    "city": "Миллерово",
+    "timezone": "Europe/Moscow",
+    "latitude": 48.93785138,
+    "longitude": 40.39742021
+  },
+  {
+    "city": "Мирный",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 62.54001853,
+    "longitude": 113.9613537
+  },
+  {
+    "city": "Михайлова",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 75.09498863,
+    "longitude": 86.98243201
+  },
+  {
+    "city": "Михайловка",
+    "timezone": "Europe/Volgograd",
+    "latitude": 50.06785992,
+    "longitude": 43.21745479
+  },
+  {
+    "city": "Михалкино",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 69.42444039,
+    "longitude": 161.4811431
+  },
+  {
+    "city": "Мичуринск",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.8999868,
+    "longitude": 40.49999792
+  },
+  {
+    "city": "Могоча",
+    "timezone": "Asia/Chita",
+    "latitude": 53.73332094,
+    "longitude": 119.7665808
+  },
+  {
+    "city": "Можга",
+    "timezone": "Europe/Samara",
+    "latitude": 56.4547569,
+    "longitude": 52.18434932
+  },
+  {
+    "city": "Моздок",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.75431765,
+    "longitude": 44.65436967
+  },
+  {
+    "city": "Мончегорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.92912111,
+    "longitude": 32.8287349
+  },
+  {
+    "city": "Моршанск",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.4547333,
+    "longitude": 41.80436275
+  },
+  {
+    "city": "Москва",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.75216412,
+    "longitude": 37.61552283
+  },
+  {
+    "city": "Мундыбаш",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 53.23327395,
+    "longitude": 87.31667517
+  },
+  {
+    "city": "Мурманск",
+    "timezone": "Europe/Moscow",
+    "latitude": 68.96998781,
+    "longitude": 33.10003617
+  },
+  {
+    "city": "Муром",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.57041811,
+    "longitude": 42.04000728
+  },
+  {
+    "city": "Мухоморное",
+    "timezone": "Asia/Anadyr",
+    "latitude": 66.4170687,
+    "longitude": 173.333337
+  },
+  {
+    "city": "Мценск",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.26474489,
+    "longitude": 36.54716426
+  },
+  {
+    "city": "Мыс Шмидта",
+    "timezone": "Asia/Anadyr",
+    "latitude": 68.93371096,
+    "longitude": -179.4999844
+  },
+  {
+    "city": "Набережные Челны",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.69999676,
+    "longitude": 52.31994828
+  },
+  {
+    "city": "Надым",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 65.5298102,
+    "longitude": 72.51478796
+  },
+  {
+    "city": "Назрань",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.23300312,
+    "longitude": 44.78300151
+  },
+  {
+    "city": "Называевск",
+    "timezone": "Asia/Omsk",
+    "latitude": 55.56695579,
+    "longitude": 71.35000118
+  },
+  {
+    "city": "Нальчик",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.4981059,
+    "longitude": 43.61794714
+  },
+  {
+    "city": "Нарьян-Мар",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.64740704,
+    "longitude": 53.05742265
+  },
+  {
+    "city": "Натара",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 68.41061627,
+    "longitude": 123.9255
+  },
+  {
+    "city": "Находка",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 67.75039817,
+    "longitude": 77.51996049
+  },
+  {
+    "city": "Находка",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 42.83744855,
+    "longitude": 132.8874336
+  },
+  {
+    "city": "Невельск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 46.68028892,
+    "longitude": 141.8699344
+  },
+  {
+    "city": "Невинномысск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.62005292,
+    "longitude": 41.95003861
+  },
+  {
+    "city": "Невьянск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.49024925,
+    "longitude": 60.21476355
+  },
+  {
+    "city": "Нелидово",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.22350486,
+    "longitude": 32.77307939
+  },
+  {
+    "city": "Нерчинск",
+    "timezone": "Asia/Chita",
+    "latitude": 52.00895591,
+    "longitude": 116.548586
+  },
+  {
+    "city": "Нерюнгри",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 56.67404584,
+    "longitude": 124.7103617
+  },
+  {
+    "city": "Нефтекамск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.08351341,
+    "longitude": 54.26308549
+  },
+  {
+    "city": "Нефтеюганск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 61.07765301,
+    "longitude": 72.70268347
+  },
+  {
+    "city": "Ниженвартовск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 60.93497438,
+    "longitude": 76.58001786
+  },
+  {
+    "city": "Нижнекамск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.64043968,
+    "longitude": 51.82003048
+  },
+  {
+    "city": "Нижнеудинск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 54.89766848,
+    "longitude": 99.02769161
+  },
+  {
+    "city": "Нижнеянск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 71.43332583,
+    "longitude": 136.0666194
+  },
+  {
+    "city": "Нижний Новгород",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.33300722,
+    "longitude": 44.00009436
+  },
+  {
+    "city": "Нижний Тагил",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.9200163,
+    "longitude": 59.9749849
+  },
+  {
+    "city": "Нижняя Тура",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.64364138,
+    "longitude": 59.7982515
+  },
+  {
+    "city": "Никель",
+    "timezone": "Europe/Moscow",
+    "latitude": 69.41257062,
+    "longitude": 30.21881669
+  },
+  {
+    "city": "Николаевск",
+    "timezone": "Europe/Volgograd",
+    "latitude": 50.01610598,
+    "longitude": 45.42610551
+  },
+  {
+    "city": "Николаевск-на-Амуре",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 53.14963564,
+    "longitude": 140.730004
+  },
+  {
+    "city": "Новоалтайск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 53.39925865,
+    "longitude": 83.95884395
+  },
+  {
+    "city": "Новозыбков",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.53481529,
+    "longitude": 31.9448612
+  },
+  {
+    "city": "Новокузнецк",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 53.75001243,
+    "longitude": 87.11498205
+  },
+  {
+    "city": "Новокуйбышевск",
+    "timezone": "Europe/Samara",
+    "latitude": 53.11999921,
+    "longitude": 49.91993974
+  },
+  {
+    "city": "Новомосковск",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.09001752,
+    "longitude": 38.21998205
+  },
+  {
+    "city": "Новороссийск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.72996869,
+    "longitude": 37.76993201
+  },
+  {
+    "city": "Новосибирск",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 55.02996014,
+    "longitude": 82.96004187
+  },
+  {
+    "city": "Новотроицк",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.20001304,
+    "longitude": 58.33002071
+  },
+  {
+    "city": "Новочеркасск",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.41995953,
+    "longitude": 40.08002356
+  },
+  {
+    "city": "Новошахтинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.76998985,
+    "longitude": 39.91998165
+  },
+  {
+    "city": "Новый Порт",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 67.69833417,
+    "longitude": 72.92830277
+  },
+  {
+    "city": "Новый Уоян",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.13498313,
+    "longitude": 111.7338928
+  },
+  {
+    "city": "Новый Уренгой",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 66.08331647,
+    "longitude": 76.63324459
+  },
+  {
+    "city": "Ногинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.87042564,
+    "longitude": 38.48001786
+  },
+  {
+    "city": "Ногинск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 64.48331077,
+    "longitude": 91.23333533
+  },
+  {
+    "city": "Ноглики",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 51.83328188,
+    "longitude": 143.1667028
+  },
+  {
+    "city": "Нордвик",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 74.01650148,
+    "longitude": 111.5100305
+  },
+  {
+    "city": "Норильск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 69.34001691,
+    "longitude": 88.22499182
+  },
+  {
+    "city": "Ноябрьск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 63.1665436,
+    "longitude": 75.61651078
+  },
+  {
+    "city": "Нумто",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 63.66671979,
+    "longitude": 71.33330969
+  },
+  {
+    "city": "Нюкжа",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 56.53121218,
+    "longitude": 121.613083
+  },
+  {
+    "city": "Нягань",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 62.14652834,
+    "longitude": 65.38142493
+  },
+  {
+    "city": "Облучье",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 48.99999229,
+    "longitude": 131.083306
+  },
+  {
+    "city": "Обнинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.08044802,
+    "longitude": 36.62002803
+  },
+  {
+    "city": "Обь",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 54.99804995,
+    "longitude": 82.70765417
+  },
+  {
+    "city": "Оймякон",
+    "timezone": "Asia/Ust-Nera",
+    "latitude": 0,
+    "longitude": 0
+  },
+  {
+    "city": "Октябрьский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.4599691,
+    "longitude": 53.45998205
+  },
+  {
+    "city": "Октябрьский",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 52.66359296,
+    "longitude": 156.2387215
+  },
+  {
+    "city": "Олёкминск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 60.50319195,
+    "longitude": 120.3925891
+  },
+  {
+    "city": "Оленек",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 68.52500205,
+    "longitude": 112.4500248
+  },
+  {
+    "city": "Оловянная",
+    "timezone": "Asia/Chita",
+    "latitude": 50.94997662,
+    "longitude": 115.5666304
+  },
+  {
+    "city": "Омолон",
+    "timezone": "Asia/Anadyr",
+    "latitude": 65.24998232,
+    "longitude": 160.5000118
+  },
+  {
+    "city": "Омск",
+    "timezone": "Asia/Omsk",
+    "latitude": 54.98998842,
+    "longitude": 73.39995357
+  },
+  {
+    "city": "Омсукчан",
+    "timezone": "Asia/Magadan",
+    "latitude": 62.53327476,
+    "longitude": 155.8000402
+  },
+  {
+    "city": "Омутнинск",
+    "timezone": "Europe/Kirov",
+    "latitude": 58.6589376,
+    "longitude": 52.1591829
+  },
+  {
+    "city": "Омчак",
+    "timezone": "Asia/Magadan",
+    "latitude": 61.63327801,
+    "longitude": 147.9166971
+  },
+  {
+    "city": "Онега",
+    "timezone": "Europe/Moscow",
+    "latitude": 63.92714317,
+    "longitude": 38.0771484
+  },
+  {
+    "city": "Орел",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.96995668,
+    "longitude": 36.06998409
+  },
+  {
+    "city": "Оренбург",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.77997764,
+    "longitude": 55.11001054
+  },
+  {
+    "city": "Орехово-Зуево",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.82001528,
+    "longitude": 38.97998734
+  },
+  {
+    "city": "Орск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.21001243,
+    "longitude": 58.62731523
+  },
+  {
+    "city": "Отрадный",
+    "timezone": "Europe/Samara",
+    "latitude": 53.37781293,
+    "longitude": 51.34739783
+  },
+  {
+    "city": "Оха",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 53.57389915,
+    "longitude": 142.9478531
+  },
+  {
+    "city": "Охотск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 59.38300193,
+    "longitude": 143.2170357
+  },
+  {
+    "city": "Палана",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 59.08400209,
+    "longitude": 159.9500195
+  },
+  {
+    "city": "Палатка",
+    "timezone": "Asia/Magadan",
+    "latitude": 60.10001243,
+    "longitude": 150.8999776
+  },
+  {
+    "city": "Палласовка",
+    "timezone": "Europe/Volgograd",
+    "latitude": 50.04773195,
+    "longitude": 46.87733476
+  },
+  {
+    "city": "Партизанск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 43.13487225,
+    "longitude": 133.1349121
+  },
+  {
+    "city": "Пахачи",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 60.5815851,
+    "longitude": 169.0499808
+  },
+  {
+    "city": "Певек",
+    "timezone": "Asia/Anadyr",
+    "latitude": 69.70082176,
+    "longitude": 170.3133146
+  },
+  {
+    "city": "Пенза",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.18002138,
+    "longitude": 44.99998165
+  },
+  {
+    "city": "Первоуральск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.91002626,
+    "longitude": 59.9550378
+  },
+  {
+    "city": "Перегребное",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 62.96699506,
+    "longitude": 65.08593909
+  },
+  {
+    "city": "Пермь",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.99995974,
+    "longitude": 56.24999263
+  },
+  {
+    "city": "Петровск-Забайкальский",
+    "timezone": "Asia/Chita",
+    "latitude": 51.28269533,
+    "longitude": 108.8326745
+  },
+  {
+    "city": "Петрозаводск",
+    "timezone": "Europe/Moscow",
+    "latitude": 61.84998313,
+    "longitude": 34.28001583
+  },
+  {
+    "city": "Петропавловск-Камчатский",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 53.06199241,
+    "longitude": 158.6230204
+  },
+  {
+    "city": "Печора",
+    "timezone": "Europe/Moscow",
+    "latitude": 65.15874758,
+    "longitude": 57.20874548
+  },
+  {
+    "city": "Пласт",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.36850181,
+    "longitude": 60.80852576
+  },
+  {
+    "city": "Подкаменная",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 61.59950747,
+    "longitude": 90.12363562
+  },
+  {
+    "city": "Подольск",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.38042971,
+    "longitude": 37.52994665
+  },
+  {
+    "city": "Покровск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 61.49344159,
+    "longitude": 129.1272497
+  },
+  {
+    "city": "Полевской",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.44341392,
+    "longitude": 60.18804683
+  },
+  {
+    "city": "Полярный",
+    "timezone": "Europe/Moscow",
+    "latitude": 69.20521893,
+    "longitude": 33.45024735
+  },
+  {
+    "city": "Поронайск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 49.24155377,
+    "longitude": 143.0850024
+  },
+  {
+    "city": "Провидения",
+    "timezone": "Asia/Anadyr",
+    "latitude": 64.4234953,
+    "longitude": -173.2257937
+  },
+  {
+    "city": "Прогресс",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 49.75038576,
+    "longitude": 129.6166772
+  },
+  {
+    "city": "Прокопьевск",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 53.89997744,
+    "longitude": 86.70999385
+  },
+  {
+    "city": "Псков",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.82999595,
+    "longitude": 28.32993974
+  },
+  {
+    "city": "Пугачев",
+    "timezone": "Europe/Saratov",
+    "latitude": 52.01476951,
+    "longitude": 48.79437537
+  },
+  {
+    "city": "Путь Ленина",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 68.51663047,
+    "longitude": 107.7999727
+  },
+  {
+    "city": "Пятигорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.07995668,
+    "longitude": 43.09002071
+  },
+  {
+    "city": "Раевский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.06738324,
+    "longitude": 54.92692094
+  },
+  {
+    "city": "Ржев",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.2574046,
+    "longitude": 34.32745479
+  },
+  {
+    "city": "Рославль",
+    "timezone": "Europe/Moscow",
+    "latitude": 53.95090456,
+    "longitude": 32.86041256
+  },
+  {
+    "city": "Ростов",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.18915651,
+    "longitude": 39.40430253
+  },
+  {
+    "city": "Ростов",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.23464785,
+    "longitude": 39.7126558
+  },
+  {
+    "city": "Рубцовск",
+    "timezone": "Asia/Barnaul",
+    "latitude": 51.52001935,
+    "longitude": 81.21001949
+  },
+  {
+    "city": "Рузаевка",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.06433433,
+    "longitude": 44.92437903
+  },
+  {
+    "city": "Русаново",
+    "timezone": "Europe/Moscow",
+    "latitude": 70.59807362,
+    "longitude": 56.37229099
+  },
+  {
+    "city": "Рыбинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.05034426,
+    "longitude": 38.81999711
+  },
+  {
+    "city": "Рязань",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.61995933,
+    "longitude": 39.71999385
+  },
+  {
+    "city": "Сагастырь",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 73.37793312,
+    "longitude": 126.5923521
+  },
+  {
+    "city": "Салават",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 53.37034568,
+    "longitude": 55.92996049
+  },
+  {
+    "city": "Салехард",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 66.53502016,
+    "longitude": 66.60998043
+  },
+  {
+    "city": "Сальск",
+    "timezone": "Europe/Moscow",
+    "latitude": 46.4775106,
+    "longitude": 41.5420015
+  },
+  {
+    "city": "Самара",
+    "timezone": "Europe/Samara",
+    "latitude": 53.19500755,
+    "longitude": 50.15129512
+  },
+  {
+    "city": "Сангар",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 63.92414593,
+    "longitude": 127.4739139
+  },
+  {
+    "city": "Санкт-Петербург",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.93901451,
+    "longitude": 30.31602006
+  },
+  {
+    "city": "Саранпаул",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 64.25045677,
+    "longitude": 60.97001461
+  },
+  {
+    "city": "Саранск",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.17037437,
+    "longitude": 45.18002234
+  },
+  {
+    "city": "Сарапул",
+    "timezone": "Europe/Samara",
+    "latitude": 56.47914817,
+    "longitude": 53.79872107
+  },
+  {
+    "city": "Саратов",
+    "timezone": "Europe/Saratov",
+    "latitude": 51.57998985,
+    "longitude": 46.0299963
+  },
+  {
+    "city": "Саскылах",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 71.91662966,
+    "longitude": 114.0833101
+  },
+  {
+    "city": "Сасово",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.34914899,
+    "longitude": 41.90869747
+  },
+  {
+    "city": "Сафоново",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.1464905,
+    "longitude": 33.21610144
+  },
+  {
+    "city": "Саяногорск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 53.0894326,
+    "longitude": 91.40040523
+  },
+  {
+    "city": "Светогорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 61.10132082,
+    "longitude": 28.9176558
+  },
+  {
+    "city": "Свободный",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 51.40617617,
+    "longitude": 128.1311865
+  },
+  {
+    "city": "Северный",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.60828798,
+    "longitude": 64.12325883
+  },
+  {
+    "city": "Северо-Курильск",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 50.69048342,
+    "longitude": 156.0850358
+  },
+  {
+    "city": "Северобайкальск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 55.63400596,
+    "longitude": 109.3129553
+  },
+  {
+    "city": "Северодвинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 64.57002382,
+    "longitude": 39.83001298
+  },
+  {
+    "city": "Североморск",
+    "timezone": "Europe/Moscow",
+    "latitude": 69.07305646,
+    "longitude": 33.42306555
+  },
+  {
+    "city": "Североуральск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 60.15652061,
+    "longitude": 59.96154903
+  },
+  {
+    "city": "Сегежа",
+    "timezone": "Europe/Moscow",
+    "latitude": 63.75477643,
+    "longitude": 34.32430253
+  },
+  {
+    "city": "Сергиев Посад",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.33000999,
+    "longitude": 38.17001094
+  },
+  {
+    "city": "Сердобск",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.46218406,
+    "longitude": 44.22178625
+  },
+  {
+    "city": "Серов",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.61497744,
+    "longitude": 60.58497351
+  },
+  {
+    "city": "Серпухов",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.93037966,
+    "longitude": 37.43000443
+  },
+  {
+    "city": "Сибай",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 52.70911989,
+    "longitude": 58.63873572
+  },
+  {
+    "city": "Сиглан",
+    "timezone": "Asia/Magadan",
+    "latitude": 59.03372093,
+    "longitude": 152.4165775
+  },
+  {
+    "city": "Сковородино",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 53.98330568,
+    "longitude": 123.9166634
+  },
+  {
+    "city": "Славгород",
+    "timezone": "Asia/Barnaul",
+    "latitude": 53.00494163,
+    "longitude": 78.6695544
+  },
+  {
+    "city": "Сланцы",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.11159731,
+    "longitude": 28.07465816
+  },
+  {
+    "city": "Слободской",
+    "timezone": "Europe/Kirov",
+    "latitude": 58.71849469,
+    "longitude": 50.18803707
+  },
+  {
+    "city": "Слюдянка",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 51.65383547,
+    "longitude": 103.6988277
+  },
+  {
+    "city": "Смоленск",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.78268841,
+    "longitude": 32.04733557
+  },
+  {
+    "city": "Советск",
+    "timezone": "Europe/Kaliningrad",
+    "latitude": 55.07176638,
+    "longitude": 21.88196122
+  },
+  {
+    "city": "Советск",
+    "timezone": "Europe/Kirov",
+    "latitude": 57.57846092,
+    "longitude": 48.9580863
+  },
+  {
+    "city": "Советская Гавань",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 48.96989077,
+    "longitude": 140.2748897
+  },
+  {
+    "city": "Сокол",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.46477989,
+    "longitude": 40.11438839
+  },
+  {
+    "city": "Сол-ллецк",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 51.1602997,
+    "longitude": 54.99988806
+  },
+  {
+    "city": "Соликамск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 59.669987,
+    "longitude": 56.74996212
+  },
+  {
+    "city": "Солнечногорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.18069094,
+    "longitude": 36.98088456
+  },
+  {
+    "city": "Сосногорск",
+    "timezone": "Europe/Moscow",
+    "latitude": 63.59476035,
+    "longitude": 53.89432247
+  },
+  {
+    "city": "Сочи",
+    "timezone": "Europe/Moscow",
+    "latitude": 43.59001243,
+    "longitude": 39.72996741
+  },
+  {
+    "city": "Спасск-Дальний",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 44.60015749,
+    "longitude": 132.8197892
+  },
+  {
+    "city": "Среднеколымск",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 67.45000307,
+    "longitude": 153.7100386
+  },
+  {
+    "city": "Ставрополь",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.05000083,
+    "longitude": 41.98001094
+  },
+  {
+    "city": "Старая Русса",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.99476625,
+    "longitude": 31.35435461
+  },
+  {
+    "city": "Старорыбное",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 72.76660362,
+    "longitude": 104.8000008
+  },
+  {
+    "city": "Старый Оскол",
+    "timezone": "Europe/Moscow",
+    "latitude": 51.30042035,
+    "longitude": 37.83995357
+  },
+  {
+    "city": "Стерлитамак",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 53.62999392,
+    "longitude": 55.96003617
+  },
+  {
+    "city": "Стрежевой",
+    "timezone": "Asia/Tomsk",
+    "latitude": 60.73315208,
+    "longitude": 77.57768306
+  },
+  {
+    "city": "Стрелка",
+    "timezone": "Asia/Magadan",
+    "latitude": 61.86698468,
+    "longitude": 152.2501794
+  },
+  {
+    "city": "Сунтар",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 62.14440961,
+    "longitude": 117.6319307
+  },
+  {
+    "city": "Сургут",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 61.25994163,
+    "longitude": 73.42501664
+  },
+  {
+    "city": "Сусуман",
+    "timezone": "Asia/Magadan",
+    "latitude": 62.78333701,
+    "longitude": 148.1667594
+  },
+  {
+    "city": "Сызрань",
+    "timezone": "Europe/Samara",
+    "latitude": 53.16999615,
+    "longitude": 48.47997595
+  },
+  {
+    "city": "Сыктывкар",
+    "timezone": "Europe/Moscow",
+    "latitude": 61.65999473,
+    "longitude": 50.81998816
+  },
+  {
+    "city": "Тавда",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.05365155,
+    "longitude": 65.25827999
+  },
+  {
+    "city": "Таганрог",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.22999697,
+    "longitude": 38.91999101
+  },
+  {
+    "city": "Тазовский",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 67.46666872,
+    "longitude": 78.69999182
+  },
+  {
+    "city": "Тайшет",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 55.92770896,
+    "longitude": 97.98770341
+  },
+  {
+    "city": "Таксимо",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.33153444,
+    "longitude": 114.8899792
+  },
+  {
+    "city": "Тамбов",
+    "timezone": "Europe/Moscow",
+    "latitude": 52.73002301,
+    "longitude": 41.43001868
+  },
+  {
+    "city": "Тара",
+    "timezone": "Asia/Omsk",
+    "latitude": 56.89824404,
+    "longitude": 74.37824011
+  },
+  {
+    "city": "Татарск",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 55.22193809,
+    "longitude": 75.96651526
+  },
+  {
+    "city": "Таштагол",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 52.79175051,
+    "longitude": 87.86770097
+  },
+  {
+    "city": "Тверь",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.85997764,
+    "longitude": 35.88999508
+  },
+  {
+    "city": "Тели",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 51.03330487,
+    "longitude": 90.23329301
+  },
+  {
+    "city": "Тербяс",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 64.37608217,
+    "longitude": 120.5468949
+  },
+  {
+    "city": "Тикси",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 71.62688552,
+    "longitude": 128.8349668
+  },
+  {
+    "city": "Тимашевск",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.62474611,
+    "longitude": 38.94438228
+  },
+  {
+    "city": "Тимирязевский",
+    "timezone": "Asia/Tomsk",
+    "latitude": 56.49260988,
+    "longitude": 84.90359249
+  },
+  {
+    "city": "Тихвин",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.64484641,
+    "longitude": 33.51437781
+  },
+  {
+    "city": "Тихорецк",
+    "timezone": "Europe/Moscow",
+    "latitude": 45.85310427,
+    "longitude": 40.13774613
+  },
+  {
+    "city": "Тобольск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.1997925,
+    "longitude": 68.26481482
+  },
+  {
+    "city": "Тогучин",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 55.23767356,
+    "longitude": 84.37768144
+  },
+  {
+    "city": "Тольятти",
+    "timezone": "Europe/Samara",
+    "latitude": 53.48039064,
+    "longitude": 49.53004106
+  },
+  {
+    "city": "Томск",
+    "timezone": "Asia/Tomsk",
+    "latitude": 56.494987,
+    "longitude": 84.97500932
+  },
+  {
+    "city": "Топки",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 55.28017743,
+    "longitude": 85.61083614
+  },
+  {
+    "city": "Торжок",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.02906293,
+    "longitude": 34.97873287
+  },
+  {
+    "city": "Троицк",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.10564964,
+    "longitude": 61.57023637
+  },
+  {
+    "city": "Трофимовск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 72.59968874,
+    "longitude": 127.0336824
+  },
+  {
+    "city": "Туапсе",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.11476076,
+    "longitude": 39.06437496
+  },
+  {
+    "city": "Туймазы",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.6047923,
+    "longitude": 53.69433467
+  },
+  {
+    "city": "Тукчи",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 57.36697512,
+    "longitude": 139.5000016
+  },
+  {
+    "city": "Тула",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.19995913,
+    "longitude": 37.62994055
+  },
+  {
+    "city": "Тулун",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 54.56533734,
+    "longitude": 100.5653755
+  },
+  {
+    "city": "Тунгуская",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 64.90044293,
+    "longitude": 125.2500187
+  },
+  {
+    "city": "Тура",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 64.28329714,
+    "longitude": 100.2500459
+  },
+  {
+    "city": "Туруханск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 65.83816347,
+    "longitude": 87.95498246
+  },
+  {
+    "city": "Тында",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 55.17426658,
+    "longitude": 124.7075712
+  },
+  {
+    "city": "Тюмень",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 57.14001223,
+    "longitude": 65.52999467
+  },
+  {
+    "city": "Углегорск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 49.08334637,
+    "longitude": 142.0333353
+  },
+  {
+    "city": "Углич",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.52435569,
+    "longitude": 38.33000118
+  },
+  {
+    "city": "Угольные Копи",
+    "timezone": "Asia/Anadyr",
+    "latitude": 64.73329551,
+    "longitude": 177.6999955
+  },
+  {
+    "city": "Удачный",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 66.42316652,
+    "longitude": 112.3965397
+  },
+  {
+    "city": "Ужур",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 55.32916669,
+    "longitude": 89.82070837
+  },
+  {
+    "city": "Улан-Удэ",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 51.82498781,
+    "longitude": 107.6249963
+  },
+  {
+    "city": "Улкан",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 55.90039797,
+    "longitude": 107.7833329
+  },
+  {
+    "city": "Ульяновск",
+    "timezone": "Europe/Ulyanovsk",
+    "latitude": 54.32997703,
+    "longitude": 48.41000606
+  },
+  {
+    "city": "Умба",
+    "timezone": "Europe/Moscow",
+    "latitude": 66.68139366,
+    "longitude": 34.34554154
+  },
+  {
+    "city": "Урай",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 60.14013918,
+    "longitude": 64.75479651
+  },
+  {
+    "city": "Урюпинск",
+    "timezone": "Europe/Volgograd",
+    "latitude": 50.77344993,
+    "longitude": 42.00305863
+  },
+  {
+    "city": "Усинск",
+    "timezone": "Europe/Moscow",
+    "latitude": 65.92304201,
+    "longitude": 57.40299719
+  },
+  {
+    "city": "Усолье-Сибирское",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 52.76498212,
+    "longitude": 103.6449808
+  },
+  {
+    "city": "Уссурийск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 43.80002545,
+    "longitude": 132.019993
+  },
+  {
+    "city": "Усть-Камчатск",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 56.21350547,
+    "longitude": 162.4349841
+  },
+  {
+    "city": "Усть-Куйга",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 70.01705568,
+    "longitude": 135.6000329
+  },
+  {
+    "city": "Усть-Кут",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 56.76497052,
+    "longitude": 105.7599939
+  },
+  {
+    "city": "Усть-Майя",
+    "timezone": "Asia/Khandyga",
+    "latitude": 60.45657981,
+    "longitude": 134.5433016
+  },
+  {
+    "city": "Усть-Нера",
+    "timezone": "Asia/Ust-Nera",
+    "latitude": 64.56658734,
+    "longitude": 143.1999825
+  },
+  {
+    "city": "Усть-Оленск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 72.99778302,
+    "longitude": 119.7729295
+  },
+  {
+    "city": "Усть-Ордынский",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 52.83299713,
+    "longitude": 104.6999977
+  },
+  {
+    "city": "Усть-Улимск",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 57.98996035,
+    "longitude": 102.6333113
+  },
+  {
+    "city": "Утхолок",
+    "timezone": "Asia/Kamchatka",
+    "latitude": 57.55040061,
+    "longitude": 157.2333378
+  },
+  {
+    "city": "Уфа",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 54.78997479,
+    "longitude": 56.04003129
+  },
+  {
+    "city": "Ухта",
+    "timezone": "Europe/Moscow",
+    "latitude": 63.55998212,
+    "longitude": 53.68999385
+  },
+  {
+    "city": "Уэлен",
+    "timezone": "Asia/Anadyr",
+    "latitude": 66.15413931,
+    "longitude": -169.8105835
+  },
+  {
+    "city": "Уяр",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 55.81037762,
+    "longitude": 94.31531775
+  },
+  {
+    "city": "Фролово",
+    "timezone": "Europe/Volgograd",
+    "latitude": 49.77219322,
+    "longitude": 43.65179521
+  },
+  {
+    "city": "Хабаровск",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 48.4549868,
+    "longitude": 135.1200105
+  },
+  {
+    "city": "Хандыга",
+    "timezone": "Asia/Khandyga",
+    "latitude": 62.66600568,
+    "longitude": 135.6000329
+  },
+  {
+    "city": "Ханты-Мансийск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 61.00153363,
+    "longitude": 69.00151404
+  },
+  {
+    "city": "Хатанга",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 72.04114402,
+    "longitude": 102.4650012
+  },
+  {
+    "city": "Хахар",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 57.66659507,
+    "longitude": 135.4300175
+  },
+  {
+    "city": "Хилок",
+    "timezone": "Asia/Chita",
+    "latitude": 51.35000389,
+    "longitude": 110.4500435
+  },
+  {
+    "city": "Холмск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 47.04732078,
+    "longitude": 142.0623775
+  },
+  {
+    "city": "Хорго",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 73.48330406,
+    "longitude": 113.6300044
+  },
+  {
+    "city": "Чагда",
+    "timezone": "Asia/Khandyga",
+    "latitude": 60.10001243,
+    "longitude": 133.8999816
+  },
+  {
+    "city": "Чапаевск",
+    "timezone": "Europe/Samara",
+    "latitude": 52.97432334,
+    "longitude": 49.72434444
+  },
+  {
+    "city": "Чебоксары",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.12997052,
+    "longitude": 47.25002519
+  },
+  {
+    "city": "Чегдомын",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 51.11779584,
+    "longitude": 133.0241178
+  },
+  {
+    "city": "Челюскин",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 77.71697329,
+    "longitude": 104.2500085
+  },
+  {
+    "city": "Челябинск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 55.15499127,
+    "longitude": 61.43866817
+  },
+  {
+    "city": "Черемхово",
+    "timezone": "Asia/Irkutsk",
+    "latitude": 53.15880821,
+    "longitude": 103.0738529
+  },
+  {
+    "city": "Черепаново",
+    "timezone": "Asia/Novosibirsk",
+    "latitude": 54.23362632,
+    "longitude": 83.36880245
+  },
+  {
+    "city": "Череповец",
+    "timezone": "Europe/Moscow",
+    "latitude": 59.14043276,
+    "longitude": 37.90997514
+  },
+  {
+    "city": "Черкесск",
+    "timezone": "Europe/Moscow",
+    "latitude": 44.29040895,
+    "longitude": 42.06000606
+  },
+  {
+    "city": "Черлак",
+    "timezone": "Asia/Omsk",
+    "latitude": 54.16047833,
+    "longitude": 74.82002193
+  },
+  {
+    "city": "Черногорск",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 53.8313253,
+    "longitude": 91.22268998
+  },
+  {
+    "city": "Чернышевский",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 63.01275454,
+    "longitude": 112.4714188
+  },
+  {
+    "city": "Черняховск",
+    "timezone": "Europe/Kaliningrad",
+    "latitude": 54.6316382,
+    "longitude": 21.81085445
+  },
+  {
+    "city": "Черский",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 68.75005292,
+    "longitude": 161.3300386
+  },
+  {
+    "city": "Чистополь",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.36477175,
+    "longitude": 50.64067094
+  },
+  {
+    "city": "Чита",
+    "timezone": "Asia/Chita",
+    "latitude": 52.05502545,
+    "longitude": 113.4650016
+  },
+  {
+    "city": "Чокурдах",
+    "timezone": "Asia/Srednekolymsk",
+    "latitude": 70.61831097,
+    "longitude": 147.8945796
+  },
+  {
+    "city": "Чумикан",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 54.7113945,
+    "longitude": 135.3145141
+  },
+  {
+    "city": "Чусовой",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 58.2934302,
+    "longitude": 57.81304968
+  },
+  {
+    "city": "Шадринск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.08366844,
+    "longitude": 63.6332629
+  },
+  {
+    "city": "Шалаурова",
+    "timezone": "Asia/Vladivostok",
+    "latitude": 73.22037437,
+    "longitude": 143.1833427
+  },
+  {
+    "city": "Шарья",
+    "timezone": "Europe/Moscow",
+    "latitude": 58.37975568,
+    "longitude": 45.50935624
+  },
+  {
+    "city": "Шахты",
+    "timezone": "Europe/Moscow",
+    "latitude": 47.72038047,
+    "longitude": 40.2700378
+  },
+  {
+    "city": "Шебекино",
+    "timezone": "Europe/Moscow",
+    "latitude": 50.4143504,
+    "longitude": 36.89437821
+  },
+  {
+    "city": "Шерловая гора",
+    "timezone": "Asia/Chita",
+    "latitude": 50.53059654,
+    "longitude": 116.3006425
+  },
+  {
+    "city": "Шилка",
+    "timezone": "Asia/Chita",
+    "latitude": 51.87056643,
+    "longitude": 116.0306331
+  },
+  {
+    "city": "Шимановск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 52.00244468,
+    "longitude": 127.6974662
+  },
+  {
+    "city": "Шира",
+    "timezone": "Asia/Krasnoyarsk",
+    "latitude": 54.49144004,
+    "longitude": 89.95305172
+  },
+  {
+    "city": "Шойна",
+    "timezone": "Europe/Moscow",
+    "latitude": 67.86664431,
+    "longitude": 44.13336788
+  },
+  {
+    "city": "Шумерля",
+    "timezone": "Europe/Moscow",
+    "latitude": 55.4848161,
+    "longitude": 46.42439083
+  },
+  {
+    "city": "Шуя",
+    "timezone": "Europe/Moscow",
+    "latitude": 56.85434491,
+    "longitude": 41.36428625
+  },
+  {
+    "city": "Щекино",
+    "timezone": "Europe/Moscow",
+    "latitude": 54.01433738,
+    "longitude": 37.5142887
+  },
+  {
+    "city": "Эвенск",
+    "timezone": "Asia/Magadan",
+    "latitude": 61.94997703,
+    "longitude": 159.2333191
+  },
+  {
+    "city": "Эгвекинот",
+    "timezone": "Asia/Anadyr",
+    "latitude": 66.32213166,
+    "longitude": -179.1837225
+  },
+  {
+    "city": "Элдикан",
+    "timezone": "Asia/Khandyga",
+    "latitude": 60.80002138,
+    "longitude": 135.1833142
+  },
+  {
+    "city": "Элиста",
+    "timezone": "Europe/Moscow",
+    "latitude": 46.32865664,
+    "longitude": 44.20871212
+  },
+  {
+    "city": "Энгельс",
+    "timezone": "Europe/Saratov",
+    "latitude": 51.50040814,
+    "longitude": 46.12001664
+  },
+  {
+    "city": "Энурмино",
+    "timezone": "Asia/Anadyr",
+    "latitude": 66.95000775,
+    "longitude": -171.8166032
+  },
+  {
+    "city": "Южно-Сахалинск",
+    "timezone": "Asia/Sakhalin",
+    "latitude": 46.96497438,
+    "longitude": 142.7400105
+  },
+  {
+    "city": "Юрга",
+    "timezone": "Asia/Novokuznetsk",
+    "latitude": 55.72575747,
+    "longitude": 84.88540238
+  },
+  {
+    "city": "Якутск",
+    "timezone": "Asia/Yakutsk",
+    "latitude": 62.03495892,
+    "longitude": 129.7350162
+  },
+  {
+    "city": "Ялуторовск",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 56.67363243,
+    "longitude": 66.29826819
+  },
+  {
+    "city": "Ямбург",
+    "timezone": "Asia/Yekaterinburg",
+    "latitude": 68.35038739,
+    "longitude": 77.13331742
+  },
+  {
+    "city": "Ярославль",
+    "timezone": "Europe/Moscow",
+    "latitude": 57.61998293,
+    "longitude": 39.87001054
+  }
+]
