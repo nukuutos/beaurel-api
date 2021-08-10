@@ -4,40 +4,41 @@ module.exports = (masterId) => [
     $project: {
       masterId: 1,
       timetable: {
-        sessionTime: '$sessionTime',
-        update: '$update',
+        sessionTime: "$sessionTime",
+        update: "$update",
       },
     },
   },
   {
     $lookup: {
-      from: 'services',
+      from: "services",
       let: {
         masterId,
       },
       pipeline: [
-        { $match: { $expr: { $eq: ['$masterId', '$$masterId'] } } },
+        { $match: { $expr: { $eq: ["$masterId", "$$masterId"] } } },
         {
           $facet: {
             // get services with params
             servicesParameter: [
               {
                 $match: {
-                  $expr: { $ne: ['$parameter', null] },
+                  $expr: { $ne: ["$parameter", null] },
                 },
               },
               {
                 $group: {
-                  _id: '$title',
-                  title: { $first: '$title' },
-                  order: { $first: '$order' },
+                  _id: "$title",
+                  title: { $first: "$title" },
+                  order: { $first: "$order" },
                   subServices: {
                     $push: {
-                      id: '$_id',
-                      parameter: '$parameter',
-                      duration: '$duration',
-                      price: '$price',
-                      subOrder: '$subOrder',
+                      id: "$_id",
+                      parameter: "$parameter",
+                      duration: "$duration",
+                      price: "$price",
+                      subOrder: "$subOrder",
+                      update: "$update",
                     },
                   },
                 },
@@ -52,12 +53,12 @@ module.exports = (masterId) => [
             services: [
               {
                 $match: {
-                  $expr: { $eq: ['$parameter', null] },
+                  $expr: { $eq: ["$parameter", null] },
                 },
               },
               {
                 $addFields: {
-                  id: '$_id',
+                  id: "$_id",
                 },
               },
               {
@@ -72,17 +73,17 @@ module.exports = (masterId) => [
         },
         // concat seriveces with params and without
         {
-          $project: { servicesArray: { $concatArrays: ['$servicesParameter', '$services'] } },
+          $project: { servicesArray: { $concatArrays: ["$servicesParameter", "$services"] } },
         },
       ],
-      as: 'services',
+      as: "services",
     },
   },
   {
     $project: {
       _id: 0,
       timetable: 1,
-      services: { $arrayElemAt: ['$services.servicesArray', 0] },
+      services: { $arrayElemAt: ["$services.servicesArray", 0] },
     },
   },
 ];

@@ -1,12 +1,12 @@
-const Service = require('../../../models/master/service/service');
-const Timetable = require('../../../models/master/timetable/timetable');
-const HttpError = require('../../../models/http-error');
+const Service = require("../../../models/master/service/service");
+const Timetable = require("../../../models/master/timetable/timetable");
+const HttpError = require("../../../models/http-error");
 
-const asyncHandler = require('../../../middleware/async-handler');
+const asyncHandler = require("../../../middleware/async-handler");
 
-const { getCorrectSessionTime } = require('./utils');
-const isEqual = require('lodash.isequal');
-const { ObjectId } = require('mongodb');
+const { getCorrectSessionTime } = require("./utils");
+const isEqual = require("lodash.isequal");
+const { ObjectId } = require("mongodb");
 
 exports.getServices = asyncHandler(async (req, res, next) => {
   // delete/get rid of timetable from request(aggregation)
@@ -33,20 +33,20 @@ exports.addService = asyncHandler(async (req, res, next) => {
 
   const { isTitle, servicesCount } = await Service.getServiceCounterAndIsTitleExists(masterId, service.title);
 
-  if (isTitle) return next(new HttpError('You already have service with this title'));
+  if (isTitle) return next(new HttpError("You already have service with this title"));
 
   const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 }); // to get service counter and is tit exists?
-
-  const sessionTime = getCorrectSessionTime(timetable, date); // for updates in session time
-  if (!sessionTime) return next(new HttpError('Incorrect session time'));
+  const { sessionTime } = timetable;
+  // const sessionTime = getCorrectSessionTime(timetable, date); // for updates in session time
+  // if (!sessionTime) return next(new HttpError('Incorrect session time'));
 
   const { title, duration, price } = service;
-  if (duration % sessionTime !== 0) return next(new HttpError('Incorrect duration'));
+  if (duration % sessionTime !== 0) return next(new HttpError("Incorrect duration"));
 
   service = new Service(masterId, title, duration, price, servicesCount || 0);
   const { insertedId } = await service.save();
   // can i do id instead of ids here?
-  return res.json({ id: insertedId, message: 'Service is added!', type: 'success' });
+  return res.json({ id: insertedId, message: "Service is added!", type: "success" });
 });
 
 // server get service with order
@@ -66,7 +66,7 @@ exports.updateService = asyncHandler(async (req, res, next) => {
   // check title
   // if it is service parameter of service (not sub service)
   const isTitle = await Service.findOne({ _id: { $ne: serviceId }, masterId, title }, { _id: 1 });
-  if (isTitle) return next(new HttpError('You already have service with this title'));
+  if (isTitle) return next(new HttpError("You already have service with this title"));
   // Check has service unsuitable date or not
   // if (unsuitableDate && new Date(unsuitableDate).getTime() !== date.getTime())
   //   return next(new HttpError('Service has unsuitable field that you need to update'));
@@ -89,13 +89,13 @@ exports.updateService = asyncHandler(async (req, res, next) => {
   const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 });
   // Get timetable: current or updated sessionTime
   const sessionTime = getCorrectSessionTime(timetable, date);
-  if (!sessionTime) return next(new HttpError('Incorrect session time'));
+  if (!sessionTime) return next(new HttpError("Incorrect session time"));
 
-  if (duration % sessionTime !== 0) return next(new HttpError('Duration is incorrect', 400));
+  if (duration % sessionTime !== 0) return next(new HttpError("Duration is incorrect", 400));
 
   await Service.updateOne({ _id: serviceId }, { ...service });
 
-  return res.json({ message: 'Service is updated', type: 'success' });
+  return res.json({ message: "Service is updated", type: "success" });
 });
 
 exports.deleteService = asyncHandler(async (req, res, next) => {
@@ -104,7 +104,7 @@ exports.deleteService = asyncHandler(async (req, res, next) => {
 
   await Service.deleteOne({ _id: serviceId, masterId });
 
-  return res.json({ message: 'Service is deleted', type: 'success' });
+  return res.json({ message: "Service is deleted", type: "success" });
 });
 
 exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
@@ -113,7 +113,7 @@ exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
 
   await Service.updateOrder(newOrder, masterId);
 
-  res.json({ message: "Service's order is updated", type: 'success' });
+  res.json({ message: "Service's order is updated", type: "success" });
 });
 
 exports.getUnsuitableServices = asyncHandler(async (req, res, next) => {
@@ -132,16 +132,18 @@ exports.putUpdateToServices = asyncHandler(async (req, res, next) => {
   // get services' id that are unsuitable
   const { sessionTime, services: servicesIds } = await Service.getDataForUpdate(masterId);
 
-  if (!sessionTime) return next(new HttpError('No updated session time'));
+  if (!sessionTime) return next(new HttpError("No updated session time"));
 
   // check amount of services from client and bd
-  if (services.length !== servicesIds.length) return next(new HttpError('Incorrect services to update'));
+  if (services.length !== servicesIds.length) return next(new HttpError("Incorrect services to update"));
 
   // compare ids that we received from bd
-  const idsFromClient = services.map(({ id }) => id);
+  const idsFromClient = services.map(({ id }) => String(id));
   const areIdsEqual = isEqual(idsFromClient.sort(), servicesIds.sort());
 
-  if (!areIdsEqual) next(new HttpError("Incorrect services' duration"));
+  console.log(idsFromClient.sort(), servicesIds.sort(), services);
+
+  if (!areIdsEqual) return next(new HttpError("Incorrect services' duration"));
 
   // check duration by session time
   if (!services.every(({ duration }) => duration % sessionTime === 0)) {
@@ -151,5 +153,5 @@ exports.putUpdateToServices = asyncHandler(async (req, res, next) => {
   // object id in validator
   await Service.putUpdateToServices(services.map(({ id, duration }) => ({ id, duration })));
 
-  res.json({ message: 'Services are updated!', type: 'success' });
+  res.json({ message: "Services are updated!", type: "success" });
 });

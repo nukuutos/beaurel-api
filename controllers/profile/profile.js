@@ -1,9 +1,9 @@
-const User = require('../../models/profile/profile');
-const HttpError = require('../../models/http-error');
+const User = require("../../models/profile/profile");
+const HttpError = require("../../models/http-error");
 
-const asyncHandler = require('../../middleware/async-handler');
+const asyncHandler = require("../../middleware/async-handler");
 
-const { formatImageBuffer, deleteImage, saveImageFS } = require('../../utils/image');
+const { formatImageBuffer, deleteImage, saveImageFS } = require("../../utils/image");
 
 // exports.updateProfileId = asyncHandler(async (req, res, next) => {
 //   const { profileId } = req.params;
@@ -24,7 +24,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 
   await User.updateOne({ _id: profileId }, { $set: { ...req.body } });
 
-  return res.status(200).json({ message: 'Profile is updated!', type: 'success' });
+  return res.status(200).json({ message: "Profile is updated!", type: "success" });
 });
 
 exports.updateAvatar = asyncHandler(async (req, res, next) => {
@@ -33,17 +33,16 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
     user: { id: profileId },
   } = req;
 
-  const defaultAvatarUrl = 'images/avatars/default.png';
-
   const { avatar } = await User.findOne({ _id: profileId }, { _id: 0, avatar: 1 });
   const formatedBuffer = await formatImageBuffer(buffer);
 
-  const imageName = new Date().toISOString().replace(/:/g, '-') + '-' + profileId.toString() + '.png';
-  const imageUrl = 'images/' + 'avatars/' + imageName;
+  const imageName = new Date().toISOString().replace(/:/g, "-") + "-" + profileId.toString() + ".png";
+  const imageUrl = "images/" + "avatars/" + imageName;
 
-  if (defaultAvatarUrl !== imageUrl) deleteImage(avatar);
+  if (avatar) deleteImage(avatar);
+
   await saveImageFS(formatedBuffer, imageUrl);
   await User.updateOne({ _id: profileId }, { $set: { avatar: imageUrl } });
 
-  return res.status(200).json({ avatar: imageUrl, message: 'Avatar is updated!', type: 'success' });
+  return res.status(200).json({ avatar: imageUrl, message: "Avatar is updated!", type: "success" });
 });

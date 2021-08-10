@@ -1,7 +1,10 @@
-const { check, query } = require('express-validator');
+const { check } = require('express-validator');
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc')
+
+dayjs.extend(utc)
 
 const { fieldId, paramId } = require('../../utils/id');
-const HttpError = require('../../../models/http-error');
 
 const masterId = paramId('masterId', 'Master Id');
 const serviceId = fieldId('serviceId', 'Service Id');
@@ -12,7 +15,7 @@ const timeStartAt = check('time.startAt')
   .withMessage('Start Time is required.')
   .isInt({ min: 0, max: 1440 }) //add min and max ms
   .withMessage('Start Time must be numeric')
-  .customSanitizer((time) => Number(time));
+  .customSanitizer((time) => +time);
 
 const timeEndAt = check('time.endAt')
   .trim()
@@ -20,7 +23,7 @@ const timeEndAt = check('time.endAt')
   .withMessage('End Time is required.')
   .isInt({ min: 0, max: 1440 }) //add min and max ms
   .withMessage('Start Time must be numeric')
-  .customSanitizer((time) => Number(time));
+  .customSanitizer((time) => +time);
 
 const date = check('date')
   .trim()
@@ -28,15 +31,17 @@ const date = check('date')
   .withMessage('Date is required')
   .isISO8601()
   .withMessage('Incorrect date')
-  .customSanitizer((date) => {
-    date = new Date(date);
-    // date.setUTCHours(0, 0, 0, 0);
-    return date;
+  .customSanitizer((date) =>  { 
+    date = dayjs(date)
+    // add timezone offset and reset offset, seconds, minutes, hours
+    return date.add(date.utcOffset(), 'm').utcOffset(0).second(0).minute(0).hour(0);
   })
   .custom((date, { req }) => {
-    const { time } = req.body;
-    //60s in one minute and mili is 10^3
-    if (Date.now() > date.getTime() + time.startAt * 60 * 1000) throw new HttpError('Appointment time is expired', 400);
+    const { time : { startAt } } = req.body;
+
+    date = date.minute(startAt)
+
+    if (dayjs().isAfter(date)) throw new HttpError('Appointment time is expired', 400);
 
     return true;
   });

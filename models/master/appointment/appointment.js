@@ -1,3 +1,6 @@
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+
 const { getDb } = require('../../../utils/database');
 
 const {
@@ -13,6 +16,8 @@ const masterAppointmentsAndCustomers = require('./pipelines/master-appointments-
 const customerAppointmentsAndMasters = require('./pipelines/customer-appointments-and-masters');
 const bookingData = require('./pipelines/booking-data');
 
+dayjs.extend(utc)
+
 class Appointment {
   constructor(masterId, customerId, service, time, date) {
     this.masterId = masterId;
@@ -21,7 +26,7 @@ class Appointment {
     this.time = time; // { startAt, endAt }
     this.status = 'onConfirmation'; // onConfirmation, confirmed, cancelled, ended/expired, unsuitable
     this.date = date;
-    this.createdAt = new Date();
+    this.createdAt = dayjs().utc().toDate();
   }
 
   async save() {

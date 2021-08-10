@@ -7,7 +7,7 @@ const { getWorkingTimetable, searchFreeAppointmentsTime, getWeekdayIndexRU, getS
 
 exports.bookAppointment = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
-  const { serviceId, time, date } = req.body;
+  let { serviceId, time, date } = req.body; // change date in next lines
 
   const { id: customerId } = req.user;
 
@@ -16,8 +16,12 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
   const { timetable, bookedAppointments, service } = await Appointment.getInfoForBookingAppointment(
     masterId,
     serviceId,
-    date
+    date.toDate()
   );
+
+  console.log(bookedAppointments);
+
+  // console.log(timetable, bookedAppointments, service)
 
   if (!timetable) return next(new HttpError('Incorrect timetable', 404));
   if (!service) return next(new HttpError('Incorrect service', 404));
@@ -37,7 +41,7 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
     const { weekends, possibleAppointmentsTime, exceptions } = auto;
 
     // Check if it is weekend
-    const weekdayIndexRU = getWeekdayIndexRU(date.getDay());
+    const weekdayIndexRU = getWeekdayIndexRU(date.day());
     if (weekends.includes(weekdayIndexRU)) return next(new HttpError('It is weekend.'), 400);
 
     // Check for exceptions
@@ -83,8 +87,7 @@ exports.bookAppointment = asyncHandler(async (req, res, next) => {
 
   const { _id, masterId: weDontNeedIt, ...restServiceProps } = service;
 
-  const appointment = new Appointment(masterId, customerId, restServiceProps, time, date);
-
+  const appointment = new Appointment(masterId, customerId, restServiceProps, time, date.toDate());
   await appointment.save();
 
   return res.json({ message: 'Appointment is added', type: 'success' });

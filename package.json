@@ -16,6 +16,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
+    "dayjs": "^1.10.5",
     "express": "^4.17.1",
     "express-validator": "^6.3.1",
     "jsonwebtoken": "^8.5.1",

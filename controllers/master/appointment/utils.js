@@ -1,3 +1,5 @@
+const dayjs = require('dayjs')
+
 exports.getStatuses = (category) => {
   switch (category) {
     case 'history':
@@ -8,13 +10,16 @@ exports.getStatuses = (category) => {
   }
 };
 
-exports.getWorkingTimetable = (timetable, date) => {
+exports.getWorkingTimetable = (timetable, bookingDate) => {
   const { update, ...currentTimetable } = timetable;
 
   let workingTimetable = { ...currentTimetable };
-  // const updateDate = ;
-  // console.log(updateDate);
-  if (update && new Date(update.date).getTime() <= date.getTime()) workingTimetable = { ...update };
+
+  if(!update || !update.date) return workingTimetable;
+
+  const updateDate = dayjs(update.date);
+
+  if (updateDate.isBefore(bookingDate)) workingTimetable = { ...update };
 
   return workingTimetable;
 };
