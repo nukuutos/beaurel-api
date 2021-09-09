@@ -1,12 +1,11 @@
-const Service = require("../../../models/master/service/service");
-const Timetable = require("../../../models/master/timetable/timetable");
-const HttpError = require("../../../models/http-error");
+const Service = require("../../../models/service/service");
+const Timetable = require("../../../models/timetable");
+const HttpError = require("../../../models/utils/http-error");
 
 const asyncHandler = require("../../../middleware/async-handler");
 
 const { getCorrectSessionTime } = require("./utils");
 const isEqual = require("lodash.isequal");
-const { ObjectId } = require("mongodb");
 
 exports.getServices = asyncHandler(async (req, res, next) => {
   // delete/get rid of timetable from request(aggregation)

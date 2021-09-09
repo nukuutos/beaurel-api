@@ -1,7 +1,7 @@
-const asyncHandler = require('../../middleware/async-handler');
-const citiesData = require('./json/short-data.json');
-const { haversine } = require('./utils');
-const Timezone = require('../../models/timezone');
+const asyncHandler = require("../../middleware/async-handler");
+const citiesData = require("./json/short-data.json");
+const { haversine } = require("./utils");
+const Timezone = require("../../models/timezone");
 
 exports.getTimezone = asyncHandler(async (req, res, next) => {
   const { lat: currentLat, lng: currentLng } = req.query;
@@ -24,9 +24,9 @@ exports.getTimezone = asyncHandler(async (req, res, next) => {
 exports.getTimezoneByCity = asyncHandler(async (req, res, next) => {
   const { city, page } = req.query;
 
-  const regexCity = new RegExp(`^${city}`, 'i');
+  const regexCity = new RegExp(`^${city}`, "i");
 
-  const cities = await Timezone.find(regexCity, page);
+  const cities = await Timezone.find({ city: regexCity }, { _id: 0 }, { page, limit: 10 });
 
   return res.status(200).json({ cities });
 });

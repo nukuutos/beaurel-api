@@ -1,5 +1,5 @@
-const Appointment = require('../../models/master/appointment/appointment');
-const asyncHandler = require('../../middleware/async-handler');
+const Appointment = require("../../models/appointment/appointment");
+const asyncHandler = require("../../middleware/async-handler");
 
 exports.getMasterAppointments = asyncHandler(async (req, res, next) => {
   const { id: masterId } = req.user;

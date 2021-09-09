@@ -1,6 +1,6 @@
 const { check } = require("express-validator");
 const { paramId } = require("../utils/id");
-const HttpError = require("../../models/http-error");
+const HttpError = require("../../models/utils/http-error");
 const dayjs = require("dayjs");
 
 const timetableId = paramId("timetableId", "Timetable Id");

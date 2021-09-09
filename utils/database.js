@@ -1,4 +1,4 @@
-const mongodb = require('mongodb');
+const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -6,8 +6,11 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${p
 let _db;
 const mongoConnect = async (callback) => {
   try {
-    const client = await MongoClient.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
-    console.log('Connected!');
+    const client = await MongoClient.connect(uri, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+    console.log("Connected!");
     _db = client.db();
     callback();
   } catch (err) {
@@ -18,8 +21,22 @@ const mongoConnect = async (callback) => {
 
 const getDb = () => {
   if (_db) return _db;
-  throw 'No database found!';
+  throw "No database found!";
 };
 
-exports.mongoConnect = mongoConnect;
-exports.getDb = getDb;
+const getCollection = (name) => {
+  const db = getDb();
+  return db.collection(name);
+};
+
+const getAggregate = (collectionName) => {
+  const collection = getCollection(collectionName);
+  const aggregate = collection.aggregate.bind(collection);
+
+  return aggregate;
+};
+
+// exports.mongoConnect = mongoConnect;
+// exports.getDb = getDb;
+
+module.exports = { mongoConnect, getDb, getCollection, getAggregate };

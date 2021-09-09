@@ -1,14 +1,14 @@
 const dayjs = require("dayjs");
 const timezone = require("dayjs/plugin/timezone");
 
-const Timetable = require("../../../models/master/timetable/timetable");
-const HttpError = require("../../../models/http-error");
+const Timetable = require("../../../models/timetable");
+const HttpError = require("../../../models/utils/http-error");
 
 const asyncHandler = require("../../../middleware/async-handler");
 
 const { generatePossibleAppointmentsTime, compareTimetables } = require("./utils");
-const Service = require("../../../models/master/service/service");
-const Appointment = require("../../../models/master/appointment/appointment");
+const Service = require("../../../models/service/service");
+const Appointment = require("../../../models/appointment/appointment");
 
 dayjs.extend(timezone);
 

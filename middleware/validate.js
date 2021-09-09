@@ -1,6 +1,6 @@
-const { validationResult } = require('express-validator');
+const { validationResult } = require("express-validator");
 
-const HttpError = require('../models/http-error');
+const HttpError = require("../models/utils/http-error");
 
 module.exports = (req, res, next) => {
   const errors = validationResult(req);

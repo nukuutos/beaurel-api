@@ -1,5 +1,5 @@
-const User = require("../../models/profile/profile");
-const HttpError = require("../../models/http-error");
+const User = require("../../models/user/profile");
+const HttpError = require("../../models/utils/http-error");
 
 const asyncHandler = require("../../middleware/async-handler");
 

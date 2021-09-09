@@ -1,4 +1,4 @@
-const { check } = require('express-validator');
+const { check } = require("express-validator");
 
 exports.titleValidation = (field, fieldName) =>
   check(field)
@@ -7,7 +7,7 @@ exports.titleValidation = (field, fieldName) =>
     .withMessage(`${fieldName} is required`)
     // .isLength({ min: 3, max: 50 })
     // .withMessage(`${fieldName} must be between 3 and 50 characters`)
-    .matches(/^[a-z]+$/i)
+    .matches(/^[а-я ]+$/i)
     .withMessage(`${fieldName} must be alphabetic`)
     .customSanitizer((title) => title.charAt(0).toUpperCase() + title.slice(1));
 
@@ -24,7 +24,7 @@ exports.priceValidation = (field, fieldName) =>
   check(field)
     .trim()
     .exists()
-    .withMessage('Price is required')
+    .withMessage("Price is required")
     .isInt({ min: 0, max: 99999 }) //add min and max ms
     .withMessage(`${fieldName} must be numeric`)
     .customSanitizer((num) => Number(num));
@@ -36,8 +36,7 @@ exports.parameterValidation = (field, fieldName) =>
 
 exports.orderValidation = (field, fieldName) =>
   check(field)
-    .trim()
-    .exists({ checkFalsy: true })
+    .exists({ checkNull: true })
     .withMessage(`${fieldName} is required.`)
     .isInt() //add min and max ms
     .withMessage(`${fieldName} must be numeric`)

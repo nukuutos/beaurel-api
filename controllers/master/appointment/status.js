@@ -1,5 +1,5 @@
-const Appointment = require('../../../models/master/appointment/appointment');
-const asyncHandler = require('../../../middleware/async-handler');
+const Appointment = require("../../../models/appointment/appointment");
+const asyncHandler = require("../../../middleware/async-handler");
 
 exports.updateStatusByMaster = asyncHandler(async (req, res, next) => {
   const { appointmentId } = req.params;
@@ -9,7 +9,7 @@ exports.updateStatusByMaster = asyncHandler(async (req, res, next) => {
 
   await Appointment.updateOne({ _id: appointmentId, masterId }, { status });
 
-  return res.json({ type: 'success', message: `Appointment is ${status}` });
+  return res.json({ type: "success", message: `Appointment is ${status}` });
 });
 
 exports.updateStatusByCustomer = asyncHandler(async (req, res, next) => {
@@ -20,5 +20,5 @@ exports.updateStatusByCustomer = asyncHandler(async (req, res, next) => {
 
   await Appointment.updateOne({ _id: appointmentId, customerId }, { status });
 
-  return res.json({ type: 'success', message: `Appointment is ${status}` });
+  return res.json({ type: "success", message: `Appointment is ${status}` });
 });
