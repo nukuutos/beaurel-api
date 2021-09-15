@@ -1,26 +1,26 @@
 module.exports = (masterId) => [
-  { $match: { masterId, 'update.status': 'unsuitable' } },
+  { $match: { masterId, "update.status": "unsuitable" } },
   {
     $facet: {
       // get services with params
       servicesParameter: [
         {
           $match: {
-            $expr: { $ne: ['$parameter', null] },
+            $expr: { $ne: ["$parameter", null] },
           },
         },
         {
           $group: {
-            _id: '$title',
-            title: { $first: '$title' },
-            order: { $first: '$order' },
+            _id: "$title",
+            title: { $first: "$title" },
+            order: { $first: "$order" },
             subServices: {
               $push: {
-                id: '$_id',
-                parameter: '$parameter',
-                duration: '$duration',
-                price: '$price',
-                subOrder: '$subOrder',
+                id: "$_id",
+                parameter: "$parameter",
+                duration: "$duration",
+                price: "$price",
+                subOrder: "$subOrder",
               },
             },
           },
@@ -35,12 +35,12 @@ module.exports = (masterId) => [
       services: [
         {
           $match: {
-            $expr: { $eq: ['$parameter', null] },
+            $expr: { $eq: ["$parameter", null] },
           },
         },
         {
           $addFields: {
-            id: '$_id',
+            id: "$_id",
           },
         },
         {
@@ -58,6 +58,6 @@ module.exports = (masterId) => [
   // concat seriveces with params and without
   {
     // $project: { services: { $arrayElemAt: [{ $concatArrays: ['$servicesParameter', '$services'] }, 0] } },
-    $project: { services: { $concatArrays: ['$servicesParameter', '$services'] } },
+    $project: { services: { $concatArrays: ["$servicesParameter", "$services"] } },
   },
 ];

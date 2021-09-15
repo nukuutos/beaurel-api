@@ -12,6 +12,8 @@ const masterRoutes = require("./routes/master/master");
 
 const multer = require("multer");
 
+require("./utils/array");
+
 // const { updateTimetableJob, updateServiceJob, updateAppointmentJob } = require('./utils/scheduleJob');
 const app = express();
 
@@ -31,7 +33,11 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.use(express.json());
-app.use(multer({ storage: memoryStorage, fileFilter, limits: { fieldSize: 25 * 1024 * 1024 } }).single("image")); // i think we need to place in corresponding router
+app.use(
+  multer({ storage: memoryStorage, fileFilter, limits: { fieldSize: 25 * 1024 * 1024 } }).single(
+    "image"
+  )
+); // i think we need to place in corresponding router
 app.use(cookieParser());
 
 app.use("/", (req, res, next) => {
@@ -50,12 +56,16 @@ app.use("/api/v1/timezone", timezoneRoutes);
 // updateAppointmentJob.start();
 
 app.use((error, req, res, next) => {
-  if (res.headerSent) return next(error); // if res has already sent
+  // if res has already sent
+  if (res.headerSent) return next(error);
+
   const { message, statusCode } = error;
 
   console.error(message, error);
 
-  res.status(statusCode || 500).json({ message: message || "Server error occured. Please try again.", type: "fail" });
+  res
+    .status(statusCode || 500)
+    .json({ message: message || "Server error occured. Please try again.", type: "fail" });
 });
 
 mongoConnect(() => app.listen(process.env.PORT || 5000));

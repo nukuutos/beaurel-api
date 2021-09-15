@@ -1,7 +1,7 @@
 const HttpError = require("../../models/utils/http-error");
 const Work = require("../../models/work");
-const { formatImageBuffer, deleteImage, saveImageFS } = require("../../utils/image");
 const asyncHandler = require("../../middleware/async-handler");
+const Image = require("../../models/utils/image/image");
 
 exports.getWorks = asyncHandler(async (req, res, next) => {
   const { masterId } = req.params;
@@ -22,16 +22,12 @@ exports.addWork = asyncHandler(async (req, res, next) => {
   const isTitle = await Work.findOne({ masterId, title }, { _id: 1 });
   if (isTitle) return next(new HttpError("Work with this title is already exists", 400));
 
-  // create image url
-  // const imageFileName = createImageName(masterId.toString());
-  // const imageUrl = path.join(__dirname, '..', 'images', imageFileName);
-
-  // work
   const work = new Work(masterId, title);
+  const { insertedId: _id } = await work.save();
 
-  const formatedBuffer = await formatImageBuffer(buffer);
-
-  const _id = await work.save(formatedBuffer);
+  const image = new Image({ id: _id, buffer, subfolder: "works" });
+  const onError = async () => await Work.deleteOne({ _id });
+  await image.save(onError);
 
   return res.json({ _id, message: "Work is added successfuly!", type: "success" });
 });
@@ -49,10 +45,9 @@ exports.updateWork = asyncHandler(async (req, res, next) => {
   if (!req.file) return res.json({ message: "Work is updated successfuly!", type: "success" });
 
   const { buffer } = req.file;
-  const imageUrl = "images/works/" + workId + ".png";
-  const formatedBuffer = await formatImageBuffer(buffer);
-  deleteImage(imageUrl);
-  await saveImageFS(formatedBuffer, imageUrl);
+
+  const image = new Image({ buffer, id: workId, subfolder: "works" });
+  await image.save();
 
   return res.json({ message: "Work is updated successfuly!", type: "success" });
 });
@@ -60,10 +55,8 @@ exports.updateWork = asyncHandler(async (req, res, next) => {
 exports.deleteWork = asyncHandler(async (req, res, next) => {
   const { workId } = req.params;
 
-  await Work.deleteOne({ _id: workId });
-
-  const imageUrl = "images/works/" + workId.toString() + ".png";
-  deleteImage(imageUrl);
+  Image.delete(workId.toString(), "works"); // 1
+  await Work.deleteOne({ _id: workId }); // 2
 
   return res.json({ message: "Work is deleted successfuly!", type: "success" });
 });

@@ -6,6 +6,7 @@ const unsuitableServices = require("../../pipelines/service/unsuitable-services"
 const sessionTimeAndServicesIds = require("../../pipelines/service/session-time-and-services-ids");
 const Collection = require("../utils/collection/collection");
 const { SERVICE, TIMETABLE } = require("../../config/collection-names");
+const { sortServices, bulkToSuitable, bulkToUpdatedOrder } = require("./utils");
 
 class Service extends Collection {
   static name = SERVICE;
@@ -34,12 +35,8 @@ class Service extends Collection {
   }
 
   static async updateOrder(newOrder, masterId) {
-    const bulkOp = this.orderedBulkOp(); // why ordered?
-
-    newOrder.forEach(({ id, ...order }) => {
-      bulkOp.find({ _id: id, masterId }).updateOne({ $set: order });
-    });
-
+    const bulkOp = this.unorderedBulkOp();
+    bulkToUpdatedOrder(bulkOp, newOrder, masterId);
     await bulkOp.execute();
   }
 
@@ -51,33 +48,14 @@ class Service extends Collection {
 
   static async getUnsuitableServices(masterId) {
     const pipeline = unsuitableServices(masterId);
-    const data = await this.aggregate(pipeline).next();
-
-    let { services } = data;
-
-    // indexes or good sort algo, okay?
-    // sort subServices
-    services = services.map((service) => {
-      if (!service.subServices) return service;
-      service.subServices.sort((a, b) => a.subOrder - b.subOrder);
-      return service;
-    });
-
-    // sort services
-    services = services.sort((a, b) => a.order - b.order);
-
-    return services;
+    const { services } = await this.aggregate(pipeline).next();
+    const sortedServices = sortServices(services);
+    return sortedServices;
   }
 
   static async putUpdateToServices(services) {
     const bulkOp = this.unorderedBulkOp();
-
-    services.forEach(({ id, duration }) => {
-      bulkOp
-        .find({ _id: id })
-        .updateOne({ $set: { "update.duration": duration, "update.status": "suitable" } });
-    });
-
+    bulkToSuitable(bulkOp, services);
     await bulkOp.execute();
   }
 }

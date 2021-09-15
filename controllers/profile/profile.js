@@ -3,7 +3,9 @@ const HttpError = require("../../models/utils/http-error");
 
 const asyncHandler = require("../../middleware/async-handler");
 
-const { formatImageBuffer, deleteImage, saveImageFS } = require("../../utils/image");
+const Image = require("../../models/utils/image/image");
+
+const { getShortUrl, getFullUrl } = require("../../models/utils/image/utils");
 
 // exports.updateProfileId = asyncHandler(async (req, res, next) => {
 //   const { profileId } = req.params;
@@ -34,15 +36,16 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
   } = req;
 
   const { avatar } = await User.findOne({ _id: profileId }, { _id: 0, avatar: 1 });
-  const formatedBuffer = await formatImageBuffer(buffer);
 
-  const imageName = new Date().toISOString().replace(/:/g, "-") + "-" + profileId.toString() + ".png";
-  const imageUrl = "images/" + "avatars/" + imageName;
+  const image = new Image({ buffer, id: profileId, subfolder: "avatars" }, { withDate: true });
+  await image.save();
+  const shortUrl = getShortUrl(image.url);
+  await User.updateOne({ _id: profileId }, { avatar: shortUrl });
 
-  if (avatar) deleteImage(avatar);
+  if (avatar) {
+    const imageToDelete = getFullUrl(avatar);
+    Image.deleteByUrl(imageToDelete);
+  }
 
-  await saveImageFS(formatedBuffer, imageUrl);
-  await User.updateOne({ _id: profileId }, { $set: { avatar: imageUrl } });
-
-  return res.status(200).json({ avatar: imageUrl, message: "Avatar is updated!", type: "success" });
+  return res.status(200).json({ avatar: shortUrl, message: "Avatar is updated!", type: "success" });
 });
