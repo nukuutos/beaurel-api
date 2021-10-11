@@ -1,91 +1,97 @@
-const { check } = require("express-validator");
-const { paramId } = require("../utils/id");
-const HttpError = require("../../models/utils/http-error");
 const dayjs = require("dayjs");
+const { body, paramId } = require("express-validator");
+const { TIMETABLE_ID, MASTER_ID } = require("../../config/id-names");
 
-const timetableId = paramId("timetableId", "Timetable Id");
-const masterId = paramId("masterId", "Master Id");
+const {
+  SESSION_TIME_REQUIRED,
+  SESSION_TIME_DURATION,
+  TYPE_REQUIRED,
+  INVALID_TYPE,
+  UPDATE_DATE_REQUIRED,
+  INVALID_UPDATE_DATE,
+  START_DAY_TIME_REQUIRED,
+  INVALID_START_DAY_TIME,
+  END_DAY_TIME_REQUIRED,
+  INVALID_END_DAY_TIME,
+  START_TIME_OVER_END_TIME,
+  WEEKENDS_REQUIRED,
+  INVALID_WEEKENDS,
+} = require("../../config/errors/timetable");
+
+const timetableId = paramId("timetableId", TIMETABLE_ID);
+const masterId = paramId("masterId", MASTER_ID);
 
 // general
-const sessionTime = check("sessionTime")
+const sessionTime = body("sessionTime")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage("Session Time is required")
-  .isInt({ min: 1, max: 1440 })
-  .withMessage("Session Time must be numeric")
-  .customSanitizer((num) => +num);
+  .withMessage(SESSION_TIME_REQUIRED)
+  .customSanitizer((num) => +num)
+  .custom((sessionTime) => {
+    const availableDurations = [30, 60, 90, 120];
+    return availableDurations.includes(sessionTime);
+  })
+  .withMessage(SESSION_TIME_DURATION);
 
-const type = check("type")
+const type = body("type")
   .exists({ checkFalsy: true })
-  .withMessage("Type is required")
+  .withMessage(TYPE_REQUIRED)
   .custom((type) => {
     const types = ["auto", "manually"];
-    if (!types.includes(type)) throw new HttpError("Incorrect type", 400);
-    return true;
-  });
-
-const date = check("date")
-  .exists({ checkFalsy: true })
-  .withMessage("Date is required")
-  .customSanitizer((date) => {
-    console.log(date);
-    return dayjs(date).utc();
+    return types.includes(type);
   })
+  .withMessage(INVALID_TYPE);
+
+const date = body("date")
+  .exists({ checkFalsy: true })
+  .withMessage(UPDATE_DATE_REQUIRED)
+  .customSanitizer((date) => dayjs(date).utc())
+  .custom((date) => date.isReseted())
+  .withMessage(INVALID_UPDATE_DATE)
   .custom((date) => {
-    // expect date in utc
-    console.log(date.format());
-    const [hour, minute, second, utcOffset] = [date.hour(), date.minute(), date.second(), date.utcOffset()];
-    if (hour !== 0 || minute !== 0 || second !== 0 || utcOffset !== 0) throw new HttpError("Invalid date", 400);
-
-    const todayUTC = dayjs().add(dayjs().utcOffset(), "m").utcOffset(0).second(0).minute(0).hour(0);
-    if (date.isBefore(todayUTC)) throw new HttpError("Invalid date", 400);
-
-    return true;
-  });
+    const todayUTC = dayjs().getTodayUTC();
+    return date.isAfter(todayUTC);
+  })
+  .withMessage(INVALID_UPDATE_DATE);
 
 // auto
-const workingDayStartAt = check("auto.workingDay.startAt")
+const workingDayStartAt = body("auto.workingDay.startAt")
   .trim()
-  .exists({ checkFalsy: true })
-  .withMessage("Start day time is required")
+  .exists({ checkFalsy: null })
+  .withMessage(START_DAY_TIME_REQUIRED)
   .isInt({ min: 0, max: 1440 })
-  .withMessage("Start day time must be numeric")
+  .withMessage(INVALID_START_DAY_TIME)
   .customSanitizer((num) => +num);
 
-const workingDayEndAt = check("auto.workingDay.endAt")
+const workingDayEndAt = body("auto.workingDay.endAt")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage("End day time is required")
+  .withMessage(END_DAY_TIME_REQUIRED)
   .isInt({ min: 0, max: 1440 })
-  .withMessage("End day time must be numeric")
+  .withMessage(INVALID_END_DAY_TIME)
   .customSanitizer((num) => +num)
   .custom((endAt, { req }) => {
     const { startAt } = req.body.auto.workingDay;
-    if (endAt < startAt) {
-      throw new Error("End day time cant be lesser than start day time");
-    }
-    return true;
-  });
+    return endAt > startAt;
+  })
+  .withMessage(START_TIME_OVER_END_TIME);
 
-const weekends = check("auto.weekends.*")
+const weekends = body("auto.weekends.*")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage("Weekends are required")
+  .withMessage(WEEKENDS_REQUIRED)
   .isInt(0, 6)
-  .withMessage("Weekends must be int from 0 to 6")
+  .withMessage(INVALID_WEEKENDS)
   .customSanitizer((num) => +num);
 
-// exceptions
-const exceptions = check("auto.exceptions.*.*").customSanitizer((num) => +num);
+const exceptions = body("auto.exceptions.*.*").customSanitizer((num) => +num);
 
-// manually, appointments
-const appointments = check("manually.appointments.*.*").customSanitizer((num) => +num);
+const manuallyAppointments = body("manually.appointments.*.*").customSanitizer((num) => +num);
 
 const auto = [workingDayStartAt, workingDayEndAt, weekends, exceptions];
-const manually = [appointments];
+const manually = [manuallyAppointments];
 
 exports.getTimetable = [masterId];
 exports.updateTimetable = [masterId, timetableId, type, sessionTime, ...auto, ...manually, date];
 exports.deleteTimetableUpdate = [masterId, timetableId];
-// exports.createTimetable = [workingDayStartAt, workingDayEndAt, sessionTime, weekends];
 exports.getTimetableAndAppointments = [masterId];

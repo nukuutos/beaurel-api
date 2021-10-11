@@ -1,0 +1,90 @@
+{
+  "_id": {
+    "$oid": "5f9ce8440a76a60d40fa776a"
+  },
+  "masterId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "customerId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "value": 1,
+  "comment": "hi u hidkfj s",
+  "createdAt": {
+    "$date": "2021-05-21T06:24:32.173Z"
+  },
+  "appointmentId": {
+    "$oid": "60a74f61c3fcb4104c3d654e"
+  }
+}
+{
+  "_id": {
+    "$oid": "5f9ce8b00798650d40c6fca1"
+  },
+  "masterId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "customerId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "value": 4,
+  "comment": "Lorem dolor sit amet consectetur adipisicing elit. Molestias sequi recusandae saepe, sunt optio provident veniam, consectetur natus, illo vero deserunt nemo quo corrupti eaque cumque? Ex iste at repellat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, soluta, dicta commodi velit voluptas expedita obcaecati iusto odio vitae perspiciatis minima quo recusandae ullam modi sapiente pariatur minus repellat doloribus?",
+  "createdAt": {
+    "$date": "2021-05-21T06:24:32.173Z"
+  }
+}
+{
+  "_id": {
+    "$oid": "601735007f786f1bc0450032"
+  },
+  "masterId": {
+    "$oid": "60154ecee670b46b50777f66"
+  },
+  "customerId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "value": 4,
+  "comment": "Lorem dolor sit amet consectetur adipisicing elit. Molestias sequi recusandae saepe, sunt optio provident veniam, consectetur natus, illo vero deserunt nemo quo corrupti eaque cumque? Ex iste at repellat. Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla, soluta, dicta commodi velit voluptas expedita obcaecati iusto odio vitae perspiciatis minima quo recusandae ullam modi sapiente pariatur minus repellat doloribus?",
+  "createdAt": {
+    "$date": "2021-05-21T06:24:32.173Z"
+  }
+}
+{
+  "_id": {
+    "$oid": "60a74f9ac3fcb4104c3d654f"
+  },
+  "masterId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "customerId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "value": 1,
+  "comment": "hi u hidkfj s",
+  "appointmentId": {
+    "$oid": "6061c6452251ae4900056402"
+  },
+  "createdAt": {
+    "$date": "2021-05-21T06:24:32.173Z"
+  }
+}
+{
+  "_id": {
+    "$oid": "60a75220b236430b78994247"
+  },
+  "masterId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "customerId": {
+    "$oid": "5eb849b81c2ccc21306ced34"
+  },
+  "appointmentId": {
+    "$oid": "6072f6a7ce01a00418b97a19"
+  },
+  "value": 3,
+  "comment": "Кулллллллллллллллллллл",
+  "reply": null,
+  "createdAt": {
+    "$date": "2021-05-21T06:24:32.173Z"
+  }
+}

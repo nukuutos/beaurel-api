@@ -1,49 +1,49 @@
-const { check } = require('express-validator');
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc')
+const dayjs = require("dayjs");
+const HttpError = require("../../../models/utils/http-error");
+const { MASTER_ID, SERVICE_ID } = require("../../../config/id-names");
+const { body, fieldId, paramId } = require("express-validator");
 
-dayjs.extend(utc)
+const {
+  APPOINTMENT_START_REQUIRED,
+  INVALID_APPOINTMENT_START,
+  APPOINTMENT_END_REQUIRED,
+  INVALID_APPOINTMENT_END,
+  DATE_REQUIRED,
+  INVALID_DATE,
+} = require("../../../config/errors/appointment");
 
-const { fieldId, paramId } = require('../../utils/id');
+const masterId = paramId("masterId", MASTER_ID);
+const serviceId = fieldId("serviceId", SERVICE_ID);
 
-const masterId = paramId('masterId', 'Master Id');
-const serviceId = fieldId('serviceId', 'Service Id');
-
-const timeStartAt = check('time.startAt')
+const timeStartAt = body("time.startAt")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage('Start Time is required.')
-  .isInt({ min: 0, max: 1440 }) //add min and max ms
-  .withMessage('Start Time must be numeric')
+  .withMessage(APPOINTMENT_START_REQUIRED)
+  .isInt({ min: 0, max: 1440 })
+  .withMessage(INVALID_APPOINTMENT_START)
   .customSanitizer((time) => +time);
 
-const timeEndAt = check('time.endAt')
+const timeEndAt = body("time.endAt")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage('End Time is required.')
-  .isInt({ min: 0, max: 1440 }) //add min and max ms
-  .withMessage('Start Time must be numeric')
+  .withMessage(APPOINTMENT_END_REQUIRED)
+  .isInt({ min: 0, max: 1440 })
+  .withMessage(INVALID_APPOINTMENT_END)
   .customSanitizer((time) => +time);
 
-const date = check('date')
+const date = body("date")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage('Date is required')
+  .withMessage(DATE_REQUIRED)
   .isISO8601()
-  .withMessage('Incorrect date')
-  .customSanitizer((date) =>  { 
-    date = dayjs(date)
-    // add timezone offset and reset offset, seconds, minutes, hours
-    return date.add(date.utcOffset(), 'm').utcOffset(0).second(0).minute(0).hour(0);
+  .withMessage(INVALID_DATE)
+  .customSanitizer((date) => dayjs(date).utc())
+  .custom((date) => date.isReseted())
+  .withMessage(INVALID_DATE)
+  .custom((date) => {
+    const todayUTC = dayjs().getTodayUTC();
+    return date.isAfter(todayUTC);
   })
-  .custom((date, { req }) => {
-    const { time : { startAt } } = req.body;
-
-    date = date.minute(startAt)
-
-    if (dayjs().isAfter(date)) throw new HttpError('Appointment time is expired', 400);
-
-    return true;
-  });
+  .withMessage(INVALID_DATE);
 
 exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];

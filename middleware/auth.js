@@ -1,27 +1,36 @@
 const jwt = require("jsonwebtoken");
-const { ObjectId } = require("mongodb");
+const { NO_TOKEN, UNAUTHORIZED } = require("../config/errors/auth");
 
 const HttpError = require("../models/utils/http-error");
 
-const asyncHandler = require("./async-handler");
+const { JWT_KEY_ACCESS } = process.env;
 
-module.exports = (req, res, next) => {
-  let token;
-  // Get token from header
-  if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-    token = req.headers.authorization.split(" ")[1];
+const getToken = (headers) => {
+  const { authorization } = headers;
+
+  if (authorization && authorization.startsWith("Bearer")) {
+    return authorization.split(" ")[1];
   }
 
-  // Check if not token
-  if (!token) return next(new HttpError("No token, authorization denied.", 401));
+  return null;
+};
 
-  // Verify token
+const getParamId = (params) => {
+  const { masterId, profileId } = params;
+
+  return masterId || profileId;
+};
+
+module.exports = (req, res, next) => {
+  const token = getToken(req.headers);
+
+  if (!token) throw new HttpError(NO_TOKEN, 401);
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_KEY_ACCESS);
-    req.user = decoded.user; // user
-    req.user.id = new ObjectId(req.user.id);
+    const { user } = jwt.verify(token, JWT_KEY_ACCESS);
+    req.setUser(user);
   } catch (error) {
-    return next(new HttpError(error.message, 401));
+    throw new HttpError(UNAUTHORIZED, 401);
   }
 
   next();

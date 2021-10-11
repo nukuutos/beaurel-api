@@ -40,5 +40,5 @@ module.exports = (defaultParams, exceptions) => {
   const findQuery = find(masterId, date);
   const pipeline = createPipeline(exceptions);
 
-  bulkOp.updateAggregation(findQuery, pipeline);
+  bulkOp.aggregationUpdate(findQuery, pipeline);
 };

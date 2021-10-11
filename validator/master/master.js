@@ -1,17 +1,23 @@
-const { check } = require('express-validator');
-const { paramId } = require('../utils/id');
+const { paramId, query } = require("express-validator");
+const { INVALID_PAGE, INVALID_SPECIALIZATION } = require("../../config/errors/master");
+const { MASTER_ID } = require("../../config/id-names");
+const specializations = require("../../config/specializations");
 
-const masterId = paramId('masterId', 'Master Id');
+const masterId = paramId("masterId", MASTER_ID);
 
-// const specializationArray = check('specialization').not().isEmpty().withMessage('Specialization is required');
-// const specializationElements = check('specialization.*')
-//   .trim()
-//   .isAlpha()
-//   .withMessage('Specialization must be only strings');
-
-const name = check('name')
+const specialization = query("specialization")
   .trim()
-  .customSanitizer((string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); // $& means the whole matched string);
+  .custom((value) => specializations.includes(value))
+  .withMessage(INVALID_SPECIALIZATION);
 
-exports.getMastersByQuery = [name];
-exports.getMasterProfile = [masterId];
+const name = query("name")
+  .trim()
+  .customSanitizer((string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+const page = query("page")
+  .isInt({ min: 0 })
+  .withMessage(INVALID_PAGE)
+  .customSanitizer((value) => +value);
+
+exports.getMastersByQuery = [name, specialization, page];
+exports.getMasterTimezone = [masterId];

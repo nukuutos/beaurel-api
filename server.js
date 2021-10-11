@@ -1,71 +1,45 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const path = require("path");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const hpp = require("hpp");
+
+require("./modules");
 
 const { mongoConnect } = require("./utils/database");
+const errorHandler = require("./middleware/error-handler");
+const cors = require("./middleware/cors");
+const static = require("./middleware/static");
 
 const timezoneRoutes = require("./routes/timezone");
 const authRoutes = require("./routes/auth");
 const profileRoutes = require("./routes/profile/profile");
 const masterRoutes = require("./routes/master/master");
+const logRequest = require("./middleware/log-request");
 
-const multer = require("multer");
+const { PORT } = process.env;
 
-require("./utils/array");
-
-// const { updateTimetableJob, updateServiceJob, updateAppointmentJob } = require('./utils/scheduleJob');
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
-app.use("/images", express.static(path.join(__dirname, "images")));
+app.use(cors);
 
-const memoryStorage = multer.memoryStorage();
-
-const fileFilter = (req, file, cb) => {
-  const { mimetype } = file;
-  console.log(mimetype);
-  if (mimetype === "image/png" || mimetype === "image/jpg" || mimetype === "image/jpeg") {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+app.use("/images", static);
 
 app.use(express.json());
-app.use(
-  multer({ storage: memoryStorage, fileFilter, limits: { fieldSize: 25 * 1024 * 1024 } }).single(
-    "image"
-  )
-); // i think we need to place in corresponding router
 app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(helmet());
+app.use(xss());
+app.use(hpp());
 
-app.use("/", (req, res, next) => {
-  console.log("--- REQUEST ---");
-  console.log(req.method, req.url);
-  next();
-});
+app.use("/", logRequest);
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/profile", profileRoutes);
 app.use("/api/v1/master", masterRoutes);
 app.use("/api/v1/timezone", timezoneRoutes);
 
-// updateTimetableJob.start();
-// updateServiceJob.start();
-// updateAppointmentJob.start();
+app.use(errorHandler);
 
-app.use((error, req, res, next) => {
-  // if res has already sent
-  if (res.headerSent) return next(error);
-
-  const { message, statusCode } = error;
-
-  console.error(message, error);
-
-  res
-    .status(statusCode || 500)
-    .json({ message: message || "Server error occured. Please try again.", type: "fail" });
-});
-
-mongoConnect(() => app.listen(process.env.PORT || 5000));
+mongoConnect(() => app.listen(PORT));

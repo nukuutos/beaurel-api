@@ -1,33 +1,45 @@
-const express = require('express');
+const express = require("express");
 
-const favoriteRouter = require('./favorite');
-const appointmentRouter = require('./appointment');
+const favoriteRouter = require("./favorite");
+const appointmentRouter = require("./appointment");
 
-const controller = require('../../controllers/profile/profile');
+const controller = require("../../controllers/profile/profile");
 
-const validator = require('../../validator/profile/profile');
+const validator = require("../../validator/profile/profile");
 
-const validate = require('../../middleware/validate');
-const auth = require('../../middleware/auth');
+const validate = require("../../middleware/validate");
+const auth = require("../../middleware/auth");
+const isYourself = require("../../middleware/is-yourself");
+const image = require("../../middleware/image");
 
 const router = express.Router();
 
-router.use('/:profileId/favorite', favoriteRouter);
-router.use('/:profileId/appointment', appointmentRouter);
+router.use("/:profileId/favorite", favoriteRouter);
+router.use("/:profileId/appointment", appointmentRouter);
 
-// @route     Get /api/v1/profile/:masterId
+// @route     Patch /api/v1/profile/:profileId
 // @desc      Update profile
 // @access    Private
-router.patch('/:profileId', auth, validator.updateProfile, validate, controller.updateProfile);
+router.patch(
+  "/:profileId",
+  auth,
+  validator.updateProfile,
+  validate,
+  isYourself,
+  controller.updateProfile
+);
 
-// @route     Get /api/v1/profile/:profileId/avatar
-// @desc      Update profile's avatar
+// @route     Put /api/v1/profile/:profileId/avatar
+// @desc      Update avatar
 // @access    Private
-router.put('/:profileId/avatar', auth, validator.updateAvatar, validate, controller.updateAvatar);
-
-// @route     Patch /api/v1/profile/:userId/master
-// @desc      Upgrade profile to master
-// @access    Private
-// router.patch('/:userId/master', validator.upgradeMaster, validate, controller.upgradeMaster);
+router.put(
+  "/:profileId/avatar",
+  auth,
+  validator.updateAvatar,
+  validate,
+  isYourself,
+  image,
+  controller.updateAvatar
+);
 
 module.exports = router;

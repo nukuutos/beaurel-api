@@ -1,22 +1,30 @@
-const { paramId, titleId } = require('../utils/id');
-const { titleValidation, durationValidation, priceValidation, parameterValidation } = require('../utils/service');
-const { check } = require('express-validator');
+const { paramId, body } = require("express-validator");
+const { PARAMETERS_REQUIRED } = require("../../config/errors/service");
+const { MASTER_ID, SUB_SERVICE_ID, SERVICE_NAME } = require("../../config/id-names");
 
-const masterId = paramId('masterId', 'Master Id');
+const {
+  titleValidation,
+  durationValidation,
+  priceValidation,
+  parameterValidation,
+  titleId,
+} = require("./utils/service");
 
-const subServiceId = paramId('subServiceId', 'Sub-service Id');
-const serviceTitleId = titleId('serviceTitle', 'Service Title Id');
+const masterId = paramId("masterId", MASTER_ID);
 
-const titleService = titleValidation('service.title', "Service's Title");
-const parameterService = parameterValidation('service.parameter', "Service's Parameter");
-const durationService = durationValidation('service.duration', "Service's Duration");
-const priceService = priceValidation('service.price', "Service's Price");
+const subServiceId = paramId("subServiceId", SUB_SERVICE_ID);
+const serviceTitleId = titleId("serviceTitle", SERVICE_NAME);
 
-const parameterSubServiceArray = parameterValidation('service.subServices.*.parameter', 'Service Parameter');
-const durationSubServiceArray = durationValidation('service.subServices.*.duration', 'Duration');
-const priceSubServiceArray = priceValidation('service.subServices.*.price', 'Price');
+const titleService = titleValidation("title");
+const parameterService = parameterValidation("parameter");
+const durationService = durationValidation("duration");
+const priceService = priceValidation("price");
 
-const subServices = check('service.subServices').isArray({ min: 1 }).withMessage('Sub-services are required');
+const parameterSubServiceArray = parameterValidation("subServices.*.parameter");
+const durationSubServiceArray = durationValidation("subServices.*.duration");
+const priceSubServiceArray = priceValidation("subServices.*.price");
+
+const subServices = body("subServices").isArray({ min: 1 }).withMessage(PARAMETERS_REQUIRED);
 
 exports.addServiceParameter = [
   masterId,
@@ -29,7 +37,14 @@ exports.addServiceParameter = [
 
 exports.addSubService = [masterId, serviceTitleId, parameterService, durationService, priceService];
 
-exports.updateSubService = [masterId, serviceTitleId, subServiceId, parameterService, durationService, priceService];
+exports.updateSubService = [
+  masterId,
+  serviceTitleId,
+  subServiceId,
+  parameterService,
+  durationService,
+  priceService,
+];
 
 exports.updateServiceParameter = [serviceTitleId, titleService];
 

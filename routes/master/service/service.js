@@ -1,48 +1,89 @@
-const express = require('express');
+const express = require("express");
 
-const controller = require('../../../controllers/master/service/service');
+const controller = require("../../../controllers/master/service/service");
 
-const validator = require('../../../validator/master/service');
+const validator = require("../../../validator/master/service");
 
-const validate = require('../../../middleware/validate');
-const auth = require('../../../middleware/auth');
+const validate = require("../../../middleware/validate");
+const auth = require("../../../middleware/auth");
+const master = require("../../../middleware/master");
+const isYourself = require("../../../middleware/is-yourself");
 
 const router = express.Router({ mergeParams: true });
 
-// @route     Get /api/profile/:masterId/service
+// @route     Get /api/master/:masterId/service
 // @desc      Get services(service and service-parameter too)
 // @access    Public
-router.get('/', validator.getServices, validate, controller.getServices);
+router.get("/", validator.getServices, validate, controller.getServices);
 
-// @route     Post /api/profile/:masterId/service
+// @route     Post /api/master/:masterId/service
 // @desc      Add service
 // @access    Private(master)
-router.post('/', auth, validator.addService, validate, controller.addService);
+router.post("/", auth, master, validator.addService, validate, isYourself, controller.addService);
 
-// @route     Patch /api/profile/:masterId/service/order
-// @desc      Update services' order
+// @route     Patch /api/master/:masterId/service/order
+// @desc      Update order of services
 // @access    Private(master)
-router.patch('/order', auth, validator.updateServicesOrder, validate, controller.updateServicesOrder);
+router.patch(
+  "/order",
+  auth,
+  master,
+  validator.updateServicesOrder,
+  validate,
+  isYourself,
+  controller.updateServicesOrder
+);
 
-// @route     Get /api/profile/:masterId/service/update
-// @desc      Get services that needing update because timetable's update
+// @route     Get /api/master/:masterId/service/update
+// @desc      Get services that needing update
 // @access    Private(master)
-router.get('/update', auth, validator.getUnsuitableServices, validate, controller.getUnsuitableServices);
+router.get(
+  "/update",
+  auth,
+  master,
+  validator.getUnsuitableServices,
+  validate,
+  isYourself,
+  controller.getUnsuitableServices
+);
 
-// @route     Put /api/profile/:masterId/service/update
+// @route     Put /api/master/:masterId/service/update
 // @desc      Put update to services
 // @access    Private(master)
-router.put('/update', auth, validator.putUpdateToServices, validate, controller.putUpdateToServices);
+router.put(
+  "/update",
+  auth,
+  master,
+  validator.putUpdateToServices,
+  validate,
+  isYourself,
+  controller.putUpdateToServices
+);
 
-// @route     Put /api/profile/:masterId/service/:serviceId
-// @desc      Add update to service, :serviceId can be an id (ordinary service or sub parameters) or title (group of service parameters)
-// @desc      Send whole service or title of service parameter or sub-service
+// @route     Put /api/master/:masterId/service/:serviceId
+// @desc      Update service
 // @access    Private(master)
-router.put('/:serviceId', auth, validator.updateService, validate, controller.updateService);
+router.put(
+  "/:serviceId",
+  auth,
+  master,
+  validator.updateService,
+  validate,
+  isYourself,
+  controller.updateService
+);
 
-// @route     Delete /api/profile/:masterId/service/:serviceId
-// @desc      Delete service, :serviceId can be an id (ordinary service or sub parameters) or title (group of service parameters)
+// @route     Delete /api/master/:masterId/service/:serviceId
+// @desc      Delete service
 // @access    Private(master)
-router.delete('/:serviceId', auth, validator.deleteService, validate, controller.deleteService);
+router.delete(
+  "/:serviceId",
+  auth,
+  master,
+  validator.deleteService,
+  validate,
+  isYourself,
+  controller.deleteService
+);
 
 module.exports = router;

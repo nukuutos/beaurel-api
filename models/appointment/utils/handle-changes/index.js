@@ -15,9 +15,9 @@ module.exports = (defaultParams, changes, updatedTimetable) => {
     isSwitchToAuto,
     isChangesInAutoTimetable,
     isChangesInManuallyTimetable,
-  } = getChanges(change, type);
+  } = getChanges(changes, type);
 
-  if (isSessionTime) handleSessionTimeChange(defaultParams);
+  if (isSessionTime) handleSessionTimeChange(defaultParams, sessionTime);
 
   if (isSwitchToAuto) {
     handleSwitchTypeToAuto(defaultParams, sessionTime, auto);

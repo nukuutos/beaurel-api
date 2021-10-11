@@ -1,121 +1,68 @@
 const Service = require("../../../models/service/service");
-const Timetable = require("../../../models/timetable");
+const Timetable = require("../../../models/timetable/timetable");
 const HttpError = require("../../../models/utils/http-error");
 
 const asyncHandler = require("../../../middleware/async-handler");
+const { NO_UPDATED_SESSION_TIME } = require("../../../config/errors/service");
 
-const { getCorrectSessionTime } = require("./utils");
-const isEqual = require("lodash.isequal");
-
-exports.getServices = asyncHandler(async (req, res, next) => {
-  // delete/get rid of timetable from request(aggregation)
+exports.getServices = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
 
-  let { services, timetable } = await Service.getServicesAndTimetable(masterId);
-  // indexes or good sort algo, okay?
-  // sort subServices
-  services = services.map((service) => {
-    if (!service.subServices) return service;
-    service.subServices.sort((a, b) => a.subOrder - b.subOrder);
-    return service;
-  });
+  const data = await Service.getServicesAndTimetable(masterId);
 
-  // sort services
-  services = services.sort((a, b) => a.order - b.order);
-
-  return res.json({ services, timetable });
+  return res.json(data);
 });
 
-exports.addService = asyncHandler(async (req, res, next) => {
+exports.addService = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
-  let { service, date } = req.body;
+  const { title, duration, price } = req.body;
 
-  const { isTitle, servicesCount } = await Service.getServiceCounterAndIsTitleExists(masterId, service.title);
+  const service = new Service({ masterId, title, duration, price });
 
-  if (isTitle) return next(new HttpError("You already have service with this title"));
+  await service.checkTitleAndSetOrder();
 
-  const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 }); // to get service counter and is tit exists?
-  const { sessionTime } = timetable;
-  // const sessionTime = getCorrectSessionTime(timetable, date); // for updates in session time
-  // if (!sessionTime) return next(new HttpError('Incorrect session time'));
+  const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
 
-  const { title, duration, price } = service;
-  if (duration % sessionTime !== 0) return next(new HttpError("Incorrect duration"));
+  const { insertedId: id } = await service.checkDuration(sessionTime).save();
 
-  service = new Service(masterId, title, duration, price, servicesCount || 0);
-  const { insertedId } = await service.save();
-  // can i do id instead of ids here?
-  return res.json({ id: insertedId, message: "Service is added!", type: "success" });
+  return res.status(201).json({ id, message: "Услуга успешно добавлена!" });
 });
 
-// server get service with order
-// server find service with that order
-// if order same - alrigth
-// else inc all and insert
-
-exports.updateService = asyncHandler(async (req, res, next) => {
+exports.updateService = asyncHandler(async (req, res) => {
   const { serviceId } = req.params;
   const { id: masterId } = req.user;
-  const { date, service } = req.body;
-  const { title } = service;
+  const { title, duration, price } = req.body;
 
-  // if (date.getTime() < new Date().getTime()) return next(new HttpError('Invalid date', 400));
-  // const { timetable, currentService } = await Service.getServiceAndTimetable(serviceId, masterId);
+  const service = new Service({ masterId, title, duration, price });
 
-  // check title
-  // if it is service parameter of service (not sub service)
-  const isTitle = await Service.findOne({ _id: { $ne: serviceId }, masterId, title }, { _id: 1 });
-  if (isTitle) return next(new HttpError("You already have service with this title"));
-  // Check has service unsuitable date or not
-  // if (unsuitableDate && new Date(unsuitableDate).getTime() !== date.getTime())
-  //   return next(new HttpError('Service has unsuitable field that you need to update'));
+  await service.setId(serviceId).checkTitle();
 
-  // Check if service has an update
-  // if (serviceUpdate) return next(new HttpError('Service has updated', 400));
+  const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
 
-  // Check if duration is correct by master's session time
+  await service.checkDuration(sessionTime).update();
 
-  // Check if current and update service are the same
-  // if (isEqual(currentService, updatedService)) {
-  //   return next(new HttpError('Current service and update are equals', 400));
-  // }
-
-  // Update service
-  // await Service.updateService(serviceId, masterId, updatedService);
-  // update service or sub service
-  const { duration } = service;
-
-  const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 });
-  // Get timetable: current or updated sessionTime
-  const sessionTime = getCorrectSessionTime(timetable, date);
-  if (!sessionTime) return next(new HttpError("Incorrect session time"));
-
-  if (duration % sessionTime !== 0) return next(new HttpError("Duration is incorrect", 400));
-
-  await Service.updateOne({ _id: serviceId }, { ...service });
-
-  return res.json({ message: "Service is updated", type: "success" });
+  return res.json({ message: "Услуга обновлена!" });
 });
 
-exports.deleteService = asyncHandler(async (req, res, next) => {
+exports.deleteService = asyncHandler(async (req, res) => {
   const { serviceId } = req.params;
   const { id: masterId } = req.user;
 
   await Service.deleteOne({ _id: serviceId, masterId });
 
-  return res.json({ message: "Service is deleted", type: "success" });
+  return res.json({ message: "Услуга удалена!" });
 });
 
-exports.updateServicesOrder = asyncHandler(async (req, res, next) => {
+exports.updateServicesOrder = asyncHandler(async (req, res) => {
   const { newOrder } = req.body;
   const { id: masterId } = req.user;
 
   await Service.updateOrder(newOrder, masterId);
 
-  res.json({ message: "Service's order is updated", type: "success" });
+  res.status(204).end();
 });
 
-exports.getUnsuitableServices = asyncHandler(async (req, res, next) => {
+exports.getUnsuitableServices = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
 
   const unsuitableServices = await Service.getUnsuitableServices(masterId);
@@ -123,34 +70,17 @@ exports.getUnsuitableServices = asyncHandler(async (req, res, next) => {
   res.json({ unsuitableServices });
 });
 
-exports.putUpdateToServices = asyncHandler(async (req, res, next) => {
-  const { services } = req.body; // [{id, duration}]
+exports.putUpdateToServices = asyncHandler(async (req, res) => {
+  const { services } = req.body;
   const { id: masterId } = req.user;
 
-  // get session time
-  // get services' id that are unsuitable
   const { sessionTime, services: servicesIds } = await Service.getDataForUpdate(masterId);
 
-  if (!sessionTime) return next(new HttpError("No updated session time"));
+  if (!sessionTime) throw new HttpError(NO_UPDATED_SESSION_TIME, 404);
 
-  // check amount of services from client and bd
-  if (services.length !== servicesIds.length) return next(new HttpError("Incorrect services to update"));
+  await Service.checkServicesForUpdate(services, servicesIds)
+    .checkServicesForDuration(services, sessionTime)
+    .putUpdateToServices(services);
 
-  // compare ids that we received from bd
-  const idsFromClient = services.map(({ id }) => String(id));
-  const areIdsEqual = isEqual(idsFromClient.sort(), servicesIds.sort());
-
-  console.log(idsFromClient.sort(), servicesIds.sort(), services);
-
-  if (!areIdsEqual) return next(new HttpError("Incorrect services' duration"));
-
-  // check duration by session time
-  if (!services.every(({ duration }) => duration % sessionTime === 0)) {
-    return next(new HttpError("Incorrect services' duration"));
-  }
-
-  // object id in validator
-  await Service.putUpdateToServices(services.map(({ id, duration }) => ({ id, duration })));
-
-  res.json({ message: "Services are updated!", type: "success" });
+  res.json({ message: "Обновление успешно добавлено к услугам!" });
 });

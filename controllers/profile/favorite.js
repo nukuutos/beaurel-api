@@ -1,38 +1,33 @@
-const Favorite = require("../../models/user/favorite");
-const HttpError = require("../../models/utils/http-error");
-
+const Favorite = require("../../models/user/favorite-controller");
 const asyncHandler = require("../../middleware/async-handler");
-const User = require("../../models/user/profile");
 
-exports.getFavorites = asyncHandler(async (req, res, next) => {
+exports.getFavorites = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
+
   const data = await Favorite.getFavoriteMasters(profileId);
-  return res.json({ data, type: "success" });
+
+  return res.json({ data });
 });
 
-exports.addFavorite = asyncHandler(async (req, res, next) => {
+exports.addFavorite = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
   const { id: profileId } = req.user;
 
-  const { masters } = await User.findOne({ _id: profileId }, { _id: 0, masters: 1 });
+  const user = new Favorite(profileId);
 
-  const stringMasters = masters.map((master) => master.toString());
-  const stringMasterId = masterId.toString();
+  await user.checkMaster(masterId);
+  await user.addMaster(masterId);
 
-  if (stringMasters.includes(stringMasterId)) {
-    return next(new HttpError("This master has been already in your list", 401));
-  }
-
-  await User.updateOne({ _id: profileId }, { $push: { masters: masterId } });
-  return res.json({ message: "Master is added", type: "success" });
+  return res.status(204).end();
 });
 
-exports.deleteFavorite = asyncHandler(async (req, res, next) => {
+exports.deleteFavorite = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
   const { id: profileId } = req.user;
 
-  // $in?
-  await User.updateOne({ _id: profileId }, { $pull: { masters: { $in: [masterId] } } });
+  const user = new Favorite(profileId);
 
-  return res.json({ message: "Master is deleted", type: "success" });
+  await user.deleteMaster(masterId);
+
+  return res.status(204).end();
 });

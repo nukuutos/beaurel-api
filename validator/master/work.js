@@ -1,14 +1,15 @@
-const { check } = require('express-validator');
-const { paramId } = require('../utils/id');
+const { body, paramId } = require("express-validator");
+const { TITLE_REQUIRED, INVALID_TITLE } = require("../../config/errors/work");
+const { WORK_ID, MASTER_ID } = require("../../config/id-names");
 
-const workId = paramId('workId', 'Work Id');
-const masterId = paramId('masterId', 'Master Id');
+const workId = paramId("workId", WORK_ID);
+const masterId = paramId("masterId", MASTER_ID);
 
-const title = check('title')
+const title = body("title")
   .exists({ checkFalsy: true })
-  .withMessage('Title is required.')
-  .isString()
-  .withMessage('Title must be a string.');
+  .withMessage(TITLE_REQUIRED)
+  .matches(/^[а-я -,.!?()0-9]+$/i)
+  .withMessage(INVALID_TITLE);
 
 exports.getWorks = [masterId];
 exports.addWork = [masterId, title];

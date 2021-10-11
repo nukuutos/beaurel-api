@@ -1,0 +1,20 @@
+exports.INCORRECT_APPOINTMENTS = "Неверные записи!";
+exports.INCORRECT_EXCEPTIONS = "Неверные исключения!";
+exports.UPDATE_EXISTS = "Обновление уже существует!";
+exports.SAME_TIMETABLES = "Новое расписание не отличается от нынешнего!";
+exports.NO_TIMETABLE = "Расписания не существует!";
+exports.NO_UPDATE = "Обновление отсутствует!";
+
+exports.SESSION_TIME_REQUIRED = "Отсуствует время сеанса!";
+exports.SESSION_TIME_DURATION = "Некорректное время сеанса!";
+exports.TYPE_REQUIRED = "Отсуствует тип расписания!";
+exports.INVALID_TYPE = "Неверный тип расписания!";
+exports.UPDATE_DATE_REQUIRED = "Отсуствет дата обновления!";
+exports.INVALID_UPDATE_DATE = "Неверная дата!";
+exports.START_DAY_TIME_REQUIRED = "Отсутствует начало рабочего дня!";
+exports.INVALID_START_DAY_TIME = "Некоррекстное начало рабочего дня!";
+exports.END_DAY_TIME_REQUIRED = "Отсуствует конец рабочего дня!";
+exports.INVALID_END_DAY_TIME = "Некоррекстный конец рабочего дня!";
+exports.START_TIME_OVER_END_TIME = "Рабочий день заканчивается раньше, чем начинается!";
+exports.WEEKENDS_REQUIRED = "Отсуствуют выходные!";
+exports.INVALID_WEEKENDS = "Некорректные выходные!";

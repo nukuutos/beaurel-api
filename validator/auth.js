@@ -1,46 +1,58 @@
-const { check } = require('express-validator');
+const { body, cookie } = require("express-validator");
 
-const email = check('email') // +-//
+const {
+  NO_REFRESH_TOKEN,
+  EMAIL_REQUIRED,
+  INVALID_EMAIL,
+  PASSWORD_REQUIRED,
+  MIN_PASSWORD_LENGTH,
+  PASSWORDS_DISMATCHED,
+  ALPHABATIC_FIRST_NAME,
+  FIRST_NAME_REQUIRED,
+  LAST_NAME_REQUIRED,
+  ALPHABATIC_LAST_NAME,
+} = require("../config/errors/auth");
+
+const email = body("email")
   .trim()
-  .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('Email is required')
+  .exists({ checkFalsy: true })
+  .withMessage(EMAIL_REQUIRED)
   .isEmail()
-  .withMessage('Please enter a valid email')
+  .withMessage(INVALID_EMAIL)
   .normalizeEmail();
 
-const passwordSignUp = check('password')
-  .trim()
-  .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('Password is required')
+const passwordSignUp = body("password")
+  .exists({ checkFalsy: true })
+  .withMessage(PASSWORD_REQUIRED)
   .isLength({ min: 6 })
-  .withMessage('Password min legnth is 6 characters long')
+  .withMessage(MIN_PASSWORD_LENGTH)
   .custom((password, { req }) => {
     const { confPassword } = req.body;
-    if (password !== confPassword) {
-      throw new Error('Passwords are dismatched');
-    }
-    return true;
-  });
+    return password === confPassword;
+  })
+  .withMessage(PASSWORDS_DISMATCHED);
 
-const passwordSignIn = check('password')
-  .trim()
-  .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('Password is required');
+const passwordSignIn = body("password").exists({ checkFalsy: true }).withMessage(PASSWORD_REQUIRED);
 
-const firstName = check('firstName')
+const firstName = body("firstName")
   .trim()
-  .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('First Name is required')
-  .isAlpha()
-  .withMessage('First Name must contain only letters');
+  .exists({ checkFalsy: true })
+  .withMessage(FIRST_NAME_REQUIRED)
+  .isAlpha("ru-RU")
+  .withMessage(ALPHABATIC_FIRST_NAME);
 
-const lastName = check('lastName')
+const lastName = body("lastName")
   .trim()
-  .exists({ checkFalsy: true, checkNull: true })
-  .withMessage('Last Name is required')
-  .isAlpha()
-  .withMessage('Last Name must contain only letters');
+  .exists({ checkFalsy: true })
+  .withMessage(LAST_NAME_REQUIRED)
+  .isAlpha("ru-RU")
+  .withMessage(ALPHABATIC_LAST_NAME);
+
+const refreshToken = cookie("refreshToken")
+  .trim()
+  .exists({ checkFalsy: true })
+  .withMessage(NO_REFRESH_TOKEN);
 
 exports.signUp = [email, passwordSignUp, firstName, lastName];
 exports.signIn = [email, passwordSignIn];
-exports.forgotPassword = [email];
+exports.refreshToken = [refreshToken];

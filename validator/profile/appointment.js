@@ -1,14 +1,15 @@
-const { query } = require("express-validator");
+const { query, paramId } = require("express-validator");
 
-const { paramId } = require("../utils/id");
-const HttpError = require("../../models/utils/http-error");
+const { INVALID_CATEGORY } = require("../../config/errors/appointment");
+const { PROFILE_ID } = require("../../config/id-names");
 
-const profileId = paramId("profileId", "Profile Id");
+const profileId = paramId("profileId", PROFILE_ID);
 
-const category = query("category").custom((value) => {
-  const categories = ["onConfirmation", "confirmed", "history", "unsuitable"];
-  if (!categories.includes(value)) throw new HttpError("Invalid category", 400);
-  return true;
-});
+const category = query("category")
+  .custom((value) => {
+    const categories = ["onConfirmation", "confirmed", "history", "unsuitable"];
+    return categories.includes(value);
+  })
+  .withMessage(INVALID_CATEGORY);
 
 exports.getMasterAppointments = [profileId, category];

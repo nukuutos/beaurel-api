@@ -17,6 +17,10 @@ class Collection {
     return await collection.insertOne(this);
   }
 
+  static async save(object) {
+    return await this.collection().insertOne(object);
+  }
+
   static async insertMany(data) {
     return await this.collection().insertMany(data);
   }
@@ -33,8 +37,13 @@ class Collection {
     return await this.collection().findOne(query, { projection: projection });
   }
 
-  static async updateOne(query, update) {
-    return await this.collection().updateOne(query, { $set: update });
+  static async updateOne(query, update, options) {
+    const stringUpdate = JSON.stringify(update);
+    const isQuerySign = stringUpdate.includes("$");
+
+    update = isQuerySign ? update : { $set: update };
+
+    return await this.collection().updateOne(query, update, options);
   }
 
   static async updateMany(query, update) {

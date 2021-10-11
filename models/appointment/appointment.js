@@ -5,8 +5,9 @@ const masterAppointmentsAndCustomers = require("../../pipelines/appointments/mas
 const customerAppointmentsAndMasters = require("../../pipelines/appointments/customer-appointments-and-masters");
 const bookingData = require("../../pipelines/appointments/booking-data");
 const Collection = require("../utils/collection/collection");
-const { utcNow, sortDays } = require("./utils/date");
+const sortDays = require("./utils/sort-days");
 const handleChanges = require("./utils/handle-changes");
+const dayjs = require("dayjs");
 
 class Appointment extends Collection {
   static name = APPOINTMENT;
@@ -18,9 +19,9 @@ class Appointment extends Collection {
     this.customerId = customerId;
     this.service = service;
     this.time = time; // { startAt, endAt }
-    this.status = "onConfirmation"; // onConfirmation, confirmed, cancelled, ended/expired, unsuitable
+    this.status = "onConfirmation"; // onConfirmation, confirmed, cancelled, ended/expired, unsuitable, history?
     this.date = date;
-    this.createdAt = utcNow();
+    this.createdAt = dayjs().utcNow();
   }
 
   static async getAppointmentsAsMaster(masterId, category) {
@@ -43,7 +44,7 @@ class Appointment extends Collection {
     await this.updateMany(query, update);
   }
 
-  static async toUnsuitable(masterId, date, updatedTimetable, changes) {
+  static async toUnsuitable({ masterId, date, updatedTimetable, changes }) {
     let bulkOp = this.unorderedBulkOp();
     const defaultParams = { bulkOp, masterId, date };
     handleChanges(defaultParams, changes, updatedTimetable);
@@ -54,6 +55,10 @@ class Appointment extends Collection {
     const aggregate = getAggregate(TIMETABLE);
     const pipeline = bookingData(masterId, serviceId, date);
     return await aggregate(pipeline).next();
+  }
+
+  static async toOnConfirmation(masterId) {
+    await this.updateMany({ masterId, status: "unsuitable" }, { status: "onConfirmation" });
   }
 }
 

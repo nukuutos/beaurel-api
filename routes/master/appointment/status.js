@@ -1,22 +1,39 @@
-const express = require('express');
+const express = require("express");
 
-const controller = require('../../../controllers/master/appointment/status');
+const controller = require("../../../controllers/master/appointment/status");
 
-const validator = require('../../../validator/master/appointment/status');
+const validator = require("../../../validator/master/appointment/status");
 
-const auth = require('../../../middleware/auth');
-const validate = require('../../../middleware/validate');
+const auth = require("../../../middleware/auth");
+const validate = require("../../../middleware/validate");
+const isYourself = require("../../../middleware/is-yourself");
+const master = require("../../../middleware/master");
 
 const router = express.Router({ mergeParams: true });
 
-// @route     put /api/profile/:masterId/appointment/:appointmentId/status/master
+// @route     Put /api/master/:masterId/appointment/:appointmentId/status/master
 // @desc      Update appointment status by master
-// @access    Private
-router.put('/master', auth, validator.updateStatusByMaster, validate, controller.updateStatusByMaster);
+// @access    Private(master)
+router.put(
+  "/master",
+  auth,
+  master,
+  validator.updateStatusByMaster,
+  validate,
+  isYourself,
+  controller.updateStatusByMaster
+);
 
-// @route     put /api/profile/:masterId/appointment/:appointmentId/status/customer // :customerId ?
+// @route     Put /api/master/:masterId/appointment/:appointmentId/status/customer
 // @desc      Update appointment status by customer
 // @access    Private
-router.put('/customer', auth, validator.updateStatusByCustomer, validate, controller.updateStatusByCustomer);
+router.put(
+  "/customer",
+  auth,
+  master,
+  validator.updateStatusByCustomer,
+  validate,
+  controller.updateStatusByCustomer
+);
 
 module.exports = router;

@@ -4,13 +4,13 @@ module.exports = (masterId, title) => [
   {
     $facet: {
       // get services count with params
-      servicesCount: [
+      count: [
         {
           $group: {
-            _id: '$title',
+            _id: "$title",
           },
         },
-        { $count: 'servicesCount' },
+        { $count: "count" },
       ],
       // servicesParameter: [
       //   {
@@ -36,8 +36,8 @@ module.exports = (masterId, title) => [
   },
   {
     $project: {
-      servicesCount: { $arrayElemAt: ['$servicesCount.servicesCount', 0] }, // break nesting with this trick
-      isTitle: { $arrayElemAt: ['$isTitle._id', 0] },
+      count: { $arrayElemAt: ["$count.count", 0] }, // break nesting with this trick
+      isTitle: { $arrayElemAt: ["$isTitle._id", 0] },
       // servicesParameter: 1,
     },
   },

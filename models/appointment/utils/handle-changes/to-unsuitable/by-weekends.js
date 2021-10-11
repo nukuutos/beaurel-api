@@ -31,5 +31,5 @@ module.exports = (defaultParams, weekends) => {
   const findQuery = find(masterId, date);
   const pipeline = createPipeline(weekends);
 
-  bulkOp.updateAggregation(findQuery, pipeline);
+  bulkOp.aggregationUpdate(findQuery, pipeline);
 };

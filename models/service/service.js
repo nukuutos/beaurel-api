@@ -7,11 +7,18 @@ const sessionTimeAndServicesIds = require("../../pipelines/service/session-time-
 const Collection = require("../utils/collection/collection");
 const { SERVICE, TIMETABLE } = require("../../config/collection-names");
 const { sortServices, bulkToSuitable, bulkToUpdatedOrder } = require("./utils");
+const isEqual = require("lodash.isequal");
+const HttpError = require("../utils/http-error");
+const {
+  INCORRECT_SERVICES_FOR_UPDATE,
+  TITLE_EXISTS,
+  INCORRECT_DURATION,
+} = require("../../config/errors/service");
 
 class Service extends Collection {
   static name = SERVICE;
 
-  constructor(masterId, title, duration, price, order) {
+  constructor({ masterId, title, duration, price, order = null }) {
     super();
 
     this.masterId = masterId;
@@ -26,12 +33,9 @@ class Service extends Collection {
   static async getServicesAndTimetable(masterId) {
     const aggregate = getAggregate(TIMETABLE);
     const pipeline = servicesAndTimetable(masterId);
-    return await aggregate(pipeline).next();
-  }
-
-  static async getServiceCounterAndIsTitleExists(masterId, title) {
-    const pipeline = servicesCountAndIsTitle(masterId, title);
-    return await this.aggregate(pipeline).next();
+    const { services: unsortedServices, timetable } = await aggregate(pipeline).next();
+    const services = sortServices(unsortedServices);
+    return { services, timetable };
   }
 
   static async updateOrder(newOrder, masterId) {
@@ -54,9 +58,88 @@ class Service extends Collection {
   }
 
   static async putUpdateToServices(services) {
+    const servicesForUpdate = services.map(({ id, duration }) => ({ id, duration }));
     const bulkOp = this.unorderedBulkOp();
-    bulkToSuitable(bulkOp, services);
+    bulkToSuitable(bulkOp, servicesForUpdate);
     await bulkOp.execute();
+  }
+
+  static async toUnsuitable({ masterId, sessionTime, date, changes }) {
+    if (!changes["sessionTime"]) return 0;
+
+    const { result } = await Service.updateMany(
+      { masterId, duration: { $not: { $mod: [sessionTime, 0] } } },
+      { update: { date, status: "unsuitable" } }
+    );
+
+    console.log({ masterId, duration: { $not: { $mod: [sessionTime, 0] } } });
+
+    return result.n;
+  }
+
+  static async cancelUpdates(masterId) {
+    await Service.updateMany({ masterId, update: { $exists: true, $ne: null } }, { update: null });
+  }
+
+  static checkServicesForUpdate(servicesClient, servicesDB) {
+    if (servicesDB.length !== servicesClient.length) {
+      throw new HttpError(INCORRECT_SERVICES_FOR_UPDATE, 400);
+    }
+
+    servicesClient = servicesClient.map(({ id }) => id.toString());
+
+    const isIdsEqual = isEqual(servicesDB.sort(), servicesClient.sort());
+    if (!isIdsEqual) throw new HttpError(INCORRECT_SERVICES_FOR_UPDATE, 400);
+
+    return this;
+  }
+
+  static checkServicesForDuration(services, sessionTime) {
+    services
+      .map(({ duration }) => new Service({ duration }))
+      .forEach((service) => service.checkDuration(sessionTime));
+
+    return this;
+  }
+
+  async checkTitleAndSetOrder() {
+    const { masterId, title } = this;
+
+    const pipeline = servicesCountAndIsTitle(masterId, title);
+    const { count, isTitle } = await Service.aggregate(pipeline).next();
+
+    if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
+
+    this.order = count;
+
+    return count;
+  }
+
+  async checkTitle() {
+    const { id, masterId, title } = this;
+
+    const isTitle = await Service.findOne(
+      { _id: { $ne: id || null }, masterId, title },
+      { _id: 1 }
+    );
+
+    if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
+  }
+
+  async update() {
+    const { id, title, duration, price } = this;
+    await Service.updateOne({ _id: id }, { title, duration, price });
+  }
+
+  checkDuration(sessionTime) {
+    const { duration } = this;
+    if (duration % sessionTime !== 0) throw new HttpError(INCORRECT_DURATION, 400);
+    return this;
+  }
+
+  setId(id) {
+    this.id = id;
+    return this;
   }
 }
 

@@ -40,5 +40,5 @@ module.exports = (defaultParams, appointments) => {
   const findQuery = find(masterId, date);
   const pipeline = createPipeline(appointments);
 
-  bulkOp.updateAggregation(findQuery, pipeline);
+  bulkOp.aggregationUpdate(findQuery, pipeline);
 };

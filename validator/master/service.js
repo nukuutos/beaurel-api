@@ -1,53 +1,32 @@
-const { paramId, fieldId } = require('../utils/id');
+const { MASTER_ID, SERVICE_ID } = require("../../config/id-names");
+const { paramId, fieldId } = require("express-validator");
 const {
   titleValidation,
   durationValidation,
   priceValidation,
   orderValidation,
   subOrderValidation,
-} = require('../utils/service');
+} = require("./utils/service");
 
-const masterId = paramId('masterId', 'Master Id');
-const serviceId = paramId('serviceId', 'Service Id');
-const serviceIdOrder = fieldId('newOrder.*.id', 'Service Id');
+const masterId = paramId("masterId", MASTER_ID);
+const serviceId = paramId("serviceId", SERVICE_ID);
+const serviceIdOrder = fieldId("newOrder.*.id", SERVICE_ID);
 
 // service
-const titleService = titleValidation('service.title', "Service's Title");
-const durationService = durationValidation('service.duration', "Service's Duration");
-const priceService = priceValidation('service.price', "Service's Price");
-const orderService = orderValidation('newOrder.*.order', "Service's Order");
-const subOrderService = subOrderValidation('newOrder.*.subOrder', "Service's Sub-Order");
+const titleService = titleValidation("title");
+const durationService = durationValidation("duration");
+const priceService = priceValidation("price");
+const orderService = orderValidation("newOrder.*.order");
+const subOrderService = subOrderValidation("newOrder.*.subOrder");
 
 // update service
-const updatingServiceDuration = durationValidation('services.*.duration', 'Duration of updating service');
-const updatingServiceId = fieldId('services.*.id', 'Id of updating service');
-
-// const date = check('date')
-//   .isISO8601()
-//   .withMessage('Not a correct Date')
-//   .customSanitizer((date) => {
-//     date = new Date(date);
-//     date.setHours(0, 0, 0, 0);
-
-//     if (Date.now() > date.getTime()) throw new Error('Update date is incorrect');
-
-//     return date;
-//   });
-// .custom((date) => {
-// if (Date.now() > date.getTime()) throw new Error('Update date is incorrect');
-//   return true;
-// }),
+const updatingServiceId = fieldId("services.*.id", SERVICE_ID);
+const updatingServiceDuration = durationValidation("services.*.duration");
 
 exports.getServices = [masterId];
-
 exports.addService = [masterId, titleService, durationService, priceService];
-
 exports.updateServicesOrder = [masterId, serviceIdOrder, orderService, subOrderService];
-
 exports.getUnsuitableServices = [masterId];
-
 exports.putUpdateToServices = [masterId, updatingServiceId, updatingServiceDuration];
-
 exports.updateService = [masterId, serviceId, titleService, durationService, priceService];
-
 exports.deleteService = [masterId, serviceId];

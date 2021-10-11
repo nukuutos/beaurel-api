@@ -1,20 +1,17 @@
-const { check } = require("express-validator");
-const { paramId } = require("../utils/id");
+const { body, paramId } = require("express-validator");
+const { ABOUT_TEXT_LENGTH, INVALID_ABOUT_TEXT } = require("../../config/errors/profile");
+const { PROFILE_ID } = require("../../config/id-names");
 
-const profileId = paramId("profileId", "Profile Id");
+const profileId = paramId("profileId", PROFILE_ID);
 
-// about, for everyone?
-const aboutText = check("aboutText")
-  .isString()
-  .withMessage("About text is not string")
+const updateFields = body("*").expectedFields(["aboutText"]);
+
+const aboutText = body("aboutText")
+  .matches(/^[а-я -,.!?()0-9]+$/i)
+  .withMessage(INVALID_ABOUT_TEXT)
   .trim()
   .isLength({ min: 0, max: 150 })
-  .withMessage(`Incorrect text length`);
-// .exists({ checkFalsy: true }) // if this route will be only for about text
-// .withMessage(`About text is required`)
-
-// specializations, it's for master
-// place of work, it's for master
+  .withMessage(ABOUT_TEXT_LENGTH);
 
 exports.updateAvatar = [profileId];
-exports.updateProfile = [profileId, aboutText];
+exports.updateProfile = [updateFields, profileId, aboutText];

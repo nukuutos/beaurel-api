@@ -1,16 +1,34 @@
-const { query } = require('express-validator');
+const { query } = require("express-validator");
 
-const lat = query('lat')
+const {
+  LATITUDE_REQUIRED,
+  LONGITUDE_REQUIRED,
+  INVALID_CITY,
+  INVALID_PAGE,
+} = require("../config/errors/timezone");
+
+const lat = query("lat")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage('Latitude is required!')
-  .customSanitizer((value) => Number(value));
+  .withMessage(LATITUDE_REQUIRED)
+  .customSanitizer((value) => +value);
 
-const lng = query('lng')
+const lng = query("lng")
   .trim()
   .exists({ checkFalsy: true })
-  .withMessage('Longitude is required!')
-  .customSanitizer((value) => Number(value));
+  .withMessage(LONGITUDE_REQUIRED)
+  .customSanitizer((value) => +value);
+
+const city = query("city")
+  .trim()
+  .exists({ checkNull: true })
+  .withMessage(INVALID_CITY)
+  .customSanitizer((string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+const page = query("page")
+  .isNumeric({ no_symbols: true })
+  .withMessage(INVALID_PAGE)
+  .customSanitizer((value) => +value);
 
 exports.getTimezone = [lat, lng];
-exports.getTimezoneByCity = [];
+exports.getTimezoneByQuery = [city, page];

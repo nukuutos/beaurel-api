@@ -1,21 +1,23 @@
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+const { MongoClient } = require("mongodb");
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME } = process.env;
+
+const uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority`;
 
 let _db;
+
 const mongoConnect = async (callback) => {
+  const options = { useUnifiedTopology: true };
+  const client = new MongoClient(uri, options);
+
   try {
-    const client = await MongoClient.connect(uri, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
+    await client.connect();
     console.log("Connected!");
     _db = client.db();
     callback();
   } catch (err) {
     console.log(err);
-    process.exit(1); // Exit process with failure
+    client.close();
   }
 };
 
@@ -35,8 +37,5 @@ const getAggregate = (collectionName) => {
 
   return aggregate;
 };
-
-// exports.mongoConnect = mongoConnect;
-// exports.getDb = getDb;
 
 module.exports = { mongoConnect, getDb, getCollection, getAggregate };

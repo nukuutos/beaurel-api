@@ -1,132 +1,66 @@
-const Service = require("../../../models/service/service");
 const ServiceParameter = require("../../../models/service/service-parameter");
-const Timetable = require("../../../models/timetable");
-const HttpError = require("../../../models/utils/http-error");
+const Timetable = require("../../../models/timetable/timetable");
 
 const asyncHandler = require("../../../middleware/async-handler");
 
-const { getCorrectSessionTime } = require("./utils");
+const SubService = require("../../../models/service/sub-service");
 
-exports.addSubService = asyncHandler(async (req, res, next) => {
-  const { serviceTitle } = req.params;
+exports.addServiceParameter = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
-  let { service, date } = req.body;
+  const { title, subServices } = req.body;
 
-  const { order, subServices } = await ServiceParameter.get(masterId, serviceTitle); // we need  service parameter length and order
+  const serviceParameter = new ServiceParameter(masterId, title, subServices);
 
-  const subServicesCount = subServices.length;
-  for (let i = 0; i < subServicesCount; i++) {
-    if (subServices[i].parameter === service.parameter)
-      return next(new HttpError("You already have service with this parameter"));
-  }
+  await serviceParameter.checkTitleAndSetOrder();
 
-  const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 }); // to get service counter and is tit exists?
-  const { sessionTime } = timetable;
-  // const sessionTime = getCorrectSessionTime(timetable, date); // for updates in session time
-  // if (!sessionTime) return next(new HttpError('Incorrect session time'));
+  const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
 
-  const { duration, price, parameter } = service;
-  if (duration % sessionTime !== 0) return next(new HttpError("Incorrect duration"));
+  const { insertedIds } = await serviceParameter.transformSubServices(sessionTime).save();
 
-  service = new ServiceParameter(
-    masterId,
-    serviceTitle,
-    duration,
-    price,
-    order,
-    subServicesCount,
-    parameter
-  );
-  const { insertedId } = await service.save();
-  // can i do id instead of ids here?
-  return res.json({ ids: insertedId, message: "Sub Service is added!", type: "success" });
-  // return res.json({ message: 'Service is added!', type: 'success' });
+  return res.status(201).json({ ids: insertedIds, message: "Услуга успешно добавлена!" });
 });
 
-exports.addServiceParameter = asyncHandler(async (req, res, next) => {
-  // DRY
-  const { id: masterId } = req.user;
-  const { service, date } = req.body;
-
-  const { isTitle, servicesCount } = await ServiceParameter.getServiceCounterAndIsTitleExists(
-    masterId,
-    service.title
-  );
-
-  if (isTitle) return next(new HttpError("You already have service with this title"));
-
-  const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 });
-  const { sessionTime } = timetable;
-
-  // const sessionTime = getCorrectSessionTime(timetable, date);
-  // if (!sessionTime) return next(new HttpError('Incorrect session time'));
-  // DRY
-
-  for (let i = 0; i < service.subServices.length; i++) {
-    const { duration } = service.subServices[i];
-    if (duration % sessionTime !== 0) return next(new HttpError("Incorrect duration"));
-
-    // add order to sub service
-    service.subServices[i].order = servicesCount || 0;
-    service.subServices[i].subOrder = i;
-  }
-
-  const { title, subServices } = service;
-  const servicesToSave = subServices.map((service) => ({ masterId, title, ...service }));
-
-  const { insertedIds } = await ServiceParameter.insertMany(servicesToSave); // insertedIds object
-
-  return res.json({ ids: insertedIds, message: "Service is added!", type: "success" });
-});
-
-exports.updateSubService = asyncHandler(async (req, res, next) => {
+exports.updateSubService = asyncHandler(async (req, res) => {
   const { subServiceId } = req.params;
   const { id: masterId } = req.user;
-  const { date, service } = req.body;
+  const { parameter, duration, price } = req.body;
 
-  console.log(subServiceId);
+  const subService = new SubService({ parameter, duration, price });
 
-  const { duration } = service;
+  const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
 
-  const timetable = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1, update: 1 });
-  // Get timetable: current or updated sessionTime
-  const sessionTime = getCorrectSessionTime(timetable, date);
-  if (!sessionTime) return next(new HttpError("Incorrect session time"));
+  await subService.checkDuration(sessionTime).setId(subServiceId).update();
 
-  if (duration % sessionTime !== 0) return next(new HttpError("Duration is incorrect", 400));
-
-  await ServiceParameter.updateOne({ _id: subServiceId }, { ...service });
-
-  return res.json({ message: "Service is updated", type: "success" });
+  return res.json({ message: "Услуга успешно обновлена!" });
 });
 
-exports.updateServiceParameter = asyncHandler(async (req, res, next) => {
-  const { serviceTitle } = req.params; // old title
+exports.updateServiceParameter = asyncHandler(async (req, res) => {
+  const { serviceTitle: currentTitle } = req.params;
   const { id: masterId } = req.user;
-  const { title } = req.body.service; // new title
+  const { title } = req.body;
 
-  const isTitleExisted = await ServiceParameter.findOne({ masterId, title }, { _id: 1 });
-  if (isTitleExisted) return next(new HttpError("You already have service with this title"));
+  const serviceParameter = new ServiceParameter(masterId, title);
 
-  await Service.updateMany({ masterId, title: serviceTitle }, { title });
+  await serviceParameter.checkTitle();
+  await serviceParameter.updateTitle(currentTitle);
 
-  return res.json({ message: "Service is updated", type: "success" });
+  return res.json({ message: "Услуга успешно обновлена!" });
 });
 
-exports.deleteSubService = asyncHandler(async (req, res, next) => {
+exports.deleteSubService = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
   const { subServiceId } = req.params;
 
   await ServiceParameter.deleteOne({ _id: subServiceId, masterId });
 
-  return res.json({ message: "Sub-service is deleted", type: "success" });
+  return res.json({ message: "Параметр успешно удалён!" });
 });
 
-exports.deleteServiceParameter = asyncHandler(async (req, res, next) => {
+exports.deleteServiceParameter = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
   const { serviceTitle } = req.params;
 
   await ServiceParameter.deleteMany({ masterId, title: serviceTitle });
 
-  return res.json({ message: "Service is deleted", type: "success" });
+  return res.json({ message: "Услуга удалена!" });
 });

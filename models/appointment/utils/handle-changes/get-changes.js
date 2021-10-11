@@ -1,5 +1,5 @@
 module.exports = (changes, type) => {
-  const isSessionTime = changes["sessiontTime"];
+  const isSessionTime = changes["sessionTime"];
   const isSwitchToAuto = type === "auto" && changes["type"];
   const isChangesInAutoTimetable = type === "auto" && !changes["type"];
   const isChangesInManuallyTimetable =
