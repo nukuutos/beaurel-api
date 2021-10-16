@@ -1,18 +1,21 @@
 const { UNAUTHORIZED } = require("../config/errors/auth");
 const HttpError = require("../models/utils/http-error");
 
-const getParamId = (params) => {
-  const { masterId, profileId } = params;
+const getParamIds = (params) => {
+  const paramIds = Object.values(params);
 
-  return masterId || profileId;
+  return paramIds.map((id) => {
+    const isMongoId = typeof id === "object";
+    return isMongoId ? id.toString() : id;
+  });
 };
 
 module.exports = (req, res, next) => {
   const { params, user } = req;
 
-  const paramId = getParamId(params);
+  const paramIds = getParamIds(params);
 
-  const isYourself = paramId.toString() === user.id.toString();
+  const isYourself = paramIds.includes(user.id.toString());
 
   if (!isYourself) throw new HttpError(UNAUTHORIZED, 401);
 
