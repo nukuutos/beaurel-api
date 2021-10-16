@@ -2,6 +2,7 @@ const { getCollection } = require("../../../utils/database");
 const { checkClass, getCollectionName } = require("./utils");
 
 require("./bulk");
+require("./cache");
 
 class Collection {
   static name = null;
@@ -26,15 +27,20 @@ class Collection {
   }
 
   static async find(query, projection = null, { page = 0, limit = 0 } = {}) {
-    return await this.collection()
+    const findObject = this.collection()
       .find(query, { projection: projection })
       .skip(page * limit)
-      .limit(limit)
-      .toArray();
+      .limit(limit);
+
+    const result = Object.assign(findObject, this);
+
+    return await result.toArray();
   }
 
   static async findOne(query, projection = null) {
-    return await this.collection().findOne(query, { projection: projection });
+    const collection = this.collection();
+    const result = Object.assign(collection, this);
+    return await result.findOne(query, { projection: projection });
   }
 
   static async updateOne(query, update, options) {
@@ -59,7 +65,15 @@ class Collection {
   }
 
   static aggregate(pipeline) {
-    return this.collection().aggregate(pipeline);
+    const aggregateObject = this.collection().aggregate(pipeline);
+    const result = Object.assign(aggregateObject, this);
+    return result;
+  }
+
+  static cache(...cacheKeys) {
+    const collection = this.collection().cache(...cacheKeys);
+    const result = Object.assign(this, { cacheKeys: collection.cacheKeys });
+    return result;
   }
 
   static orderedBulkOp() {

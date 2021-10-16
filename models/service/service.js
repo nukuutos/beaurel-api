@@ -9,6 +9,9 @@ const { SERVICE, TIMETABLE } = require("../../config/collection-names");
 const { sortServices, bulkToSuitable, bulkToUpdatedOrder } = require("./utils");
 const isEqual = require("lodash.isequal");
 const HttpError = require("../utils/http-error");
+
+const { SERVICES_AND_TIMETABLE, UNSUITABLE_SERVICES } = require("../../config/cache");
+
 const {
   INCORRECT_SERVICES_FOR_UPDATE,
   TITLE_EXISTS,
@@ -33,7 +36,11 @@ class Service extends Collection {
   static async getServicesAndTimetable(masterId) {
     const aggregate = getAggregate(TIMETABLE);
     const pipeline = servicesAndTimetable(masterId);
-    const { services: unsortedServices, timetable } = await aggregate(pipeline).next();
+
+    const { services: unsortedServices, timetable } = await aggregate(pipeline)
+      .cache(masterId, SERVICES_AND_TIMETABLE)
+      .next();
+
     const services = sortServices(unsortedServices);
     return { services, timetable };
   }
@@ -52,7 +59,7 @@ class Service extends Collection {
 
   static async getUnsuitableServices(masterId) {
     const pipeline = unsuitableServices(masterId);
-    const { services } = await this.aggregate(pipeline).next();
+    const { services } = await this.aggregate(pipeline).cache(masterId, UNSUITABLE_SERVICES).next();
     const sortedServices = sortServices(services);
     return sortedServices;
   }

@@ -8,7 +8,11 @@ const validate = require("../../../middleware/validate");
 const auth = require("../../../middleware/auth");
 const master = require("../../../middleware/master");
 const isYourself = require("../../../middleware/is-yourself");
+const getCleanCache = require("../../../middleware/get-clean-cache");
 
+const { SERVICES_AND_TIMETABLE, MASTER_ID } = require("../../../config/cache");
+
+const cleanCache = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
 const router = express.Router({ mergeParams: true });
 
 // @route     Post /api/profile/:masterId/service-parameter
@@ -21,6 +25,7 @@ router.post(
   validator.addServiceParameter,
   validate,
   isYourself,
+  cleanCache,
   controller.addServiceParameter
 );
 
@@ -34,6 +39,7 @@ router.delete(
   validator.deleteServiceParameter,
   validate,
   isYourself,
+  cleanCache,
   controller.deleteServiceParameter
 );
 
@@ -47,6 +53,7 @@ router.put(
   validator.updateServiceParameter,
   validate,
   isYourself,
+  cleanCache,
   controller.updateServiceParameter
 );
 
@@ -60,6 +67,7 @@ router.delete(
   validator.deleteSubService,
   validate,
   isYourself,
+  cleanCache,
   controller.deleteSubService
 );
 
@@ -73,6 +81,7 @@ router.put(
   validator.updateSubService,
   validate,
   isYourself,
+  cleanCache,
   controller.updateSubService
 );
 

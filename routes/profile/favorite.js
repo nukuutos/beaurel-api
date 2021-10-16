@@ -7,8 +7,12 @@ const validator = require("../../validator/profile/favorite");
 const validate = require("../../middleware/validate");
 const auth = require("../../middleware/auth");
 const isYourself = require("../../middleware/is-yourself");
+const getCleanCache = require("../../middleware/get-clean-cache");
+
+const { PROFILE_ID, FAVORITES } = require("../../config/cache");
 
 const router = express.Router({ mergeParams: true });
+const cleanCache = getCleanCache(PROFILE_ID, FAVORITES);
 
 // @route     Get /api/v1/profile/:profileId/favorite
 // @desc      Get favorite masters
@@ -24,6 +28,7 @@ router.delete(
   validator.deleteFavorite,
   validate,
   isYourself,
+  cleanCache,
   controller.deleteFavorite
 );
 
@@ -36,6 +41,7 @@ router.post(
   validator.addFavorite,
   validate,
   isYourself,
+  cleanCache,
   controller.addFavorite
 );
 

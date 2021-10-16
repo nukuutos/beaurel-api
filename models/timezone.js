@@ -1,6 +1,7 @@
 const { TIMEZONE } = require("../config/collection-names");
 const Collection = require("./utils/collection/collection");
 const citiesData = require("../data/timezone/short-data.json");
+const { SEARCH_TIMEZONE } = require("../config/cache");
 
 class Timezone extends Collection {
   static name = TIMEZONE;
@@ -8,7 +9,14 @@ class Timezone extends Collection {
   static async getByCity(city, page) {
     const regexCity = new RegExp(`^${city}`, "i");
 
-    const cities = await Timezone.find({ city: regexCity }, { _id: 0 }, { page, limit: 10 });
+    const isCityEmpty = city === "";
+    const pageCacheKey = isCityEmpty ? page : null;
+
+    const cities = await Timezone.cache(SEARCH_TIMEZONE, pageCacheKey).find(
+      { city: regexCity },
+      { _id: 0 },
+      { page, limit: 10 }
+    );
 
     return cities;
   }

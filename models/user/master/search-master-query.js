@@ -1,6 +1,7 @@
 const { USER } = require("../../../config/collection-names");
 const mastersAndRating = require("../../../pipelines/master/masters-and-rating");
 const Collection = require("../../utils/collection/collection");
+const { SEARCH_MASTERS } = require("../../../config/cache");
 
 class SearchQuery extends Collection {
   static name = USER;
@@ -10,14 +11,18 @@ class SearchQuery extends Collection {
 
     this.query = { role: "master" };
     this.page = page;
+    this.name = null;
   }
 
   addSpecialization(specialization) {
+    this.specialization = specialization;
     if (specialization.length) this.query.specialization = new RegExp(`^${specialization}`, "i");
     return this;
   }
 
   handleName(name) {
+    this.name = name;
+
     if (name.includes(" ")) this.addFirstAndLastNames(name);
     else if (name.length) this.addFirstName(name);
     return this;
@@ -40,8 +45,18 @@ class SearchQuery extends Collection {
   }
 
   async exec() {
-    const pipeline = mastersAndRating(this.query, this.page);
-    const data = await SearchQuery.aggregate(pipeline).toArray();
+    const { name, specialization, query, page } = this;
+
+    const pipeline = mastersAndRating(query, page);
+
+    const isNameEmpty = name === "";
+    const secondCacheKey = isNameEmpty ? specialization + page : null;
+    const fiveMins = 60 * 5;
+
+    const data = await SearchQuery.cache(SEARCH_MASTERS, secondCacheKey, fiveMins)
+      .aggregate(pipeline)
+      .toArray();
+
     return data || [];
   }
 }

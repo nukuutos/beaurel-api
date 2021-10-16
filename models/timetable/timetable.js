@@ -4,6 +4,7 @@ const {
 const timetableAndAppointments = require("../../pipelines/timetable/timetable-and-appointments");
 const Collection = require("../utils/collection/collection");
 const { TIMETABLE } = require("../../config/collection-names");
+const { TIMETABLE_AND_APPOINTMENTS } = require("../../config/cache");
 
 class Timetable extends Collection {
   static name = TIMETABLE;
@@ -21,7 +22,7 @@ class Timetable extends Collection {
 
   static async getTimetableAndAppointments(masterId) {
     const pipeline = timetableAndAppointments(masterId);
-    return await this.aggregate(pipeline).next();
+    return await this.aggregate(pipeline).cache(masterId, TIMETABLE_AND_APPOINTMENTS).next();
   }
 
   static async getTimetableAndAppointmentsForUpdate(masterId, appointmentId, date) {

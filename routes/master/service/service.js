@@ -8,6 +8,11 @@ const validate = require("../../../middleware/validate");
 const auth = require("../../../middleware/auth");
 const master = require("../../../middleware/master");
 const isYourself = require("../../../middleware/is-yourself");
+const getCleanCache = require("../../../middleware/get-clean-cache");
+const { UNSUITABLE_SERVICES, SERVICES_AND_TIMETABLE, MASTER_ID } = require("../../../config/cache");
+
+const cleanCacheServices = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
+const cleanCacheUnsuitable = getCleanCache(MASTER_ID, UNSUITABLE_SERVICES);
 
 const router = express.Router({ mergeParams: true });
 
@@ -19,7 +24,16 @@ router.get("/", validator.getServices, validate, controller.getServices);
 // @route     Post /api/master/:masterId/service
 // @desc      Add service
 // @access    Private(master)
-router.post("/", auth, master, validator.addService, validate, isYourself, controller.addService);
+router.post(
+  "/",
+  auth,
+  master,
+  validator.addService,
+  validate,
+  isYourself,
+  cleanCacheServices,
+  controller.addService
+);
 
 // @route     Patch /api/master/:masterId/service/order
 // @desc      Update order of services
@@ -31,6 +45,7 @@ router.patch(
   validator.updateServicesOrder,
   validate,
   isYourself,
+  cleanCacheServices,
   controller.updateServicesOrder
 );
 
@@ -57,6 +72,7 @@ router.put(
   validator.putUpdateToServices,
   validate,
   isYourself,
+  cleanCacheUnsuitable,
   controller.putUpdateToServices
 );
 
@@ -70,6 +86,7 @@ router.put(
   validator.updateService,
   validate,
   isYourself,
+  cleanCacheServices,
   controller.updateService
 );
 
@@ -83,6 +100,7 @@ router.delete(
   validator.deleteService,
   validate,
   isYourself,
+  cleanCacheServices,
   controller.deleteService
 );
 

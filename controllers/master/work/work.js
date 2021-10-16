@@ -2,11 +2,12 @@ const Work = require("../../../models/work/work");
 const asyncHandler = require("../../../middleware/async-handler");
 const WorkImage = require("../../../models/work/work-image");
 const { onError } = require("./utils");
+const { WORKS } = require("../../../config/cache");
 
 exports.getWorks = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
 
-  const works = await Work.find({ masterId }, { masterId: 0 });
+  const works = await Work.cache(masterId, WORKS).find({ masterId }, { masterId: 0 });
 
   return res.json({ works });
 });

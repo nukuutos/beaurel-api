@@ -9,8 +9,11 @@ const master = require("../../middleware/master");
 const validate = require("../../middleware/validate");
 const isYourself = require("../../middleware/is-yourself");
 const image = require("../../middleware/image");
+const getCleanCache = require("../../middleware/get-clean-cache");
+const { MASTER_ID, WORKS } = require("../../config/cache");
 
 const router = express.Router({ mergeParams: true });
+const cleanCache = getCleanCache(MASTER_ID, WORKS);
 
 // @route     Get /api/v1/master/:masterId/work
 // @desc      Get works
@@ -20,7 +23,17 @@ router.get("/", validator.getWorks, validate, controller.getWorks);
 // @route     Post /api/v1/master/:masterId/work
 // @desc      Create work
 // @access    Private(master)
-router.post("/", auth, master, validator.addWork, validate, isYourself, image, controller.addWork);
+router.post(
+  "/",
+  auth,
+  master,
+  image,
+  validator.addWork,
+  validate,
+  isYourself,
+  cleanCache,
+  controller.addWork
+);
 
 // @route     Put /api/v1/master/:masterId/work/:workId
 // @desc      Update work
@@ -29,10 +42,11 @@ router.put(
   "/:workId",
   auth,
   master,
+  image,
   validator.updateWork,
   validate,
   isYourself,
-  image,
+  cleanCache,
   controller.updateWork
 );
 
@@ -46,6 +60,7 @@ router.delete(
   validator.deleteWork,
   validate,
   isYourself,
+  cleanCache,
   controller.deleteWork
 );
 

@@ -1,3 +1,4 @@
+const { FAVORITES } = require("../../config/cache");
 const { USER } = require("../../config/collection-names");
 const { MASTER_IS_FRIEND } = require("../../config/errors/favorite");
 const favoriteMasters = require("../../pipelines/favorite/favorite-masters");
@@ -13,7 +14,7 @@ class Favorite extends AuthUser {
 
   static async getFavoriteMasters(userId) {
     const pipeline = favoriteMasters(userId);
-    return await this.aggregate(pipeline).next();
+    return await this.aggregate(pipeline).cache(userId, FAVORITES).next();
   }
 
   async checkMaster(masterId) {

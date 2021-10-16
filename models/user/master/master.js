@@ -4,6 +4,7 @@ const HttpError = require("../../utils/http-error");
 
 const { USER } = require("../../../config/collection-names");
 const { NO_MASTER, NO_CITY } = require("../../../config/errors/master");
+const { MASTER_ID, CITY } = require("../../../config/cache");
 
 class Master extends Collection {
   static name = USER;
@@ -15,7 +16,10 @@ class Master extends Collection {
   async getCity() {
     const { _id } = this;
 
-    const data = await Master.findOne({ _id, role: "master" }, { _id: 0, city: 1 });
+    const data = await Master.cache(MASTER_ID, CITY).findOne(
+      { _id, role: "master" },
+      { _id: 0, city: 1 }
+    );
 
     if (!data) throw new HttpError(NO_MASTER, 404);
 

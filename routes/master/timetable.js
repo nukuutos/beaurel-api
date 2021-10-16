@@ -8,8 +8,17 @@ const master = require("../../middleware/master");
 const auth = require("../../middleware/auth");
 const validate = require("../../middleware/validate");
 const isYourself = require("../../middleware/is-yourself");
+const getCleanCache = require("../../middleware/get-clean-cache");
+
+const {
+  MASTER_ID,
+  UNSUITABLE_SERVICES,
+  TIMETABLE_AND_APPOINTMENTS,
+} = require("../../config/cache");
 
 const router = express.Router({ mergeParams: true });
+const cleanCacheUnsuitableServices = getCleanCache(MASTER_ID, UNSUITABLE_SERVICES);
+const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, TIMETABLE_AND_APPOINTMENTS);
 
 // @route     Post /api/master/:masterId/timetable/:timetableId/update
 // @desc      Create Timetable Update
@@ -21,6 +30,8 @@ router.post(
   validator.updateTimetable,
   validate,
   isYourself,
+  cleanCacheUnsuitableServices,
+  cleanCacheAppointmentsAndTimetable,
   controller.updateTimetable
 );
 
@@ -34,6 +45,8 @@ router.delete(
   validator.deleteTimetableUpdate,
   validate,
   isYourself,
+  cleanCacheUnsuitableServices,
+  cleanCacheAppointmentsAndTimetable,
   controller.deleteTimetableUpdate
 );
 

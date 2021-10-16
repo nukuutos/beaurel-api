@@ -8,8 +8,12 @@ const auth = require("../../../middleware/auth");
 const validate = require("../../../middleware/validate");
 const isYourself = require("../../../middleware/is-yourself");
 const master = require("../../../middleware/master");
+const getCleanCache = require("../../../middleware/get-clean-cache");
+
+const { TIMETABLE_AND_APPOINTMENTS, MASTER_ID } = require("../../../config/cache");
 
 const router = express.Router({ mergeParams: true });
+const cleanCache = getCleanCache(MASTER_ID, TIMETABLE_AND_APPOINTMENTS);
 
 // @route     Put /api/master/:masterId/appointment/:appointmentId/status/master
 // @desc      Update appointment status by master
@@ -21,6 +25,7 @@ router.put(
   validator.updateStatusByMaster,
   validate,
   isYourself,
+  cleanCache,
   controller.updateStatusByMaster
 );
 
@@ -33,6 +38,7 @@ router.put(
   master,
   validator.updateStatusByCustomer,
   validate,
+  cleanCache,
   controller.updateStatusByCustomer
 );
 
