@@ -4,4 +4,4 @@ exports.TIMETABLE = "timetables";
 exports.REVIEW = "reviews";
 exports.WORK = "works";
 exports.APPOINTMENT = "appointments";
-exports.TIMEZONE = "timezone";
+exports.TIMEZONE = "timezones";

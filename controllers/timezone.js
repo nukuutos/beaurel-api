@@ -12,7 +12,7 @@ exports.getTimezone = asyncHandler(async (req, res) => {
 exports.getTimezoneByQuery = asyncHandler(async (req, res) => {
   const { city, page } = req.query;
 
-  const cities = Timezone.getByCity(city, page);
+  const cities = await Timezone.getByCity(city, page);
 
   return res.json({ cities });
 });

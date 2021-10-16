@@ -8,6 +8,7 @@ const hpp = require("hpp");
 require("./modules");
 
 const { mongoConnect } = require("./utils/database");
+
 const errorHandler = require("./middleware/error-handler");
 const cors = require("./middleware/cors");
 const static = require("./middleware/static");

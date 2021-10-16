@@ -10,6 +10,8 @@ class Master extends Collection {
   static name = USER;
 
   constructor(masterId) {
+    super();
+
     this._id = masterId;
   }
 

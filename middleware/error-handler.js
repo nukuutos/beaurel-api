@@ -1,6 +1,5 @@
 module.exports = (error, req, res, next) => {
-  // if res has already sent
-  if (res.headerSent) return next(error);
+  if (res.headersSent) return next(error);
 
   const { message, statusCode } = error;
 
