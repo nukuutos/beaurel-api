@@ -3,15 +3,15 @@
 // clean up userId hash when user changes userId
 
 const userId = {
-  favorites: value, // post, delete
-  works: value, // post, delete, put
-  servicesAndTimetable: value, // post, delete, patch, put services, parameter-services, order
-  tiemtableAndAppointments: value, // change appointment status, put delete timetable update, book appointment, review appointment
-  unsuitableServices: value, // put update, delete put timetable update
+  favorites: value, // post, delete /favorite
+  works: value, // post, delete, put /work
+  servicesAndTimetable: value, // post, delete, patch, put services, parameter-services, order, timetable /services
+  unsuitableServices: value, // put update service, delete put timetable update
   city: value, // by city gets timezone on server with json file
+  timetableAndAppointments: value, // change appointment status, put delete timetable update, book appointment
 
   // first letter of status is lower case
-  // not implement because of clean up: need clean master and customer cache
+  // not implemented because of clean up: need clean master and customer cache
 //   masterAppointmentsonConfirmation: value, // put delete timetable update!!!, change status!, review appointment, book appointment,
 //   masterAppointmentsconfirmed: value, // change status
 //   "...": value,
