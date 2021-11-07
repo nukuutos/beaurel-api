@@ -1,4 +1,4 @@
-const unnecessaryStatuses = ["unsuitable", "rejected", "history"];
+const unnecessaryStatuses = ['unsuitable', 'rejected', 'history', 'cancelled'];
 
 const find = (masterId, date) => ({
   masterId,

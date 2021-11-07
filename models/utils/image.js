@@ -43,6 +43,10 @@ class Image {
     const { url } = this;
     fs.unlinkSync(url);
   }
+
+  static deleteFS(url) {
+    fs.unlinkSync(url);
+  }
 }
 
 module.exports = Image;

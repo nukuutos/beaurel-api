@@ -1,8 +1,8 @@
-const Work = require("../../../models/work/work");
-const asyncHandler = require("../../../middleware/async-handler");
-const WorkImage = require("../../../models/work/work-image");
-const { onError } = require("./utils");
-const { WORKS } = require("../../../config/cache");
+const Work = require('../../../models/work/work');
+const asyncHandler = require('../../../middleware/async-handler');
+const WorkImage = require('../../../models/work/work-image');
+const { onError } = require('./utils');
+const { WORKS } = require('../../../config/cache');
 
 exports.getWorks = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
@@ -27,7 +27,7 @@ exports.addWork = asyncHandler(async (req, res) => {
   const image = new WorkImage(_id, buffer);
   await image.saveFS(onError);
 
-  return res.status(201).json({ _id, message: "Работа успешно добавлена!" });
+  return res.status(201).json({ _id, message: 'Работа успешно добавлена!' });
 });
 
 exports.updateWork = asyncHandler(async (req, res) => {
@@ -38,14 +38,14 @@ exports.updateWork = asyncHandler(async (req, res) => {
   await work.setId(workId).checkTitle();
   await work.updateTitle();
 
-  if (!req.file) return res.json({ message: "Работа успешно обновлена!" });
+  if (!req.file) return res.json({ message: 'Работа успешно обновлена!' });
 
   const { buffer } = req.file;
 
   const image = new WorkImage(workId, buffer);
   await image.save();
 
-  return res.json({ message: "Работа успешно обновлена!" });
+  return res.json({ message: 'Работа успешно обновлена!' });
 });
 
 exports.deleteWork = asyncHandler(async (req, res) => {
@@ -55,5 +55,5 @@ exports.deleteWork = asyncHandler(async (req, res) => {
   workImage.deleteFS();
   await Work.deleteDB(workId);
 
-  return res.json({ message: "Работа удалена!" });
+  return res.json({ message: 'Работа удалена!' });
 });

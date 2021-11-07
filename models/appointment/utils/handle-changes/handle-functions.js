@@ -1,9 +1,9 @@
 // to unsuitable by ...
-const byExceptions = require("./to-unsuitable/by-exceptions");
-const byManuallyAppointments = require("./to-unsuitable/by-manually-appointments");
-const byPossibleTime = require("./to-unsuitable/by-possible-time");
-const bySessionTime = require("./to-unsuitable/by-session-time");
-const byWeekends = require("./to-unsuitable/by-weekends");
+const byExceptions = require('./to-unsuitable/by-exceptions');
+const byManuallyAppointments = require('./to-unsuitable/by-manually-appointments');
+const byPossibleTime = require('./to-unsuitable/by-possible-time');
+const bySessionTime = require('./to-unsuitable/by-session-time');
+const byWeekends = require('./to-unsuitable/by-weekends');
 
 const handleSessionTimeChange = (defaultParams, sessionTime) => {
   bySessionTime(defaultParams, sessionTime);
@@ -20,13 +20,13 @@ const handleSwitchTypeToAuto = (defaultParams, sessionTime, auto) => {
 const handleChangesInAutoTimetable = (defaultParams, sessionTime, changes, auto) => {
   const { possibleAppointmentsTime, weekends, exceptions } = auto;
 
-  if (changes["workingDay"]) {
+  if (changes.workingDay || changes.possibleAppointmentsTime) {
     byPossibleTime(defaultParams, possibleAppointmentsTime, sessionTime);
   }
 
-  if (changes["weekends"]) byWeekends(defaultParams, weekends);
+  if (changes.weekends) byWeekends(defaultParams, weekends);
 
-  if (changes["exceptions"]) byExceptions(defaultParams, exceptions);
+  if (changes.exceptions) byExceptions(defaultParams, exceptions);
 };
 
 const handleChangesInManuallyTimetable = (defaultParams, manually) => {

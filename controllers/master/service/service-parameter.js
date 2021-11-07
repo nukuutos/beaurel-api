@@ -1,9 +1,9 @@
-const ServiceParameter = require("../../../models/service/service-parameter");
-const Timetable = require("../../../models/timetable/timetable");
+const ServiceParameter = require('../../../models/service/service-parameter');
+const Timetable = require('../../../models/timetable/timetable');
 
-const asyncHandler = require("../../../middleware/async-handler");
+const asyncHandler = require('../../../middleware/async-handler');
 
-const SubService = require("../../../models/service/sub-service");
+const SubService = require('../../../models/service/sub-service');
 
 exports.addServiceParameter = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
@@ -17,7 +17,7 @@ exports.addServiceParameter = asyncHandler(async (req, res) => {
 
   const { insertedIds } = await serviceParameter.transformSubServices(sessionTime).save();
 
-  return res.status(201).json({ ids: insertedIds, message: "Услуга успешно добавлена!" });
+  return res.status(201).json({ ids: insertedIds, message: 'Услуга успешно добавлена!' });
 });
 
 exports.updateSubService = asyncHandler(async (req, res) => {
@@ -25,13 +25,13 @@ exports.updateSubService = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
   const { parameter, duration, price } = req.body;
 
-  const subService = new SubService({ parameter, duration, price });
+  const subService = new SubService({ parameter, duration, price, masterId });
 
   const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
 
   await subService.checkDuration(sessionTime).setId(subServiceId).update();
 
-  return res.json({ message: "Услуга успешно обновлена!" });
+  return res.json({ message: 'Услуга успешно обновлена!' });
 });
 
 exports.updateServiceParameter = asyncHandler(async (req, res) => {
@@ -44,7 +44,7 @@ exports.updateServiceParameter = asyncHandler(async (req, res) => {
   await serviceParameter.checkTitle();
   await serviceParameter.updateTitle(currentTitle);
 
-  return res.json({ message: "Услуга успешно обновлена!" });
+  return res.json({ message: 'Услуга успешно обновлена!' });
 });
 
 exports.deleteSubService = asyncHandler(async (req, res) => {
@@ -53,7 +53,7 @@ exports.deleteSubService = asyncHandler(async (req, res) => {
 
   await ServiceParameter.deleteOne({ _id: subServiceId, masterId });
 
-  return res.json({ message: "Параметр успешно удалён!" });
+  return res.json({ message: 'Параметр успешно удалён!' });
 });
 
 exports.deleteServiceParameter = asyncHandler(async (req, res) => {
@@ -62,5 +62,5 @@ exports.deleteServiceParameter = asyncHandler(async (req, res) => {
 
   await ServiceParameter.deleteMany({ masterId, title: serviceTitle });
 
-  return res.json({ message: "Услуга удалена!" });
+  return res.json({ message: 'Услуга удалена!' });
 });

@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server"
+    "dev": "nodemon server",
+    "test": "jest --runInBand --bail --testTimeout 10000"
   },
   "author": "nukuutos",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isequal": "^4.5.0",
     "mongodb": "^4.1.3",
     "multer": "^1.4.2",
@@ -41,6 +43,13 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jest": "^25.2.2",
     "eslint-plugin-node": "^11.1.0",
+    "image-size": "^1.0.0",
+    "jest": "^27.2.5",
     "prettier": "^2.4.1",
+    "supertest": "^6.1.6"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "globalSetup": "<rootDir>/tests/global.js"
   }
 }

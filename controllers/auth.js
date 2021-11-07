@@ -40,8 +40,6 @@ exports.signIn = asyncHandler(async (req, res) => {
 exports.refreshToken = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
 
-  if (!refreshToken) throw new HttpError(NO_REFRESH_TOKEN, 404);
-
   const _id = User.verifyToken(refreshToken);
   const user = await User.findOne({ _id }, { role: 1 });
 

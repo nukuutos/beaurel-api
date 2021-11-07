@@ -1,5 +1,5 @@
-const { SERVICE } = require("../../config/collection-names");
-const Service = require("./service");
+const { SERVICE } = require('../../config/collection-names');
+const Service = require('./service');
 
 class SubService extends Service {
   static name = SERVICE;
@@ -11,8 +11,8 @@ class SubService extends Service {
   }
 
   async update() {
-    const { id, parameter, duration, price } = this;
-    await SubService.updateOne({ _id: id }, { parameter, duration, price });
+    const { id, parameter, duration, price, masterId } = this;
+    await SubService.updateOne({ _id: id, masterId }, { parameter, duration, price });
   }
 
   setOrderAndSubOrder(order, subOrder) {

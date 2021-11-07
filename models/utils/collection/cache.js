@@ -1,16 +1,18 @@
-const { AbstractCursor } = require("mongodb/lib/cursor/abstract_cursor");
-const { Collection } = require("mongodb/lib/collection");
-const client = require("../../../utils/redis");
+const { AbstractCursor } = require('mongodb/lib/cursor/abstract_cursor');
+const { Collection } = require('mongodb/lib/collection');
+const { getRedisClient } = require('../../../utils/redis');
 
-const next = AbstractCursor.prototype.next;
-const toArray = AbstractCursor.prototype.toArray;
-const find = Collection.prototype.find;
+const { next } = AbstractCursor.prototype;
+const { toArray } = AbstractCursor.prototype;
+const { find } = Collection.prototype;
 
-const handleCache = (fn) => {
-  return async function () {
+const handleCache = (fn) =>
+  async function () {
     const { cacheKeys } = this;
 
     if (!cacheKeys) return await fn.apply(this, arguments);
+
+    const client = getRedisClient();
 
     const cachedData = await client.hget(cacheKeys[0], cacheKeys[1]);
 
@@ -26,14 +28,13 @@ const handleCache = (fn) => {
 
     return data;
   };
-};
 
 function cache(...args) {
   if (args.includes(null)) return this;
 
   const cacheKeys = args.map((key) => {
-    const isMongoId = typeof key === "object";
-    return isMongoId ? "id-" + key.toString() : key;
+    const isMongoId = typeof key === 'object';
+    return isMongoId ? `id-${key.toString()}` : key;
   });
 
   const cursor = Object.assign(this, { cacheKeys });

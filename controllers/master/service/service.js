@@ -1,9 +1,9 @@
-const Service = require("../../../models/service/service");
-const Timetable = require("../../../models/timetable/timetable");
-const HttpError = require("../../../models/utils/http-error");
+const Service = require('../../../models/service/service');
+const Timetable = require('../../../models/timetable/timetable');
+const HttpError = require('../../../models/utils/http-error');
 
-const asyncHandler = require("../../../middleware/async-handler");
-const { NO_UPDATED_SESSION_TIME } = require("../../../config/errors/service");
+const asyncHandler = require('../../../middleware/async-handler');
+const { NO_UPDATED_SESSION_TIME } = require('../../../config/errors/service');
 
 exports.getServices = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
@@ -25,7 +25,7 @@ exports.addService = asyncHandler(async (req, res) => {
 
   const { insertedId: id } = await service.checkDuration(sessionTime).save();
 
-  return res.status(201).json({ id, message: "Услуга успешно добавлена!" });
+  return res.status(201).json({ id, message: 'Услуга успешно добавлена!' });
 });
 
 exports.updateService = asyncHandler(async (req, res) => {
@@ -41,7 +41,7 @@ exports.updateService = asyncHandler(async (req, res) => {
 
   await service.checkDuration(sessionTime).update();
 
-  return res.json({ message: "Услуга обновлена!" });
+  return res.json({ message: 'Услуга обновлена!' });
 });
 
 exports.deleteService = asyncHandler(async (req, res) => {
@@ -50,14 +50,18 @@ exports.deleteService = asyncHandler(async (req, res) => {
 
   await Service.deleteOne({ _id: serviceId, masterId });
 
-  return res.json({ message: "Услуга удалена!" });
+  return res.json({ message: 'Услуга удалена!' });
 });
 
 exports.updateServicesOrder = asyncHandler(async (req, res) => {
   const { newOrder } = req.body;
   const { id: masterId } = req.user;
 
-  await Service.updateOrder(newOrder, masterId);
+  await Service.checkOrderLength(masterId, newOrder);
+
+  const validOrder = Service.checkAndCorrectOrder(newOrder);
+
+  await Service.updateOrder(validOrder, masterId);
 
   res.status(204).end();
 });
@@ -82,5 +86,5 @@ exports.putUpdateToServices = asyncHandler(async (req, res) => {
     .checkServicesForDuration(services, sessionTime)
     .putUpdateToServices(services);
 
-  res.json({ message: "Обновление успешно добавлено к услугам!" });
+  res.json({ message: 'Обновление успешно добавлено к услугам!' });
 });

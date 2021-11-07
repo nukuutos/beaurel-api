@@ -1,12 +1,13 @@
-const dayjs = require("dayjs");
-const { APPOINTMENT } = require("../../../config/collection-names");
+const dayjs = require('dayjs');
+const { APPOINTMENT } = require('../../../config/collection-names');
 const {
   INCORRECT_TIMETABLE,
   INCORRECT_SERVICE,
   INCORRECT_DURATION,
-} = require("../../../config/errors/appointment");
-const Collection = require("../../utils/collection/collection");
-const HttpError = require("../../utils/http-error");
+  UNSUITABLE_SERVICE,
+} = require('../../../config/errors/appointment');
+const Collection = require('../../utils/collection/collection');
+const HttpError = require('../../utils/http-error');
 
 class BookingController extends Collection {
   static name = APPOINTMENT;
@@ -20,13 +21,8 @@ class BookingController extends Collection {
     this.date = date;
     this.time = time;
     this.bookedAppointments = bookedAppointments;
-    this.status = "onConfiramtion";
+    this.status = 'onConfiramtion';
     this.createdAt = dayjs().toDate();
-  }
-
-  isTimetable() {
-    if (!this.timetable) throw new HttpError(INCORRECT_TIMETABLE, 404);
-    return this;
   }
 
   isService() {
@@ -41,7 +37,7 @@ class BookingController extends Collection {
 
     let workingTimetable = { ...currentTimetable };
 
-    if (!update.date) {
+    if (!update?.date) {
       this.timetable = workingTimetable;
       return this;
     }
@@ -60,12 +56,16 @@ class BookingController extends Collection {
 
     const { update, ...currentService } = service;
 
-    if (!update.date) {
+    if (!update?.date) {
       this.service = currentService;
       return this;
     }
 
     const updateDate = dayjs(update.date);
+
+    if (updateDate.isBefore(bookingDate) && update.status === 'unsuitable') {
+      throw new HttpError(UNSUITABLE_SERVICE, 400);
+    }
 
     if (updateDate.isBefore(bookingDate)) {
       this.service.duration = update.duration;

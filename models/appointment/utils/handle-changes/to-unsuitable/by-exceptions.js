@@ -1,25 +1,31 @@
-// day of week !!!!
-const { find } = require("./utils");
+const { find } = require('./utils');
+
+// mongodb      |   app
+// sun    sat   |   sun    sat
+//  1 --- 7     |    6 --- 5 / + 1
+//                   7 --- 6 / % 7
+//                   0 --- 6 / + 1
+//                   1 --- 7
 
 const createPipeline = (exceptions) => [
   {
     $addFields: {
-      dayOfWeek: { $subtract: [{ $dayOfWeek: "$date" }, 1] },
+      dayOfWeek: { $subtract: [{ $dayOfWeek: '$date' }, 1] }, // to indexes,
       exceptions: { $objectToArray: exceptions },
     },
   },
   {
     $addFields: {
-      day: { $arrayElemAt: ["$exceptions", "$dayOfWeek"] },
+      day: { $arrayElemAt: ['$exceptions', '$dayOfWeek'] },
     },
   },
   {
     $set: {
       status: {
         $cond: {
-          if: { $in: ["$time.startAt", "$day.v"] },
-          then: "unsuitable",
-          else: "$status",
+          if: { $in: ['$time.startAt', '$day.v'] },
+          then: 'unsuitable',
+          else: '$status',
         },
       },
     },
@@ -33,12 +39,33 @@ const createPipeline = (exceptions) => [
   },
 ];
 
+// change exception keys for date format in mongodb
+const formatWeekObjectForMongodb = (object) => {
+  const weekdays = Object.keys(object);
+  const exceptions = Object.values(object);
+
+  const formatedWeekdays = weekdays.map((weekday) => ((Number(weekday) + 1) % 7) + 1);
+
+  const result = {};
+
+  for (let i = 0; i < 7; i++) {
+    const key = formatedWeekdays[i];
+    const value = exceptions[i];
+
+    result[key] = value;
+  }
+
+  return result;
+};
+
 // exceptions test it
 module.exports = (defaultParams, exceptions) => {
   const { bulkOp, masterId, date } = defaultParams;
 
   const findQuery = find(masterId, date);
-  const pipeline = createPipeline(exceptions);
+
+  const formatedExceptions = formatWeekObjectForMongodb(exceptions);
+  const pipeline = createPipeline(formatedExceptions);
 
   bulkOp.aggregationUpdate(findQuery, pipeline);
 };

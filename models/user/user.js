@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { ObjectId } = require("mongodb");
 
 const { USER } = require("../../config/collection-names");
-const { INVALID_EMAIL_OR_PASSWORD } = require("../../config/errors/auth");
+const { INVALID_EMAIL_OR_PASSWORD, INVALID_TOKEN } = require("../../config/errors/auth");
 const Collection = require("../utils/collection/collection");
 const HttpError = require("../utils/http-error");
 
@@ -31,8 +31,12 @@ class User extends Collection {
   }
 
   static verifyToken(token) {
-    const { user } = jwt.verify(token, JWT_KEY_REFRESH);
-    return new ObjectId(user.id);
+    try {
+      const { user } = jwt.verify(token, JWT_KEY_REFRESH);
+      return new ObjectId(user.id);
+    } catch (error) {
+      throw new HttpError(INVALID_TOKEN, 400);
+    }
   }
 
   checkPassword(enteredPassword) {

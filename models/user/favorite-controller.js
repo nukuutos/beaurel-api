@@ -1,6 +1,9 @@
 const { FAVORITES } = require("../../config/cache");
 const { USER } = require("../../config/collection-names");
-const { MASTER_IS_FRIEND } = require("../../config/errors/favorite");
+const {
+  MASTER_IS_FRIEND,
+  NO_MASTER,
+} = require("../../config/errors/favorite");
 const favoriteMasters = require("../../pipelines/favorite/favorite-masters");
 const HttpError = require("../utils/http-error");
 const AuthUser = require("./auth-user");
@@ -14,13 +17,18 @@ class Favorite extends AuthUser {
 
   static async getFavoriteMasters(userId) {
     const pipeline = favoriteMasters(userId);
-    return await this.aggregate(pipeline).cache(userId, FAVORITES).next();
+    return await this.aggregate(pipeline)
+      .cache(userId, FAVORITES)
+      .next();
   }
 
   async checkMaster(masterId) {
     const { _id } = this;
 
-    const { masters } = await Favorite.findOne({ _id }, { _id: 0, masters: 1 });
+    const { masters } = await Favorite.findOne(
+      { _id },
+      { _id: 0, masters: 1 }
+    );
 
     const stringMasters = masters.map((master) => master.toString());
     const stringMasterId = masterId.toString();
@@ -28,18 +36,33 @@ class Favorite extends AuthUser {
     if (stringMasters.includes(stringMasterId)) {
       throw new HttpError(MASTER_IS_FRIEND, 400);
     }
+
+    const isMaster = await Favorite.findOne(
+      { _id: masterId, role: "master" },
+      { _id: 1, role: 1 }
+    );
+
+    if (!isMaster) {
+      throw new HttpError(NO_MASTER, 404);
+    }
   }
 
   async addMaster(masterId) {
     const { _id } = this;
 
-    await Favorite.updateOne({ _id }, { $push: { masters: masterId } });
+    await Favorite.updateOne(
+      { _id },
+      { $push: { masters: masterId } }
+    );
   }
 
   async deleteMaster(masterId) {
     const { _id } = this;
 
-    await Favorite.updateOne({ _id }, { $pull: { masters: masterId } });
+    await Favorite.updateOne(
+      { _id },
+      { $pull: { masters: masterId } }
+    );
   }
 }
 

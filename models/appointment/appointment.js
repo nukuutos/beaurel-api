@@ -1,13 +1,15 @@
-const { getAggregate } = require("../../utils/database");
-const { APPOINTMENT, TIMETABLE } = require("../../config/collection-names");
+const dayjs = require('dayjs');
+const { getAggregate } = require('../../utils/database');
+const { APPOINTMENT, TIMETABLE } = require('../../config/collection-names');
 
-const masterAppointmentsAndCustomers = require("../../pipelines/appointments/master-appointments-and-customers");
-const customerAppointmentsAndMasters = require("../../pipelines/appointments/customer-appointments-and-masters");
-const bookingData = require("../../pipelines/appointments/booking-data");
-const Collection = require("../utils/collection/collection");
-const sortDays = require("./utils/sort-days");
-const handleChanges = require("./utils/handle-changes");
-const dayjs = require("dayjs");
+const masterAppointmentsAndCustomers = require('../../pipelines/appointments/master-appointments-and-customers');
+const customerAppointmentsAndMasters = require('../../pipelines/appointments/customer-appointments-and-masters');
+const bookingData = require('../../pipelines/appointments/booking-data');
+const Collection = require('../utils/collection/collection');
+const sortDays = require('./utils/sort-days');
+const handleChanges = require('./utils/handle-changes');
+const HttpError = require('../utils/http-error');
+const { INCORRECT_TIMETABLE } = require('../../config/errors/appointment');
 
 class Appointment extends Collection {
   static name = APPOINTMENT;
@@ -19,7 +21,7 @@ class Appointment extends Collection {
     this.customerId = customerId;
     this.service = service;
     this.time = time; // { startAt, endAt }
-    this.status = "onConfirmation"; // onConfirmation, confirmed, cancelled, ended/expired, unsuitable, history?
+    this.status = 'onConfirmation'; // onConfirmation, confirmed, cancelled, ended/expired, unsuitable, history?
     this.date = date;
     this.createdAt = dayjs().utcNow();
   }
@@ -40,12 +42,12 @@ class Appointment extends Collection {
 
   static async toConfirmed(masterId, date) {
     const query = { masterId, date: { $gte: date } };
-    const update = { status: "confirmed" };
+    const update = { status: 'confirmed' };
     await this.updateMany(query, update);
   }
 
   static async toUnsuitable({ masterId, date, updatedTimetable, changes }) {
-    let bulkOp = this.unorderedBulkOp();
+    const bulkOp = this.unorderedBulkOp();
     const defaultParams = { bulkOp, masterId, date };
     handleChanges(defaultParams, changes, updatedTimetable);
     await bulkOp.execute();
@@ -54,11 +56,13 @@ class Appointment extends Collection {
   static async getInfoForBookingAppointment(masterId, serviceId, date) {
     const aggregate = getAggregate(TIMETABLE);
     const pipeline = bookingData(masterId, serviceId, date);
-    return await aggregate(pipeline).next();
+    const data = await aggregate(pipeline).next();
+    if (!data) throw new HttpError(INCORRECT_TIMETABLE, 404);
+    return data;
   }
 
   static async toOnConfirmation(masterId) {
-    await this.updateMany({ masterId, status: "unsuitable" }, { status: "onConfirmation" });
+    await this.updateMany({ masterId, status: 'unsuitable' }, { status: 'onConfirmation' });
   }
 }
 

@@ -20,7 +20,10 @@ class Avatar extends Image {
   }
 
   static async deletePreviousFS(id) {
-    const { avatar: shortUrl } = await User.findOne({ _id: id }, { _id: 0, avatar: 1 });
+    const { avatar: shortUrl } = await User.findOne(
+      { _id: id },
+      { _id: 0, avatar: 1 }
+    );
 
     if (shortUrl) {
       const avatar = new Avatar({ shortUrl });

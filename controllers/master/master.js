@@ -1,6 +1,6 @@
-const Master = require("../../models/user/master/master");
-const asyncHandler = require("../../middleware/async-handler");
-const SearchQuery = require("../../models/user/master/search-master-query");
+const Master = require('../../models/user/master/master');
+const asyncHandler = require('../../middleware/async-handler');
+const SearchQuery = require('../../models/user/master/search-master-query');
 
 exports.getMasterProfile = asyncHandler(async (req, res) => {
   const { masterId } = req.params;

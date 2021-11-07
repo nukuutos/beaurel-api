@@ -1,6 +1,6 @@
-const { INCORRECT_EXCEPTIONS } = require("../../../config/errors/timetable");
-const HttpError = require("../../utils/http-error");
-const TimetableGenerator = require("./timetable-generator");
+const { INCORRECT_EXCEPTIONS } = require('../../../config/errors/timetable');
+const HttpError = require('../../utils/http-error');
+const TimetableGenerator = require('./timetable-generator');
 
 class AutoGenerator extends TimetableGenerator {
   constructor({ sessionTime, auto, manually, type, timetableId, difference, masterId }) {

@@ -1,21 +1,17 @@
-const getChanges = require("./get-changes");
+const getChanges = require('./get-changes');
 
 const {
   handleSessionTimeChange,
   handleSwitchTypeToAuto,
   handleChangesInAutoTimetable,
   handleChangesInManuallyTimetable,
-} = require("./handle-functions");
+} = require('./handle-functions');
 
 module.exports = (defaultParams, changes, updatedTimetable) => {
   const { auto, manually, sessionTime, type } = updatedTimetable;
 
-  const {
-    isSessionTime,
-    isSwitchToAuto,
-    isChangesInAutoTimetable,
-    isChangesInManuallyTimetable,
-  } = getChanges(changes, type);
+  const { isSessionTime, isSwitchToAuto, isChangesInAutoTimetable, isChangesInManuallyTimetable } =
+    getChanges(changes, type);
 
   if (isSessionTime) handleSessionTimeChange(defaultParams, sessionTime);
 

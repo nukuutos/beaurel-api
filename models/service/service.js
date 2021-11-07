@@ -1,22 +1,29 @@
-const { getAggregate } = require("../../utils/database");
+const isEqual = require('lodash.isequal');
+const { getAggregate } = require('../../utils/database');
 
-const servicesCountAndIsTitle = require("../../pipelines/service/services-count-and-is-title");
-const servicesAndTimetable = require("../../pipelines/service/services-and-timetable");
-const unsuitableServices = require("../../pipelines/service/unsuitable-services");
-const sessionTimeAndServicesIds = require("../../pipelines/service/session-time-and-services-ids");
-const Collection = require("../utils/collection/collection");
-const { SERVICE, TIMETABLE } = require("../../config/collection-names");
-const { sortServices, bulkToSuitable, bulkToUpdatedOrder } = require("./utils");
-const isEqual = require("lodash.isequal");
-const HttpError = require("../utils/http-error");
+const servicesCountAndIsTitle = require('../../pipelines/service/services-count-and-is-title');
+const servicesAndTimetable = require('../../pipelines/service/services-and-timetable');
+const unsuitableServices = require('../../pipelines/service/unsuitable-services');
+const sessionTimeAndServicesIds = require('../../pipelines/service/session-time-and-services-ids');
+const Collection = require('../utils/collection/collection');
+const { SERVICE, TIMETABLE } = require('../../config/collection-names');
+const {
+  sortServices,
+  bulkToSuitable,
+  bulkToUpdatedOrder,
+  checkAndCorrectOrder,
+  sortOrder,
+} = require('./utils');
+const HttpError = require('../utils/http-error');
 
-const { SERVICES_AND_TIMETABLE, UNSUITABLE_SERVICES } = require("../../config/cache");
+const { SERVICES_AND_TIMETABLE, UNSUITABLE_SERVICES } = require('../../config/cache');
 
 const {
   INCORRECT_SERVICES_FOR_UPDATE,
   TITLE_EXISTS,
   INCORRECT_DURATION,
-} = require("../../config/errors/service");
+  SERVICES_ORDER_LENGTH,
+} = require('../../config/errors/service');
 
 class Service extends Collection {
   static name = SERVICE;
@@ -72,16 +79,14 @@ class Service extends Collection {
   }
 
   static async toUnsuitable({ masterId, sessionTime, date, changes }) {
-    if (!changes["sessionTime"]) return 0;
+    if (!changes.sessionTime) return 0;
 
-    const { result } = await Service.updateMany(
+    const { modifiedCount } = await Service.updateMany(
       { masterId, duration: { $not: { $mod: [sessionTime, 0] } } },
-      { update: { date, status: "unsuitable" } }
+      { update: { date, status: 'unsuitable' } }
     );
 
-    console.log({ masterId, duration: { $not: { $mod: [sessionTime, 0] } } });
-
-    return result.n;
+    return modifiedCount;
   }
 
   static async cancelUpdates(masterId) {
@@ -107,6 +112,16 @@ class Service extends Collection {
       .forEach((service) => service.checkDuration(sessionTime));
 
     return this;
+  }
+
+  static checkAndCorrectOrder(order) {
+    const sortedOrder = sortOrder(order);
+    return checkAndCorrectOrder(sortedOrder);
+  }
+
+  static async checkOrderLength(masterId, order) {
+    const services = await this.find({ masterId }, { _id: 1 });
+    if (order.length !== services.length) throw new HttpError(SERVICES_ORDER_LENGTH, 400);
   }
 
   async checkTitleAndSetOrder() {

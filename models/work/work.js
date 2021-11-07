@@ -1,7 +1,7 @@
-const Collection = require("../utils/collection/collection");
-const { WORK } = require("../../config/collection-names");
-const HttpError = require("../utils/http-error");
-const { TITLE_EXISTS } = require("../../config/errors/work");
+const Collection = require('../utils/collection/collection');
+const { WORK } = require('../../config/collection-names');
+const HttpError = require('../utils/http-error');
+const { TITLE_EXISTS } = require('../../config/errors/work');
 
 class Work extends Collection {
   static name = WORK;
@@ -14,7 +14,7 @@ class Work extends Collection {
   }
 
   static async isExisted(masterId, title) {
-    const isTitle = await this.findOne({ masterId, title }, { _id: 1 });
+    const isTitle = await this.findOne({ masterId, title }, { _id: 1, title: 1 });
     if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
   }
 

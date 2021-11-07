@@ -1,22 +1,13 @@
-const Timetable = require("../timetable");
-const HttpError = require("../../utils/http-error");
-const lodash = require("lodash");
-const {
-  SAME_TIMETABLES,
-  UPDATE_EXISTS,
-  NO_TIMETABLE,
-} = require("../../../config/errors/timetable");
+const lodash = require('lodash');
+const Timetable = require('../timetable');
+const HttpError = require('../../utils/http-error');
+const { SAME_TIMETABLES, UPDATE_EXISTS } = require('../../../config/errors/timetable');
 
 class TimetableGenerator extends Timetable {
   constructor({ masterId, sessionTime, type, auto, manually, update, difference = null }) {
     super(masterId, sessionTime, type, auto, manually);
     this.update = update;
     this.difference = difference;
-  }
-
-  isExisted() {
-    if (!this.sessionTime) throw new HttpError(NO_TIMETABLE, 404);
-    return this;
   }
 
   isUpdate() {
@@ -29,19 +20,19 @@ class TimetableGenerator extends Timetable {
     return this;
   }
 
-  getDifference() {
-    const { sessionTime: currentSessionTime, type: currentType } = this;
-    const { sessionTime: updatedSessionTime, type: updatedType } = this.update;
+  getDifference(currentTimetable) {
+    const { sessionTime: updatedSessionTime, type: updatedType } = this;
+    const { sessionTime: currentSessionTime, type: currentType } = currentTimetable;
 
     let difference = {};
 
-    if (currentSessionTime !== updatedSessionTime) difference["sessionTime"] = 1;
+    if (currentSessionTime !== updatedSessionTime) difference.sessionTime = 1;
 
     if (currentType === updatedType) {
-      const subDifference = lodash.getDifference(this[currentType], this.update[updatedType]);
+      const subDifference = lodash.getDifference(this[updatedType], currentTimetable[currentType]);
       difference = { ...difference, ...subDifference };
     } else {
-      difference["type"] = 1;
+      difference.type = 1;
     }
 
     this.difference = difference;
@@ -61,7 +52,11 @@ class TimetableGenerator extends Timetable {
 
   async makeUpdate(date) {
     const { timetableId, masterId, ...update } = this;
-    await Timetable.updateOne({ _id: timetableId, masterId }, { update: { ...update, date } });
+
+    await Timetable.updateOne(
+      { _id: timetableId, masterId },
+      { update: { ...update, date: date.toDate() } }
+    );
   }
 }
 

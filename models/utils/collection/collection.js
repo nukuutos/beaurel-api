@@ -1,8 +1,8 @@
-const { getCollection } = require("../../../utils/database");
-const { checkClass, getCollectionName } = require("./utils");
+const { getCollection } = require('../../../utils/database');
+const { checkClass, getCollectionName } = require('./utils');
 
-require("./bulk");
-require("./cache");
+require('./bulk');
+require('./cache');
 
 class Collection {
   static name = null;
@@ -28,11 +28,13 @@ class Collection {
 
   static async find(query, projection = null, { page = 0, limit = 0 } = {}) {
     const findObject = this.collection()
-      .find(query, { projection: projection })
+      .find(query, { projection })
       .skip(page * limit)
       .limit(limit);
 
     const result = Object.assign(findObject, this);
+
+    delete this.cacheKeys;
 
     return await result.toArray();
   }
@@ -40,12 +42,15 @@ class Collection {
   static async findOne(query, projection = null) {
     const collection = this.collection();
     const result = Object.assign(collection, this);
-    return await result.findOne(query, { projection: projection });
+
+    delete this.cacheKeys;
+
+    return await result.findOne(query, { projection });
   }
 
   static async updateOne(query, update, options) {
     const stringUpdate = JSON.stringify(update);
-    const isQuerySign = stringUpdate.includes("$");
+    const isQuerySign = stringUpdate.includes('$');
 
     update = isQuerySign ? update : { $set: update };
 
@@ -67,12 +72,17 @@ class Collection {
   static aggregate(pipeline) {
     const aggregateObject = this.collection().aggregate(pipeline);
     const result = Object.assign(aggregateObject, this);
+
+    delete this.cacheKeys;
+
     return result;
   }
 
   static cache(...cacheKeys) {
     const collection = this.collection().cache(...cacheKeys);
+    // eslint-disable-next-line prefer-object-spread
     const result = Object.assign(this, { cacheKeys: collection.cacheKeys });
+
     return result;
   }
 

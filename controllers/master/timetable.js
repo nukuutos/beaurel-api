@@ -1,61 +1,61 @@
-const Timetable = require("../../models/timetable/timetable");
-const HttpError = require("../../models/utils/http-error");
+const Timetable = require('../../models/timetable/timetable');
+const HttpError = require('../../models/utils/http-error');
 
-const asyncHandler = require("../../middleware/async-handler");
+const asyncHandler = require('../../middleware/async-handler');
 
-const Service = require("../../models/service/service");
-const Appointment = require("../../models/appointment/appointment");
-const AutoGenerator = require("../../models/timetable/timetable-generator/auto-generator");
-const TimetableGenerator = require("../../models/timetable/timetable-generator/timetable-generator");
-const ManuallyGenerator = require("../../models/timetable/timetable-generator/manually-generator");
-const { NO_TIMETABLE, NO_UPDATE } = require("../../config/errors/timetable");
+const Service = require('../../models/service/service');
+const Appointment = require('../../models/appointment/appointment');
+const AutoGenerator = require('../../models/timetable/timetable-generator/auto-generator');
+const TimetableGenerator = require('../../models/timetable/timetable-generator/timetable-generator');
+const ManuallyGenerator = require('../../models/timetable/timetable-generator/manually-generator');
+const { NO_TIMETABLE, NO_UPDATE } = require('../../config/errors/timetable');
 
 exports.getTimetableAndAppointments = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
 
   const { timetable, appointments } = await Timetable.getTimetableAndAppointments(masterId);
 
-  if (!timetable) throw new HttpError(NO_TIMETABLE, 400);
-
   return res.json({ timetable, appointments: appointments || [] });
 });
 
 exports.updateTimetable = asyncHandler(async (req, res) => {
   const { masterId, timetableId } = req.params;
-  let { date, ...updatedTimetable } = req.body;
+  const { date, ...updatedTimetable } = req.body;
 
-  const find = { _id: timetableId, masterId };
-  const projection = { _id: 0, masterId: 0, "auto.possibleAppointmentsTime": 0 };
-  const { update: isUpdate, timezone, ...currentTimetable } = await Timetable.findOne(
-    find,
-    projection
-  );
+  const { timezone, ...currentTimetable } = await Timetable.getDataForUpdate(timetableId, masterId);
 
-  let timetable = new TimetableGenerator({ ...currentTimetable, update: isUpdate, masterId });
+  let timetable = new TimetableGenerator({ ...currentTimetable, masterId });
 
-  timetable.isExisted().isUpdate().addUpdate(updatedTimetable).getDifference().checkDifference();
+  timetable.isUpdate().addUpdate(updatedTimetable);
 
-  const { update, difference } = timetable;
+  const { update } = timetable;
 
-  if (update.type === "auto") {
-    timetable = new AutoGenerator({ ...update, difference, timetableId, masterId });
+  if (update.type === 'auto') {
+    timetable = new AutoGenerator({ ...update, timetableId, masterId });
     timetable.getPossibleAppointmentsTime().checkExceptions();
   } else {
-    timetable = new ManuallyGenerator({ ...update, difference, timetableId, masterId });
+    timetable = new ManuallyGenerator({ ...update, timetableId, masterId });
     timetable.checkAppointments();
   }
 
-  date = date.toLocalTimeInUTC("Asia/Vladivostok");
-  await timetable.makeUpdate(date);
+  const { difference } = timetable.getDifference(currentTimetable).checkDifference();
+
+  //  dateTz is saved to db but every next search query executes by reseted utc date
+  const dateTz = date.toLocalTimeInUTC(timezone);
+  await timetable.makeUpdate(dateTz);
 
   const { sessionTime } = update;
-  const defaultParams = { masterId, date, changes: difference };
-
+  const defaultParams = { masterId, date: date.toDate(), changes: difference };
   await Appointment.toUnsuitable({ ...defaultParams, updatedTimetable });
-  const unsuitableServices = await Service.toUnsuitable({ ...defaultParams, sessionTime });
+
+  const unsuitableServices = await Service.toUnsuitable({
+    ...defaultParams,
+    date: dateTz.toDate(),
+    sessionTime,
+  });
 
   return res.json({
-    message: "Расписание обновлено!",
+    message: 'Расписание обновлено!',
     unsuitableServices,
   });
 });
@@ -63,13 +63,14 @@ exports.updateTimetable = asyncHandler(async (req, res) => {
 exports.deleteTimetableUpdate = asyncHandler(async (req, res) => {
   const { masterId, timetableId } = req.params;
 
-  const { update } = await Timetable.findOne({ _id: timetableId, masterId }, { _id: 0, update: 1 });
+  const timetable = await Timetable.findOne({ _id: timetableId, masterId }, { _id: 0, update: 1 });
 
-  if (!update) throw new HttpError(NO_UPDATE, 400);
+  if (!timetable) throw new HttpError(NO_TIMETABLE, 404);
+  if (!timetable.update) throw new HttpError(NO_UPDATE, 404);
 
   await Appointment.toOnConfirmation(masterId);
   await Service.cancelUpdates(masterId);
   await Timetable.cancelUpdate(timetableId);
 
-  return res.json({ message: "Обновление отменено!" });
+  return res.json({ message: 'Обновление отменено!' });
 });

@@ -1,0 +1,80 @@
+const { ObjectId } = require('mongodb');
+const master = require('../masters/master');
+
+module.exports = [
+  {
+    _id: new ObjectId('6121fc858fce2120cc841b68'),
+    masterId: master._id,
+    title: 'Ываы',
+    duration: 120,
+    price: 23423,
+    order: 0,
+    subOrder: null,
+    parameter: null,
+    update: {
+      status: 'suitable',
+      duration: 90,
+      date: new Date('2021-09-28T14:00:00.49Z'),
+    },
+  },
+  {
+    _id: new ObjectId('6121fc9f8fce2120cc841b6c'),
+    masterId: master._id,
+    title: 'Суцаыва',
+    parameter: 'аыва',
+    duration: 120,
+    price: 324,
+    order: 1,
+    subOrder: 2,
+    update: {
+      status: 'suitable',
+      duration: 90,
+      date: new Date('2021-09-28T14:00:00.49Z'),
+    },
+  },
+  {
+    _id: new ObjectId('6121fc9f8fce2120cc841b6a'),
+    masterId: master._id,
+    title: 'Суцаыва',
+    parameter: '423а',
+    duration: 120,
+    price: 342,
+    order: 1,
+    subOrder: 3,
+    update: {
+      status: 'suitable',
+      duration: 90,
+      date: new Date('2021-09-28T14:00:00.49Z'),
+    },
+  },
+  {
+    _id: new ObjectId('6121fc9f8fce2120cc841b69'),
+    masterId: master._id,
+    title: 'Суцаыва',
+    parameter: '42342',
+    duration: 120,
+    price: 34,
+    order: 1,
+    subOrder: 0,
+    update: {
+      status: 'suitable',
+      duration: 90,
+      date: new Date('2021-09-28T14:00:00.49Z'),
+    },
+  },
+  {
+    _id: new ObjectId('6121fc9f8fce2120cc841b6b'),
+    masterId: master._id,
+    title: 'Суцаыва',
+    parameter: 'капе',
+    duration: 120,
+    price: 342,
+    order: 1,
+    subOrder: 1,
+    update: {
+      status: 'suitable',
+      duration: 90,
+      date: new Date('2021-09-28T14:00:00.49Z'),
+    },
+  },
+];

@@ -1,7 +1,7 @@
-const { APPOINTMENT } = require("../../../config/collection-names");
-const { UNAVAILABLE_TIME, INCORRECT_TIME } = require("../../../config/errors/appointment");
-const HttpError = require("../../utils/http-error");
-const BookingController = require("./booking-controller");
+const { APPOINTMENT } = require('../../../config/collection-names');
+const { UNAVAILABLE_TIME, INCORRECT_TIME } = require('../../../config/errors/appointment');
+const HttpError = require('../../utils/http-error');
+const BookingController = require('./booking-controller');
 
 class BookingManuallyController extends BookingController {
   static name = APPOINTMENT;
@@ -24,8 +24,10 @@ class BookingManuallyController extends BookingController {
   }
 
   isTimeExist() {
-    const { manually, date } = this.timetable;
+    const { timetable, date, time } = this;
+    const { manually } = timetable;
     const { appointments } = manually;
+    const { startAt } = time;
 
     const weekday = date.weekday();
     if (!appointments[weekday].includes(startAt)) {

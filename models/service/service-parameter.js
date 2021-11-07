@@ -1,7 +1,7 @@
-const Service = require("./service");
-const serviceParameter = require("../../pipelines/service/service-parameter");
-const { SERVICE } = require("../../config/collection-names");
-const SubService = require("./sub-service");
+const Service = require('./service');
+const serviceParameter = require('../../pipelines/service/service-parameter');
+const { SERVICE } = require('../../config/collection-names');
+const SubService = require('./sub-service');
 
 class ServiceParameter extends Service {
   static name = SERVICE;
