@@ -14,8 +14,8 @@ exports.getTimetableAndAppointmentsForUpdate = (masterId, appointmentId, date) =
       pipeline: [
         {
           $match: {
-            status: { $nin: ['cancelled', 'unsuitable'] },
-            _id: { $ne: appointmentId }, //??? was masterId
+            status: { $nin: ['cancelled', 'unsuitable', 'history', 'rejected'] },
+            _id: { $ne: appointmentId },
             $expr: {
               $and: [
                 {
