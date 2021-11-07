@@ -1,4 +1,4 @@
-const client = require("../utils/redis");
+const { getRedisClient } = require("../utils/redis");
 
 const {
   MASTER_APPOINTMENTS,
@@ -10,7 +10,8 @@ const {
 } = require("../config/cache");
 
 const handleSecondKey = (key, req) => {
-  const isAppointments = key === MASTER_APPOINTMENTS || key === CUSTOMER_APPOINTMENTS;
+  const isAppointments =
+    key === MASTER_APPOINTMENTS || key === CUSTOMER_APPOINTMENTS;
 
   if (isAppointments) {
     return key + req.params.status;
@@ -53,9 +54,9 @@ const getCleanCache = (...keys) => {
 
     keys = handleKeys(keys, req);
 
-    client.hdel(...keys);
+    const client = getRedisClient();
 
-    console.log("clean it", keys);
+    client.hdel(...keys);
   };
 };
 

@@ -1,29 +1,45 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient } = require('mongodb');
+const HttpError = require('../models/utils/http-error');
 
-const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME } = process.env;
+const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME, NODE_ENV } = process.env;
 
 const uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority`;
 
-let _db;
+let client;
 
-const mongoConnect = async (callback) => {
+const connectDB = async () => {
   const options = { useUnifiedTopology: true };
-  const client = new MongoClient(uri, options);
+
+  client = new MongoClient(uri, options);
 
   try {
     await client.connect();
-    console.log("Connected!");
-    _db = client.db();
-    callback();
+    if (NODE_ENV !== 'test') console.log('Connected!');
   } catch (err) {
     console.log(err);
     client.close();
   }
+
+  return client;
+};
+
+const closeDB = async () => {
+  await client.close();
 };
 
 const getDb = () => {
-  if (_db) return _db;
-  throw "No database found!";
+  if (client) return client.db();
+  throw new HttpError('No database found!');
+};
+
+const dropDB = async () => {
+  const db = getDb();
+  await db.dropDatabase();
+};
+
+const dropCollection = async (name) => {
+  const db = getDb();
+  await db.dropCollection(name);
 };
 
 const getCollection = (name) => {
@@ -38,4 +54,4 @@ const getAggregate = (collectionName) => {
   return aggregate;
 };
 
-module.exports = { mongoConnect, getDb, getCollection, getAggregate };
+module.exports = { connectDB, dropCollection, dropDB, closeDB, getDb, getCollection, getAggregate };
