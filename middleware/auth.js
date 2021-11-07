@@ -15,12 +15,6 @@ const getToken = (headers) => {
   return null;
 };
 
-const getParamId = (params) => {
-  const { masterId, profileId } = params;
-
-  return masterId || profileId;
-};
-
 module.exports = (req, res, next) => {
   const token = getToken(req.headers);
 
