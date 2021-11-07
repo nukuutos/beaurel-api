@@ -1,5 +1,7 @@
 node_modules
+
 images
+!images/avatars/default.svg
 
 dump.rdb
 
