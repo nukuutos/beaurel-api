@@ -1,22 +1,25 @@
-const express = require("express");
+const express = require('express');
 
-const controller = require("../../controllers/master/timetable");
+const controller = require('../../controllers/master/timetable');
 
-const validator = require("../../validator/master/timetable");
+const validator = require('../../validator/master/timetable');
 
-const master = require("../../middleware/master");
-const auth = require("../../middleware/auth");
-const validate = require("../../middleware/validate");
-const isYourself = require("../../middleware/is-yourself");
-const getCleanCache = require("../../middleware/get-clean-cache");
+const master = require('../../middleware/master');
+const auth = require('../../middleware/auth');
+const validate = require('../../middleware/validate');
+const isYourself = require('../../middleware/is-yourself');
+const getCleanCache = require('../../middleware/get-clean-cache');
 
 const {
   MASTER_ID,
   UNSUITABLE_SERVICES,
   TIMETABLE_AND_APPOINTMENTS,
-} = require("../../config/cache");
+  SERVICES_AND_TIMETABLE,
+} = require('../../config/cache');
 
 const router = express.Router({ mergeParams: true });
+
+const cleanCacheServicesAndTimetable = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
 const cleanCacheUnsuitableServices = getCleanCache(MASTER_ID, UNSUITABLE_SERVICES);
 const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, TIMETABLE_AND_APPOINTMENTS);
 
@@ -24,12 +27,13 @@ const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, TIMETABLE_AN
 // @desc      Create Timetable Update
 // @access    Private(master)
 router.post(
-  "/:timetableId/update",
+  '/:timetableId/update',
   auth,
   master,
   validator.updateTimetable,
   validate,
   isYourself,
+  cleanCacheServicesAndTimetable,
   cleanCacheUnsuitableServices,
   cleanCacheAppointmentsAndTimetable,
   controller.updateTimetable
@@ -39,12 +43,13 @@ router.post(
 // @desc      Delete Timetable Update
 // @access    Private(master)
 router.delete(
-  "/:timetableId/update",
+  '/:timetableId/update',
   auth,
   master,
   validator.deleteTimetableUpdate,
   validate,
   isYourself,
+  cleanCacheServicesAndTimetable,
   cleanCacheUnsuitableServices,
   cleanCacheAppointmentsAndTimetable,
   controller.deleteTimetableUpdate
@@ -54,7 +59,7 @@ router.delete(
 // @desc      Get timetable and appointmetns for booking time
 // @access    Public
 router.get(
-  "/booking",
+  '/booking',
   validator.getTimetableAndAppointments,
   validate,
   controller.getTimetableAndAppointments

@@ -21,6 +21,6 @@ router.post("/sign-in", validator.signIn, validate, controller.signIn);
 // @route     Post /api/v1/auth/refresh-token
 // @desc      Refresh user token
 // @access    Public
-router.post("/refresh-token", validator.refreshToken, controller.refreshToken);
+router.post("/refresh-token", validator.refreshToken, validate, controller.refreshToken);
 
 module.exports = router;

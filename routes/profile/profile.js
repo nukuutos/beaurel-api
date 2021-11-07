@@ -1,27 +1,28 @@
-const express = require("express");
+const express = require('express');
 
-const favoriteRouter = require("./favorite");
-const appointmentRouter = require("./appointment");
+const favoriteRouter = require('./favorite');
+const appointmentRouter = require('./appointment');
 
-const controller = require("../../controllers/profile/profile");
+const controller = require('../../controllers/profile/profile');
 
-const validator = require("../../validator/profile/profile");
+const validator = require('../../validator/profile/profile');
 
-const validate = require("../../middleware/validate");
-const auth = require("../../middleware/auth");
-const isYourself = require("../../middleware/is-yourself");
-const image = require("../../middleware/image");
+const validate = require('../../middleware/validate');
+const auth = require('../../middleware/auth');
+const isYourself = require('../../middleware/is-yourself');
+const image = require('../../middleware/image');
+const isFile = require('../../middleware/is-file');
 
 const router = express.Router();
 
-router.use("/:profileId/favorite", favoriteRouter);
-router.use("/:profileId/appointment", appointmentRouter);
+router.use('/:profileId/favorite', favoriteRouter);
+router.use('/:profileId/appointment', appointmentRouter);
 
 // @route     Patch /api/v1/profile/:profileId
 // @desc      Update profile
 // @access    Private
 router.patch(
-  "/:profileId",
+  '/:profileId',
   auth,
   validator.updateProfile,
   validate,
@@ -33,12 +34,13 @@ router.patch(
 // @desc      Update avatar
 // @access    Private
 router.put(
-  "/:profileId/avatar",
+  '/:profileId/avatar',
   auth,
   validator.updateAvatar,
   validate,
   isYourself,
   image,
+  isFile,
   controller.updateAvatar
 );
 

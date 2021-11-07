@@ -1,15 +1,15 @@
-const express = require("express");
+const express = require('express');
 
-const controller = require("../../../controllers/master/service/service");
+const controller = require('../../../controllers/master/service/service');
 
-const validator = require("../../../validator/master/service");
+const validator = require('../../../validator/master/service');
 
-const validate = require("../../../middleware/validate");
-const auth = require("../../../middleware/auth");
-const master = require("../../../middleware/master");
-const isYourself = require("../../../middleware/is-yourself");
-const getCleanCache = require("../../../middleware/get-clean-cache");
-const { UNSUITABLE_SERVICES, SERVICES_AND_TIMETABLE, MASTER_ID } = require("../../../config/cache");
+const validate = require('../../../middleware/validate');
+const auth = require('../../../middleware/auth');
+const master = require('../../../middleware/master');
+const isYourself = require('../../../middleware/is-yourself');
+const getCleanCache = require('../../../middleware/get-clean-cache');
+const { UNSUITABLE_SERVICES, SERVICES_AND_TIMETABLE, MASTER_ID } = require('../../../config/cache');
 
 const cleanCacheServices = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
 const cleanCacheUnsuitable = getCleanCache(MASTER_ID, UNSUITABLE_SERVICES);
@@ -19,13 +19,13 @@ const router = express.Router({ mergeParams: true });
 // @route     Get /api/master/:masterId/service
 // @desc      Get services(service and service-parameter too)
 // @access    Public
-router.get("/", validator.getServices, validate, controller.getServices);
+router.get('/', validator.getServices, validate, controller.getServices);
 
 // @route     Post /api/master/:masterId/service
 // @desc      Add service
 // @access    Private(master)
 router.post(
-  "/",
+  '/',
   auth,
   master,
   validator.addService,
@@ -39,7 +39,7 @@ router.post(
 // @desc      Update order of services
 // @access    Private(master)
 router.patch(
-  "/order",
+  '/order',
   auth,
   master,
   validator.updateServicesOrder,
@@ -53,7 +53,7 @@ router.patch(
 // @desc      Get services that needing update
 // @access    Private(master)
 router.get(
-  "/update",
+  '/update',
   auth,
   master,
   validator.getUnsuitableServices,
@@ -66,13 +66,14 @@ router.get(
 // @desc      Put update to services
 // @access    Private(master)
 router.put(
-  "/update",
+  '/update',
   auth,
   master,
   validator.putUpdateToServices,
   validate,
   isYourself,
   cleanCacheUnsuitable,
+  cleanCacheServices,
   controller.putUpdateToServices
 );
 
@@ -80,7 +81,7 @@ router.put(
 // @desc      Update service
 // @access    Private(master)
 router.put(
-  "/:serviceId",
+  '/:serviceId',
   auth,
   master,
   validator.updateService,
@@ -94,7 +95,7 @@ router.put(
 // @desc      Delete service
 // @access    Private(master)
 router.delete(
-  "/:serviceId",
+  '/:serviceId',
   auth,
   master,
   validator.deleteService,

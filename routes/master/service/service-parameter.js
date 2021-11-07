@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 
-const controller = require("../../../controllers/master/service/service-parameter");
+const controller = require('../../../controllers/master/service/service-parameter');
 
-const validator = require("../../../validator/master/service-parameter");
+const validator = require('../../../validator/master/service-parameter');
 
-const validate = require("../../../middleware/validate");
-const auth = require("../../../middleware/auth");
-const master = require("../../../middleware/master");
-const isYourself = require("../../../middleware/is-yourself");
-const getCleanCache = require("../../../middleware/get-clean-cache");
+const validate = require('../../../middleware/validate');
+const auth = require('../../../middleware/auth');
+const master = require('../../../middleware/master');
+const isYourself = require('../../../middleware/is-yourself');
+const getCleanCache = require('../../../middleware/get-clean-cache');
 
-const { SERVICES_AND_TIMETABLE, MASTER_ID } = require("../../../config/cache");
+const { SERVICES_AND_TIMETABLE, MASTER_ID } = require('../../../config/cache');
 
 const cleanCache = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
 const router = express.Router({ mergeParams: true });
@@ -19,7 +19,7 @@ const router = express.Router({ mergeParams: true });
 // @desc      Add service-parameter
 // @access    Private(master)
 router.post(
-  "/",
+  '/',
   auth,
   master,
   validator.addServiceParameter,
@@ -33,7 +33,7 @@ router.post(
 // @desc      Delete service-parameter
 // @access    Private(master)
 router.delete(
-  "/:serviceTitle",
+  '/:serviceTitle',
   auth,
   master,
   validator.deleteServiceParameter,
@@ -47,7 +47,7 @@ router.delete(
 // @desc      Update service-parameter title
 // @access    Private(master)
 router.put(
-  "/:serviceTitle",
+  '/:serviceTitle',
   auth,
   master,
   validator.updateServiceParameter,
@@ -57,11 +57,11 @@ router.put(
   controller.updateServiceParameter
 );
 
-// @route     Delete /api/profile/:masterId/service-parameter/:serviceTitle
+// @route     Delete /api/profile/:masterId/service-parameter/:serviceTitle/sub-service/:subServiceId
 // @desc      Delete sub-service
 // @access    Private(master)
 router.delete(
-  "/:serviceTitle/sub-service/:subServiceId",
+  '/:serviceTitle/sub-service/:subServiceId',
   auth,
   master,
   validator.deleteSubService,
@@ -75,7 +75,7 @@ router.delete(
 // @desc      Update sub-service
 // @access    Private(master)
 router.put(
-  "/:serviceTitle/sub-service/:subServiceId",
+  '/:serviceTitle/sub-service/:subServiceId',
   auth,
   master,
   validator.updateSubService,
