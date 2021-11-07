@@ -1,0 +1,36 @@
+{
+  "parser": "@babel/eslint-parser",
+  "parserOptions": { "requireConfigFile": false },
+  "env": {
+    "node": true,
+    "commonjs": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": ["airbnb-base", "plugin:node/recommended", "plugin:jest/recommended", "prettier"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-shadow": "warn",
+    "no-console": "off",
+    "class-methods-use-this": "off",
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-return-await": "off",
+    "no-restricted-syntax": "off",
+    "no-plusplus": "off",
+    "guard-for-in": "off",
+    "func-names": "off",
+    "no-continue": "off",
+
+    "jest/valid-title": "warn",
+    "jest/no-export": "off"
+  },
+  "overrides": [
+    {
+      "files": "tests/**",
+      "rules": {
+        "node/no-unpublished-require": 0,
+        "node/no-missing-require": 0
+      }
+    }
+  ]
+}
