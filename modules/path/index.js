@@ -1,8 +1,7 @@
 const path = require("path");
 
 path.getRootDir = function () {
-  const { filename } = require.main;
-  return this.dirname(filename);
+  return process.env.PWD;
 };
 
 path.rootJoin = function (...rest) {

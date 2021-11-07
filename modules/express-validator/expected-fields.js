@@ -16,7 +16,6 @@ const expectedFields = function (expectedFields) {
 
 validator.body = function () {
   const result = body.apply(this, arguments);
-
   result.expectedFields = expectedFields;
 
   return result;

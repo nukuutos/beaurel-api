@@ -1,21 +1,24 @@
 const validator = require("express-validator");
-const { param, body } = validator;
 const { ObjectId } = require("mongodb");
+
+const { param, body } = validator;
+
+const { noParam, invalidParam } = require("../../config/errors/id");
 
 const paramId = (paramName, name) =>
   param(paramName)
-    .exists({ checkFalsy: true })
-    .withMessage(`${name} отсутствует!`)
     .isMongoId()
-    .withMessage(`Некорректный ${name}!`)
+    .withMessage(invalidParam(name))
+    .bail()
     .customSanitizer((id) => new ObjectId(id));
 
 const fieldId = (fieldName, name) =>
   body(fieldName)
     .exists({ checkFalsy: true })
-    .withMessage(`${name} отсутствует!`)
+    .withMessage(noParam(name))
     .isMongoId()
-    .withMessage(`Некорректный ${name}!`)
+    .withMessage(invalidParam(name))
+    .bail()
     .customSanitizer((id) => new ObjectId(id));
 
 validator.paramId = paramId;
