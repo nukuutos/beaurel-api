@@ -1,32 +1,38 @@
-const { query } = require("express-validator");
+const { query } = require('express-validator');
 
 const {
   LATITUDE_REQUIRED,
   LONGITUDE_REQUIRED,
   INVALID_CITY,
   INVALID_PAGE,
-} = require("../config/errors/timezone");
+  INVALID_LATITUDE,
+  INVALID_LONGITUDE,
+} = require('../config/errors/timezone');
 
-const lat = query("lat")
-  .trim()
+const lat = query('lat')
   .exists({ checkFalsy: true })
   .withMessage(LATITUDE_REQUIRED)
+  .isNumeric()
+  .withMessage(INVALID_LATITUDE)
   .customSanitizer((value) => +value);
 
-const lng = query("lng")
-  .trim()
+const lng = query('lng')
   .exists({ checkFalsy: true })
   .withMessage(LONGITUDE_REQUIRED)
+  .isNumeric()
+  .withMessage(INVALID_LONGITUDE)
   .customSanitizer((value) => +value);
 
-const city = query("city")
-  .trim()
+const city = query('city')
   .exists({ checkNull: true })
   .withMessage(INVALID_CITY)
-  .customSanitizer((string) => string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  .bail()
+  .customSanitizer((string) => string.replace(/[^а-яА-Я]/g, ''));
 
-const page = query("page")
-  .isNumeric({ no_symbols: true })
+const page = query('page')
+  .exists({ checkNull: true })
+  .withMessage(INVALID_PAGE)
+  .isInt({ min: 0 })
   .withMessage(INVALID_PAGE)
   .customSanitizer((value) => +value);
 

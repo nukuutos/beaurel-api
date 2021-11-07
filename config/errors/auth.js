@@ -15,3 +15,5 @@ exports.FIRST_NAME_REQUIRED = "Имя отсутствует!";
 exports.ALPHABATIC_FIRST_NAME = "Имя должно состоять только из букв!";
 exports.LAST_NAME_REQUIRED = "Фамилия отсутствует!";
 exports.ALPHABATIC_LAST_NAME = "Фамилия должна состоять только из букв!";
+exports.MIN_FIRST_NAME_LENGTH = "Минимальная длина имени - 2 символа";
+exports.MIN_LAST_NAME_LENGTH = "Минимальная длина фамилии - 2 символа";

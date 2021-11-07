@@ -7,11 +7,11 @@ const profileId = paramId("profileId", PROFILE_ID);
 const updateFields = body("*").expectedFields(["aboutText"]);
 
 const aboutText = body("aboutText")
-  .matches(/^[а-я -,.!?()0-9]+$/i)
+  .matches(/^[а-яa-z -,.!?():;0-9]+$/i)
   .withMessage(INVALID_ABOUT_TEXT)
   .trim()
   .isLength({ min: 0, max: 150 })
   .withMessage(ABOUT_TEXT_LENGTH);
 
 exports.updateAvatar = [profileId];
-exports.updateProfile = [updateFields, profileId, aboutText];
+exports.updateProfile = [profileId, updateFields, aboutText];

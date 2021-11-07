@@ -1,27 +1,27 @@
-const { MASTER_ID, SERVICE_ID } = require("../../config/id-names");
-const { paramId, fieldId } = require("express-validator");
+const { paramId, fieldId } = require('express-validator');
+const { MASTER_ID, SERVICE_ID } = require('../../config/id-names');
 const {
   titleValidation,
   durationValidation,
   priceValidation,
   orderValidation,
   subOrderValidation,
-} = require("./utils/service");
+} = require('./utils/service');
 
-const masterId = paramId("masterId", MASTER_ID);
-const serviceId = paramId("serviceId", SERVICE_ID);
-const serviceIdOrder = fieldId("newOrder.*.id", SERVICE_ID);
+const masterId = paramId('masterId', MASTER_ID);
+const serviceId = paramId('serviceId', SERVICE_ID);
+const serviceIdOrder = fieldId('newOrder.*.id', SERVICE_ID);
 
 // service
-const titleService = titleValidation("title");
-const durationService = durationValidation("duration");
-const priceService = priceValidation("price");
-const orderService = orderValidation("newOrder.*.order");
-const subOrderService = subOrderValidation("newOrder.*.subOrder");
+const titleService = titleValidation('title');
+const durationService = durationValidation('duration');
+const priceService = priceValidation('price');
+const orderService = orderValidation('newOrder.*.order');
+const subOrderService = subOrderValidation('newOrder.*.subOrder');
 
 // update service
-const updatingServiceId = fieldId("services.*.id", SERVICE_ID);
-const updatingServiceDuration = durationValidation("services.*.duration");
+const updatingServiceId = fieldId('services.*.id', SERVICE_ID);
+const updatingServiceDuration = durationValidation('services.*.duration');
 
 exports.getServices = [masterId];
 exports.addService = [masterId, titleService, durationService, priceService];

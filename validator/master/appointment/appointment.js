@@ -1,7 +1,7 @@
-const dayjs = require("dayjs");
-const HttpError = require("../../../models/utils/http-error");
-const { MASTER_ID, SERVICE_ID } = require("../../../config/id-names");
-const { body, fieldId, paramId } = require("express-validator");
+const dayjs = require('dayjs');
+const { body, fieldId, paramId } = require('express-validator');
+
+const { MASTER_ID, SERVICE_ID } = require('../../../config/id-names');
 
 const {
   APPOINTMENT_START_REQUIRED,
@@ -10,35 +10,33 @@ const {
   INVALID_APPOINTMENT_END,
   DATE_REQUIRED,
   INVALID_DATE,
-} = require("../../../config/errors/appointment");
+} = require('../../../config/errors/appointment');
 
-const masterId = paramId("masterId", MASTER_ID);
-const serviceId = fieldId("serviceId", SERVICE_ID);
+const masterId = paramId('masterId', MASTER_ID);
+const serviceId = fieldId('serviceId', SERVICE_ID);
 
-const timeStartAt = body("time.startAt")
-  .trim()
+const timeStartAt = body('time.startAt')
   .exists({ checkFalsy: true })
   .withMessage(APPOINTMENT_START_REQUIRED)
   .isInt({ min: 0, max: 1440 })
   .withMessage(INVALID_APPOINTMENT_START)
   .customSanitizer((time) => +time);
 
-const timeEndAt = body("time.endAt")
-  .trim()
+const timeEndAt = body('time.endAt')
   .exists({ checkFalsy: true })
   .withMessage(APPOINTMENT_END_REQUIRED)
   .isInt({ min: 0, max: 1440 })
   .withMessage(INVALID_APPOINTMENT_END)
   .customSanitizer((time) => +time);
 
-const date = body("date")
-  .trim()
+const date = body('date')
   .exists({ checkFalsy: true })
   .withMessage(DATE_REQUIRED)
+  .trim()
   .isISO8601()
   .withMessage(INVALID_DATE)
   .customSanitizer((date) => dayjs(date).utc())
-  .custom((date) => date.isReseted())
+  .custom((date) => date.isTimeReseted())
   .withMessage(INVALID_DATE)
   .custom((date) => {
     const todayUTC = dayjs().getTodayUTC();

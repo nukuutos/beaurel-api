@@ -11,6 +11,8 @@ const {
   FIRST_NAME_REQUIRED,
   LAST_NAME_REQUIRED,
   ALPHABATIC_LAST_NAME,
+  MIN_LAST_NAME_LENGTH,
+  MIN_FIRST_NAME_LENGTH,
 } = require("../config/errors/auth");
 
 const email = body("email")
@@ -35,16 +37,20 @@ const passwordSignUp = body("password")
 const passwordSignIn = body("password").exists({ checkFalsy: true }).withMessage(PASSWORD_REQUIRED);
 
 const firstName = body("firstName")
-  .trim()
   .exists({ checkFalsy: true })
   .withMessage(FIRST_NAME_REQUIRED)
+  .trim()
+  .isLength({ min: 2 })
+  .withMessage(MIN_FIRST_NAME_LENGTH)
   .isAlpha("ru-RU")
   .withMessage(ALPHABATIC_FIRST_NAME);
 
 const lastName = body("lastName")
-  .trim()
   .exists({ checkFalsy: true })
   .withMessage(LAST_NAME_REQUIRED)
+  .trim()
+  .isLength({ min: 2 })
+  .withMessage(MIN_LAST_NAME_LENGTH)
   .isAlpha("ru-RU")
   .withMessage(ALPHABATIC_LAST_NAME);
 

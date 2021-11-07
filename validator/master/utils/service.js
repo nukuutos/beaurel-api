@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body, param } = require('express-validator');
 
 const {
   TITLE_LENGTH,
@@ -17,15 +17,16 @@ const {
   TITLE_ID_LENGTH,
   INVALID_TITLE_ID,
   INVALID_DURATION,
-} = require("../../../config/errors/service");
+} = require('../../../config/errors/service');
 
 exports.titleId = (paramName) =>
   param(paramName)
+    .trim()
     .exists({ checkFalsy: true })
     .withMessage(TITLE_REQUIRED)
     .isLength({ min: 3, max: 50 })
     .withMessage(TITLE_ID_LENGTH)
-    .matches(/^[а-я -,.!?()0-9]+$/i)
+    .matches(/^[а-яё -,.!?()0-9]+$/i)
     .withMessage(INVALID_TITLE_ID);
 
 exports.titleValidation = (field) =>
@@ -35,7 +36,7 @@ exports.titleValidation = (field) =>
     .withMessage(TITLE_REQUIRED)
     .isLength({ min: 3, max: 50 })
     .withMessage(TITLE_LENGTH)
-    .matches(/^[а-я -,.!?()0-9]+$/i)
+    .matches(/^[а-яё -,.!?()0-9]+$/i)
     .withMessage(INVALID_TITLE)
     .customSanitizer((title) => title.charAt(0).toUpperCase() + title.slice(1));
 
@@ -53,7 +54,7 @@ exports.durationValidation = (field) =>
 exports.priceValidation = (field) =>
   body(field)
     .trim()
-    .exists({ checkNull: true })
+    .exists({ checkFalsy: true })
     .withMessage(PRICE_REQUIRED)
     .isInt({ min: 0, max: 99999 })
     .withMessage(PRICE_NUMBER)
@@ -66,7 +67,7 @@ exports.parameterValidation = (field) =>
     .withMessage(PARAMETER_REQUIRED)
     .isLength({ min: 2, max: 10 })
     .withMessage(PARAMETER_LENGTH)
-    .matches(/^[а-я -,.!?()0-9]+$/i)
+    .matches(/^[а-яА-Я -,.!?()0-9]+$/i)
     .withMessage(INVALID_PARAMETER);
 
 exports.orderValidation = (field) =>
@@ -79,7 +80,13 @@ exports.orderValidation = (field) =>
 
 exports.subOrderValidation = (field) =>
   body(field)
-    .trim()
-    .exists()
+    .not()
+    .isString()
     .withMessage(SUBORDER_NUMBER)
-    .customSanitizer((value) => (value ? +value : null));
+    .custom((value) => {
+      if (value === null) return null;
+      if (value < 0) return false;
+      return true;
+    })
+    .withMessage(SUBORDER_NUMBER)
+    .customSanitizer((value) => (isNaN(value) ? null : +value));
