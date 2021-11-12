@@ -1,6 +1,6 @@
-const res = require("express/lib/response");
+const res = require('express/lib/response');
 
-const { createAccessToken, createRefreshToken } = require("./create-token");
+const { createAccessToken, createRefreshToken } = require('./create-token');
 
 const { JWT_KEY_REFRESH_TIME, NODE_ENV } = process.env;
 
@@ -12,11 +12,11 @@ res.sendToken = function (user) {
 
   const options = {
     httpOnly: true,
-    secure: NODE_ENV !== "development",
+    secure: NODE_ENV !== 'development',
     maxAge: JWT_KEY_REFRESH_TIME, // 7 days env
-    path: "/",
+    path: '/',
     sameSite: true,
   };
 
-  return this.cookie("refreshToken", refreshToken, options).json({ accessToken, role, id: _id });
+  return this.cookie('refreshToken', refreshToken, options).json({ accessToken, role, id: _id });
 };
