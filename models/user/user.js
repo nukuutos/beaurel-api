@@ -11,7 +11,7 @@ class User extends Collection {
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.photo = null;
+    this.avatar = null;
     this.isConfirmed = { email: false, phone: false };
     this.role = role;
     this.createdAt = new Date();
