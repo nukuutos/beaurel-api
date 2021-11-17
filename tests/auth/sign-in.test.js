@@ -6,7 +6,7 @@ const bodyFields = require('./body-fields/sign-in');
 
 const controller = require('./controllers/sign-in');
 
-const User = require('../../models/user/user');
+const User = require('../../models/user');
 const master = require('../data/masters/master');
 const { before, after } = require('../utils/endpoint-test-preparation');
 

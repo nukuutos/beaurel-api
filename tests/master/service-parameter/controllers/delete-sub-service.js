@@ -1,4 +1,4 @@
-const ServiceParameter = require('../../../../models/service/service-parameter');
+const ServiceParameter = require('../../../../models/service-parameter');
 const serviceParameter = require('../../../data/services/service-parameter');
 const { checkIsCacheDeleted, getServices, checkIsCache } = require('./utils');
 

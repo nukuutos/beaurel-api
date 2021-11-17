@@ -1,6 +1,6 @@
 const app = require('../../../app');
-const User = require('../../../models/user/user');
-const Service = require('../../../models/service/service');
+const User = require('../../../models/user');
+const Service = require('../../../models/service');
 
 const ExtendedSupertest = require('../../extended-supertest');
 
@@ -12,7 +12,7 @@ const master = require('../../data/masters/master');
 const unsuitableServices = require('../../data/services/unsuitable-services');
 const timetableWithUpdate = require('../../data/timetables/auto-timetable-with-update');
 
-const Timetable = require('../../../models/timetable/timetable');
+const Timetable = require('../../../models/timetable');
 const { before, after } = require('../../utils/endpoint-test-preparation');
 
 const template = '/api/v1/master/:masterId/service/update';

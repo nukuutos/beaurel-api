@@ -10,7 +10,7 @@ exports.signUp = asyncHandler(async (req, res) => {
 
   await user.isExists().setData({ email, password, firstName, lastName }).hashPassword().save();
 
-  return res.status(201).sendToken(user.data);
+  return res.status(201).sendToken(user);
 });
 
 exports.signIn = asyncHandler(async (req, res) => {
@@ -20,7 +20,7 @@ exports.signIn = asyncHandler(async (req, res) => {
 
   user.isExists().checkPassword(enteredPassword);
 
-  return res.sendToken(user.data);
+  return res.sendToken(user);
 });
 
 exports.refreshToken = asyncHandler(async (req, res) => {
@@ -30,5 +30,5 @@ exports.refreshToken = asyncHandler(async (req, res) => {
 
   await user.isExists();
 
-  return res.sendToken(user.data);
+  return res.sendToken(user);
 });

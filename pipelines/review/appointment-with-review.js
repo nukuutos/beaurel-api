@@ -4,30 +4,30 @@ module.exports = (appointmentId, masterId, customerId, status) => [
       _id: appointmentId,
       masterId,
       customerId,
-      status: status,
+      status,
     },
   },
   { $project: { _id: 1 } },
   {
     $lookup: {
-      from: "reviews",
+      from: 'reviews',
       let: {
-        appointmentId: "$_id",
+        appointmentId: '$_id',
       },
       pipeline: [
-        { $match: { $expr: { $eq: ["$appointmentId", "$$appointmentId"] } } },
+        { $match: { $expr: { $eq: ['$appointmentId', '$$appointmentId'] } } },
         {
           $project: {
             _id: 1,
           },
         },
       ],
-      as: "review",
+      as: 'review',
     },
   },
   {
     $addFields: {
-      review: { $first: "$review" },
+      review: { $first: '$review' },
     },
   },
 ];

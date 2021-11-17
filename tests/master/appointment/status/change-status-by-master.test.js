@@ -1,5 +1,5 @@
 const app = require('../../../../app');
-const User = require('../../../../models/user/user');
+const User = require('../../../../models/user');
 
 const ExtendedSupertest = require('../../../extended-supertest');
 
@@ -9,7 +9,7 @@ const controller = require('./controllers/change-status-by-master');
 
 const master = require('../../../data/masters/master');
 const appointments = require('../../../data/appointments/appointments');
-const Appointment = require('../../../../models/appointment/appointment');
+const Appointment = require('../../../../models/appointment');
 const { before, after } = require('../../../utils/endpoint-test-preparation');
 
 const template = '/api/v1/master/:masterId/appointment/:appointmentId/status/master';

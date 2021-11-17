@@ -1,6 +1,6 @@
 const express = require('express');
 
-const controller = require('../../controllers/master/work/work');
+const controller = require('../../controllers/master/work');
 
 const validator = require('../../validator/master/work');
 

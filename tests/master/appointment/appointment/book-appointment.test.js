@@ -1,7 +1,7 @@
 const ExtendedSupertest = require('../../../extended-supertest');
 const app = require('../../../../app');
 
-const User = require('../../../../models/user/user');
+const User = require('../../../../models/user');
 
 const bodyFields = require('./body-fields/book-appointment');
 const routeParams = require('./route-params/book-appointment');

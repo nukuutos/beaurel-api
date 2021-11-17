@@ -1,7 +1,7 @@
-const { NO_TIMETABLE, NO_UPDATE } = require('../../../../config/errors/timetable');
-const Appointment = require('../../../../models/appointment/appointment');
-const Service = require('../../../../models/service/service');
-const Timetable = require('../../../../models/timetable/timetable');
+const { NO_UPDATE } = require('../../../../config/errors/timetable');
+const Appointment = require('../../../../models/appointment');
+const Service = require('../../../../models/service');
+const Timetable = require('../../../../models/timetable');
 const autoTimetable = require('../../../data/timetables/auto-timetable');
 const autoTimetableWithUpdate = require('../../../data/timetables/auto-timetable-with-update');
 const unsuitableAppointments = require('../../../data/appointments/unsuitable-appointments');
@@ -26,19 +26,6 @@ const {
 } = require('./utils/booking-data-cache');
 
 module.exports = function () {
-  it('should fail, no timetable', async () => {
-    await Timetable.deleteMany({});
-    const response = await this.request();
-
-    const { statusCode, body } = response;
-
-    expect(statusCode).toBe(404);
-
-    const { message } = body;
-
-    expect(message).toBe(NO_TIMETABLE);
-  });
-
   it('should fail, no timetable update', async () => {
     await Timetable.save(autoTimetable);
 

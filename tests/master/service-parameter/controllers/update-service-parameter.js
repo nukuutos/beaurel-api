@@ -1,5 +1,5 @@
 const { TITLE_EXISTS } = require('../../../../config/errors/service');
-const ServiceParameter = require('../../../../models/service/service-parameter');
+const ServiceParameter = require('../../../../models/service-parameter');
 const { getServices, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 const data = { title: 'Супер услуга' };

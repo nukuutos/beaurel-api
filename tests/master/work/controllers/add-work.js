@@ -27,8 +27,6 @@ module.exports = function () {
 
     const { statusCode, body } = response;
 
-    console.log(body);
-
     expect(statusCode).toBe(201);
 
     const { _id } = body;

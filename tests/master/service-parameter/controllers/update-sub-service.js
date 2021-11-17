@@ -1,5 +1,5 @@
 const { INCORRECT_DURATION } = require('../../../../config/errors/service');
-const ServiceParameter = require('../../../../models/service/service-parameter');
+const ServiceParameter = require('../../../../models/service-parameter');
 const { getServices, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 const data = { parameter: 'супер 21см', duration: 240, price: 12 };

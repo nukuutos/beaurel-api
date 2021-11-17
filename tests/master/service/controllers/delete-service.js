@@ -1,4 +1,4 @@
-const Service = require('../../../../models/service/service');
+const Service = require('../../../../models/service');
 const services = require('../../../data/services/services');
 const {
   getServices,

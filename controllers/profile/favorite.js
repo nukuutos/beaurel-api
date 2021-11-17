@@ -1,10 +1,10 @@
-const Favorite = require("../../models/user/favorite-controller");
-const asyncHandler = require("../../middleware/async-handler");
+const Favorite = require('../../logic/profile/favorite');
+const asyncHandler = require('../../middleware/async-handler');
 
 exports.getFavorites = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
 
-  const data = await Favorite.getFavoriteMasters(profileId);
+  const data = await Favorite.getMasters(profileId);
 
   return res.json({ data });
 });

@@ -1,4 +1,4 @@
-exports.getTimetableAndAppointmentsForUpdate = (masterId, appointmentId, date) => [
+exports.timetableAndAppointmentsForUpdate = (masterId, appointmentId, date) => [
   {
     $match: {
       masterId,

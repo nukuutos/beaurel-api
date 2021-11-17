@@ -1,6 +1,6 @@
 const { NO_TIMETABLE } = require('../../../../config/errors/timetable');
 
-const Timetable = require('../../../../models/timetable/timetable');
+const Timetable = require('../../../../models/timetable');
 const { dropRedis } = require('../../../../utils/redis');
 const autoTimetable = require('../../../data/timetables/auto-timetable');
 

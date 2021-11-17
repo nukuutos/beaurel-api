@@ -1,21 +1,20 @@
-const Appointment = require('../../../models/appointment/appointment');
-
 const asyncHandler = require('../../../middleware/async-handler');
 
-const BookingController = require('../../../models/appointment/booking-controller/booking-controller');
-const BookingAutoController = require('../../../models/appointment/booking-controller/booking-auto-controller');
-const BookingManuallyController = require('../../../models/appointment/booking-controller/booking-manually-controller');
+const Booking = require('../../../logic/master/appointment/appointment/booking-controllers/booking');
+const BookingAuto = require('../../../logic/master/appointment/appointment/booking-controllers/booking-auto');
+const BookingManually = require('../../../logic/master/appointment/appointment/booking-controllers/booking-manually');
+const BookAppointment = require('../../../logic/master/appointment/appointment/book-appointment');
 
 exports.bookAppointment = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
   const { id: customerId } = req.user;
   const { serviceId, time, date } = req.body;
 
-  const data = await Appointment.getInfoForBookingAppointment(masterId, serviceId, date.toDate());
+  const data = await BookAppointment.getData(masterId, serviceId, date.toDate());
 
   const { timetable, bookedAppointments, service } = data;
 
-  let booking = new BookingController({
+  let booking = new Booking({
     timetable,
     bookedAppointments,
     service,
@@ -29,10 +28,10 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
   const { type } = booking.timetable;
 
   if (type === 'auto') {
-    booking = new BookingAutoController(booking);
+    booking = new BookingAuto(booking);
     booking.isWeekend().isException().isOverWorkingDay().getFreeAppointments().checkAvailability();
   } else {
-    booking = new BookingManuallyController(booking);
+    booking = new BookingManually(booking);
     booking.isTimeExist().checkAvailability();
   }
 

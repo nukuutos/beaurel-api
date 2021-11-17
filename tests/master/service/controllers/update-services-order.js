@@ -1,5 +1,5 @@
 const { SERVICES_ORDER_LENGTH } = require('../../../../config/errors/service');
-const Service = require('../../../../models/service/service');
+const Service = require('../../../../models/service');
 const master = require('../../../data/masters/master');
 
 const servicesNewOrder = require('../../../data/services/services-new-order');

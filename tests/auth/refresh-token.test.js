@@ -4,7 +4,7 @@ const ExtendedSupertest = require('../extended-supertest');
 
 const controller = require('./controllers/refresh-token');
 
-const User = require('../../models/user/user');
+const User = require('../../models/user');
 const master = require('../data/masters/master');
 const { before, after } = require('../utils/endpoint-test-preparation');
 

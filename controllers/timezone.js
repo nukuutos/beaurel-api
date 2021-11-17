@@ -1,5 +1,5 @@
-const asyncHandler = require("../middleware/async-handler");
-const Timezone = require("../models/timezone");
+const asyncHandler = require('../middleware/async-handler');
+const Timezone = require('../logic/timezone');
 
 exports.getTimezone = asyncHandler(async (req, res) => {
   const { lat: userLat, lng: userLng } = req.query;

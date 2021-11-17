@@ -1,6 +1,6 @@
 const app = require('../../../app');
-const User = require('../../../models/user/user');
-const Work = require('../../../models/work/work');
+const User = require('../../../models/user');
+const Work = require('../../../models/work');
 
 const ExtendedSupertest = require('../../extended-supertest');
 

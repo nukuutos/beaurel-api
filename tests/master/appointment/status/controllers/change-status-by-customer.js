@@ -1,6 +1,6 @@
 const { CHANGE_STATUS } = require('../../../../../config/errors/appointment');
 const { NO_APPOINTMENT } = require('../../../../../config/errors/review');
-const Appointment = require('../../../../../models/appointment/appointment');
+const Appointment = require('../../../../../models/appointment');
 const appointments = require('../../../../data/appointments/appointments');
 const { checkIsCache, getBookingData, checkIsCacheDeleted } = require('./utils');
 

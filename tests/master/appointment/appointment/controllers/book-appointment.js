@@ -10,10 +10,10 @@ const {
   MORE_THAN_MAX,
   INCORRECT_TIME,
 } = require('../../../../../config/errors/appointment');
-const Appointment = require('../../../../../models/appointment/appointment');
-const Service = require('../../../../../models/service/service');
+const Appointment = require('../../../../../models/appointment');
+const Service = require('../../../../../models/service');
 
-const Timetable = require('../../../../../models/timetable/timetable');
+const Timetable = require('../../../../../models/timetable');
 const services = require('../../../../data/services/services');
 const autoTimetable = require('../../../../data/timetables/auto-timetable');
 const manuallyTimetable = require('../../../../data/timetables/manually-timetable');

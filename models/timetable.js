@@ -1,0 +1,19 @@
+const Collection = require('./utils/collection/collection');
+const { TIMETABLE } = require('../config/collection-names');
+
+class Timetable extends Collection {
+  static name = TIMETABLE;
+
+  constructor(masterId, sessionTime, type, auto, manually) {
+    super();
+
+    this.masterId = masterId;
+    this.sessionTime = sessionTime;
+    this.type = type;
+    this.auto = auto;
+    this.manually = manually;
+    this.update = null;
+  }
+}
+
+module.exports = Timetable;

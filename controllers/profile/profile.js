@@ -1,13 +1,12 @@
-const User = require("../../models/user/user");
-const asyncHandler = require("../../middleware/async-handler");
-const Avatar = require("../../models/user/avatar");
+const asyncHandler = require('../../middleware/async-handler');
+const Profile = require('../../logic/profile/profile');
 
 exports.updateProfile = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
 
-  await User.updateOne({ _id: profileId }, { ...req.body });
+  await Profile.udpateProfile(profileId, req.body);
 
-  return res.json({ message: "Профиль обновлён!" });
+  return res.json({ message: 'Профиль обновлён!' });
 });
 
 exports.updateAvatar = asyncHandler(async (req, res) => {
@@ -16,13 +15,7 @@ exports.updateAvatar = asyncHandler(async (req, res) => {
   const { buffer } = file;
   const { id } = user;
 
-  const avatar = new Avatar({ id, buffer });
+  const shortUrl = await Profile.updateAvatar(id, buffer);
 
-  await avatar.saveFS();
-  await Avatar.deletePreviousFS(id);
-  await avatar.getShortUrl().updateDB(id);
-
-  const { shortUrl } = avatar;
-
-  return res.json({ avatar: shortUrl, message: "Фото профиля успешно обновлено!" });
+  return res.json({ avatar: shortUrl, message: 'Фото профиля успешно обновлено!' });
 });

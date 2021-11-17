@@ -2,14 +2,15 @@ const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 
 const { INVALID_TOKEN } = require('../../config/errors/auth');
-const User = require('../../models/user/user');
+const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
 
 const { JWT_KEY_REFRESH } = process.env;
 
-class RefereshToken {
-  constructor(data) {
-    this.data = data;
+class RefereshToken extends User {
+  constructor({ _id, ...data }) {
+    super(data);
+    this._id = _id;
   }
 
   static verifyToken(token) {
@@ -23,12 +24,13 @@ class RefereshToken {
   }
 
   async isExists() {
-    const { _id } = this.data;
+    const { _id } = this;
 
-    const user = await User.findOne({ _id }, { role: 1 });
-    if (!user) throw new HttpError(INVALID_TOKEN, 400);
+    const userData = await User.findOne({ _id }, { role: 1 });
+    if (!userData) throw new HttpError(INVALID_TOKEN, 400);
 
-    this.data = user;
+    const user = Object.assign(this, userData);
+    return user;
   }
 }
 

@@ -1,4 +1,4 @@
-const Favorite = require('../../../../models/user/favorite-controller');
+const Favorite = require('../../../../logic/profile/favorite');
 const master = require('../../../data/masters/master');
 const { checkIsCache, checkIsCacheDeleted, getFavorites } = require('./utils');
 
@@ -16,7 +16,7 @@ module.exports = function () {
 
     expect(statusCode).toBe(204);
 
-    const dbData = await Favorite.getFavoriteMasters(master._id);
+    const dbData = await Favorite.getMasters(master._id);
 
     expect(dbData).toHaveProperty('masters');
     expect(dbData).toHaveProperty('ids');

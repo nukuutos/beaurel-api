@@ -1,5 +1,5 @@
 const app = require('../../../app');
-const User = require('../../../models/user/user');
+const User = require('../../../models/user');
 
 const ExtendedSupertest = require('../../extended-supertest');
 
@@ -10,7 +10,7 @@ const queryParams = require('./query-params/get-appointments-master');
 const routeParams = require('./route-params/get-appointments-master');
 const controller = require('./controllers/get-appointments-master');
 
-const Appointment = require('../../../models/appointment/appointment');
+const Appointment = require('../../../models/appointment');
 const { before, after } = require('../../utils/endpoint-test-preparation');
 
 const template = '/api/v1/profile/:profileId/appointment/customer';

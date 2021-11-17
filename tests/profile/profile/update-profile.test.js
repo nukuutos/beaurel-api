@@ -1,5 +1,5 @@
 const app = require('../../../app');
-const User = require('../../../models/user/user');
+const User = require('../../../models/user');
 
 const ExtendedSupertest = require('../../extended-supertest');
 const bodyFields = require('./body-fields/update-profile');

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const Work = require('../../../../models/work/work');
+const Work = require('../../../../models/work');
 const works = require('../../../data/works');
 const { getWorks, checkIsCache, checkIsCacheDeleted } = require('./utils');
 

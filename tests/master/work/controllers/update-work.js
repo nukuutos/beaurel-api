@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const works = require('../../../data/works');
-const Work = require('../../../../models/work/work');
+const Work = require('../../../../models/work');
 const Image = require('../../../../models/utils/image');
 
 const { TITLE_EXISTS } = require('../../../../config/errors/work');

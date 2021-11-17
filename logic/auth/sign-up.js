@@ -1,40 +1,41 @@
 const bcrypt = require('bcryptjs');
 
 const { USER_EXISTS } = require('../../config/errors/auth');
-const User = require('../../models/user/user');
+const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
 
-class SignUp {
-  constructor(data) {
-    this.data = data;
+class SignUp extends User {
+  constructor({ _id, ...data }) {
+    super(data);
+    this._id = _id;
   }
 
   static async getUser(email) {
     const userData = await User.findOne({ email }, { _id: 1 });
-    return new this(userData);
+    return new this(userData || {});
   }
 
   isExists() {
-    if (this.data) throw new HttpError(USER_EXISTS, 400);
+    if (this._id) throw new HttpError(USER_EXISTS, 400);
     return this;
   }
 
   setData(data) {
-    const userData = new User(data);
-    this.data = userData;
-    return this;
+    const user = Object.assign(this, data);
+    return user;
   }
 
   hashPassword() {
-    const { password } = this.data;
+    const { password } = this;
     const salt = bcrypt.genSaltSync(10);
-    this.data.password = bcrypt.hashSync(password, salt);
+    this.password = bcrypt.hashSync(password, salt);
     return this;
   }
 
   async save() {
-    const { insertedId: _id } = await User.save(this.data);
-    this.data._id = _id;
+    const { _id, ...userData } = this;
+    const { insertedId: id } = await User.save(userData);
+    this._id = id;
   }
 }
 

@@ -7,7 +7,7 @@ const {
   INCORRECT_APPOINTMENTS,
 } = require('../../../../config/errors/timetable');
 
-const Appointment = require('../../../../models/appointment/appointment');
+const Appointment = require('../../../../models/appointment');
 
 const appointmentsSessionTime = require('../../../data/appointments/appointments-for-session-time');
 const appointmentsExceptions = require('../../../data/appointments/appointments-for-exceptions');
@@ -18,12 +18,12 @@ const appointmentsManually = require('../../../data/appointments/appointments-fo
 const appointmentsSwitchAuto = require('../../../data/appointments/appointments-for-switch-type-to-auto');
 const appointmentsSameDate = require('../../../data/appointments/appointments-same-date-with-update');
 
-const Timetable = require('../../../../models/timetable/timetable');
+const Timetable = require('../../../../models/timetable');
 const autoTimetable = require('../../../data/timetables/auto-timetable');
 const autoTimetableWithUpdate = require('../../../data/timetables/auto-timetable-with-update');
 const manuallyTimetable = require('../../../data/timetables/manually-timetable');
 const services = require('../../../data/services/services');
-const Service = require('../../../../models/service/service');
+const Service = require('../../../../models/service');
 
 const {
   getServices,

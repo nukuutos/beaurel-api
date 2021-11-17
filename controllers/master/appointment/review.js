@@ -1,19 +1,20 @@
-const Review = require("../../../models/review");
+const Review = require('../../../models/review');
 
-const asyncHandler = require("../../../middleware/async-handler");
+const asyncHandler = require('../../../middleware/async-handler');
+const AddReview = require('../../../logic/master/appointment/review/add-review');
+const UpdateReview = require('../../../logic/master/appointment/review/update-review');
 
 exports.addReview = asyncHandler(async (req, res) => {
   const { appointmentId, masterId } = req.params;
   const { value, comment } = req.body;
   const { id: customerId } = req.user;
 
-  const review = new Review({ masterId, customerId, appointmentId });
+  const review = new AddReview({ masterId, customerId, appointmentId, value, comment });
 
-  await review.checkAppointmentAndReview("add");
+  await review.checkAppointment();
+  await review.checkReview().checkMasterAndCustomer().save();
 
-  await review.checkMasterAndCustomer().addValueAndComment(value, comment).save();
-
-  return res.status(201).json({ message: "Отзыв сохранён!" });
+  return res.status(201).json({ message: 'Отзыв сохранён!' });
 });
 
 exports.updateReview = asyncHandler(async (req, res) => {
@@ -21,11 +22,10 @@ exports.updateReview = asyncHandler(async (req, res) => {
   const { value, comment } = req.body;
   const { id: customerId } = req.user;
 
-  const review = new Review({ masterId, customerId, appointmentId });
+  const review = new UpdateReview({ masterId, customerId, appointmentId, value, comment });
 
-  await review.checkAppointmentAndReview("update");
+  await review.checkAppointment();
+  await review.checkReview().checkMasterAndCustomer().save();
 
-  await review.checkMasterAndCustomer().addValueAndComment(value, comment).save();
-
-  return res.json({ message: "Отзыв обновлён!" });
+  return res.json({ message: 'Отзыв обновлён!' });
 });

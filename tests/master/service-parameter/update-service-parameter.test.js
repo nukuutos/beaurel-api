@@ -1,5 +1,5 @@
 const app = require('../../../app');
-const User = require('../../../models/user/user');
+const User = require('../../../models/user');
 
 const ExtendedSupertest = require('../../extended-supertest');
 
@@ -10,7 +10,7 @@ const controller = require('./controllers/update-service-parameter');
 const master = require('../../data/masters/master');
 const serviceParameter = require('../../data/services/service-parameter');
 
-const ServiceParameter = require('../../../models/service/service-parameter');
+const ServiceParameter = require('../../../models/service-parameter');
 const { after, before } = require('../../utils/endpoint-test-preparation');
 
 const subService = serviceParameter[0];
