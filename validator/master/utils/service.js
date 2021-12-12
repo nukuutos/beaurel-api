@@ -72,11 +72,16 @@ exports.parameterValidation = (field) =>
 
 exports.orderValidation = (field) =>
   body(field)
-    .exists({ checkNull: true })
+    .not()
+    .isString()
     .withMessage(ORDER_REQUIRED)
-    .isInt({ min: 0 })
+    .custom((value) => {
+      if (value === null) return true;
+      if (value < 0) return false;
+      return true;
+    })
     .withMessage(ORDER_NUMBER)
-    .customSanitizer((num) => +num);
+    .customSanitizer((value) => (isNaN(value) ? null : +value));
 
 exports.subOrderValidation = (field) =>
   body(field)
@@ -84,7 +89,8 @@ exports.subOrderValidation = (field) =>
     .isString()
     .withMessage(SUBORDER_NUMBER)
     .custom((value) => {
-      if (value === null) return null;
+      console.log(typeof value, value);
+      if (value === null) return true;
       if (value < 0) return false;
       return true;
     })
