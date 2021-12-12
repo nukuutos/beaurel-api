@@ -89,7 +89,6 @@ exports.subOrderValidation = (field) =>
     .isString()
     .withMessage(SUBORDER_NUMBER)
     .custom((value) => {
-      console.log(typeof value, value);
       if (value === null) return true;
       if (value < 0) return false;
       return true;
