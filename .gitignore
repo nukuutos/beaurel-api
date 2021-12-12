@@ -1,8 +1,9 @@
 node_modules
 
+config/envs
+
 images
 !images/avatars/default.svg
 
 dump.rdb
 
-nodemon.json
