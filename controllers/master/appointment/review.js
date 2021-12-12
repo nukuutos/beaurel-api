@@ -1,5 +1,3 @@
-const Review = require('../../../models/review');
-
 const asyncHandler = require('../../../middleware/async-handler');
 const AddReview = require('../../../logic/master/appointment/review/add-review');
 const UpdateReview = require('../../../logic/master/appointment/review/update-review');

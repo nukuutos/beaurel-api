@@ -24,7 +24,7 @@ const name = query('name')
   .withMessage(NO_NAME)
   .bail()
   .trim()
-  .customSanitizer((string) => string.replace(/[^а-яА-Я]/g, ''));
+  .customSanitizer((string) => string.replace(/[^а-яА-Я ]/g, ''));
 
 const page = query('page')
   .exists({ checkNull: true })

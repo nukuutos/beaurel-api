@@ -1,5 +1,5 @@
 module.exports = (masterId, serviceId, date) => [
-  //get timetable
+  // get timetable
   {
     $match: {
       masterId,
@@ -10,34 +10,34 @@ module.exports = (masterId, serviceId, date) => [
       _id: 0,
       masterId: 1,
       timetable: {
-        workingDay: "$workingDay",
-        sessionTime: "$sessionTime",
-        timezone: "$timezone",
-        type: "$type",
-        auto: "$auto",
-        manually: "$manually",
-        update: "$update",
+        workingDay: '$workingDay',
+        sessionTime: '$sessionTime',
+        timezone: '$timezone',
+        type: '$type',
+        auto: '$auto',
+        manually: '$manually',
+        update: '$update',
       },
     },
   },
   // get appointments
   {
     $lookup: {
-      from: "appointments",
+      from: 'appointments',
       let: {
         masterId,
       },
       pipeline: [
         {
           $match: {
-            status: { $nin: ["cancelled", "unsuitable", "rejected"] },
+            status: { $nin: ['cancelled', 'unsuitable', 'rejected'] },
             $expr: {
               $and: [
                 {
-                  $eq: ["$masterId", "$$masterId"],
+                  $eq: ['$masterId', '$$masterId'],
                 },
                 {
-                  $eq: ["$date", new Date(date)],
+                  $eq: ['$date', new Date(date)],
                 },
               ],
             },
@@ -46,12 +46,12 @@ module.exports = (masterId, serviceId, date) => [
         {
           $project: {
             _id: 0,
-            startAt: "$time.startAt",
-            endAt: "$time.endAt",
+            startAt: '$time.startAt',
+            endAt: '$time.endAt',
           },
         },
       ],
-      as: "bookedAppointments",
+      as: 'bookedAppointments',
     },
   },
   {
@@ -63,7 +63,7 @@ module.exports = (masterId, serviceId, date) => [
   },
   {
     $lookup: {
-      from: "services",
+      from: 'services',
       let: {
         serviceId,
         masterId,
@@ -74,22 +74,22 @@ module.exports = (masterId, serviceId, date) => [
             $expr: {
               $and: [
                 {
-                  $eq: ["$_id", "$$serviceId"],
+                  $eq: ['$_id', '$$serviceId'],
                 },
                 {
-                  $eq: ["$masterId", "$$masterId"],
+                  $eq: ['$masterId', '$$masterId'],
                 },
               ],
             },
           },
         },
       ],
-      as: "service",
+      as: 'service',
     },
   },
   {
     $addFields: {
-      service: { $arrayElemAt: ["$service", 0] },
+      service: { $arrayElemAt: ['$service', 0] },
     },
   },
 ];

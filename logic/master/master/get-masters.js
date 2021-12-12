@@ -22,7 +22,6 @@ class GetMasters extends Collection {
 
   handleName(name) {
     this.name = name;
-
     if (name.includes(' ')) this.addFirstAndLastNames(name);
     else if (name.length) this.addFirstName(name);
     return this;
@@ -30,7 +29,6 @@ class GetMasters extends Collection {
 
   addFirstAndLastNames(name) {
     const [firstName, lastName] = name.split(' ').map((name) => new RegExp(`^${name}`, 'i'));
-
     this.query.$or = [
       { firstName, lastName },
       { firstName: lastName, lastName: firstName },

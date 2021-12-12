@@ -9,7 +9,7 @@ const { find } = Collection.prototype;
 const handleCache = (fn) =>
   async function () {
     const { cacheKeys } = this;
-
+    console.log(cacheKeys);
     if (!cacheKeys) return await fn.apply(this, arguments);
 
     const client = getRedisClient();
