@@ -2,17 +2,17 @@ module.exports = (customerId, status) => [
   {
     $match: {
       customerId,
-      status: status,
+      status,
     },
   },
   {
     $lookup: {
-      from: "users",
+      from: 'users',
       let: {
-        masterId: "$masterId",
+        masterId: '$masterId',
       },
       pipeline: [
-        { $match: { $expr: { $eq: ["$_id", "$$masterId"] } } },
+        { $match: { $expr: { $eq: ['$_id', '$$masterId'] } } },
         {
           $project: {
             // _id: { $convert: { input: '$_id', to: 'string' } },
@@ -22,17 +22,17 @@ module.exports = (customerId, status) => [
           },
         },
       ],
-      as: "user",
+      as: 'user',
     },
   },
   {
     $lookup: {
-      from: "reviews",
+      from: 'reviews',
       let: {
-        appointmentId: "$_id",
+        appointmentId: '$_id',
       },
       pipeline: [
-        { $match: { $expr: { $eq: ["$appointmentId", "$$appointmentId"] } } },
+        { $match: { $expr: { $eq: ['$appointmentId', '$$appointmentId'] } } },
         {
           $project: {
             customerId: 0,
@@ -40,7 +40,7 @@ module.exports = (customerId, status) => [
           },
         },
       ],
-      as: "review",
+      as: 'review',
     },
   },
   // {
@@ -59,23 +59,26 @@ module.exports = (customerId, status) => [
   // },
   {
     $addFields: {
-      user: { $arrayElemAt: ["$user", 0] },
-      review: { $arrayElemAt: ["$review", 0] },
-      createdAt: { $convert: { input: "$createdAt", to: "string" } },
+      user: { $arrayElemAt: ['$user', 0] },
+      review: { $arrayElemAt: ['$review', 0] },
+      createdAt: { $convert: { input: '$createdAt', to: 'string' } },
     },
   },
   // { $sort: { date: 1 } },
   {
     $group: {
-      _id: { $dateToString: { format: "%d-%m-%Y", date: "$date" } },
+      _id: { $dateToString: { format: '%d-%m-%Y', date: '$date' } },
       appointments: {
         $push: {
-          user: "$user",
-          review: "$review",
-          service: "$service",
-          time: "$time",
-          date: { $convert: { input: "$date", to: "string" } },
-          createdAt: "$createdAt",
+          _id: '$_id',
+          masterId: '$masterId',
+          status: '$status',
+          user: '$user',
+          review: '$review',
+          service: '$service',
+          time: '$time',
+          date: { $convert: { input: '$date', to: 'string' } },
+          createdAt: '$createdAt',
         },
       },
     },
@@ -83,14 +86,14 @@ module.exports = (customerId, status) => [
   {
     $group: {
       _id: null,
-      appointments: { $push: { k: "$_id", v: "$appointments" } },
+      appointments: { $push: { k: '$_id', v: '$appointments' } },
     },
   },
   {
     $project: {
       _id: 0,
-      appointments: { $arrayToObject: "$appointments" },
+      appointments: { $arrayToObject: '$appointments' },
     },
   },
-  { $replaceRoot: { newRoot: "$appointments" } },
+  { $replaceRoot: { newRoot: '$appointments' } },
 ];
