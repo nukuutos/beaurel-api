@@ -1,10 +1,13 @@
 const cloneDeep = require('lodash.clonedeep');
+const { SERVICE } = require('../../../config/collection-names');
 const { INCORRECT_DURATION } = require('../../../config/errors/service');
 const ServiceModel = require('../../../models/service');
 const Timetable = require('../../../models/timetable');
 const HttpError = require('../../../models/utils/http-error');
 
 class Service extends ServiceModel {
+  static name = SERVICE;
+
   constructor(service) {
     super(service);
   }

@@ -20,7 +20,7 @@ class Booking extends Collection {
     this.date = date;
     this.time = time;
     this.bookedAppointments = bookedAppointments;
-    this.status = 'onConfiramtion';
+    this.status = 'onConfirmation';
     this.createdAt = dayjs().toDate();
   }
 

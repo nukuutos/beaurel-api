@@ -9,7 +9,8 @@ class UpdateReview extends Review {
   }
 
   checkReview() {
-    if (this.id) throw new HttpError(NO_REVIEW, 404);
+    if (!this.id) throw new HttpError(NO_REVIEW, 404);
+    return this;
   }
 }
 

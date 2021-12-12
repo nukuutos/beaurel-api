@@ -17,14 +17,13 @@ class Review extends ReviewModel {
     const { appointmentId, masterId, customerId } = this;
     const aggregate = getAggregate(APPOINTMENT);
     const pipeline = appointmentWithReview(appointmentId, masterId, customerId, 'history');
-
     const data = await aggregate(pipeline).next();
 
     if (!data) throw new HttpError(NO_APPOINTMENT, 404);
 
-    const { review: reviewId } = data;
+    const { review } = data;
 
-    this.id = reviewId;
+    this.id = review._id;
   }
 
   async save() {
