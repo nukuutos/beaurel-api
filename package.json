@@ -6,11 +6,14 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
-    "test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
+    "dev": "concurrently \"npm:redis:start\" \"npm:server:dev\"",
+    "test": "concurrently \"npm:redis:start\" \"npm:server:test\" \"npm:cypress:open\"",
+    "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
+    "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
     "jest:test": "jest --runInBand --bail --testTimeout 10000",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "redis:start": "redis-server"
   },
   "author": "nukuutos",
   "license": "ISC",
@@ -39,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
+    "concurrently": "^6.4.0",
     "cypress": "^9.1.1",
     "cypress-file-upload": "^5.0.8",
     "eslint": "^7.32.0",
