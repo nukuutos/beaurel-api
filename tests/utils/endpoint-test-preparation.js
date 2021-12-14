@@ -1,5 +1,5 @@
 const { connectDB, closeDB, dropCollection, getDb } = require('../../utils/database');
-const { connectReddis, closeRedis, dropRedis } = require('../../utils/redis');
+const { connectRedis, closeRedis, dropRedis } = require('../../utils/redis');
 
 const { TIMEZONE } = require('../../config/collection-names');
 
@@ -20,7 +20,7 @@ const dropCollections = async () => {
 
 const before = (cb) =>
   beforeAll(async () => {
-    connectReddis();
+    connectRedis();
     dropRedis();
 
     await connectDB();

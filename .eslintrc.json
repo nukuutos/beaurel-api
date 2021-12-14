@@ -5,9 +5,10 @@
     "node": true,
     "commonjs": true,
     "es2021": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
-  "extends": ["airbnb-base", "plugin:node/recommended", "plugin:jest/recommended", "prettier"],
+  "extends": ["airbnb-base", "plugin:node/recommended", "prettier"],
   "rules": {
     "no-unused-vars": "warn",
     "no-shadow": "warn",
@@ -28,7 +29,15 @@
   },
   "overrides": [
     {
+      "files": "cypress/**",
+      "extends": ["plugin:cypress/recommended"],
+      "rules": {
+        "node/no-unpublished-require": 0
+      }
+    },
+    {
       "files": "tests/**",
+      "extends": ["plugin:jest/recommended", "plugin:jest/style"],
       "rules": {
         "node/no-unpublished-require": 0,
         "node/no-missing-require": 0

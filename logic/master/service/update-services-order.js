@@ -29,7 +29,6 @@ class UpdateServicesOrder extends Collection {
 
   async checkLength() {
     const { order, masterId } = this;
-
     const services = await ServiceModel.find({ masterId }, { _id: 1 });
     if (order.length !== services.length) throw new HttpError(SERVICES_ORDER_LENGTH, 400);
   }

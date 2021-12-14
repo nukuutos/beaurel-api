@@ -1,8 +1,8 @@
 const { ObjectId } = require('mongodb');
 
 module.exports = {
-  _id: new ObjectId('5eb849b81c2ccc21306ced34'),
-  email: 'test@test.com',
+  _id: new ObjectId('5eb849b81c2ccc21306abd12'),
+  email: 'test1@test.com',
   password: '$2a$10$XcAJi.gMUnDN7LQTlxonOuHYnxdPvXa9YhWTFwrpuxk.TtvV48jBW',
   firstName: 'Никита',
   lastName: 'Волошин',
@@ -14,6 +14,6 @@ module.exports = {
     'Lorem dolor sit amet consectetur adipisicing elit. Molestias sequi recusandae saepe, sunt optio provident repellat. Lorem ipsum dolor sit ameorib',
   createdAt: { $date: '2020-05-10T18:36:40.515Z' },
   specialization: 'Визажист',
-  masters: [new ObjectId('5eb849b81c2ccc21306ced33'), new ObjectId('5eb849b81c2ccc21306ced32')],
+  masters: [],
   city: 'Владивосток',
 };

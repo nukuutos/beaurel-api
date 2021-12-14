@@ -4,7 +4,7 @@ const HttpError = require('../models/utils/http-error');
 
 let client;
 
-const connectReddis = () => {
+const connectRedis = () => {
   client = redis.createClient();
   client.hget = util.promisify(client.hget);
 };
@@ -28,4 +28,4 @@ const getCachedData = async (...args) => {
   throw new HttpError('No Redis Client found!');
 };
 
-module.exports = { connectReddis, getCachedData, dropRedis, closeRedis, getRedisClient };
+module.exports = { connectRedis, getCachedData, dropRedis, closeRedis, getRedisClient };
