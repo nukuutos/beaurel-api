@@ -23,7 +23,7 @@ class Review extends ReviewModel {
 
     const { review } = data;
 
-    this.id = review._id;
+    this.id = review?._id;
   }
 
   async save() {
