@@ -4,7 +4,7 @@ const title = 'УслугаДляОбновления';
 describe('Update timetable', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addService', title);
     // go to auth
     cy.auth('test@test.com', '123456');
@@ -24,9 +24,9 @@ describe('Update timetable', () => {
     cy.get('[name="edit.auto.weekends.1"]').click();
     cy.get('.weekends__button').click();
 
-    // select working day start at 09:00
+    // select working day start at 11:00
     cy.get('.timetable-card__btn-edit--bottom').click();
-    cy.get('.mr-1').select(5);
+    cy.get('.mr-1').select(10);
     cy.get('.timetable-card__btn-edit--primary').click();
 
     // disable first monday appointment
@@ -41,10 +41,10 @@ describe('Update timetable', () => {
 
     // check working day start at
     cy.get('.timetable-visual').contains('08:00').should('not.exist');
-    cy.get('.timetable-visual').contains('09:00').should('be.visible');
+    cy.get('.timetable-visual').contains('11:00').should('be.visible');
 
     // check disabled appointments
-    cy.get('.timetable__form > :nth-child(3)').contains('ПН: 09:00').should('be.visible');
+    cy.get('.timetable__form > :nth-child(3)').contains('ПН: 11:00').should('be.visible');
 
     // open date-picker
     cy.get('.btn--primary').click();
@@ -75,7 +75,7 @@ describe('Update timetable', () => {
 
     // check working day start at
     cy.get('.content > :nth-child(3) > .timetable-visual').contains('08:00').should('not.exist');
-    cy.get('.content > :nth-child(3) > .timetable-visual').contains('09:00').should('be.visible');
+    cy.get('.content > :nth-child(3) > .timetable-visual').contains('11:00').should('be.visible');
 
     // check disabled appointments
     cy.get('.content > :nth-child(3)  .weekday__time--exception').should('be.visible');
@@ -105,9 +105,9 @@ describe('Update timetable', () => {
     cy.get('[name="edit.auto.weekends.1"]').click();
     cy.get('.weekends__button').click();
 
-    // select working day start at 09:00
+    // select working day start at 11:00
     cy.get(':nth-child(3) > :nth-child(7)').click();
-    cy.get('.mr-1').select(5);
+    cy.get('.mr-1').select(10);
     cy.get('.timetable-phone-edit-modal__button').click();
 
     // disable first monday appointment
@@ -122,10 +122,10 @@ describe('Update timetable', () => {
 
     // check working day start at
     cy.get('.timetable-visual').contains('08:00').should('not.exist');
-    cy.get('.timetable-visual').contains('09:00').should('be.visible');
+    cy.get('.timetable-visual').contains('11:00').should('be.visible');
 
     // check disabled appointment
-    cy.get('.timetable__form > :nth-child(3)').contains('ПН: 09:00').should('be.visible');
+    cy.get('.timetable__form > :nth-child(3)').contains('ПН: 11:00').should('be.visible');
 
     // open date-picker
     cy.get('.btn--primary').click();
@@ -156,7 +156,7 @@ describe('Update timetable', () => {
 
     // check working day start at
     cy.get('.content > :nth-child(3) > .timetable-visual').contains('08:00').should('not.exist');
-    cy.get('.content > :nth-child(3) > .timetable-visual').contains('09:00').should('be.visible');
+    cy.get('.content > :nth-child(3) > .timetable-visual').contains('11:00').should('be.visible');
 
     // check disabled appointment
     cy.get('.content > :nth-child(3)  .weekday__time--exception').should('be.visible');

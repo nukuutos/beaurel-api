@@ -17,7 +17,7 @@ const checkSubServiceAppearance = ({ parameter, price }) => {
 describe('Update sub-service', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addServiceParameter', { title, parameter: currentParameter });
     // go to auth
     cy.auth('test@test.com', '123456');

@@ -6,7 +6,7 @@ const price = 2131;
 describe('Add service', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to services

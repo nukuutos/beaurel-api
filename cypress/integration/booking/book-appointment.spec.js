@@ -5,7 +5,7 @@ const auth = require('../../utils/auth');
 describe('Book appointment', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addService', 'услуга');
     // go to auth
     cy.auth('test@test.com', '123456');

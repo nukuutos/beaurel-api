@@ -6,7 +6,7 @@ const parameter = 'Параметр0';
 describe('Delete sub-service', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addServiceParameter', { title, parameter });
     // go to auth
     cy.auth('test@test.com', '123456');

@@ -7,7 +7,7 @@ const newTitle = 'Такое название';
 describe('Update service parameter title', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addServiceParameter', { title: currentTitle, parameter });
     // go to auth
     cy.auth('test@test.com', '123456');

@@ -5,7 +5,7 @@ const title = 'Хорошее такое название';
 describe('Delete service', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addService', title);
     // go to auth
     cy.auth('test@test.com', '123456');

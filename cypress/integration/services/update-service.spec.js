@@ -7,7 +7,7 @@ const newPrice = 324;
 describe('Update service', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addMasterTimetable');
+    cy.task('db:addTimetable');
     cy.task('db:addService', currentTitle);
     // go to auth
     cy.auth('test@test.com', '123456');
