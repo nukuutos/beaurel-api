@@ -1,22 +1,12 @@
-const { ORDER_REQUIRED, ORDER_NUMBER } = require('../../../../../config/errors/service');
+const { ORDER_NUMBER, ORDER_REQUIRED } = require('../../../../../config/errors/service');
 
 const order = {
   name: 'order',
   tests: [
     {
-      message: 'should fail, field required',
-      data: { order: null },
-      error: ORDER_REQUIRED,
-    },
-    {
-      message: 'should fail, field required',
-      data: {},
-      error: ORDER_REQUIRED,
-    },
-    {
       message: 'should fail, invalid field',
       data: { order: '' },
-      error: ORDER_NUMBER,
+      error: ORDER_REQUIRED,
     },
     {
       message: 'should fail, order less than should be',
