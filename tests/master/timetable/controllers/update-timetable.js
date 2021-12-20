@@ -203,7 +203,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(2);
+    expect(unsuitableAppointments).toHaveLength(2);
   });
 
   it('should successfully change appointment state to unsuitable(possible times)', async () => {
@@ -221,7 +221,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(2);
+    expect(unsuitableAppointments).toHaveLength(2);
   });
 
   it('should successfully change appointment state to unsuitable(weekends)', async () => {
@@ -239,7 +239,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(3);
+    expect(unsuitableAppointments).toHaveLength(3);
   });
 
   it('should successfully change appointment state to unsuitable(exceptions)', async () => {
@@ -257,7 +257,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(2);
+    expect(unsuitableAppointments).toHaveLength(2);
   });
 
   it('should successfully change appointment state to unsuitable(switch type to manually)', async () => {
@@ -275,7 +275,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(3);
+    expect(unsuitableAppointments).toHaveLength(3);
   });
 
   it('should successfully change appointment state to unsuitable(manually appointments update)', async () => {
@@ -302,7 +302,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(2);
+    expect(unsuitableAppointments).toHaveLength(2);
   });
 
   it('should successfully change appointment state to unsuitable(switch type to auto)', async () => {
@@ -320,7 +320,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(3);
+    expect(unsuitableAppointments).toHaveLength(3);
   });
 
   it('should successfully change appointment state to unsuitable(same date of appointment and timetable update)', async () => {
@@ -329,7 +329,7 @@ module.exports = function () {
 
     const update = cloneDeep(data);
     update.auto.workingDay.endAt = 1100;
-    update.date = new Date('2021-11-19T00:00:00Z');
+    update.date = new Date('2023-11-17T00:00:00Z');
 
     const response = await this.request().send(update);
 
@@ -339,7 +339,7 @@ module.exports = function () {
 
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
-    expect(unsuitableAppointments.length).toBe(1);
+    expect(unsuitableAppointments).toHaveLength(1);
   });
 
   it('should successfully change services to unsuitable', async () => {
@@ -357,7 +357,7 @@ module.exports = function () {
 
     const unsuitableServices = await Service.find({ 'update.status': 'unsuitable' });
 
-    expect(unsuitableServices.length).toBe(5);
+    expect(unsuitableServices).toHaveLength(5);
 
     const service = unsuitableServices[0];
 

@@ -6,9 +6,9 @@ const addDataToTest = (field, correctData) => {
 
     const newData = { ...correctData };
 
-    const isUndefind = typeof fieldValue === 'undefined';
+    const isUndefined = typeof fieldValue === 'undefined';
 
-    if (isUndefind) {
+    if (isUndefined) {
       delete newData[name];
       return { ...test, data: newData };
     }
