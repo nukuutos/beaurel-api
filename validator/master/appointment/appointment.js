@@ -1,7 +1,7 @@
 const dayjs = require('dayjs');
 const { body, fieldId, paramId } = require('express-validator');
 
-const { MASTER_ID, SERVICE_ID } = require('../../../config/id-names');
+const { MASTER_ID, SERVICE_ID, APPOINTMENT_ID } = require('../../../config/id-names');
 
 const {
   APPOINTMENT_START_REQUIRED,
@@ -11,9 +11,13 @@ const {
   DATE_REQUIRED,
   INVALID_DATE,
 } = require('../../../config/errors/appointment');
+const { durationValidation } = require('../utils/service');
 
 const masterId = paramId('masterId', MASTER_ID);
+const appointmentId = paramId('appointmentId', APPOINTMENT_ID);
 const serviceId = fieldId('serviceId', SERVICE_ID);
+
+const duration = durationValidation('duration');
 
 const timeStartAt = body('time.startAt')
   .exists({ checkFalsy: true })
@@ -45,3 +49,11 @@ const date = body('date')
   .withMessage(INVALID_DATE);
 
 exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];
+exports.updateUnsuitableAppointment = [
+  masterId,
+  appointmentId,
+  duration,
+  timeStartAt,
+  timeEndAt,
+  date,
+];

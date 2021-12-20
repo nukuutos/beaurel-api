@@ -10,7 +10,9 @@ exports.INVALID_CATEGORY = 'Неверная категория!';
 exports.INVALID_STATUS = 'Неверный статус!';
 exports.STATUS_REQUIRED = 'Cтатус отсутствует!';
 exports.UNSUITABLE_SERVICE = 'Услуга недоступана!';
-exports.CHANGE_STATUS = 'Нельзя изменить ныненшний статус записи';
+exports.CHANGE_STATUS = 'Нельзя изменить ныненшний статус записи!';
+exports.INCORRECT_STATUS = 'Неверный статус записи!';
+exports.INVALID_APPOINTMENT = 'Неверная запись!';
 
 exports.APPOINTMENT_START_REQUIRED = 'Отсутствует начало записи!';
 exports.INVALID_APPOINTMENT_START = 'Некорректное начало записи!';

@@ -18,7 +18,7 @@ const appointments = [
     },
     time: { startAt: 500, endAt: 860 },
     status: 'onConfirmation',
-    date: new Date('2021-11-19T00:00:00Z'),
+    date: new Date('2023-11-17T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
   {
@@ -36,7 +36,7 @@ const appointments = [
     },
     time: { startAt: 700, endAt: 1060 },
     status: 'onConfirmation',
-    date: new Date('2021-11-18T00:00:00Z'),
+    date: new Date('2023-11-16T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
 ];

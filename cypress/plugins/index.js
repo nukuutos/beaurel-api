@@ -43,6 +43,7 @@ const customer = require('../data/masters/customer');
 const review = require('../data/review');
 const Review = require('../../models/review');
 const autoTimetableWithUpdate = require('../data/timetables/auto-timetable-with-update');
+const unsuitableAppointment = require('../../tests/data/appointments/unsuitable-appointment');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -102,6 +103,10 @@ module.exports = (on, config) => {
     },
     'db:addHistoryAppointment': async () => {
       await Appointment.save(historyAppointment);
+      return null;
+    },
+    'db:addUnsuitableAppointment': async () => {
+      await Appointment.save(unsuitableAppointment);
       return null;
     },
     'db:addReview': async () => {

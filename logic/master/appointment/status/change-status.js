@@ -16,7 +16,7 @@ class ChangeStatus {
   checkImmutableStatuses() {
     const { status } = this;
 
-    const immutableStatuses = ['rejected', 'history', 'cancelled', 'unsuitable'];
+    const immutableStatuses = ['rejected', 'history', 'cancelled'];
 
     if (immutableStatuses.includes(status)) throw new HttpError(CHANGE_STATUS, 400);
 

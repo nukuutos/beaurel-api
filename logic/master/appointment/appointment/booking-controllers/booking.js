@@ -11,7 +11,9 @@ const HttpError = require('../../../../../models/utils/http-error');
 class Booking extends Collection {
   static name = APPOINTMENT;
 
-  constructor({ customerId, timetable, service, date, time, bookedAppointments }) {
+  constructor(
+    { customerId, timetable, service, date, time, bookedAppointments } = { customerId: null }
+  ) {
     super();
 
     this.customerId = customerId;
@@ -85,6 +87,20 @@ class Booking extends Collection {
 
     if (!isStartAndEndCorrect || !isDurationCorrect) {
       throw new HttpError(INCORRECT_DURATION, 400);
+    }
+
+    return this;
+  }
+
+  getCorrectStatus() {
+    const { customerId } = this;
+    const { masterId } = this.service;
+
+    const stringMasterId = masterId.toString();
+    const stringCustomerId = customerId.toString();
+
+    if (stringMasterId === stringCustomerId) {
+      this.status = 'confirmed';
     }
 
     return this;
