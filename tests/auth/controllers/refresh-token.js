@@ -42,5 +42,6 @@ module.exports = function () {
     expect(body).toHaveProperty('id');
     expect(body).toHaveProperty('role');
     expect(body).toHaveProperty('accessToken');
+    expect(body).toHaveProperty('username');
   });
 };

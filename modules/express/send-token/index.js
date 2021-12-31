@@ -8,7 +8,7 @@ res.sendToken = function (user) {
   const accessToken = createAccessToken(user);
   const refreshToken = createRefreshToken(user);
 
-  const { _id, role } = user;
+  const { _id, role, username } = user;
 
   const options = {
     httpOnly: true,
@@ -18,5 +18,10 @@ res.sendToken = function (user) {
     sameSite: true,
   };
 
-  return this.cookie('refreshToken', refreshToken, options).json({ accessToken, role, id: _id });
+  return this.cookie('refreshToken', refreshToken, options).json({
+    accessToken,
+    username,
+    role,
+    id: _id,
+  });
 };

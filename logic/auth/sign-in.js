@@ -11,7 +11,7 @@ class SignIn extends User {
   }
 
   static async getUser(email) {
-    const userData = await User.findOne({ email }, { email: 1, password: 1, role: 1 });
+    const userData = await User.findOne({ email }, { email: 1, password: 1, role: 1, username: 1 });
     return new this(userData || {});
   }
 

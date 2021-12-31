@@ -2,6 +2,7 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
   _id: new ObjectId('5eb849b81c2ccc21306ced34'),
+  username: 'test',
   email: 'test@test.com',
   password: '$2a$10$XcAJi.gMUnDN7LQTlxonOuHYnxdPvXa9YhWTFwrpuxk.TtvV48jBW',
   firstName: 'Никита',

@@ -7,7 +7,7 @@ const HttpError = require('../../models/utils/http-error');
 
 const { JWT_KEY_REFRESH } = process.env;
 
-class RefereshToken extends User {
+class RefreshToken extends User {
   constructor({ _id, ...data }) {
     super(data);
     this._id = _id;
@@ -26,7 +26,7 @@ class RefereshToken extends User {
   async isExists() {
     const { _id } = this;
 
-    const userData = await User.findOne({ _id }, { role: 1 });
+    const userData = await User.findOne({ _id }, { _id: 0, role: 1, username: 1 });
     if (!userData) throw new HttpError(INVALID_TOKEN, 400);
 
     const user = Object.assign(this, userData);
@@ -34,4 +34,4 @@ class RefereshToken extends User {
   }
 }
 
-module.exports = RefereshToken;
+module.exports = RefreshToken;
