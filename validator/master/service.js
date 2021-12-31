@@ -6,6 +6,7 @@ const {
   priceValidation,
   orderValidation,
   subOrderValidation,
+  updateDurationValidation,
 } = require('./utils/service');
 
 const masterId = paramId('masterId', MASTER_ID);
@@ -15,6 +16,7 @@ const serviceIdOrder = fieldId('newOrder.*.id', SERVICE_ID);
 // service
 const titleService = titleValidation('title');
 const durationService = durationValidation('duration');
+const updateDuration = updateDurationValidation('updateDuration');
 const priceService = priceValidation('price');
 const orderService = orderValidation('newOrder.*.order');
 const subOrderService = subOrderValidation('newOrder.*.subOrder');
@@ -24,7 +26,7 @@ const updatingServiceId = fieldId('services.*.id', SERVICE_ID);
 const updatingServiceDuration = durationValidation('services.*.duration');
 
 exports.getServices = [masterId];
-exports.addService = [masterId, titleService, durationService, priceService];
+exports.addService = [masterId, titleService, durationService, priceService, updateDuration];
 exports.updateServicesOrder = [masterId, serviceIdOrder, orderService, subOrderService];
 exports.getUnsuitableServices = [masterId];
 exports.putUpdateToServices = [masterId, updatingServiceId, updatingServiceDuration];

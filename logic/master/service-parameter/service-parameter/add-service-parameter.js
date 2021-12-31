@@ -15,12 +15,18 @@ class AddServiceParameter extends AddService {
   async transformSubServices() {
     const { title, masterId, subServices, order } = this;
 
-    const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
+    const { sessionTime, update } = await Timetable.findOne(
+      { masterId },
+      { _id: 0, sessionTime: 1, update: 1 }
+    );
 
     this.subServices = subServices.map((subServiceData, i) => {
       const subService = new SubService({ ...subServiceData, title, masterId });
 
-      subService.checkDuration(sessionTime).setOrderAndSubOrder(order || 0, i);
+      subService
+        .isUpdateDuration()
+        .checkDuration(sessionTime, update)
+        .setOrderAndSubOrder(order || 0, i);
 
       return subService;
     });

@@ -1,6 +1,7 @@
 const dataPreparation = require('../../../utils/data-preparation');
 const title = require('./fields/title');
 const duration = require('./fields/duration');
+const updateDuration = require('./fields/update-duration');
 const price = require('./fields/price');
 
 const data = {
@@ -9,7 +10,7 @@ const data = {
   price: 50,
 };
 
-const fields = [title, duration, price];
+const fields = [title, duration, price, updateDuration];
 
 const fieldsTests = dataPreparation(fields, data);
 

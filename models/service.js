@@ -4,7 +4,7 @@ const { SERVICE } = require('../config/collection-names');
 class Service extends Collection {
   static name = SERVICE;
 
-  constructor({ masterId, title, duration, price, order = null }) {
+  constructor({ masterId, title, duration, price, order = null, updateDuration = null }) {
     super();
 
     this.masterId = masterId;
@@ -12,6 +12,7 @@ class Service extends Collection {
     this.duration = duration;
     this.price = price;
     this.order = order;
+    this.updateDuration = updateDuration;
     this.subOrder = null;
     this.parameter = null;
   }

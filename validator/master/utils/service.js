@@ -51,6 +51,15 @@ exports.durationValidation = (field) =>
     .custom((value) => value % 30 === 0)
     .withMessage(INVALID_DURATION);
 
+exports.updateDurationValidation = (field) =>
+  body(field)
+    .optional()
+    .isInt({ min: 1, max: 1440 })
+    .withMessage(DURATION_NUMBER)
+    .customSanitizer((num) => +num)
+    .custom((value) => value % 30 === 0)
+    .withMessage(INVALID_DURATION);
+
 exports.priceValidation = (field) =>
   body(field)
     .trim()

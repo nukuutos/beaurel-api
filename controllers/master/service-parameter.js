@@ -28,7 +28,7 @@ exports.updateSubService = asyncHandler(async (req, res) => {
   const subService = new UpdateSubService({ subServiceId, parameter, duration, price, masterId });
 
   await subService.checkDuration();
-  await subService.update();
+  await subService.updateOne();
 
   return res.json({ message: 'Услуга успешно обновлена!' });
 });

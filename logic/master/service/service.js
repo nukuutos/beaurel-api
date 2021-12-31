@@ -1,6 +1,7 @@
+const dayjs = require('dayjs');
 const cloneDeep = require('lodash.clonedeep');
 const { SERVICE } = require('../../../config/collection-names');
-const { INCORRECT_DURATION } = require('../../../config/errors/service');
+const { INCORRECT_DURATION, NO_UPDATE_DURATION } = require('../../../config/errors/service');
 const ServiceModel = require('../../../models/service');
 const Timetable = require('../../../models/timetable');
 const HttpError = require('../../../models/utils/http-error');
@@ -15,9 +16,32 @@ class Service extends ServiceModel {
   async checkDuration() {
     const { duration, masterId } = this;
 
-    const { sessionTime } = await Timetable.findOne({ masterId }, { _id: 0, sessionTime: 1 });
+    const { sessionTime, update: timetableUpdate } = await Timetable.findOne(
+      { masterId },
+      { _id: 0, sessionTime: 1, update: 1 }
+    );
 
     if (duration % sessionTime !== 0) throw new HttpError(INCORRECT_DURATION, 400);
+
+    if (timetableUpdate) {
+      this.checkUpdateDuration(sessionTime, timetableUpdate);
+    }
+
+    return this;
+  }
+
+  checkUpdateDuration(sessionTime, timetableUpdate) {
+    if (sessionTime === timetableUpdate.sessionTime) return this;
+
+    const { update } = this;
+
+    if (!update) throw new HttpError(NO_UPDATE_DURATION, 400);
+
+    if (update.duration % timetableUpdate.sessionTime !== 0) {
+      throw new HttpError(INCORRECT_DURATION, 400);
+    }
+
+    this.update.date = dayjs(timetableUpdate.date).clone().toDate();
 
     return this;
   }

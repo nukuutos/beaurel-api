@@ -37,7 +37,7 @@ class UpdateService extends Service {
     if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
   }
 
-  async update() {
+  async updateOne() {
     const { id, title, duration, price } = this;
     await Service.updateOne({ _id: id }, { title, duration, price });
   }

@@ -17,13 +17,13 @@ exports.getServices = asyncHandler(async (req, res) => {
 
 exports.addService = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
-  const { title, duration, price } = req.body;
+  const { title, duration, price, updateDuration } = req.body;
 
-  const service = new AddService({ masterId, title, duration, price });
+  const service = new AddService({ masterId, title, duration, price, updateDuration });
 
   await service.checkTitleAndSetOrder();
 
-  await service.checkDuration();
+  await service.isUpdateDuration().checkDuration();
 
   const { insertedId: id } = await service.save();
 
@@ -39,7 +39,7 @@ exports.updateService = asyncHandler(async (req, res) => {
 
   await service.checkTitle();
   await service.checkDuration();
-  await service.update();
+  await service.updateOne();
 
   return res.json({ message: 'Услуга обновлена!' });
 });

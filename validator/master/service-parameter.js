@@ -8,6 +8,7 @@ const {
   priceValidation,
   parameterValidation,
   titleId,
+  updateDurationValidation,
 } = require('./utils/service');
 
 const masterId = paramId('masterId', MASTER_ID);
@@ -22,6 +23,7 @@ const priceService = priceValidation('price');
 
 const parameterSubServiceArray = parameterValidation('subServices.*.parameter');
 const durationSubServiceArray = durationValidation('subServices.*.duration');
+const updateDurationSubServiceArray = updateDurationValidation('subServices.*.updateDuration');
 const priceSubServiceArray = priceValidation('subServices.*.price');
 
 const subServices = body('subServices')
@@ -36,6 +38,7 @@ exports.addServiceParameter = [
   subServices,
   parameterSubServiceArray,
   durationSubServiceArray,
+  updateDurationSubServiceArray,
   priceSubServiceArray,
 ];
 

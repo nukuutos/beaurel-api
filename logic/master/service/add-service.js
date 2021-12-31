@@ -24,6 +24,16 @@ class AddService extends Service {
 
     return count;
   }
+
+  isUpdateDuration() {
+    const { updateDuration } = this;
+
+    if (updateDuration) {
+      this.update = { status: 'suitable', duration: updateDuration };
+    }
+
+    return this;
+  }
 }
 
 module.exports = AddService;
