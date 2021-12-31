@@ -4,7 +4,16 @@ const Profile = require('../../logic/profile/profile');
 exports.updateProfile = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
 
-  await Profile.udpateProfile(profileId, req.body);
+  await Profile.updateProfile(profileId, req.body);
+
+  return res.json({ message: 'Профиль обновлён!' });
+});
+
+exports.updateUsername = asyncHandler(async (req, res) => {
+  const { username } = req.body;
+  const { id: profileId } = req.user;
+
+  await Profile.updateUsername(profileId, username);
 
   return res.json({ message: 'Профиль обновлён!' });
 });

@@ -30,6 +30,18 @@ router.patch(
   controller.updateProfile
 );
 
+// @route     Put /api/v1/profile/:profileId/username
+// @desc      Update username
+// @access    Private
+router.put(
+  '/:profileId/username',
+  auth,
+  validator.updateUsername,
+  validate,
+  isYourself,
+  controller.updateUsername
+);
+
 // @route     Put /api/v1/profile/:profileId/avatar
 // @desc      Update avatar
 // @access    Private
