@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const { USER_EXISTS } = require('../../config/errors/auth');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
+const getVerificationCode = require('./utils/get-verification-code');
 
 class SignUp extends User {
   constructor({ _id, ...data }) {
@@ -10,13 +11,14 @@ class SignUp extends User {
     this._id = _id;
   }
 
-  static async getUser(email) {
-    const userData = await User.findOne({ email }, { _id: 1 });
+  static async getUser(phone) {
+    const userData = await User.findOne({ phone }, { _id: 1, confirmation: 1 });
     return new this(userData || {});
   }
 
   isExists() {
-    if (this._id) throw new HttpError(USER_EXISTS, 400);
+    const isUser = this._id && this.confirmation.isConfirmed;
+    if (isUser) throw new HttpError(USER_EXISTS, 400);
     return this;
   }
 
@@ -29,6 +31,22 @@ class SignUp extends User {
     const { password } = this;
     const salt = bcrypt.genSaltSync(10);
     this.password = bcrypt.hashSync(password, salt);
+    return this;
+  }
+
+  isMaster(specialization) {
+    if (!specialization) return this;
+
+    this.role = 'master';
+    this.specialization = specialization;
+
+    return this;
+  }
+
+  generateVerificationCode() {
+    const verificationCode = getVerificationCode();
+    this.confirmation.verificationCode = verificationCode;
+    this.confirmation.lastSendAt = new Date();
     return this;
   }
 

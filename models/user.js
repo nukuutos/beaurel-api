@@ -5,22 +5,29 @@ class User extends Collection {
   static name = USER;
 
   constructor({
-    email,
+    phone,
     password,
-    username = null,
+    role = 'customer',
+    confirmation = null,
     firstName = null,
     lastName = null,
-    role = 'user',
   }) {
     super();
 
-    this.email = email;
-    this.username = username;
+    this.phone = phone;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.username = null;
+    this.email = null;
     this.avatar = null;
-    this.isConfirmed = { email: false, phone: false };
+    this.confirmation = confirmation || {
+      lastSendAt: null,
+      isConfirmed: false,
+      verificationCode: null,
+      attemptsCountLeft: 5,
+      resendCountLeft: 5,
+    };
     this.role = role;
     this.createdAt = new Date();
   }

@@ -1,13 +1,13 @@
 const dataPreparation = require('../../utils/data-preparation');
-const email = require('./fields/email');
+const identificator = require('./fields/identificator');
 const passwordSignIn = require('./fields/password-sign-in');
 
 const data = {
-  email: 'nukuutos@gmail.com',
+  identificator: 'nukuutos@gmail.com',
   password: '123456',
 };
 
-const fields = [email, passwordSignIn];
+const fields = [identificator, passwordSignIn];
 
 const fieldsTests = dataPreparation(fields, data);
 

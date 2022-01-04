@@ -65,6 +65,10 @@ module.exports = (on, config) => {
       await User.save(master);
       return null;
     },
+    'db:getVerificationCode': async () => {
+      const data = await User.findOne({}, { _id: 0, 'confirmation.verificationCode': 1 });
+      return data.confirmation.verificationCode;
+    },
     'db:addCustomer': async () => {
       await User.save(customer);
       return null;

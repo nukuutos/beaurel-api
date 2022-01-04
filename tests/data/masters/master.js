@@ -7,8 +7,15 @@ module.exports = {
   password: '$2a$10$XcAJi.gMUnDN7LQTlxonOuHYnxdPvXa9YhWTFwrpuxk.TtvV48jBW',
   firstName: 'Никита',
   lastName: 'Волошин',
+  phone: '+79999999999',
   avatar: null,
-  isConfirmed: { email: false, phone: false },
+  confirmation: {
+    lastSendAt: new Date(),
+    isConfirmed: false,
+    verificationCode: 'ABCD',
+    attemptsCountLeft: 5,
+    resendCountLeft: 5,
+  },
   placeOfWork: 'Vladivostok, Paper St. 32',
   role: 'master',
   aboutText:

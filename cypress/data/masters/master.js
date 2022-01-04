@@ -7,7 +7,13 @@ module.exports = {
   firstName: 'Никита',
   lastName: 'Волошин',
   avatar: null,
-  isConfirmed: { email: false, phone: false },
+  confirmation: {
+    lastSendAt: null,
+    isConfirmed: true,
+    verificationCode: null,
+    attemptsCountLeft: 5,
+    resendCountLeft: 5,
+  },
   placeOfWork: 'Vladivostok, Paper St. 32',
   role: 'master',
   aboutText:
