@@ -70,7 +70,11 @@ describe('Book appointment', () => {
       cy.get('.fa-times > path').click();
       cy.get(':nth-child(3) > a').click();
       cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
-
+      // go to confirmed appointments
+      cy.intercept('GET', '/api/v1/profile/**').as('getConfirmedAppointments');
+      cy.get('.appointments__appointment-types > :nth-child(2)').click();
+      cy.wait('@getConfirmedAppointments');
+      // reject
       cy.intercept('PUT', '/api/v1/master/**').as('rejectAppointment');
       cy.get('.btn--fail').click();
       cy.wait('@rejectAppointment');
@@ -115,7 +119,11 @@ describe('Book appointment', () => {
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
     cy.get('.navbar > :nth-child(3) > a').click();
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
-
+    // go to confirmed appointments
+    cy.intercept('GET', '/api/v1/profile/**').as('getConfirmedAppointments');
+    cy.get('.appointments__appointment-types > :nth-child(2)').click();
+    cy.wait('@getConfirmedAppointments');
+    // reject appointment
     cy.intercept('PUT', '/api/v1/master/**').as('rejectAppointment');
     cy.get('.btn--fail').click();
     cy.wait('@rejectAppointment');

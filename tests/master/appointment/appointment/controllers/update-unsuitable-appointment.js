@@ -1,10 +1,7 @@
 const cloneDeep = require('lodash.clonedeep');
 const { ObjectId } = require('mongodb');
 const {
-  INCORRECT_SERVICE,
-  INCORRECT_TIMETABLE,
   INCORRECT_DURATION,
-  UNSUITABLE_SERVICE,
   WEEKEND,
   EXCEPTION,
   UNAVAILABLE_TIME,
@@ -14,15 +11,11 @@ const {
   INCORRECT_STATUS,
 } = require('../../../../../config/errors/appointment');
 const Appointment = require('../../../../../models/appointment');
-const Service = require('../../../../../models/service');
 
 const Timetable = require('../../../../../models/timetable');
-const services = require('../../../../data/services/services');
 const autoTimetable = require('../../../../data/timetables/auto-timetable');
 const manuallyTimetable = require('../../../../data/timetables/manually-timetable');
-const timetableWithUpdate = require('../../../../data/timetables/auto-timetable-with-update');
 const autoTimetableWithUpdate = require('../../../../data/timetables/auto-timetable-with-update');
-const servicesWithUpdate = require('../../../../data/services/services-with-update');
 const { getBookingData, checkIsCache, checkIsCacheDeleted } = require('./utils');
 const unsuitableAppointment = require('../../../../data/appointments/unsuitable-appointment');
 
@@ -32,7 +25,7 @@ const data = {
     startAt: 720,
     endAt: 840,
   },
-  date: new Date('2021-12-24T00:00:00.000Z'),
+  date: new Date('2023-12-22T00:00:00.000Z'),
 };
 
 module.exports = function () {

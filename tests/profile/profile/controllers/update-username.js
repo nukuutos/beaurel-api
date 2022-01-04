@@ -27,7 +27,7 @@ module.exports = function () {
   it('should successfully update username', async () => {
     await User.save(master);
 
-    const username = 'test';
+    const username = 'testy';
 
     const response = await this.request().send({
       username,
