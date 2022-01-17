@@ -26,9 +26,10 @@ class Collection {
     return await this.collection().insertMany(data);
   }
 
-  static async find(query, projection = null, { page = 0, limit = 0 } = {}) {
+  static async find(query, projection = null, { page = 0, limit = 0, sort = null } = {}) {
     const findObject = this.collection()
       .find(query, { projection })
+      .sort(sort)
       .skip(page * limit)
       .limit(limit);
 
