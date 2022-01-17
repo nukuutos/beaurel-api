@@ -1,4 +1,4 @@
-const { getRedisClient } = require("../utils/redis");
+const { getRedisClient } = require('../utils/redis');
 
 const {
   MASTER_APPOINTMENTS,
@@ -7,11 +7,10 @@ const {
   MASTER_ID,
   SEARCH_TIMEZONE,
   SEARCH_MASTERS,
-} = require("../config/cache");
+} = require('../config/cache');
 
 const handleSecondKey = (key, req) => {
-  const isAppointments =
-    key === MASTER_APPOINTMENTS || key === CUSTOMER_APPOINTMENTS;
+  const isAppointments = key === MASTER_APPOINTMENTS || key === CUSTOMER_APPOINTMENTS;
 
   if (isAppointments) {
     return key + req.params.status;
@@ -27,7 +26,7 @@ const handleKeys = (keys, req) => {
     case PROFILE_ID:
     case MASTER_ID: {
       const userId = req.params[firstKey];
-      const stringUserId = "id-" + userId.toString();
+      const stringUserId = `id-${userId.toString()}`;
       const secondKey = handleSecondKey(keys[1], req);
       return [stringUserId, secondKey];
     }
@@ -48,8 +47,9 @@ const handleKeys = (keys, req) => {
   }
 };
 
-const getCleanCache = (...keys) => {
-  return async (req, res, next) => {
+const getCleanCache =
+  (...keys) =>
+  async (req, res, next) => {
     await next();
 
     keys = handleKeys(keys, req);
@@ -58,6 +58,5 @@ const getCleanCache = (...keys) => {
 
     client.hdel(...keys);
   };
-};
 
 module.exports = getCleanCache;

@@ -38,12 +38,13 @@
     "multer": "^1.4.2",
     "redis": "^3.1.2",
     "sharp": "^0.26.3",
+    "socket.io": "^4.4.1",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
     "concurrently": "^6.4.0",
-    "cypress": "^9.1.1",
+    "cypress": "^9.2.1",
     "cypress-file-upload": "^5.0.8",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",

@@ -2,6 +2,7 @@ const express = require('express');
 
 const favoriteRouter = require('./favorite');
 const appointmentRouter = require('./appointment');
+const messageRouter = require('./message');
 
 const controller = require('../../controllers/profile/profile');
 
@@ -17,6 +18,7 @@ const router = express.Router();
 
 router.use('/:profileId/favorite', favoriteRouter);
 router.use('/:profileId/appointment', appointmentRouter);
+router.use('/:profileId/message', messageRouter);
 
 // @route     Patch /api/v1/profile/:profileId
 // @desc      Update profile

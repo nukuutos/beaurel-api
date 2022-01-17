@@ -2,8 +2,11 @@ const app = require('./app');
 
 const { connectDB } = require('./utils/database');
 const { connectRedis } = require('./utils/redis');
+const { initIO } = require('./utils/socket');
 
 connectRedis();
 connectDB();
 
-app.listen(process.env.PORT);
+const server = app.listen(process.env.PORT);
+
+initIO(server);

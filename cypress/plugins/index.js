@@ -44,6 +44,9 @@ const review = require('../data/review');
 const Review = require('../../models/review');
 const autoTimetableWithUpdate = require('../data/timetables/auto-timetable-with-update');
 const unsuitableAppointment = require('../../tests/data/appointments/unsuitable-appointment');
+const Message = require('../../models/message');
+const dialogsLastMessages = require('../data/messages/dialogs-last-messages');
+const dialog = require('../data/messages/dialog');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -68,6 +71,10 @@ module.exports = (on, config) => {
     'db:getVerificationCode': async () => {
       const data = await User.findOne({}, { _id: 0, 'confirmation.verificationCode': 1 });
       return data.confirmation.verificationCode;
+    },
+    'db:getViewedMessages': async () => {
+      const data = await Message.find({ isUnread: false });
+      return data.length;
     },
     'db:addCustomer': async () => {
       await User.save(customer);
@@ -95,6 +102,14 @@ module.exports = (on, config) => {
     },
     'db:addWork': async () => {
       await Work.save(work);
+      return null;
+    },
+    'db:addDialogsLastMessages': async () => {
+      await Message.insertMany(dialogsLastMessages);
+      return null;
+    },
+    'db:addDialog': async () => {
+      await Message.insertMany(dialog);
       return null;
     },
     'db:addOnConfirmationAppointment': async () => {
