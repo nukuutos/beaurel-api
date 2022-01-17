@@ -30,7 +30,8 @@ module.exports = (userId) => [
             firstName: 1,
             lastName: 1,
             avatar: 1,
-            placeOfwork: 1,
+            placeOfWork: 1,
+            specialization: 1,
           },
         },
         // get avg rating
