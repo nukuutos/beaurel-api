@@ -1,3 +1,3 @@
 const dotenv = require('dotenv');
 
-module.exports = () => dotenv.config({ path: './config/envs/.env.test' });
+module.exports = () => dotenv.config({ path: './config/envs/.env.jest-test' });
