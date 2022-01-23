@@ -2,10 +2,17 @@ const Avatar = require('./avatar');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
 const { USERNAME_EXISTS } = require('../../config/errors/profile');
+const customerProfile = require('../../pipelines/user/customer-profile');
 
 class Profile {
   static async updateProfile(profileId, fieldsForUpdate) {
     await User.updateOne({ _id: profileId }, { ...fieldsForUpdate });
+  }
+
+  static async getCustomerProfile(profileId) {
+    const pipeline = customerProfile(profileId);
+    const data = await User.aggregate(pipeline).next();
+    return data;
   }
 
   static async updateUsername(profileId, username) {

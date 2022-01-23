@@ -58,5 +58,6 @@ const username = body('username')
   .withMessage(INVALID_USERNAME);
 
 exports.updateAvatar = [profileId];
+exports.getCustomerProfile = [profileId];
 exports.updateProfile = [profileId, updateFields, aboutText, firstName, lastName];
 exports.updateUsername = [profileId, username];

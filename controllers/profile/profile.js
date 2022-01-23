@@ -1,6 +1,14 @@
 const asyncHandler = require('../../middleware/async-handler');
 const Profile = require('../../logic/profile/profile');
 
+exports.getCustomerProfile = asyncHandler(async (req, res) => {
+  const { profileId } = req.params;
+
+  const data = await Profile.getCustomerProfile(profileId);
+
+  return res.json(data);
+});
+
 exports.updateProfile = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
 

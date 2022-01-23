@@ -20,6 +20,11 @@ router.use('/:profileId/favorite', favoriteRouter);
 router.use('/:profileId/appointment', appointmentRouter);
 router.use('/:profileId/message', messageRouter);
 
+// @route     Get /api/v1/profile/:profileId
+// @desc      Get customer data
+// @access    Public
+router.get('/:profileId', validator.getCustomerProfile, validate, controller.getCustomerProfile);
+
 // @route     Patch /api/v1/profile/:profileId
 // @desc      Update profile
 // @access    Private

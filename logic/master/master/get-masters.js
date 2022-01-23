@@ -1,5 +1,5 @@
 const { USER } = require('../../../config/collection-names');
-const mastersAndRating = require('../../../pipelines/master/masters-and-rating');
+const mastersAndRating = require('../../../pipelines/user/masters-and-rating');
 const { SEARCH_MASTERS } = require('../../../config/cache');
 const Collection = require('../../../models/utils/collection/collection');
 
