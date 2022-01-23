@@ -15,7 +15,8 @@ module.exports = (customerId, status) => [
         { $match: { $expr: { $eq: ['$_id', '$$masterId'] } } },
         {
           $project: {
-            // _id: { $convert: { input: '$_id', to: 'string' } },
+            role: 1,
+            username: 1,
             firstName: 1,
             lastName: 1,
             avatar: 1,

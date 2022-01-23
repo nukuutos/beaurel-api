@@ -32,6 +32,7 @@ module.exports = (userId) => [
             avatar: 1,
             placeOfWork: 1,
             specialization: 1,
+            role: 1,
           },
         },
         // get avg rating
