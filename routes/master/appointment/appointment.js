@@ -28,6 +28,17 @@ router.post('/', auth, validator.bookAppointment, validate, cleanCache, controll
 // @desc      Update an unsuitable appointment
 // @access    Private
 router.put(
+  '/:appointmentId/viewed-state',
+  auth,
+  validator.updateViewedState,
+  validate,
+  controller.updateViewedState
+);
+
+// @route     put /api/master/:masterId/appointment/:appointmentId/unsuitable
+// @desc      Update an unsuitable appointment
+// @access    Private
+router.put(
   '/:appointmentId/unsuitable',
   auth,
   validator.updateUnsuitableAppointment,

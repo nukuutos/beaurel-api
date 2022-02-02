@@ -12,7 +12,7 @@ module.exports = function () {
 
     const appointmentsDates = Object.keys(appointments).map((date) => dayjs(date, 'DD-MM-YYYY'));
 
-    expect(appointmentsDates.length).toBe(3);
+    expect(appointmentsDates).toHaveLength(3);
 
     const isSorted = appointmentsDates.every((currrentDate, index) => {
       if (index === 0) return true;

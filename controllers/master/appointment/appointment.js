@@ -5,6 +5,7 @@ const BookingAuto = require('../../../logic/master/appointment/appointment/booki
 const BookingManually = require('../../../logic/master/appointment/appointment/booking-controllers/booking-manually');
 const BookAppointment = require('../../../logic/master/appointment/appointment/book-appointment');
 const UpdateUnsuitableAppointment = require('../../../logic/master/appointment/appointment/update-unsuitable-appointment');
+const UpdateViewedState = require('../../../logic/master/appointment/appointment/update-viewed-state');
 
 exports.bookAppointment = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
@@ -36,9 +37,21 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
     booking.isTimeExist().checkAvailability();
   }
 
-  await booking.getCorrectStatus().createAppointment().save();
+  await booking.getCorrectStatus().setIsViewed().createAppointment().save();
+
+  booking.sendAppointmentToClient();
 
   return res.status(201).json({ message: 'Запись забронирована!' });
+});
+
+exports.updateViewedState = asyncHandler(async (req, res) => {
+  const { appointmentId } = req.params;
+  const { id: userId } = req.user;
+  const { role } = req.body;
+
+  UpdateViewedState.update({ appointmentId, userId, role });
+
+  return res.end();
 });
 
 exports.updateUnsuitableAppointment = asyncHandler(async (req, res) => {
@@ -79,7 +92,7 @@ exports.updateUnsuitableAppointment = asyncHandler(async (req, res) => {
     checkAppointment.isTimeExist().checkAvailability();
   }
 
-  await updateAppointment.update();
+  await updateAppointment.setIsViewed().update();
 
   return res.status(200).json({ message: 'Запись обновлена!' });
 });

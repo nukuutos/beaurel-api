@@ -48,6 +48,7 @@ const date = body('date')
   })
   .withMessage(INVALID_DATE);
 
+exports.updateViewedState = [masterId, appointmentId];
 exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];
 exports.updateUnsuitableAppointment = [
   masterId,
