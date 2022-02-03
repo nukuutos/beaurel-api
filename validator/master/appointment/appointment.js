@@ -10,6 +10,8 @@ const {
   INVALID_APPOINTMENT_END,
   DATE_REQUIRED,
   INVALID_DATE,
+  ROLE_REQUIRED,
+  INVALID_ROLE,
 } = require('../../../config/errors/appointment');
 const { durationValidation } = require('../utils/service');
 
@@ -48,7 +50,13 @@ const date = body('date')
   })
   .withMessage(INVALID_DATE);
 
-exports.updateViewedState = [masterId, appointmentId];
+const role = body('role')
+  .exists({ checkFalsy: true })
+  .withMessage(ROLE_REQUIRED)
+  .isIn(['customer', 'master'])
+  .withMessage(INVALID_ROLE);
+
+exports.updateViewedState = [masterId, appointmentId, role];
 exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];
 exports.updateUnsuitableAppointment = [
   masterId,
