@@ -20,3 +20,5 @@ exports.APPOINTMENT_END_REQUIRED = 'Отсутствует конец запис
 exports.INVALID_APPOINTMENT_END = 'Некорректный конец записи!';
 exports.DATE_REQUIRED = 'Отсутствует дата записи!';
 exports.INVALID_DATE = 'Некорректная дата!';
+exports.ROLE_REQUIRED = 'Отсутствует роль!';
+exports.INVALID_ROLE = 'Неправильная роль!';
