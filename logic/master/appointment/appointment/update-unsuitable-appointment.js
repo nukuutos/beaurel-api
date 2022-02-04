@@ -58,12 +58,17 @@ class UpdateUnsuitableAppointment extends Booking {
     return this;
   }
 
+  setIsViewed() {
+    this.isViewed = { master: true, customer: false };
+    return this;
+  }
+
   async update() {
-    const { appointment, masterId, duration, date, time } = this;
+    const { appointment, masterId, duration, date, time, isViewed } = this;
 
     await UpdateUnsuitableAppointment.updateOne(
       { _id: appointment._id, masterId },
-      { 'service.duration': duration, date: date.toDate(), time, status: 'confirmed' }
+      { 'service.duration': duration, date: date.toDate(), isViewed, time, status: 'confirmed' }
     );
   }
 }

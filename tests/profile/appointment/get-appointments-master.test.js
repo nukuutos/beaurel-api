@@ -4,7 +4,7 @@ const User = require('../../../models/user');
 const ExtendedSupertest = require('../../extended-supertest');
 
 const master = require('../../data/masters/master');
-const appointments = require('../../data/appointments/appointments');
+const appointments = require('../../data/appointments/get-appointments');
 
 const queryParams = require('./query-params/get-appointments-master');
 const routeParams = require('./route-params/get-appointments-master');

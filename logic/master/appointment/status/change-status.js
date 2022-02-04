@@ -3,9 +3,15 @@ const { NO_APPOINTMENT } = require('../../../../config/errors/review');
 const HttpError = require('../../../../models/utils/http-error');
 
 class ChangeStatus {
-  constructor({ status, id }) {
+  constructor({ status, id, masterId, customerId, isViewed, service, time, date }) {
     this.status = status;
     this.id = id;
+    this.masterId = masterId;
+    this.customerId = customerId;
+    this.isViewed = isViewed;
+    this.service = service;
+    this.time = time;
+    this.date = date;
   }
 
   isExisted() {

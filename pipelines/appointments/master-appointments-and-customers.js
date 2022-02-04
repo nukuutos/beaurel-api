@@ -62,6 +62,7 @@ module.exports = (masterId, status) => [
           user: '$user',
           review: '$review',
           service: '$service',
+          isViewed: '$isViewed',
           time: '$time',
           date: { $convert: { input: '$date', to: 'string' } },
           createdAt: '$createdAt',

@@ -4,11 +4,11 @@ const User = require('../../../models/user');
 const ExtendedSupertest = require('../../extended-supertest');
 
 const master1 = require('../../data/masters/master-1');
-const appointments = require('../../data/appointments/appointments');
+const appointments = require('../../data/appointments/get-appointments');
 
-const queryParams = require('./query-params/get-appointments-master');
-const routeParams = require('./route-params/get-appointments-master');
-const controller = require('./controllers/get-appointments-master');
+const queryParams = require('./query-params/get-appointments-customer');
+const routeParams = require('./route-params/get-appointments-customer');
+const controller = require('./controllers/get-appointments-customer');
 
 const Appointment = require('../../../models/appointment');
 const { before, after } = require('../../utils/endpoint-test-preparation');

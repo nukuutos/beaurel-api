@@ -1,8 +1,9 @@
 const dayjs = require('dayjs');
+const Appointment = require('../../../../models/appointment');
 
 module.exports = function () {
   it('should successfully get sorted appointments', async () => {
-    const response = await this.request().query({ category: 'history' });
+    const response = await this.request().query({ category: 'confirmed' });
 
     const { statusCode, body } = response;
 
@@ -14,17 +15,27 @@ module.exports = function () {
 
     expect(appointmentsDates).toHaveLength(3);
 
-    const isSorted = appointmentsDates.every((currrentDate, index) => {
+    const isSorted = appointmentsDates.every((currentDate, index) => {
       if (index === 0) return true;
 
       const prevDate = appointmentsDates[index - 1];
-      const difference = currrentDate.diff(prevDate);
+      const difference = currentDate.diff(prevDate);
 
       if (difference > 0) return true;
       return false;
     });
 
     expect(isSorted).toBeTruthy();
+
+    const appointmentsDB = await Appointment.find({ status: 'confirmed' });
+
+    const isViewed = appointmentsDB.every(({ isViewed }) => {
+      const { master, customer } = isViewed;
+      if (!master && customer) return true;
+      return false;
+    });
+
+    expect(isViewed).toBeTruthy();
   });
 
   it('should detect unauthorized action', async () => {

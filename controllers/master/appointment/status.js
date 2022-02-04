@@ -9,7 +9,9 @@ exports.updateStatusByMaster = asyncHandler(async (req, res) => {
 
   const appointment = await ChangeStatusByMaster.getAppointment(appointmentId, masterId);
 
-  await appointment.isExisted().checkImmutableStatuses().update(status);
+  await appointment.isExisted().checkImmutableStatuses().setIsViewed().update(status);
+
+  appointment.sendUpdatedAppointmentToClient(status);
 
   return res.json({ message: `Новый статус записи: ${status}` });
 });
@@ -21,7 +23,7 @@ exports.updateStatusByCustomer = asyncHandler(async (req, res) => {
 
   const appointment = await ChangeStatusByCustomer.getAppointment(appointmentId, customerId);
 
-  await appointment.isExisted().checkImmutableStatuses().update(status);
+  await appointment.isExisted().checkImmutableStatuses().setIsViewed().update(status);
 
   return res.json({ message: `Новый статус записи: ${status}` });
 });

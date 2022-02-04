@@ -5,8 +5,13 @@ const {
   INCORRECT_DURATION,
   UNSUITABLE_SERVICE,
 } = require('../../../../../config/errors/appointment');
+const { BOOK_APPOINTMENT_BY_CUSTOMER } = require('../../../../../config/socket-io/types');
+const User = require('../../../../../models/user');
 const Collection = require('../../../../../models/utils/collection/collection');
 const HttpError = require('../../../../../models/utils/http-error');
+const { getIO } = require('../../../../../utils/socket');
+
+const { IS_SOCKET_IO } = process.env;
 
 class Booking extends Collection {
   static name = APPOINTMENT;
@@ -106,8 +111,24 @@ class Booking extends Collection {
     return this;
   }
 
+  setIsViewed() {
+    const { customerId } = this;
+    const { masterId } = this.service;
+
+    const stringMasterId = masterId.toString();
+    const stringCustomerId = customerId.toString();
+
+    this.isViewed = { customer: true, master: false };
+
+    if (stringMasterId === stringCustomerId) {
+      this.isViewed.master = false;
+    }
+
+    return this;
+  }
+
   createAppointment() {
-    const { time, customerId, createdAt, status, date: bookingDate } = this;
+    const { time, customerId, createdAt, status, isViewed, date: bookingDate } = this;
     const { _id, masterId, ...service } = this.service;
 
     const appointment = {
@@ -117,6 +138,7 @@ class Booking extends Collection {
       time,
       createdAt,
       status,
+      isViewed,
       date: bookingDate.toDate(),
     };
 
@@ -127,7 +149,38 @@ class Booking extends Collection {
 
   async save() {
     const { appointment } = this;
-    await Booking.save(appointment);
+    const { insertedId } = await Booking.save(appointment);
+    this.appointment._id = insertedId;
+  }
+
+  async sendAppointmentToClient() {
+    if (!IS_SOCKET_IO) return this;
+
+    const { customerId } = this;
+    const { masterId } = this.service;
+
+    const stringMasterId = masterId.toString();
+    const stringCustomerId = customerId.toString();
+
+    if (stringMasterId === stringCustomerId) return this;
+
+    // get customer
+    const user = await User.findOne(
+      { _id: customerId },
+      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+    );
+
+    const io = getIO();
+
+    const { appointment } = this;
+    const { customerId: something, ...appointmentData } = appointment;
+
+    io.emit(stringMasterId, {
+      type: BOOK_APPOINTMENT_BY_CUSTOMER,
+      payload: { appointment: { ...appointmentData, user, isSocket: true } },
+    });
+
+    return this;
   }
 }
 

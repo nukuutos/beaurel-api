@@ -23,6 +23,17 @@ class Appointment extends AppointmentModel {
     const sortedDatesWithAppointments = sortDays(datesWithAppointments);
     return sortedDatesWithAppointments;
   }
+
+  static async setMasterAppointmentsViewed(masterId, category) {
+    await AppointmentModel.updateMany({ masterId, status: category }, { 'isViewed.master': true });
+  }
+
+  static async setCustomerAppointmentsViewed(customerId, category) {
+    await AppointmentModel.updateMany(
+      { customerId, status: category },
+      { 'isViewed.customer': true }
+    );
+  }
 }
 
 module.exports = Appointment;

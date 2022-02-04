@@ -2,19 +2,34 @@ const Appointment = require('../../../../models/appointment');
 const ChangeStatus = require('./change-status');
 
 class ChangeStatusByCustomer extends ChangeStatus {
-  constructor({ status, id, customerId }) {
-    super({ status, id });
-    this.customerId = customerId;
+  constructor(appointment) {
+    super(appointment);
   }
 
   static async getAppointment(id, customerId) {
-    const appointment = await Appointment.findOne({ _id: id, customerId }, { _id: 0, status: 1 });
+    const appointment = await Appointment.findOne(
+      { _id: id, customerId },
+      { createdAt: 0, _id: 0 }
+    );
+
     return new this({ ...(appointment || {}), id, customerId });
   }
 
+  setIsViewed() {
+    const { masterId, customerId } = this;
+
+    this.isViewed = { master: false, customer: true };
+
+    if (masterId.toString() === customerId.toString()) {
+      this.isViewed.master = true;
+    }
+
+    return this;
+  }
+
   async update(status) {
-    const { id, customerId } = this;
-    await Appointment.updateOne({ _id: id, customerId }, { status });
+    const { id, isViewed } = this;
+    await Appointment.updateOne({ _id: id }, { isViewed, status });
   }
 }
 

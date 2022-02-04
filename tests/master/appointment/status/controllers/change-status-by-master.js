@@ -48,12 +48,17 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const { status } = await Appointment.findOne(
+    const { status, isViewed } = await Appointment.findOne(
       { _id: appointments[1]._id },
-      { _id: 0, status: 1 }
+      { _id: 0, status: 1, isViewed: 1 }
     );
 
     expect(status).toBe('confirmed');
+
+    const { master, customer } = isViewed;
+
+    expect(master).toBeTruthy();
+    expect(customer).toBeFalsy();
   });
 
   it('should detect unauthorized action', async () => {
