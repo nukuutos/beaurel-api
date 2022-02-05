@@ -167,6 +167,7 @@ const auto = [
 const manually = [manuallyAppointmentsObject, manuallyDay, manuallyAppointments];
 
 exports.getTimetable = [masterId];
+exports.createTimetable = [masterId, type, sessionTime, ...auto, ...manually];
 exports.updateTimetable = [masterId, timetableId, type, sessionTime, ...auto, ...manually, date];
 exports.deleteTimetableUpdate = [masterId, timetableId];
 exports.getTimetableAndAppointments = [masterId];

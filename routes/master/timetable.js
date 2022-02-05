@@ -27,6 +27,19 @@ const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, TIMETABLE_AN
 // @desc      Create Timetable Update
 // @access    Private(master)
 router.post(
+  '/',
+  auth,
+  master,
+  validator.createTimetable,
+  validate,
+  isYourself,
+  controller.createTimetable
+);
+
+// @route     Post /api/master/:masterId/timetable/:timetableId/update
+// @desc      Create Timetable Update
+// @access    Private(master)
+router.post(
   '/:timetableId/update',
   auth,
   master,

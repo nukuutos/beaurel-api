@@ -3,7 +3,16 @@ const HttpError = require('../../../../../models/utils/http-error');
 const TimetableGenerator = require('./timetable-generator');
 
 class AutoGenerator extends TimetableGenerator {
-  constructor({ sessionTime, auto, manually, type, timetableId, difference, masterId }) {
+  constructor({
+    sessionTime,
+    auto,
+    manually,
+    type,
+    timetableId,
+    difference,
+    masterId,
+    timezone = null,
+  }) {
     super({ difference, masterId });
 
     this.timetableId = timetableId;
@@ -11,6 +20,7 @@ class AutoGenerator extends TimetableGenerator {
     this.auto = auto;
     this.manually = manually;
     this.type = type;
+    this.timezone = timezone;
   }
 
   getPossibleAppointmentsTime() {

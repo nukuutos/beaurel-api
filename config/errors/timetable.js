@@ -4,6 +4,8 @@ exports.UPDATE_EXISTS = 'Обновление уже существует!';
 exports.SAME_TIMETABLES = 'Новое расписание не отличается от нынешнего!';
 exports.NO_TIMETABLE = 'Расписания не существует!';
 exports.NO_UPDATE = 'Обновление отсутствует!';
+exports.TIMETABLE_IS_EXISTED = 'Расписание уже существует!';
+exports.NO_TIMEZONE = 'Отсутствует часовый пояс!';
 
 exports.SESSION_TIME_REQUIRED = 'Отсуствует время сеанса!';
 exports.SESSION_TIME_DURATION = 'Некорректное время сеанса!';

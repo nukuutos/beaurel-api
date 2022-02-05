@@ -5,6 +5,7 @@ const ManuallyGenerator = require('../../logic/master/timetable/timetable-update
 const TimetableUpdate = require('../../logic/master/timetable/timetable-update/timetable-update');
 const DeleteTimetableUpdate = require('../../logic/master/timetable/delete-timetable-update');
 const GetTimetable = require('../../logic/master/timetable/get-timetable');
+const CreateTimetable = require('../../logic/master/timetable/create-timetable');
 
 exports.getTimetableAndAppointments = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
@@ -12,6 +13,33 @@ exports.getTimetableAndAppointments = asyncHandler(async (req, res) => {
   const { timetable, appointments } = await GetTimetable.getData(masterId);
 
   return res.json({ timetable, appointments: appointments || [] });
+});
+
+exports.createTimetable = asyncHandler(async (req, res) => {
+  const { masterId } = req.params;
+  const timetableFields = req.body;
+
+  const data = await CreateTimetable.getData(masterId);
+
+  data.isTimetable().isTimezone();
+
+  const { timezone } = data;
+
+  let timetable;
+
+  const { type } = timetableFields;
+
+  if (type === 'auto') {
+    timetable = new AutoGenerator({ ...timetableFields, timezone, masterId });
+    timetable.getPossibleAppointmentsTime().checkExceptions();
+  } else {
+    timetable = new ManuallyGenerator({ ...timetableFields, timezone, masterId });
+    timetable.checkAppointments();
+  }
+
+  const { insertedId: _id } = await timetable.save();
+
+  return res.status(201).json({ _id });
 });
 
 exports.updateTimetable = asyncHandler(async (req, res) => {

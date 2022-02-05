@@ -4,7 +4,7 @@ const { TIMETABLE } = require('../config/collection-names');
 class Timetable extends Collection {
   static name = TIMETABLE;
 
-  constructor(masterId, sessionTime, type, auto, manually) {
+  constructor(masterId, sessionTime, type, auto, manually, timezone = null) {
     super();
 
     this.masterId = masterId;
@@ -12,6 +12,7 @@ class Timetable extends Collection {
     this.type = type;
     this.auto = auto;
     this.manually = manually;
+    this.timezone = timezone;
     this.update = null;
   }
 }

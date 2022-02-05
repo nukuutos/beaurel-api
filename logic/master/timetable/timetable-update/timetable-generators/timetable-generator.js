@@ -4,8 +4,17 @@ const Timetable = require('../../../../../models/timetable');
 const HttpError = require('../../../../../models/utils/http-error');
 
 class TimetableGenerator extends Timetable {
-  constructor({ masterId, sessionTime, type, auto, manually, update, difference = null }) {
-    super(masterId, sessionTime, type, auto, manually);
+  constructor({
+    masterId,
+    sessionTime,
+    type,
+    auto,
+    manually,
+    update = null,
+    difference = null,
+    timezone = null,
+  }) {
+    super(masterId, sessionTime, type, auto, manually, timezone);
     this.update = update;
     this.difference = difference;
   }
@@ -51,12 +60,18 @@ class TimetableGenerator extends Timetable {
   }
 
   async makeUpdate(date) {
-    const { timetableId, masterId, ...update } = this;
+    const { timetableId, masterId, difference, timezone, update, ...updateData } = this;
 
     await Timetable.updateOne(
       { _id: timetableId, masterId },
-      { update: { ...update, date: date.toDate() } }
+      { update: { ...updateData, date: date.toDate() } }
     );
+  }
+
+  async save() {
+    const { timetableId, difference, update, ...timetable } = this;
+
+    return await Timetable.save(timetable);
   }
 }
 
