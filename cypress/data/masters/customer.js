@@ -9,11 +9,12 @@ module.exports = {
   avatar: null,
   isConfirmed: { email: false, phone: false },
   placeOfWork: 'Vladivostok, Paper St. 32',
-  role: 'master',
+  role: 'customer',
   aboutText:
     'Lorem dolor sit amet consectetur adipisicing elit. Molestias sequi recusandae saepe, sunt optio provident repellat. Lorem ipsum dolor sit ameorib',
   createdAt: { $date: '2020-05-10T18:36:40.515Z' },
   specialization: 'Визажист',
   masters: [],
   city: 'Владивосток',
+  wasOnline: new Date('2021-12-17'),
 };
