@@ -18,6 +18,7 @@ class User extends Collection {
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.masters = [];
     this.username = null;
     this.email = null;
     this.avatar = null;

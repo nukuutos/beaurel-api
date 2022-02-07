@@ -1,5 +1,6 @@
 const asyncHandler = require('../../middleware/async-handler');
 const Message = require('../../logic/profile/message');
+const Profile = require('../../logic/profile/profile');
 
 exports.addMessage = asyncHandler(async (req, res) => {
   const { recipientId } = req.params;
@@ -10,6 +11,8 @@ exports.addMessage = asyncHandler(async (req, res) => {
 
   await messageRecord.getData();
   await messageRecord.isRecipientExisted().setSenderData().save();
+
+  Profile.updateOnlineStatus(senderId);
 
   messageRecord.sendToClient();
 

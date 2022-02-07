@@ -59,5 +59,7 @@ const username = body('username')
 
 exports.updateAvatar = [profileId];
 exports.getCustomerProfile = [profileId];
+exports.getOnlineStatus = [profileId];
+exports.updateOnlineStatus = [profileId];
 exports.updateProfile = [profileId, updateFields, aboutText, firstName, lastName];
 exports.updateUsername = [profileId, username];

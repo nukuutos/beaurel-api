@@ -63,4 +63,27 @@ router.put(
   controller.updateAvatar
 );
 
+// @route     Get /api/v1/profile/:profileId
+// @desc      Update user status (when was user last time online)
+// @access    Public
+router.put(
+  '/:profileId/online',
+  auth,
+  validator.updateOnlineStatus,
+  validate,
+  isYourself,
+  controller.updateOnlineStatus
+);
+
+// @route     Get /api/v1/profile/:profileId
+// @desc      Get online status
+// @access    Private
+router.get(
+  '/:profileId/online',
+  auth,
+  validator.getOnlineStatus,
+  validate,
+  controller.getOnlineStatus
+);
+
 module.exports = router;
