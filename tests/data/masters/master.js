@@ -24,4 +24,5 @@ module.exports = {
   specialization: 'Визажист',
   masters: [new ObjectId('5eb849b81c2ccc21306ced33'), new ObjectId('5eb849b81c2ccc21306ced32')],
   city: 'Владивосток',
+  wasOnline: new Date('1995-12-17T03:24:00'),
 };
