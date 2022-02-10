@@ -10,7 +10,7 @@
     "test": "concurrently \"npm:redis:start\" \"npm:server:test\" \"npm:cypress:open\"",
     "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
     "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
-    "jest:test": "jest --runInBand --bail --testTimeout 10000",
+    "jest:test": "jest --runInBand --bail --testTimeout 30000",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "redis:start": "redis-server"
