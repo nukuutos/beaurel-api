@@ -5,5 +5,9 @@ config/envs
 images
 !images/avatars/default.svg
 
+cypress/screenshots
+cypress/videos
+cypress/downloads
+
 dump.rdb
 
