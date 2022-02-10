@@ -1,13 +1,13 @@
-const express = require("express");
+const express = require('express');
 
-const controller = require("../../controllers/profile/appointment");
+const controller = require('../../controllers/profile/appointment');
 
-const validator = require("../../validator/profile/appointment");
+const validator = require('../../validator/profile/appointment');
 
-const validate = require("../../middleware/validate");
-const auth = require("../../middleware/auth");
-const master = require("../../middleware/master");
-const isYourself = require("../../middleware/is-yourself");
+const validate = require('../../middleware/validate');
+const auth = require('../../middleware/auth');
+const master = require('../../middleware/master');
+const isYourself = require('../../middleware/is-yourself');
 
 const router = express.Router({ mergeParams: true });
 
@@ -15,7 +15,7 @@ const router = express.Router({ mergeParams: true });
 // @desc      Get appointments for master with specific type
 // @access    Private(master)
 router.get(
-  "/master",
+  '/master',
   auth,
   master,
   validator.getMasterAppointments,
@@ -28,9 +28,9 @@ router.get(
 // @desc      Get appointments for customer with specific type
 // @access    Private
 router.get(
-  "/customer",
+  '/customer',
   auth,
-  validator.getMasterAppointments,
+  validator.getCustomerAppointments,
   validate,
   isYourself,
   controller.getCustomerAppointments

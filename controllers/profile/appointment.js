@@ -3,22 +3,22 @@ const asyncHandler = require('../../middleware/async-handler');
 
 exports.getMasterAppointments = asyncHandler(async (req, res) => {
   const { id: masterId } = req.user;
-  const { category } = req.query;
+  const { category, page } = req.query;
 
-  const appointments = await Appointment.getAppointmentsAsMaster(masterId, category);
+  const appointments = await Appointment.getAppointmentsAsMaster(masterId, category, page);
 
-  Appointment.setMasterAppointmentsViewed(masterId, category);
+  Appointment.setMasterAppointmentsViewed(appointments);
 
   return res.json({ appointments });
 });
 
 exports.getCustomerAppointments = asyncHandler(async (req, res) => {
   const { id: customerId } = req.user;
-  const { category } = req.query;
+  const { category, page } = req.query;
 
-  const appointments = await Appointment.getAppointmentsAsCustomer(customerId, category);
+  const appointments = await Appointment.getAppointmentsAsCustomer(customerId, category, page);
 
-  Appointment.setCustomerAppointmentsViewed(customerId, category);
+  Appointment.setCustomerAppointmentsViewed(appointments);
 
   return res.json({ appointments });
 });

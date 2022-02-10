@@ -1,10 +1,15 @@
-module.exports = (customerId, status) => [
+const limit = 10;
+
+module.exports = (customerId, status, page) => [
   {
     $match: {
       customerId,
       status,
     },
   },
+  { $sort: { date: 1, time: 1 } },
+  { $skip: page * limit },
+  { $limit: limit },
   {
     $lookup: {
       from: 'users',
@@ -44,20 +49,6 @@ module.exports = (customerId, status) => [
       as: 'review',
     },
   },
-  // {
-  //   $project: {
-  //     customerId: 0,
-  //     reviewId: 0,
-  //   },
-  // },
-  // {
-  //   $addFields: {
-  //     user: { $arrayElemAt: ["$user", 0] },
-  //     review: { $arrayElemAt: ["$review", 0] },
-  //     date: { $convert: { input: "$date", to: "string" } },
-  //     createdAt: { $convert: { input: "$createdAt", to: "string" } },
-  //   },
-  // },
   {
     $addFields: {
       user: { $arrayElemAt: ['$user', 0] },
@@ -65,7 +56,6 @@ module.exports = (customerId, status) => [
       createdAt: { $convert: { input: '$createdAt', to: 'string' } },
     },
   },
-  // { $sort: { date: 1 } },
   {
     $group: {
       _id: { $dateToString: { format: '%d-%m-%Y', date: '$date' } },

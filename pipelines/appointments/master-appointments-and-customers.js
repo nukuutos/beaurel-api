@@ -1,10 +1,15 @@
-module.exports = (masterId, status) => [
+const limit = 10;
+
+module.exports = (masterId, status, page) => [
   {
     $match: {
       masterId,
       status,
     },
   },
+  { $sort: { date: 1, time: 1 } },
+  { $skip: page * limit },
+  { $limit: limit },
   {
     $lookup: {
       from: 'users',
