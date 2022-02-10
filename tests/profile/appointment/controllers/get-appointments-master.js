@@ -3,7 +3,7 @@ const Appointment = require('../../../../models/appointment');
 
 module.exports = function () {
   it('should successfully get sorted appointments', async () => {
-    const response = await this.request().query({ category: 'confirmed' });
+    const response = await this.request().query({ category: 'confirmed', page: 0 });
 
     const { statusCode, body } = response;
 
@@ -40,7 +40,7 @@ module.exports = function () {
 
   it('should detect unauthorized action', async () => {
     const response = await this.request()
-      .query({ category: 'history' })
+      .query({ category: 'history', page: 0 })
       .set('Authorization', 'hacky');
 
     const { statusCode } = response;
