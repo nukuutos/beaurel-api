@@ -22,4 +22,5 @@ module.exports = {
   specialization: 'Визажист',
   masters: [],
   city: 'Владивосток',
+  wasOnline: new Date('2021-12-17'),
 };

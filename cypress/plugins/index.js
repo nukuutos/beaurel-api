@@ -36,17 +36,19 @@ const Image = require('../../models/utils/image');
 const Work = require('../../models/work');
 const work = require('../data/work');
 const Appointment = require('../../models/appointment');
-const onConfirmationAppointment = require('../data/appointments/on-confirmation-appointment');
+const onConfirmationAppointmentCustomer = require('../data/appointments/on-confirmation-appointment-customer');
+const onConfirmationAppointmentMaster = require('../data/appointments/on-confirmation-appointment-master');
 const confirmedAppointment = require('../data/appointments/confirmed-appointment');
 const historyAppointment = require('../data/appointments/history-appointment');
 const customer = require('../data/masters/customer');
 const review = require('../data/review');
 const Review = require('../../models/review');
 const autoTimetableWithUpdate = require('../data/timetables/auto-timetable-with-update');
-const unsuitableAppointment = require('../../tests/data/appointments/unsuitable-appointment');
+const unsuitableAppointment = require('../data/appointments/unsuitable-appointment');
 const Message = require('../../models/message');
 const dialogsLastMessages = require('../data/messages/dialogs-last-messages');
 const dialog = require('../data/messages/dialog');
+const appointmentsOnScroll = require('../data/appointments/appointments-on-scroll');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -112,8 +114,16 @@ module.exports = (on, config) => {
       await Message.insertMany(dialog);
       return null;
     },
-    'db:addOnConfirmationAppointment': async () => {
-      await Appointment.save(onConfirmationAppointment);
+    'db:addOnConfirmationAppointmentCustomer': async () => {
+      await Appointment.save(onConfirmationAppointmentCustomer);
+      return null;
+    },
+    'db:addOnConfirmationAppointmentMaster': async () => {
+      await Appointment.save(onConfirmationAppointmentMaster);
+      return null;
+    },
+    'db:addAppointmentsOnScroll': async () => {
+      await Appointment.insertMany(appointmentsOnScroll);
       return null;
     },
     'db:addConfirmedAppointment': async () => {

@@ -15,6 +15,7 @@ module.exports = {
     id: '5fc798eb321f4a09588b254c',
   },
   time: { startAt: 480, endAt: 600 },
+  isViewed: { master: false, customer: false },
   status: 'confirmed',
   date: new Date('2021-04-18T00:00:00Z'),
   createdAt: new Date('2021-04-11T13:16:23.000Z'),
