@@ -4,6 +4,7 @@ const ServiceModel = require('../../../models/service');
 const HttpError = require('../../../models/utils/http-error');
 const servicesCountAndIsTitle = require('../../../pipelines/service/services-count-and-is-title');
 const { SERVICE } = require('../../../config/collection-names');
+const User = require('../../../models/user');
 
 class AddService extends Service {
   static name = SERVICE;
@@ -23,6 +24,10 @@ class AddService extends Service {
     this.order = count;
 
     return count;
+  }
+
+  static async updateMasterTools(masterId, count) {
+    if (!count) await User.updateOne({ _id: masterId }, { 'tools.isServices': true });
   }
 
   isUpdateDuration() {

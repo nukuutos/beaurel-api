@@ -10,9 +10,9 @@ const CreateTimetable = require('../../logic/master/timetable/create-timetable')
 exports.getTimetableAndAppointments = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
 
-  const { timetable, appointments } = await GetTimetable.getData(masterId);
+  const { timetable, appointments, isServices } = await GetTimetable.getData(masterId);
 
-  return res.json({ timetable, appointments: appointments || [] });
+  return res.json({ timetable, isServices, appointments: appointments || [] });
 });
 
 exports.createTimetable = asyncHandler(async (req, res) => {
@@ -38,6 +38,8 @@ exports.createTimetable = asyncHandler(async (req, res) => {
   }
 
   const { insertedId: _id } = await timetable.save();
+
+  CreateTimetable.updateMasterTools(masterId);
 
   return res.status(201).json({ _id });
 });

@@ -25,6 +25,10 @@ class CreateTimetable {
     if (!this.timezone) throw new HttpError(NO_TIMEZONE, 400);
     return this;
   }
+
+  static async updateMasterTools(masterId) {
+    await User.updateOne({ _id: masterId }, { 'tools.isTimetable': true });
+  }
 }
 
 module.exports = CreateTimetable;

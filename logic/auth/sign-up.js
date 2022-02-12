@@ -39,6 +39,7 @@ class SignUp extends User {
 
     this.role = 'master';
     this.specialization = specialization;
+    this.tools = { isServices: false, isTimetable: false };
 
     return this;
   }

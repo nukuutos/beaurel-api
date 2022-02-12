@@ -65,10 +65,41 @@ module.exports = (masterId) => [
         manually: '$manually',
         type: '$type',
         update: '$update',
-        // weekends: '$autoweekends',
-        // possibleAppointmentsTime: '$possibleAppointmentsTime',
       },
-      // 'timetable.workingDay': 0,
+    },
+  },
+  {
+    $lookup: {
+      from: 'users',
+      let: {
+        masterId,
+      },
+      pipeline: [
+        {
+          $match: {
+            $expr: {
+              $eq: ['$_id', '$$masterId'],
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            isServices: '$tools.isServices',
+          },
+        },
+      ],
+      as: 'user',
+    },
+  },
+  {
+    $addFields: {
+      isServices: { $arrayElemAt: ['$user.isServices', 0] },
+    },
+  },
+  {
+    $project: {
+      user: 0,
     },
   },
 ];

@@ -12,10 +12,12 @@ exports.addServiceParameter = asyncHandler(async (req, res) => {
 
   const serviceParameter = new AddServiceParameter({ masterId, title, subServices });
 
-  await serviceParameter.checkTitleAndSetOrder();
+  const servicesCount = await serviceParameter.checkTitleAndSetOrder();
   await serviceParameter.transformSubServices();
 
   const { insertedIds } = await serviceParameter.save();
+
+  AddServiceParameter.updateMasterTools(masterId, servicesCount);
 
   return res.status(201).json({ ids: insertedIds, message: 'Услуга успешно добавлена!' });
 });
