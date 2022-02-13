@@ -47,6 +47,8 @@ module.exports = function () {
 
     expect(master).toMatchSchema(masterSchema);
     expect(master.role).toBe('master');
+    expect(master.tools.isServices).toBeFalsy();
+    expect(master.tools.isTimetable).toBeFalsy();
 
     await User.deleteMany({});
   });

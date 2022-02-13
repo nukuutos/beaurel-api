@@ -150,6 +150,10 @@ module.exports = function () {
     const timetable = await Timetable.findOne({});
 
     expect(timetable).toMatchSchema(timetableSchema);
+
+    const user = await User.findOne({}, { 'tools.isTimetable': 1 });
+
+    expect(user.tools.isTimetable).toBeTruthy();
   });
 
   it('should detect unauthorized action', async () => {

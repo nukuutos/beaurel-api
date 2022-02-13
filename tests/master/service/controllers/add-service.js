@@ -6,6 +6,7 @@ const {
 } = require('../../../../config/errors/service');
 const Service = require('../../../../models/service');
 const Timetable = require('../../../../models/timetable');
+const User = require('../../../../models/user');
 const autoTimetableWithUpdate = require('../../../data/timetables/auto-timetable-with-update');
 
 const {
@@ -40,6 +41,14 @@ module.exports = function () {
     const { id } = body;
 
     expect(ObjectId.isValid(id)).toBeTruthy();
+
+    await Service.deleteMany({});
+
+    await this.request().send(data);
+
+    const user = await User.findOne({}, { 'tools.isServices': 1 });
+
+    expect(user.tools.isServices).toBeTruthy();
   });
 
   it('should fail, title already existed', async () => {
