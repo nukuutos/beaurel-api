@@ -12,7 +12,7 @@ module.exports = function () {
 
     const { masters } = body;
 
-    expect(masters.length).toBe(3);
+    expect(masters).toHaveLength(2);
   });
 
   it('should cache result', async () => {
@@ -28,12 +28,12 @@ module.exports = function () {
 
     const { masters } = body;
 
-    expect(masters.length).toBe(4);
+    expect(masters).toHaveLength(3);
 
     const cachedData = await getCachedData('searchMasters', specialization + page);
 
     const parsedData = JSON.parse(cachedData);
 
-    expect(parsedData.length).toBe(4);
+    expect(parsedData).toHaveLength(3);
   });
 };

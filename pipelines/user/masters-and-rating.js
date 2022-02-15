@@ -1,7 +1,8 @@
 module.exports = (matchQuery, page) => [
   {
-    $match: matchQuery,
+    $match: { ...matchQuery, 'tools.isServices': true, 'tools.isTimetable': true },
   },
+
   {
     $project: {
       firstName: 1,
@@ -14,20 +15,20 @@ module.exports = (matchQuery, page) => [
   // rating
   {
     $lookup: {
-      from: "reviews",
+      from: 'reviews',
       let: {
-        masterId: "$_id",
+        masterId: '$_id',
       },
       pipeline: [
         {
           $match: {
-            $expr: { $eq: ["$masterId", "$$masterId"] },
+            $expr: { $eq: ['$masterId', '$$masterId'] },
           },
         },
         {
           $group: {
             _id: null,
-            rating: { $avg: "$value" },
+            rating: { $avg: '$value' },
           },
         },
         {
@@ -36,12 +37,12 @@ module.exports = (matchQuery, page) => [
           },
         },
       ],
-      as: "rating",
+      as: 'rating',
     },
   },
   {
     $addFields: {
-      rating: { $arrayElemAt: ["$rating.rating", 0] },
+      rating: { $arrayElemAt: ['$rating.rating', 0] },
     },
   },
   { $sort: { rating: -1 } },
