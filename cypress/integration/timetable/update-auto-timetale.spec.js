@@ -1,7 +1,7 @@
 // update session time to 90min!
 const title = 'УслугаДляОбновления';
 
-describe('Update timetable', () => {
+describe('Update auto timetable', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addTimetable');
@@ -9,7 +9,7 @@ describe('Update timetable', () => {
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to timetable
-    cy.get(':nth-child(5) > a').click();
+    cy.get(':nth-child(6) > a').click();
     cy.get('.timetable__timetable-card', { timeout: 60000 }).should('be.visible');
   });
 
@@ -20,7 +20,7 @@ describe('Update timetable', () => {
     cy.get('.timetable-card__btn-edit--primary').click();
 
     // add tuesday to weekends
-    cy.get(':nth-child(3) > :nth-child(4)').click();
+    cy.get('.timetable__form > :nth-child(3) > :nth-child(4)').click();
     cy.get('[name="edit.auto.weekends.1"]').click();
     cy.get('.weekends__button').click();
 
@@ -81,7 +81,7 @@ describe('Update timetable', () => {
     cy.get('.content > :nth-child(3)  .weekday__time--exception').should('be.visible');
 
     // go to services
-    cy.get(':nth-child(4) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();
@@ -101,12 +101,12 @@ describe('Update timetable', () => {
     cy.get('.timetable-phone-edit-modal__button').click();
 
     // add tuesday to weekends
-    cy.get(':nth-child(3) > :nth-child(4)').click();
+    cy.get('.timetable__form > :nth-child(3) > :nth-child(4)').click();
     cy.get('[name="edit.auto.weekends.1"]').click();
     cy.get('.weekends__button').click();
 
     // select working day start at 11:00
-    cy.get(':nth-child(3) > :nth-child(7)').click();
+    cy.get('.timetable__form > :nth-child(3) > :nth-child(7)').click();
     cy.get('.mr-1').select(10);
     cy.get('.timetable-phone-edit-modal__button').click();
 
@@ -163,7 +163,7 @@ describe('Update timetable', () => {
 
     // go to services
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get('.navbar > :nth-child(4) > a').click();
+    cy.get('.navbar > :nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();
