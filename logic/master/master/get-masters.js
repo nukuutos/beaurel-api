@@ -42,13 +42,19 @@ class GetMasters extends Collection {
     return this;
   }
 
+  addCity(city) {
+    this.city = city;
+    this.query.city = new RegExp(`^${city}`, 'i');
+    return this;
+  }
+
   async exec() {
-    const { name, specialization, query, page } = this;
+    const { name, specialization, query, page, city } = this;
 
     const pipeline = mastersAndRating(query, page);
 
     const isNameEmpty = name === '';
-    const secondCacheKey = isNameEmpty ? specialization + page : null;
+    const secondCacheKey = isNameEmpty ? city + specialization + page : null;
     const fiveMins = 60 * 5;
 
     const data = await GetMasters.cache(SEARCH_MASTERS, secondCacheKey, fiveMins)

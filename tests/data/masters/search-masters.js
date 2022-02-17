@@ -79,7 +79,7 @@ module.exports = [
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
     masters: [],
-    city: 'Владивосток',
+    city: 'Уссурийск',
     tools: { isTimetable: true, isServices: true },
   },
 ];

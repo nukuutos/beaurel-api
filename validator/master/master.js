@@ -6,6 +6,7 @@ const {
   NO_NAME,
   NO_PAGE,
 } = require('../../config/errors/master');
+const { INVALID_CITY } = require('../../config/errors/timezone');
 const { MASTER_ID } = require('../../config/id-names');
 const specializations = require('../../config/specializations');
 
@@ -33,5 +34,11 @@ const page = query('page')
   .withMessage(INVALID_PAGE)
   .customSanitizer((value) => +value);
 
-exports.getMastersByQuery = [name, specialization, page];
+const city = query('city')
+  .exists({ checkNull: true })
+  .withMessage(INVALID_CITY)
+  .bail()
+  .customSanitizer((string) => string.replace(/[^а-яА-Я]/g, ''));
+
+exports.getMastersByQuery = [name, specialization, city, page];
 exports.getMasterTimezone = [masterId];

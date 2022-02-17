@@ -3,11 +3,15 @@ const GetMasters = require('../../logic/master/master/get-masters');
 const asyncHandler = require('../../middleware/async-handler');
 
 exports.getMasters = asyncHandler(async (req, res) => {
-  const { specialization, name, page } = req.query;
+  const { city, specialization, name, page } = req.query;
 
   const searchQuery = new GetMasters(page);
 
-  const masters = await searchQuery.addSpecialization(specialization).handleName(name).exec();
+  const masters = await searchQuery
+    .addCity(city)
+    .addSpecialization(specialization)
+    .handleName(name)
+    .exec();
 
   return res.json({ masters });
 });
