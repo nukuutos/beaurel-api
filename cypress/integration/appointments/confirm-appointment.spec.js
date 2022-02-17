@@ -3,7 +3,7 @@
 describe('Confirm appointment', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addOnConfirmationAppointment');
+    cy.task('db:addOnConfirmationAppointmentMaster');
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to appointments
