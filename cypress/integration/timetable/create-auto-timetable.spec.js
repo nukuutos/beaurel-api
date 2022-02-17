@@ -2,11 +2,11 @@
 
 describe('Create auto timetable', () => {
   beforeEach(() => {
-    cy.task('db:addMaster');
+    cy.task('db:addMasterBeginner');
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to timetable
-    cy.get(':nth-child(6) > a').click();
+    cy.get('.no-master-tools__link').click();
     cy.get('.timetable-card__tip', { timeout: 60000 }).should('be.visible');
   });
 
@@ -32,9 +32,13 @@ describe('Create auto timetable', () => {
     cy.get('.content').contains('08:00 - 19:00');
     cy.get('.content').contains('ПН: 08:00');
     cy.get('.weekday__time--exception').should('be.visible');
+    cy.get('.no-master-tools').should('be.visible');
+    // to services
+    cy.get('.no-master-tools__link').click();
+    cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
-  it('Phone', () => {
+  it.only('Phone', () => {
     cy.viewport(330, 500);
 
     // select session time
@@ -53,6 +57,9 @@ describe('Create auto timetable', () => {
     cy.get(':nth-child(1) > .weekday__appointments > :nth-child(1)').click({ force: true });
     cy.get('.btn').click();
     // check
+    cy.get('.no-master-tools').should('be.visible');
+    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+
     cy.get('.timetable-card__value').contains('сб');
     cy.get('.content').contains('60 мин');
     cy.get('.content').contains('08:00 - 19:00');

@@ -49,6 +49,7 @@ const Message = require('../../models/message');
 const dialogsLastMessages = require('../data/messages/dialogs-last-messages');
 const dialog = require('../data/messages/dialog');
 const appointmentsOnScroll = require('../data/appointments/appointments-on-scroll');
+const masterBeginner = require('../data/masters/master-beginner');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -68,6 +69,10 @@ module.exports = (on, config) => {
     // add data
     'db:addMaster': async () => {
       await User.save(master);
+      return null;
+    },
+    'db:addMasterBeginner': async () => {
+      await User.save(masterBeginner);
       return null;
     },
     'db:getVerificationCode': async () => {

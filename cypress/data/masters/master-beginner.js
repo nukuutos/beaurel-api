@@ -23,5 +23,5 @@ module.exports = {
   masters: [],
   city: 'Владивосток',
   wasOnline: new Date('2021-12-17'),
-  tools: { isTimetable: true, isServices: true },
+  tools: { isTimetable: false, isServices: false },
 };
