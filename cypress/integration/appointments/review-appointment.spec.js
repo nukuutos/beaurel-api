@@ -9,15 +9,10 @@ describe('Review appointment', () => {
     cy.auth('test1@test.com', '123456');
     // go to appointments
     cy.get(':nth-child(3) > a').click();
-    cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
+    cy.get('.appointments__appointment-types', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
-    // check appointment as customer
-    cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
-    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)').click();
-    cy.wait('@getAppointmentsAsCustomer');
-
     cy.intercept('GET', '/api/v1/profile/**').as('getHistoryAppointments');
     cy.get('.appointment-types__type').contains('история').click({ force: true });
     cy.wait('@getHistoryAppointments');
@@ -38,10 +33,6 @@ describe('Review appointment', () => {
 
   it('Phone', () => {
     cy.viewport(330, 500);
-    // check appointment as customer
-    cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
-    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)').click();
-    cy.wait('@getAppointmentsAsCustomer');
 
     cy.intercept('GET', '/api/v1/profile/**').as('getHistoryAppointments');
     cy.get('.appointment-types__type').contains('история').click({ force: true });
@@ -50,7 +41,7 @@ describe('Review appointment', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     //  open review modal
     cy.get('.btn').click();
-    cy.get('.stars > :nth-child(2) > path').click();
+    cy.get('.stars > :nth-child(2) > path').click({ force: true });
     cy.get('.edit-review__textarea').type('Интересный коммент');
     cy.intercept('POST', '/api/v1/master/**').as('saveReview');
     cy.get('.edit-review__button > .btn').click();
