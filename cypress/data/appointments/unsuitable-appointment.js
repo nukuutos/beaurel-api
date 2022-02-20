@@ -1,10 +1,11 @@
 const { ObjectId } = require('mongodb');
+const customer = require('../masters/customer');
 const master = require('../masters/master');
 
 module.exports = {
   _id: new ObjectId('6072f6a7ce01a00418b97a19'),
   masterId: master._id,
-  customerId: master._id,
+  customerId: customer._id,
   service: {
     title: 'Smoe',
     parameter: '312',

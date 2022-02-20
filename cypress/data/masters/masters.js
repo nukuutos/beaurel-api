@@ -15,6 +15,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0052a433fe10c0bc790b'),
@@ -30,6 +32,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0055a433fe10c0bc790c'),
@@ -45,6 +49,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0058a433fe10c0bc790d'),
@@ -60,6 +66,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa005aa433fe10c0bc790e'),
@@ -75,6 +83,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa005da433fe10c0bc790f'),
@@ -90,6 +100,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0060a433fe10c0bc7910'),
@@ -105,6 +117,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0063a433fe10c0bc7911'),
@@ -120,6 +134,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa006fa433fe10c0bc7912'),
@@ -135,6 +151,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0072a433fe10c0bc7913'),
@@ -150,6 +168,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0075a433fe10c0bc7914'),
@@ -165,6 +185,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('60aa0078a433fe10c0bc7915'),
@@ -180,6 +202,8 @@ module.exports = [
       'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus porro quisquam similique delectus consectetur soluta labore temporibussss suk',
     createdAt: { $date: '2020-05-10T18:36:40.515Z' },
     specialization: 'Визажист',
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('6138d264684eff23cc52876e'),
@@ -191,6 +215,8 @@ module.exports = [
     isConfirmed: { email: false, phone: false },
     role: 'user',
     createdAt: { $date: '2021-09-08T15:10:28.43Z' },
+    city: 'Уссурийск',
+    tools: { isServices: true, isTimetable: true },
   },
   {
     _id: new ObjectId('614da4b02963b70f8406534c'),
@@ -202,6 +228,8 @@ module.exports = [
     isConfirmed: { email: false, phone: false },
     role: 'user',
     createdAt: { $date: '2021-09-24T10:13:04.585Z' },
+    city: 'Владивосток',
+    tools: { isServices: false, isTimetable: true },
   },
   {
     _id: new ObjectId('614da4d8ff0164201c32971b'),
@@ -213,6 +241,8 @@ module.exports = [
     isConfirmed: { email: false, phone: false },
     role: 'user',
     createdAt: { $date: '2021-09-24T10:13:43.979Z' },
+    city: 'Владивосток',
+    tools: { isServices: true, isTimetable: false },
   },
   {
     _id: new ObjectId('614da5074c5ca20dece3153a'),
