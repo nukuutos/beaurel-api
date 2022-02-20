@@ -94,5 +94,7 @@ exports.updateUnsuitableAppointment = asyncHandler(async (req, res) => {
 
   await updateAppointment.setIsViewed().update();
 
+  updateAppointment.sendUpdatedAppointmentToClient();
+
   return res.status(200).json({ message: 'Запись обновлена!' });
 });

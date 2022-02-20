@@ -5,9 +5,14 @@ const {
   INCORRECT_STATUS,
   INVALID_APPOINTMENT,
 } = require('../../../../config/errors/appointment');
+const { CHANGE_APPOINTMENT_STATUS_SOCKET } = require('../../../../config/socket-io/types');
+const User = require('../../../../models/user');
 const HttpError = require('../../../../models/utils/http-error');
 const unsuitableAppointmentData = require('../../../../pipelines/appointments/unsuitable-appointment-data');
+const { getIO } = require('../../../../utils/socket');
 const Booking = require('./booking-controllers/booking');
+
+const { IS_SOCKET_IO } = process.env;
 
 class UpdateUnsuitableAppointment extends Booking {
   static name = APPOINTMENT;
@@ -70,6 +75,34 @@ class UpdateUnsuitableAppointment extends Booking {
       { _id: appointment._id, masterId },
       { 'service.duration': duration, date: date.toDate(), isViewed, time, status: 'confirmed' }
     );
+  }
+
+  async sendUpdatedAppointmentToClient() {
+    if (!IS_SOCKET_IO) return this;
+
+    const { appointment } = this;
+    const { customerId, masterId } = appointment;
+
+    const stringMasterId = masterId.toString();
+    const stringCustomerId = customerId.toString();
+
+    if (stringMasterId === stringCustomerId) return this;
+
+    const user = await User.findOne(
+      { _id: masterId },
+      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+    );
+
+    const io = getIO();
+
+    const appointmentToClient = { ...appointment, user, isSocket: true };
+
+    io.emit(stringCustomerId, {
+      type: CHANGE_APPOINTMENT_STATUS_SOCKET,
+      payload: { appointment: appointmentToClient, user: 'customer', nextStatus: 'confirmed' },
+    });
+
+    return this;
   }
 }
 

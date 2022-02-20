@@ -7,7 +7,9 @@ exports.getMasterAppointments = asyncHandler(async (req, res) => {
 
   const appointments = await Appointment.getAppointmentsAsMaster(masterId, category, page);
 
-  Appointment.setMasterAppointmentsViewed(appointments);
+  const isAppointments = Object.keys(appointments).length;
+
+  if (isAppointments) Appointment.setMasterAppointmentsViewed(appointments);
 
   return res.json({ appointments });
 });
@@ -18,7 +20,9 @@ exports.getCustomerAppointments = asyncHandler(async (req, res) => {
 
   const appointments = await Appointment.getAppointmentsAsCustomer(customerId, category, page);
 
-  Appointment.setCustomerAppointmentsViewed(appointments);
+  const isAppointments = Object.keys(appointments).length;
+
+  if (isAppointments) Appointment.setCustomerAppointmentsViewed(appointments);
 
   return res.json({ appointments });
 });

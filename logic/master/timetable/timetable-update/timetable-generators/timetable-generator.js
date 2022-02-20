@@ -1,7 +1,16 @@
 const lodash = require('lodash');
 const { UPDATE_EXISTS, SAME_TIMETABLES } = require('../../../../../config/errors/timetable');
+const {
+  CHANGE_APPOINTMENT_STATUS_SOCKET,
+  UPDATE_APPOINTMENT_TO_UNSUITABLE_SOCKET,
+} = require('../../../../../config/socket-io/types');
+const Appointment = require('../../../../../models/appointment');
 const Timetable = require('../../../../../models/timetable');
+const User = require('../../../../../models/user');
 const HttpError = require('../../../../../models/utils/http-error');
+const { getIO } = require('../../../../../utils/socket');
+
+const { IS_SOCKET_IO } = process.env;
 
 class TimetableGenerator extends Timetable {
   constructor({
@@ -72,6 +81,46 @@ class TimetableGenerator extends Timetable {
     const { timetableId, difference, update, ...timetable } = this;
 
     return await Timetable.save(timetable);
+  }
+
+  async sendUnsuitableAppointmentsToClients() {
+    if (!IS_SOCKET_IO) return this;
+
+    const { masterId } = this;
+
+    const appointments = await Appointment.find(
+      { masterId, status: 'unsuitable' },
+      { masterId: 0 }
+    );
+
+    if (!appointments?.length) return this;
+
+    const io = getIO();
+
+    const master = await User.findOne(
+      { _id: masterId },
+      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+    );
+
+    for (const appointment of appointments) {
+      const { customerId } = appointment;
+
+      const stringMasterId = masterId.toString();
+      const stringCustomerId = customerId.toString();
+
+      if (stringMasterId === stringCustomerId) continue;
+
+      const appointmentToClient = { ...appointment, user: master, isSocket: true };
+
+      console.log(appointmentToClient);
+
+      io.emit(stringCustomerId, {
+        type: UPDATE_APPOINTMENT_TO_UNSUITABLE_SOCKET,
+        payload: { appointment: appointmentToClient },
+      });
+    }
+
+    return this;
   }
 }
 

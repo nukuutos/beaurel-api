@@ -79,6 +79,8 @@ exports.updateTimetable = asyncHandler(async (req, res) => {
     dateTz
   );
 
+  timetable.sendUnsuitableAppointmentsToClients();
+
   return res.json({
     message: 'Расписание обновлено!',
     unsuitableServices,
