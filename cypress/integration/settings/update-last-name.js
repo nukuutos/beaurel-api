@@ -4,7 +4,7 @@ describe('Update last name', () => {
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to search
-    cy.get(':nth-child(7) > a').click();
+    cy.get(':nth-child(8) > a').click();
     cy.get('.settings__heading', { timeout: 60000 }).should('be.visible');
   });
 

@@ -9,7 +9,7 @@ describe('Update unsuitable services', () => {
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to timetable
-    cy.get(':nth-child(5) > a').click();
+    cy.get(':nth-child(6) > a').click();
     cy.get('.timetable__timetable-card', { timeout: 60000 }).should('be.visible');
   });
 
@@ -28,7 +28,7 @@ describe('Update unsuitable services', () => {
     cy.get('.modal > .svg-inline--fa').click();
 
     // go to services
-    cy.get(':nth-child(4) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();
@@ -66,7 +66,7 @@ describe('Update unsuitable services', () => {
     cy.get('.back-bar__main > .svg-inline--fa').click();
     // go to services
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get('.navbar > :nth-child(4) > a').click();
+    cy.get('.navbar > :nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();

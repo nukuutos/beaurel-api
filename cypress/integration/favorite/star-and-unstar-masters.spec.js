@@ -22,7 +22,7 @@ describe('Star and unstar master', () => {
     cy.get('.star-profile--invisible').first().click();
     cy.wait('@starMaster');
 
-    cy.get(':nth-child(6) > a').click();
+    cy.get(':nth-child(7) > a').click();
     cy.get('.masters__heading', { timeout: 60000 }).should('be.visible');
 
     cy.get('.star-profile.star-profile--unstar').should('have.length', 1);
@@ -36,7 +36,7 @@ describe('Star and unstar master', () => {
     cy.wait('@starMaster');
 
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get(':nth-child(6) > a').click();
+    cy.get(':nth-child(7) > a').click();
     cy.get('.masters__heading', { timeout: 60000 }).should('be.visible');
 
     cy.get('.star-profile.star-profile--unstar').should('have.length', 1);

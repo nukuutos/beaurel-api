@@ -7,7 +7,7 @@ describe('Delete timetable update', () => {
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to timetable
-    cy.get(':nth-child(5) > a').click();
+    cy.get(':nth-child(6) > a').click();
     cy.get('.timetable__timetable-card', { timeout: 60000 }).should('be.visible');
   });
 

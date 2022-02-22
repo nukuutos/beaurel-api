@@ -25,14 +25,14 @@ const checkForSubServiceAppearance = (parameterName) => {
   });
 };
 
-describe('Add service-parameter', () => {
+describe('Add service-parameter with update', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addTimetableWithUpdate');
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to services
-    cy.get(':nth-child(4) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 

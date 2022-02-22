@@ -12,7 +12,7 @@ describe('Update service parameter title', () => {
     // go to auth
     cy.auth('test@test.com', '123456');
     // go to services
-    cy.get(':nth-child(4) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
