@@ -1,24 +1,10 @@
-const {
-  TITLE_REQUIRED,
-  INVALID_TITLE,
-  INVALID_LENGTH,
-} = require('../../../../../config/errors/work');
+const { TITLE_REQUIRED, INVALID_LENGTH } = require('../../../../../config/errors/work');
 
 const titleMoreMaxLength = 'сукиываодылв оадывоадлоывалдо оыарвлралыврадоывдлоо';
 
 const title = {
   name: 'title',
   tests: [
-    {
-      message: 'should fail, invalid field',
-      data: { title: '<>' },
-      error: INVALID_TITLE,
-    },
-    {
-      message: 'should fail, invalid field',
-      data: { title: 'ха ха jklk' },
-      error: INVALID_TITLE,
-    },
     {
       message: 'should fail, invalid length',
       data: { title: 'ха ' },

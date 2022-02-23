@@ -27,7 +27,7 @@ const city = query('city')
   .exists({ checkNull: true })
   .withMessage(INVALID_CITY)
   .bail()
-  .customSanitizer((string) => string.replace(/[^а-яА-Я]/g, ''));
+  .customSanitizer((string) => string.replace(/[^ёа-яА-Я]/g, ''));
 
 const page = query('page')
   .exists({ checkNull: true })

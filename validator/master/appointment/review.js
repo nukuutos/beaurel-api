@@ -6,7 +6,6 @@ const {
   INVALID_VALUE,
   COMMENT_REQUIRED,
   COMMENT_LENGTH,
-  INVALID_COMMENT,
 } = require('../../../config/errors/review');
 
 const appointmentId = paramId('appointmentId', APPOINTMENT_ID);
@@ -24,9 +23,7 @@ const comment = body('comment')
   .withMessage(COMMENT_REQUIRED)
   .trim()
   .isLength({ min: 3, max: 500 })
-  .withMessage(COMMENT_LENGTH)
-  .matches(/^[а-яё -,.!?()0-9]+$/i)
-  .withMessage(INVALID_COMMENT);
+  .withMessage(COMMENT_LENGTH);
 
 exports.addReview = [masterId, appointmentId, value, comment];
 exports.updateReview = [masterId, appointmentId, value, comment];

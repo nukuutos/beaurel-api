@@ -3,7 +3,7 @@ const review = {
   masterId,
   customerId,
   appointmentId,
-  value: "1-5",
-  comment: ["length 3 to 500", "/^[а-я -,.!?()0-9]+$/i"],
-  createdAt: "date in utc",
+  value: '1-5',
+  comment: ['length 3 to 500'],
+  createdAt: 'date in utc',
 };

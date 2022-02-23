@@ -2,7 +2,6 @@ const { body, paramId } = require('express-validator');
 
 const {
   ABOUT_TEXT_LENGTH,
-  INVALID_ABOUT_TEXT,
   INVALID_FIRST_NAME_LENGTH,
   INVALID_FIRST_NAME,
   INVALID_LAST_NAME_LENGTH,
@@ -20,8 +19,6 @@ const updateFields = body('*').expectedFields(['aboutText', 'firstName', 'lastNa
 
 const aboutText = body('aboutText')
   .optional()
-  .matches(/^[а-яa-z -,.!?():;0-9]+$/i)
-  .withMessage(INVALID_ABOUT_TEXT)
   .trim()
   .isLength({ min: 0, max: 150 })
   .withMessage(ABOUT_TEXT_LENGTH);
@@ -31,7 +28,7 @@ const firstName = body('firstName')
   .trim()
   .isLength({ min: 2, max: 20 })
   .withMessage(INVALID_FIRST_NAME_LENGTH)
-  .matches(/^[а-я -]+$/i)
+  .matches(/^[ёа-я-]+$/i)
   .withMessage(INVALID_FIRST_NAME);
 
 const lastName = body('lastName')
@@ -39,7 +36,7 @@ const lastName = body('lastName')
   .trim()
   .isLength({ min: 2, max: 20 })
   .withMessage(INVALID_LAST_NAME_LENGTH)
-  .matches(/^[а-я -]+$/i)
+  .matches(/^[ёа-я-]+$/i)
   .withMessage(INVALID_LAST_NAME);
 
 const username = body('username')

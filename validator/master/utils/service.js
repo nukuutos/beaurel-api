@@ -3,19 +3,16 @@ const { body, param } = require('express-validator');
 const {
   TITLE_LENGTH,
   TITLE_REQUIRED,
-  INVALID_TITLE,
   DURATION_REQUIRED,
   DURATION_NUMBER,
   PRICE_REQUIRED,
   PRICE_NUMBER,
   PARAMETER_REQUIRED,
   PARAMETER_LENGTH,
-  INVALID_PARAMETER,
   ORDER_REQUIRED,
   SUBORDER_NUMBER,
   ORDER_NUMBER,
   TITLE_ID_LENGTH,
-  INVALID_TITLE_ID,
   INVALID_DURATION,
 } = require('../../../config/errors/service');
 
@@ -25,9 +22,7 @@ exports.titleId = (paramName) =>
     .exists({ checkFalsy: true })
     .withMessage(TITLE_REQUIRED)
     .isLength({ min: 3, max: 50 })
-    .withMessage(TITLE_ID_LENGTH)
-    .matches(/^[а-яё -,.!?()0-9]+$/i)
-    .withMessage(INVALID_TITLE_ID);
+    .withMessage(TITLE_ID_LENGTH);
 
 exports.titleValidation = (field) =>
   body(field)
@@ -36,8 +31,6 @@ exports.titleValidation = (field) =>
     .withMessage(TITLE_REQUIRED)
     .isLength({ min: 3, max: 50 })
     .withMessage(TITLE_LENGTH)
-    .matches(/^[а-яё -,.!?()0-9]+$/i)
-    .withMessage(INVALID_TITLE)
     .customSanitizer((title) => title.charAt(0).toUpperCase() + title.slice(1));
 
 exports.durationValidation = (field) =>
@@ -75,9 +68,7 @@ exports.parameterValidation = (field) =>
     .exists({ checkFalsy: true })
     .withMessage(PARAMETER_REQUIRED)
     .isLength({ min: 2, max: 10 })
-    .withMessage(PARAMETER_LENGTH)
-    .matches(/^[а-яА-Я -,.!?()0-9]+$/i)
-    .withMessage(INVALID_PARAMETER);
+    .withMessage(PARAMETER_LENGTH);
 
 exports.orderValidation = (field) =>
   body(field)

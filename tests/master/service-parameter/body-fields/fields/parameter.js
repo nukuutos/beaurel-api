@@ -1,8 +1,4 @@
-const {
-  PARAMETER_REQUIRED,
-  PARAMETER_LENGTH,
-  INVALID_PARAMETER,
-} = require('../../../../../config/errors/service');
+const { PARAMETER_REQUIRED, PARAMETER_LENGTH } = require('../../../../../config/errors/service');
 
 const parameterMoreMaxLength = 'сукиываодыл';
 
@@ -33,11 +29,6 @@ const parameter = {
       message: 'should fail, invalid length',
       data: { parameter: parameterMoreMaxLength },
       error: PARAMETER_LENGTH,
-    },
-    {
-      message: 'should fail, field required',
-      data: { parameter: '<са' },
-      error: INVALID_PARAMETER,
     },
   ],
 };

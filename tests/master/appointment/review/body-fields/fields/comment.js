@@ -35,11 +35,6 @@ const comment = {
       data: { comment: commentMoreMaxLength },
       error: COMMENT_LENGTH,
     },
-    {
-      message: 'should fail, field required',
-      data: { comment: '<са' },
-      error: INVALID_COMMENT,
-    },
   ],
 };
 

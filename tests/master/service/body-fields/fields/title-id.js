@@ -1,8 +1,4 @@
-const {
-  TITLE_REQUIRED,
-  TITLE_LENGTH,
-  INVALID_TITLE_ID,
-} = require('../../../../../config/errors/service');
+const { TITLE_REQUIRED, TITLE_LENGTH } = require('../../../../../config/errors/service');
 
 const titleMoreMaxLength = 'сукиываодылв оадывоадлоывалдо оыарвлралыврадоывдлоо';
 
@@ -33,11 +29,6 @@ const title = {
       message: 'should fail, invalid length',
       data: { title: titleMoreMaxLength },
       error: TITLE_LENGTH,
-    },
-    {
-      message: 'should fail, field required',
-      data: { title: '<са' },
-      error: INVALID_TITLE_ID,
     },
   ],
 };
