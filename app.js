@@ -16,6 +16,10 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile/profile');
 const masterRoutes = require('./routes/master/master');
 const logRequest = require('./middleware/log-request');
+const serviceUpdateJob = require('./cron/service-update-job');
+const timetableUpdateJob = require('./cron/timetable-update-job');
+const restoreAuthAttemptsJob = require('./cron/restore-auth-attempts-job');
+const deleteUnconfirmedAccountsJob = require('./cron/delete-unconfirmed-accounts-job');
 
 const app = express();
 
@@ -36,6 +40,11 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/master', masterRoutes);
 app.use('/api/v1/timezone', timezoneRoutes);
+
+serviceUpdateJob();
+timetableUpdateJob();
+restoreAuthAttemptsJob();
+deleteUnconfirmedAccountsJob();
 
 app.use(errorHandler);
 

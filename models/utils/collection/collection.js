@@ -59,7 +59,16 @@ class Collection {
   }
 
   static async updateMany(query, update) {
-    return await this.collection().updateMany(query, { $set: update });
+    const isAggregation = Array.isArray(update);
+
+    if (isAggregation) {
+      return await this.collection().updateMany(query, update);
+    }
+
+    const stringUpdate = JSON.stringify(update);
+    const isQuerySign = stringUpdate.includes('$');
+    update = isQuerySign ? update : { $set: update };
+    return await this.collection().updateMany(query, update);
   }
 
   static async deleteOne(query) {

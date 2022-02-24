@@ -41,6 +41,17 @@ class UpdateService extends Service {
     const { id, title, duration, price } = this;
     await Service.updateOne({ _id: id }, { title, duration, price });
   }
+
+  static async update() {
+    await Service.updateMany({ 'update.status': 'suitable', 'update.date': { $lte: new Date() } }, [
+      {
+        $set: {
+          duration: '$update.duration',
+          update: null,
+        },
+      },
+    ]);
+  }
 }
 
 module.exports = UpdateService;

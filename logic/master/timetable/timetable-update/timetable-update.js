@@ -46,6 +46,20 @@ class TimetableUpdate extends Timetable {
 
     return modifiedCount;
   }
+
+  static async update() {
+    await Timetable.updateMany({ 'update.date': { $lte: new Date() } }, [
+      {
+        $set: {
+          sessionTime: '$update.sessionTime',
+          auto: '$update.auto',
+          manually: '$update.manually',
+          type: '$update.type',
+          update: null,
+        },
+      },
+    ]);
+  }
 }
 
 module.exports = TimetableUpdate;

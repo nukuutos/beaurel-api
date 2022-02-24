@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const Avatar = require('./avatar');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
@@ -61,6 +62,28 @@ class Profile {
     });
 
     return this;
+  }
+
+  static async deleteUnconfirmedAccounts() {
+    const date = dayjs().subtract(7, 'day').toDate();
+
+    await User.deleteMany({
+      'confirmation.isConfirmed': false,
+      createdAt: { $lte: date },
+    });
+  }
+
+  static async restoreAttempts() {
+    const date = dayjs().subtract(2, 'h').toDate();
+
+    await User.updateMany(
+      {
+        'confirmation.lastSendAt': { $lte: date },
+        'confirmation.attemptsCountLeft': { $lt: 5 },
+        'confirmation.resendCountLeft': { $lt: 5 },
+      },
+      { 'confirmation.attemptsCountLeft': 5, 'confirmation.resendCountLeft': 5 }
+    );
   }
 }
 
