@@ -30,12 +30,9 @@ describe('Add Work', () => {
       // compare length
       cy.wait('@addWork').then((xhr) => {
         expect(xhr.response.statusCode).to.equal(201);
-
-        cy.get('.master-works').then(($element) => {
-          const childrenLength = $element.children().length;
-          expect(initialChildrenLength).to.be.lessThan(childrenLength);
-        });
       });
+
+      cy.get('.master-work').should('have.length', 1);
     });
   });
 
@@ -60,12 +57,9 @@ describe('Add Work', () => {
       // compare length
       cy.wait('@addWork').then((xhr) => {
         expect(xhr.response.statusCode).to.equal(201);
-
-        cy.get('.master-works').then(($element) => {
-          const childrenLength = $element.children().length;
-          expect(initialChildrenLength).to.be.lessThan(childrenLength);
-        });
       });
+
+      cy.get('.master-work').should('have.length', 1);
     });
   });
 });
