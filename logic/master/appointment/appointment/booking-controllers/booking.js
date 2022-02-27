@@ -17,7 +17,9 @@ class Booking extends Collection {
   static name = APPOINTMENT;
 
   constructor(
-    { customerId, timetable, service, date, time, bookedAppointments } = { customerId: null }
+    { customerId, timetable, service, date, time, bookedAppointments, formattedDate } = {
+      customerId: null,
+    }
   ) {
     super();
 
@@ -25,6 +27,7 @@ class Booking extends Collection {
     this.timetable = timetable;
     this.service = service;
     this.date = date;
+    this.formattedDate = formattedDate;
     this.time = time;
     this.bookedAppointments = bookedAppointments;
     this.status = 'onConfirmation';
@@ -128,7 +131,7 @@ class Booking extends Collection {
   }
 
   createAppointment() {
-    const { time, customerId, createdAt, status, isViewed, date: bookingDate } = this;
+    const { time, customerId, createdAt, status, isViewed, formattedDate } = this;
     const { _id, masterId, ...service } = this.service;
 
     const appointment = {
@@ -139,7 +142,7 @@ class Booking extends Collection {
       createdAt,
       status,
       isViewed,
-      date: bookingDate.toDate(),
+      date: formattedDate.toDate(),
     };
 
     this.appointment = appointment;

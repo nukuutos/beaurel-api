@@ -23,7 +23,7 @@ Dayjs.prototype.toLocalTimeInUTC = function (timezone) {
   const date = this.tz(timezone);
   const offset = date.utcOffset();
 
-  return date.utcOffset(0).subtract(offset, 'minute');
+  return date.utc().subtract(offset, 'minute');
 };
 
 Dayjs.prototype.utcNow = () => this.utc().toDate();

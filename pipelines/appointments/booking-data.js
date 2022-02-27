@@ -1,23 +1,14 @@
 module.exports = (masterId, serviceId, date) => [
-  // get timetable
   {
     $match: {
+      _id: serviceId,
       masterId,
     },
   },
   {
     $project: {
       _id: 0,
-      masterId: 1,
-      timetable: {
-        workingDay: '$workingDay',
-        sessionTime: '$sessionTime',
-        timezone: '$timezone',
-        type: '$type',
-        auto: '$auto',
-        manually: '$manually',
-        update: '$update',
-      },
+      service: '$$ROOT',
     },
   },
   // get appointments
@@ -52,44 +43,6 @@ module.exports = (masterId, serviceId, date) => [
         },
       ],
       as: 'bookedAppointments',
-    },
-  },
-  {
-    $project: {
-      _id: 0,
-      masterId: 0,
-      workingDay: 0,
-    },
-  },
-  {
-    $lookup: {
-      from: 'services',
-      let: {
-        serviceId,
-        masterId,
-      },
-      pipeline: [
-        {
-          $match: {
-            $expr: {
-              $and: [
-                {
-                  $eq: ['$_id', '$$serviceId'],
-                },
-                {
-                  $eq: ['$masterId', '$$masterId'],
-                },
-              ],
-            },
-          },
-        },
-      ],
-      as: 'service',
-    },
-  },
-  {
-    $addFields: {
-      service: { $arrayElemAt: ['$service', 0] },
     },
   },
 ];

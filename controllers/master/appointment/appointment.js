@@ -12,9 +12,9 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
   const { id: customerId } = req.user;
   const { serviceId, time, date } = req.body;
 
-  const data = await BookAppointment.getData(masterId, serviceId, date.toDate());
+  const data = await BookAppointment.getData(masterId, serviceId, date);
 
-  const { timetable, bookedAppointments, service } = data;
+  const { timetable, bookedAppointments, service, formattedDate } = data;
 
   let booking = new Booking({
     timetable,
@@ -23,6 +23,7 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
     date,
     time,
     customerId,
+    formattedDate,
   });
 
   booking.isService().getWorkingTimetable().getWorkingService().checkDuration();

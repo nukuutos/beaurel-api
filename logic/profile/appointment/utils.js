@@ -1,16 +1,24 @@
 const dayjs = require('dayjs');
 
-const sortDays = (appointmentsDays) => {
-  if (!appointmentsDays) return {};
+const getFormattedAppointments = (daysWithAppointments) => {
+  daysWithAppointments = daysWithAppointments.map(({ date, appointments }) => ({
+    date: dayjs(date).utc().add(1, 'day'), // prevent utc +0.:00
+    appointments,
+  }));
 
-  return Object.keys(appointmentsDays)
-    .map((date) => dayjs(date, 'DD-MM-YYYY'))
-    .sort((a, b) => a.diff(b))
-    .map((date) => date.format('DD-MM-YYYY'))
-    .reduce((obj, key) => {
-      obj[key] = appointmentsDays[key];
-      return obj;
-    }, {});
+  const sortedDaysWithAppointments = daysWithAppointments.sort((a, b) =>
+    a.date.isBefore(b.date) ? -1 : 1
+  );
+
+  const formattedAppointments = {};
+
+  for (const day of sortedDaysWithAppointments) {
+    const { date, appointments } = day;
+    const stringDate = date.format('DD-MM-YYYY');
+    formattedAppointments[stringDate] = appointments;
+  }
+
+  return formattedAppointments;
 };
 
-module.exports = { sortDays };
+module.exports = { getFormattedAppointments };

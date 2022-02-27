@@ -56,10 +56,9 @@ module.exports = (masterId, status, page) => [
       createdAt: { $convert: { input: '$createdAt', to: 'string' } },
     },
   },
-  // { $sort: { date: 1 } },
   {
     $group: {
-      _id: { $dateToString: { format: '%d-%m-%Y', date: '$date' } },
+      _id: '$date',
       appointments: {
         $push: {
           _id: '$_id',
@@ -76,16 +75,10 @@ module.exports = (masterId, status, page) => [
     },
   },
   {
-    $group: {
-      _id: null,
-      appointments: { $push: { k: '$_id', v: '$appointments' } },
-    },
-  },
-  {
     $project: {
       _id: 0,
-      appointments: { $arrayToObject: '$appointments' },
+      date: '$_id',
+      appointments: '$appointments',
     },
   },
-  { $replaceRoot: { newRoot: '$appointments' } },
 ];
