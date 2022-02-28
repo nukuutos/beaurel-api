@@ -23,8 +23,8 @@ const connectDB = async () => {
   return client;
 };
 
-const closeDB = async () => {
-  await client.close();
+const closeDB = () => {
+  client.close();
 };
 
 const getDb = () => {
