@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { CHANGE_APPOINTMENT_STATUS_SOCKET } = require('../../../../config/socket-io/types');
 const Appointment = require('../../../../models/appointment');
 const User = require('../../../../models/user');
@@ -30,7 +31,12 @@ class ChangeStatusByMaster extends ChangeStatus {
 
   async update(status) {
     const { id, isViewed } = this;
-    await Appointment.updateOne({ _id: id }, { isViewed, status });
+    const date = dayjs().utc().toDate();
+    const historyRecord = { user: 'master', status, date };
+    await Appointment.updateOne(
+      { _id: id },
+      { $set: { isViewed, status }, $push: { history: historyRecord } }
+    );
   }
 
   async sendUpdatedAppointmentToClient(nextStatus) {

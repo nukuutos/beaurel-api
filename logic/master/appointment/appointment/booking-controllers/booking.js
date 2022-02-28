@@ -31,6 +31,7 @@ class Booking extends Collection {
     this.time = time;
     this.bookedAppointments = bookedAppointments;
     this.status = 'onConfirmation';
+    this.history = [{ user: 'customer', status: 'onConfirmation', date: dayjs().utc().toDate() }];
     this.createdAt = dayjs().toDate();
   }
 
@@ -109,6 +110,7 @@ class Booking extends Collection {
 
     if (stringMasterId === stringCustomerId) {
       this.status = 'confirmed';
+      this.history = [{ user: 'master', status: 'confirmed', date: dayjs().utc().toDate() }];
     }
 
     return this;
@@ -131,7 +133,7 @@ class Booking extends Collection {
   }
 
   createAppointment() {
-    const { time, customerId, createdAt, status, isViewed, formattedDate } = this;
+    const { time, customerId, createdAt, history, status, isViewed, formattedDate } = this;
     const { _id, masterId, ...service } = this.service;
 
     const appointment = {
@@ -140,6 +142,7 @@ class Booking extends Collection {
       service,
       time,
       createdAt,
+      history,
       status,
       isViewed,
       date: formattedDate.toDate(),

@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { find } = require('./utils');
 
 // mongodb      |   app
@@ -7,7 +8,7 @@ const { find } = require('./utils');
 //                   0 --- 6 / + 1
 //                   1 --- 7
 
-const createPipeline = (exceptions) => [
+const createPipeline = (exceptions, historyRecord) => [
   {
     $addFields: {
       dayOfWeek: { $subtract: [{ $dayOfWeek: '$date' }, 1] }, // to indexes,
@@ -26,6 +27,13 @@ const createPipeline = (exceptions) => [
           if: { $in: ['$time.startAt', '$day.v'] },
           then: 'unsuitable',
           else: '$status',
+        },
+      },
+      history: {
+        $cond: {
+          if: { $in: ['$time.startAt', '$day.v'] },
+          then: { $concatArrays: ['$history', [historyRecord]] },
+          else: '$history',
         },
       },
     },
@@ -64,8 +72,11 @@ module.exports = (defaultParams, exceptions) => {
 
   const findQuery = find(masterId, date);
 
+  const historyDate = dayjs().utc().toDate();
+  const historyRecord = { user: 'server', status: 'unsuitable', date: historyDate };
+
   const formatedExceptions = formatWeekObjectForMongodb(exceptions);
-  const pipeline = createPipeline(formatedExceptions);
+  const pipeline = createPipeline(formatedExceptions, historyRecord);
 
   bulkOp.aggregationUpdate(findQuery, pipeline);
 };

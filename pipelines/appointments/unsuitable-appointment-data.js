@@ -12,7 +12,7 @@ module.exports = ({ masterId, appointmentId, date }) => [
       bookedAppointments: [
         {
           $match: {
-            status: { $nin: ['cancelled', 'unsuitable', 'rejected'] },
+            status: { $nin: ['unsuitable', 'rejected', 'history', 'cancelled', 'unanswered'] },
             $expr: {
               $and: [
                 {

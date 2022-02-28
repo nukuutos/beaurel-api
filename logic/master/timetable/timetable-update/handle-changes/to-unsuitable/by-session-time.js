@@ -1,5 +1,6 @@
 // day of week !!!!
 
+const dayjs = require('dayjs');
 const { find: defaultFind } = require('./utils');
 
 const createFindQuery = (defaultParams, sessionTime) => {
@@ -12,7 +13,13 @@ module.exports = (defaultParams, sessionTime) => {
   const { bulkOp } = defaultParams;
   const findQuery = createFindQuery(defaultParams, sessionTime);
 
-  const updateQuery = { status: 'unsuitable' };
+  const historyDate = dayjs().utc().toDate();
+  const historyRecord = { user: 'server', status: 'unsuitable', date: historyDate };
 
-  bulkOp.update(findQuery, updateQuery);
+  const updateQuery = {
+    $set: { status: 'unsuitable' },
+    $push: { history: historyRecord },
+  };
+
+  bulkOp.aggregationUpdate(findQuery, updateQuery);
 };

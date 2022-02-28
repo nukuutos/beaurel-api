@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { NO_UPDATE } = require('../../../config/errors/timetable');
 const Appointment = require('../../../models/appointment');
 const Service = require('../../../models/service');
@@ -25,7 +26,22 @@ class DeleteTimetableUpdate {
   }
 
   static async appointmentsToOnConfirmation(masterId) {
-    await Appointment.updateMany({ masterId, status: 'unsuitable' }, { status: 'onConfirmation' });
+    const date = dayjs().utc().toDate();
+
+    const pipeline = [
+      { $addFields: { penultimateStatus: { $arrayElemAt: ['$history.status', -2] } } },
+      {
+        $set: {
+          status: '$penultimateStatus',
+          history: {
+            $concatArrays: ['$history', [{ user: 'server', status: '$penultimateStatus', date }]],
+          },
+        },
+      },
+      { $project: { penultimateStatus: 0 } },
+    ];
+
+    await Appointment.updateMany({ masterId, status: 'unsuitable' }, pipeline);
   }
 
   static async deleteServicesUpdate(masterId) {

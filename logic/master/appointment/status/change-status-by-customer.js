@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const Appointment = require('../../../../models/appointment');
 const ChangeStatus = require('./change-status');
 
@@ -29,7 +30,12 @@ class ChangeStatusByCustomer extends ChangeStatus {
 
   async update(status) {
     const { id, isViewed } = this;
-    await Appointment.updateOne({ _id: id }, { isViewed, status });
+    const date = dayjs().utc().toDate();
+    const historyRecord = { user: 'customer', status, date };
+    await Appointment.updateOne(
+      { _id: id },
+      { $set: { isViewed, status }, $push: { history: historyRecord } }
+    );
   }
 }
 

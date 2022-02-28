@@ -8,7 +8,7 @@ const masterId = paramId('masterId', MASTER_ID);
 const masterStatuses = body('status')
   .exists({ checkFalsy: true })
   .withMessage(STATUS_REQUIRED)
-  .isIn(['confirmed', 'rejected'])
+  .isIn(['confirmed', 'rejected', 'cancelled'])
   .withMessage(INVALID_STATUS);
 
 const customerStatuses = body('status')

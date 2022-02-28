@@ -14,17 +14,38 @@ class Appointment extends AppointmentModel {
   static name = APPOINTMENT;
 
   static async getAppointmentsAsMaster(masterId, category, page) {
-    const pipeline = masterAppointmentsAndCustomers(masterId, category, page);
+    const findQuery = this.getFindQuery({ masterId, category });
+    const pipeline = masterAppointmentsAndCustomers(findQuery, page);
     const daysWithAppointments = await this.aggregate(pipeline).toArray();
     const formattedAppointments = getFormattedAppointments(daysWithAppointments);
     return formattedAppointments;
   }
 
   static async getAppointmentsAsCustomer(customerId, category, page) {
-    const pipeline = customerAppointmentsAndMasters(customerId, category, page);
+    const findQuery = this.getFindQuery({ customerId, category });
+    const pipeline = customerAppointmentsAndMasters(findQuery, page);
     const daysWithAppointments = await this.aggregate(pipeline).toArray();
     const formattedAppointments = getFormattedAppointments(daysWithAppointments);
     return formattedAppointments;
+  }
+
+  static getFindQuery({ category, masterId, customerId }) {
+    let query = { masterId };
+
+    if (customerId) query = { customerId };
+
+    if (category === 'history') {
+      query.$or = [
+        { status: 'history' },
+        { status: 'rejected' },
+        { status: 'cancelled' },
+        { status: 'unanswered' },
+      ];
+    } else {
+      query.status = category;
+    }
+
+    return query;
   }
 
   static async setMasterAppointmentsViewed(appointments) {
@@ -73,8 +94,24 @@ class Appointment extends AppointmentModel {
       queries.push({ date: { $lte: todayByTimezoneInUTC }, 'time.endAt': { $lte: localeMinutes } });
     }
 
-    queries.forEach((findQuery) => {
+    const historyQueries = [...queries];
+
+    for (const query of historyQueries) {
+      query.status = 'confirmed';
+    }
+
+    const unansweredQueries = [...queries];
+
+    for (const query of unansweredQueries) {
+      query.status = { $or: [{ status: 'onConfirmation' }, { status: 'unsuitable' }] };
+    }
+
+    historyQueries.forEach((findQuery) => {
       bulkOp.update(findQuery, { status: 'history' });
+    });
+
+    unansweredQueries.forEach((findQuery) => {
+      bulkOp.update(findQuery, { status: 'unanswered' });
     });
 
     await bulkOp.execute();

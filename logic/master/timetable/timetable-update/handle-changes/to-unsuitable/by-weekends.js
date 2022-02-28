@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { find } = require('./utils');
 
 // mongodb      |   app
@@ -7,7 +8,7 @@ const { find } = require('./utils');
 //                   0 --- 6 / + 1
 //                   1 --- 7
 
-const createPipeline = (weekends) => [
+const createPipeline = (weekends, historyRecord) => [
   {
     $addFields: {
       dayOfWeek: { $dayOfWeek: '$date' },
@@ -22,6 +23,13 @@ const createPipeline = (weekends) => [
           else: '$status',
         },
       },
+      history: {
+        $cond: {
+          if: { $in: ['$dayOfWeek', weekends.map((weekday) => ((weekday + 1) % 7) + 1)] },
+          then: { $concatArrays: ['$history', [historyRecord]] },
+          else: '$history',
+        },
+      },
     },
   },
   {
@@ -34,9 +42,12 @@ const createPipeline = (weekends) => [
 module.exports = (defaultParams, weekends) => {
   const { bulkOp, masterId, date } = defaultParams;
 
+  const historyDate = dayjs().utc().toDate();
+  const historyRecord = { user: 'server', status: 'unsuitable', date: historyDate };
+
   const findQuery = find(masterId, date);
 
-  const pipeline = createPipeline(weekends);
+  const pipeline = createPipeline(weekends, historyRecord);
 
   bulkOp.aggregationUpdate(findQuery, pipeline);
 };

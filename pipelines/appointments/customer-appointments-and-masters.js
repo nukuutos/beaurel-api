@@ -1,15 +1,15 @@
 const limit = 10;
 
-module.exports = (customerId, status, page) => [
-  {
-    $match: {
-      customerId,
-      status,
-    },
-  },
+module.exports = (findQuery, page) => [
+  { $match: findQuery },
   { $sort: { date: 1, time: 1 } },
   { $skip: page * limit },
   { $limit: limit },
+  {
+    $addFields: {
+      status: { status: '$status', user: { $last: '$history.user' } },
+    },
+  },
   {
     $lookup: {
       from: 'users',

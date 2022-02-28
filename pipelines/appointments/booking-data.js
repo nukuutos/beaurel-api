@@ -21,7 +21,7 @@ module.exports = (masterId, serviceId, date) => [
       pipeline: [
         {
           $match: {
-            status: { $nin: ['cancelled', 'unsuitable', 'rejected'] },
+            status: { $nin: ['unsuitable', 'rejected', 'history', 'cancelled', 'unanswered'] },
             $expr: {
               $and: [
                 {

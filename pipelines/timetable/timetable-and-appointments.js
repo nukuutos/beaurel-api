@@ -24,7 +24,7 @@ module.exports = (masterId) => [
                 },
               ],
             },
-            status: { $nin: ['cancelled', 'unsuitable', 'history', 'rejected'] },
+            status: { $nin: ['unsuitable', 'rejected', 'history', 'cancelled', 'unanswered'] },
           },
         },
         {
