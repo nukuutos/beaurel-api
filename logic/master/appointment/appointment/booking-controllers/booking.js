@@ -179,11 +179,13 @@ class Booking extends Collection {
     const io = getIO();
 
     const { appointment } = this;
-    const { customerId: something, ...appointmentData } = appointment;
+    const { customerId: something, history, ...appointmentData } = appointment;
+
+    const status = { status: 'onConfirmation', user: 'customer' };
 
     io.emit(stringMasterId, {
       type: BOOK_APPOINTMENT_BY_CUSTOMER,
-      payload: { appointment: { ...appointmentData, user, isSocket: true } },
+      payload: { appointment: { ...appointmentData, status, user, isSocket: true } },
     });
 
     return this;

@@ -58,9 +58,11 @@ class ChangeStatusByMaster extends ChangeStatus {
 
     const io = getIO();
 
-    const { masterId: something, id, ...appointmentData } = this;
+    const { masterId: something, id, history, ...appointmentData } = this;
 
-    const appointment = { ...appointmentData, _id: id, user, isSocket: true };
+    const status = { status: nextStatus, user: 'master' };
+
+    const appointment = { ...appointmentData, _id: id, user, status, isSocket: true };
 
     io.emit(stringCustomerId, {
       type: CHANGE_APPOINTMENT_STATUS_SOCKET,

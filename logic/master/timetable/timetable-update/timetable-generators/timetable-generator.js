@@ -110,9 +110,9 @@ class TimetableGenerator extends Timetable {
 
       if (stringMasterId === stringCustomerId) continue;
 
-      const appointmentToClient = { ...appointment, user: master, isSocket: true };
+      const status = { status: 'unsuitable', user: 'server' };
 
-      console.log(appointmentToClient);
+      const appointmentToClient = { ...appointment, user: master, status, isSocket: true };
 
       io.emit(stringCustomerId, {
         type: UPDATE_APPOINTMENT_TO_UNSUITABLE_SOCKET,

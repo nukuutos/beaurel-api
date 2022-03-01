@@ -107,7 +107,9 @@ class UpdateUnsuitableAppointment extends Booking {
 
     const io = getIO();
 
-    const appointmentToClient = { ...appointment, user, isSocket: true };
+    const status = { status: 'confirmed', user: 'master' };
+
+    const appointmentToClient = { ...appointment, status, user, isSocket: true };
 
     io.emit(stringCustomerId, {
       type: CHANGE_APPOINTMENT_STATUS_SOCKET,
