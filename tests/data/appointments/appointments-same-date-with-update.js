@@ -16,6 +16,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 500, endAt: 860 },
     status: 'onConfirmation',
     date: new Date('2023-11-17T00:00:00Z'),
@@ -34,6 +37,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 700, endAt: 1060 },
     status: 'onConfirmation',
     date: new Date('2023-11-16T00:00:00Z'),

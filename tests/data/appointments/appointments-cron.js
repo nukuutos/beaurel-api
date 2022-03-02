@@ -17,9 +17,12 @@ const appointmentsCron = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'onConfirmation',
-    date: dayjs().subtract(1, 'd').utc(),
+    date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
   {
@@ -35,9 +38,12 @@ const appointmentsCron = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
-    date: dayjs().subtract(1, 'd').utc(),
+    date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
   {
@@ -53,9 +59,12 @@ const appointmentsCron = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'unsuitable',
-    date: dayjs().subtract(1, 'd').utc(),
+    date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
   {
@@ -71,9 +80,12 @@ const appointmentsCron = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 360, endAt: 720 },
     status: 'onConfirmation',
-    date: dayjs().add(1, 'd').utc(),
+    date: dayjs().add(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
   },
 ];

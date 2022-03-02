@@ -17,9 +17,21 @@ describe(`Cron update appointments to history status`, () => {
 
     await Appointment.toHistory();
 
-    const appointments = await Appointment.find({ status: 'history' });
+    const historyAppointments = await Appointment.find({ status: 'history' });
+    const unansweredAppointments = await Appointment.find({ status: 'unanswered' });
 
-    expect(appointments).toHaveLength(3);
+    expect(historyAppointments).toHaveLength(1);
+    expect(unansweredAppointments).toHaveLength(2);
+
+    historyAppointments.forEach((appointment) => {
+      expect(appointment.history[1].user).toBe('server');
+      expect(appointment.history[1].status).toBe('history');
+    });
+
+    unansweredAppointments.forEach((appointment) => {
+      expect(appointment.history[1].user).toBe('server');
+      expect(appointment.history[1].status).toBe('unanswered');
+    });
   });
 
   after();

@@ -16,6 +16,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-18T00:00:00Z'), // tue (+)
@@ -34,6 +37,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'onConfirmation',
     date: new Date('2023-04-17T00:00:00Z'), // mon (+)
@@ -52,6 +58,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-19T00:00:00Z'), // wen
@@ -70,6 +79,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-21T00:00:00Z'), // fri
@@ -88,6 +100,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-22T00:00:00Z'), // sat
@@ -106,6 +121,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-23T00:00:00Z'), // sun (+)
@@ -124,6 +142,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 360, endAt: 720 },
     status: 'history',
     date: new Date('2021-04-17T00:00:00Z'),

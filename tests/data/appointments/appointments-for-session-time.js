@@ -16,6 +16,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 960 },
     status: 'confirmed',
     date: new Date('2023-04-18T00:00:00Z'),
@@ -34,6 +37,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 960 },
     status: 'onConfirmation',
     date: new Date('2023-04-17T00:00:00Z'),
@@ -52,6 +58,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 480, endAt: 840 },
     status: 'onConfirmed',
     date: new Date('2023-04-17T00:00:00Z'),
@@ -70,6 +79,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'history',
     date: new Date('2023-04-17T00:00:00Z'),

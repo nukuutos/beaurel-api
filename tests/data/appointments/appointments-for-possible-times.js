@@ -16,6 +16,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'confirmed',
     date: new Date('2023-04-18T00:00:00Z'),
@@ -34,6 +37,9 @@ const appointments = [
       subOrder: null,
       id: '5fc798eb321f4a09588b254c',
     },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     time: { startAt: 720, endAt: 1080 },
     status: 'onConfirmation',
     date: new Date('2023-04-17T00:00:00Z'),
@@ -43,6 +49,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a00418b97a17'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',

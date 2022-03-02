@@ -250,6 +250,7 @@ module.exports = function () {
     expect(appointmentDB).toHaveProperty('masterId');
     expect(appointmentDB).toHaveProperty('time');
     expect(appointmentDB).toHaveProperty('service');
+    expect(appointmentDB).toHaveProperty('history');
     expect(appointmentDB).toHaveProperty('status');
     expect(appointmentDB).toHaveProperty('createdAt');
 

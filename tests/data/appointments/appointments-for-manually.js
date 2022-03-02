@@ -7,6 +7,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a00418b97a19'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -25,6 +28,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a00418b97a18'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -43,6 +49,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a04018b97a17'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -61,6 +70,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a00418b79a17'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -79,6 +91,9 @@ const appointments = [
     _id: new ObjectId('6702f6a7ce01a00418b79a17'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -97,6 +112,9 @@ const appointments = [
     _id: new ObjectId('6702f6a7ce0a100418b79a17'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',
@@ -115,6 +133,9 @@ const appointments = [
     _id: new ObjectId('6072f6a7ce01a00418b97a16'),
     masterId: master._id,
     customerId: master1._id,
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     service: {
       title: 'Smoe',
       parameter: '312',

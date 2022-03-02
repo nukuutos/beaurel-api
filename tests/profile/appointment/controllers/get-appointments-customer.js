@@ -11,6 +11,11 @@ module.exports = function () {
 
     const { appointments } = body;
 
+    const { status } = appointments['18-04-2021'][0];
+
+    expect(status.status).toBe('confirmed');
+    expect(status.user).toBe('master');
+
     const appointmentsDates = Object.keys(appointments).map((date) => dayjs(date, 'DD-MM-YYYY'));
 
     expect(appointmentsDates).toHaveLength(3);

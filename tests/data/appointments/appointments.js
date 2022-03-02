@@ -17,6 +17,9 @@ const appointments = [
       id: '5fc798eb321f4a09588b254c',
     },
     time: { startAt: 720, endAt: 1080 },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     status: 'history',
     date: new Date('2021-04-18T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -35,6 +38,9 @@ const appointments = [
       id: '5fc798eb321f4a09588b254c',
     },
     time: { startAt: 720, endAt: 1080 },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     status: 'onConfirmation',
     date: new Date('2021-04-17T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -53,6 +59,9 @@ const appointments = [
       id: '5fc798eb321f4a09588b254c',
     },
     time: { startAt: 720, endAt: 1080 },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     status: 'history',
     date: new Date('2021-04-19T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -71,6 +80,9 @@ const appointments = [
       id: '5fc798eb321f4a09588b254c',
     },
     time: { startAt: 360, endAt: 720 },
+    history: [
+      { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    ],
     status: 'history',
     date: new Date('2021-04-17T00:00:00Z'),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),

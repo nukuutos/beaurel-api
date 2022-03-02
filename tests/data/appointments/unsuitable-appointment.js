@@ -13,6 +13,10 @@ module.exports = {
     subOrder: null,
     parameter: null,
   },
+  history: [
+    { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
+    { status: 'unsuitable', user: 'server', date: new Date('2021-04-18T00:00:00Z') },
+  ],
   time: { startAt: 540, endAt: 630 },
   createdAt: '2021-12-05T14:44:12.406Z',
   status: 'unsuitable',

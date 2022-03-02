@@ -204,6 +204,10 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(2);
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(possible times)', async () => {
@@ -222,6 +226,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(2);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(weekends)', async () => {
@@ -240,6 +249,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(3);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(exceptions)', async () => {
@@ -258,6 +272,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(2);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(switch type to manually)', async () => {
@@ -276,6 +295,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(3);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(manually appointments update)', async () => {
@@ -303,6 +327,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(2);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(switch type to auto)', async () => {
@@ -321,6 +350,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(3);
+
+    const { user, status: recordStatus } = unsuitableAppointments[1].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change appointment state to unsuitable(same date of appointment and timetable update)', async () => {
@@ -340,6 +374,11 @@ module.exports = function () {
     const unsuitableAppointments = await Appointment.find({ status: 'unsuitable' });
 
     expect(unsuitableAppointments).toHaveLength(1);
+
+    const { user, status: recordStatus } = unsuitableAppointments[0].history[1];
+
+    expect(user).toBe('server');
+    expect(recordStatus).toBe('unsuitable');
   });
 
   it('should successfully change services to unsuitable', async () => {

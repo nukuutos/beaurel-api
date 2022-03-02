@@ -239,6 +239,8 @@ module.exports = function () {
     expect(appointmentDB.service.duration).toBe(data.duration);
     expect(appointmentDB.status).toBe('confirmed');
     expect(appointmentDB.date).toMatchObject(data.date);
+    expect(appointmentDB.history[2].status).toBe('confirmed');
+    expect(appointmentDB.history[2].user).toBe('master');
   });
 
   it('should success, with timetable update and service update', async () => {
