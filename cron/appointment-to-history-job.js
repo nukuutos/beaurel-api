@@ -1,7 +1,7 @@
 const { CronJob } = require('cron');
 const Appointment = require('../logic/profile/appointment/appointment');
 
-const deleteUnconfirmedAccountsJob = () =>
+const appointmentToHistoryJob = () =>
   new CronJob(
     '0 */30 * * * *',
     () => {
@@ -11,4 +11,4 @@ const deleteUnconfirmedAccountsJob = () =>
     true,
     'Asia/Vladivostok'
   );
-module.exports = deleteUnconfirmedAccountsJob;
+module.exports = appointmentToHistoryJob;

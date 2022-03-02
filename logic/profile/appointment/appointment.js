@@ -89,30 +89,35 @@ class Appointment extends AppointmentModel {
 
     for (const timezone of russianTimezones) {
       const currentDateByTimezone = dayjs().tz(timezone);
-      const todayByTimezoneInUTC = currentDateByTimezone.utc();
+      const todayByTimezoneInUTC = currentDateByTimezone.utc().toDate();
       const localeMinutes = currentDateByTimezone.minute() + currentDateByTimezone.hour() * 60;
       queries.push({ date: { $lte: todayByTimezoneInUTC }, 'time.endAt': { $lte: localeMinutes } });
     }
 
-    const historyQueries = [...queries];
+    const historyQueries = queries.map((query) => ({ ...query, status: 'confirmed' }));
 
-    for (const query of historyQueries) {
-      query.status = 'confirmed';
-    }
+    const unansweredQueries = queries.map((query) => ({
+      ...query,
+      $or: [{ status: 'onConfirmation' }, { status: 'unsuitable' }],
+    }));
 
-    const unansweredQueries = [...queries];
-
-    for (const query of unansweredQueries) {
-      query.status = { $or: [{ status: 'onConfirmation' }, { status: 'unsuitable' }] };
-    }
+    const recordDate = dayjs().utc().toDate();
 
     historyQueries.forEach((findQuery) => {
-      bulkOp.update(findQuery, { status: 'history' });
+      bulkOp.aggregationUpdate(findQuery, {
+        $set: { status: 'history' },
+        $push: { history: { user: 'server', date: recordDate, status: 'history' } },
+      });
     });
 
     unansweredQueries.forEach((findQuery) => {
-      bulkOp.update(findQuery, { status: 'unanswered' });
+      bulkOp.aggregationUpdate(findQuery, {
+        $set: { status: 'unanswered' },
+        $push: { history: { user: 'server', date: recordDate, status: 'unanswered' } },
+      });
     });
+
+    console.log('Appointments to history!');
 
     await bulkOp.execute();
   }

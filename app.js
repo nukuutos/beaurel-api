@@ -16,17 +16,14 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile/profile');
 const masterRoutes = require('./routes/master/master');
 const logRequest = require('./middleware/log-request');
-const serviceUpdateJob = require('./cron/service-update-job');
-const timetableUpdateJob = require('./cron/timetable-update-job');
-const restoreAuthAttemptsJob = require('./cron/restore-auth-attempts-job');
-const deleteUnconfirmedAccountsJob = require('./cron/delete-unconfirmed-accounts-job');
+const { runCronJobs } = require('./cron/cron');
 
 const app = express();
 
+runCronJobs();
+
 app.use(cors);
-
 app.use('/images', staticFolder);
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(mongoSanitize());
@@ -40,11 +37,6 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/master', masterRoutes);
 app.use('/api/v1/timezone', timezoneRoutes);
-
-serviceUpdateJob();
-timetableUpdateJob();
-restoreAuthAttemptsJob();
-deleteUnconfirmedAccountsJob();
 
 app.use(errorHandler);
 
