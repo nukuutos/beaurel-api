@@ -2,6 +2,7 @@ const { connectDB, closeDB, dropCollection, getDb } = require('../../utils/datab
 const { connectRedis, closeRedis, dropRedis } = require('../../utils/redis');
 
 const { TIMEZONE } = require('../../config/collection-names');
+const { stopCronJobs } = require('../../cron/cron');
 
 const dropCollections = async () => {
   const db = getDb();
@@ -36,8 +37,9 @@ const after = (cb) =>
     dropRedis();
     closeRedis();
 
+    stopCronJobs();
     await dropCollections();
-    await closeDB();
+    closeDB();
   });
 
 module.exports = { before, after };
