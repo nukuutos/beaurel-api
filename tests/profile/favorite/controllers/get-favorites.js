@@ -1,27 +1,21 @@
+const { getFavoritesCacheName } = require('../../../../config/cache');
 const { getCachedData } = require('../../../../utils/redis');
 const master = require('../../../data/masters/master');
 
 module.exports = function () {
   it('should successfully get favorites', async () => {
-    const response = await this.request();
+    const response = await this.request().query({ page: 0 });
 
     const { statusCode, body } = response;
 
     expect(statusCode).toBe(200);
 
-    const { data } = body;
-
-    expect(data).toHaveProperty('masters');
-    expect(data).toHaveProperty('ids');
-
-    expect(data.masters.length).toBe(2);
-    expect(data.ids.length).toBe(2);
-
-    const cacheData = await getCachedData(`id-${master._id.toString()}`, 'favorites');
+    expect(body).toHaveLength(2);
+    const cacheKeys = [getFavoritesCacheName(master._id.toString()), 0];
+    const cacheData = await getCachedData(...cacheKeys);
     const parsedCacheData = JSON.parse(cacheData);
 
-    expect(parsedCacheData.masters.length).toBe(2);
-    expect(parsedCacheData.ids.length).toBe(2);
+    expect(parsedCacheData).toHaveLength(2);
   });
 
   it('should detect unauthorized action', async () => {

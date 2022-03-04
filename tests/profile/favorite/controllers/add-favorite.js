@@ -5,7 +5,9 @@ const { getFavorites, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 module.exports = function () {
   it('should successfully add favorite', async () => {
-    await getFavorites.request();
+    const page = 0;
+
+    await getFavorites.request().query({ page });
 
     await checkIsCache();
 
@@ -17,13 +19,9 @@ module.exports = function () {
 
     expect(statusCode).toBe(204);
 
-    const dbData = await Favorite.getMasters(master._id);
+    const dbData = await Favorite.getMasters(master._id, page);
 
-    expect(dbData).toHaveProperty('masters');
-    expect(dbData).toHaveProperty('ids');
-
-    expect(dbData.masters.length).toBe(3);
-    expect(dbData.ids.length).toBe(3);
+    expect(dbData).toHaveLength(3);
   });
 
   it('should detect that master has already favorite', async () => {

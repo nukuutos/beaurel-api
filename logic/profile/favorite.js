@@ -1,4 +1,4 @@
-const { FAVORITES } = require('../../config/cache');
+const { getFavoritesCacheName } = require('../../config/cache');
 const { USER } = require('../../config/collection-names');
 const { MASTER_IS_FRIEND, NO_MASTER } = require('../../config/errors/favorite');
 const User = require('../../models/user');
@@ -13,9 +13,10 @@ class Favorite extends User {
     this._id = _id;
   }
 
-  static async getMasters(userId) {
-    const pipeline = favoriteMasters(userId);
-    return await this.aggregate(pipeline).cache(userId, FAVORITES).next();
+  static async getMasters(userId, page) {
+    const pipeline = favoriteMasters(userId, page);
+    const cacheName = getFavoritesCacheName(userId);
+    return await this.aggregate(pipeline).cache(cacheName, page).toArray();
   }
 
   async addMaster(masterId) {

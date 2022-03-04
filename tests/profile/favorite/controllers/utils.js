@@ -1,5 +1,5 @@
 const app = require('../../../../app');
-const { FAVORITES } = require('../../../../config/cache');
+const { getFavoritesCacheName } = require('../../../../config/cache');
 const { getCachedData } = require('../../../../utils/redis');
 const master = require('../../../data/masters/master');
 const ExtendedSupertest = require('../../../extended-supertest');
@@ -15,7 +15,7 @@ const config = {
 
 const getFavorites = new ExtendedSupertest(app, config);
 
-const cacheKeys = [`id-${master._id.toString()}`, FAVORITES];
+const cacheKeys = [getFavoritesCacheName(master._id.toString()), 0];
 
 const getCache = async () => await getCachedData(...cacheKeys);
 

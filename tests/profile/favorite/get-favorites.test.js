@@ -9,6 +9,7 @@ const master1 = require('../../data/masters/master-1');
 const master2 = require('../../data/masters/master-2');
 
 const routeParams = require('./route-params/get-favorites');
+const queryParams = require('./query-params/get-favorites');
 const { before, after } = require('../../utils/endpoint-test-preparation');
 
 const template = '/api/v1/profile/:profileId/favorite';
@@ -27,7 +28,7 @@ before(async () => {
 });
 
 describe(`GET ${template}`, () => {
-  request.testRouteParams(routeParams).testController(controller);
+  request.testRouteParams(routeParams).testController(controller).testQueryParams(queryParams);
 });
 
 after();

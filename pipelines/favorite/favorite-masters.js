@@ -1,4 +1,6 @@
-module.exports = (userId) => [
+const limit = 10;
+
+module.exports = (userId, page) => [
   {
     $match: {
       _id: userId,
@@ -8,20 +10,23 @@ module.exports = (userId) => [
     $project: {
       _id: 0,
       masters: 1,
-      ids: '$masters',
     },
   },
+  { $unwind: '$masters' },
+  { $skip: page * limit },
+  { $limit: limit },
+  { $project: { masterId: '$masters' } },
   // find masters profile
   {
     $lookup: {
       from: 'users',
       let: {
-        masters: '$masters',
+        masterId: '$masterId',
       },
       pipeline: [
         {
           $match: {
-            $expr: { $in: ['$_id', '$$masters'] },
+            $expr: { $eq: ['$_id', '$$masterId'] },
           },
         },
         {
@@ -64,7 +69,8 @@ module.exports = (userId) => [
           },
         },
       ],
-      as: 'masters',
+      as: 'master',
     },
   },
+  { $replaceWith: { $arrayElemAt: ['$master', 0] } },
 ];

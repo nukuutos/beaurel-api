@@ -3,10 +3,11 @@ const asyncHandler = require('../../middleware/async-handler');
 
 exports.getFavorites = asyncHandler(async (req, res) => {
   const { id: profileId } = req.user;
+  const { page } = req.query;
 
-  const data = await Favorite.getMasters(profileId);
+  const data = await Favorite.getMasters(profileId, page);
 
-  return res.json({ data });
+  return res.json(data);
 });
 
 exports.addFavorite = asyncHandler(async (req, res) => {
