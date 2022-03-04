@@ -29,6 +29,15 @@ exports.getDialog = asyncHandler(async (req, res) => {
   return res.json({ dialog });
 });
 
+exports.getDialogs = asyncHandler(async (req, res) => {
+  const { page } = req.query;
+  const { id: userId } = req.user;
+
+  const dialogs = await Message.getDialogs(userId, page);
+
+  return res.json({ dialogs });
+});
+
 exports.setMessagesViewed = asyncHandler(async (req, res) => {
   const { interlocutorId } = req.params;
   const { id: userId } = req.user;

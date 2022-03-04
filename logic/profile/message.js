@@ -9,6 +9,7 @@ const {
 } = require('../../config/socket-io/types');
 const senderAndRecipient = require('../../pipelines/message/sender-and-recipient');
 const { getAggregate } = require('../../utils/database');
+const dialogs = require('../../pipelines/message/dialogs');
 
 const { IS_SOCKET_IO } = process.env;
 
@@ -17,6 +18,12 @@ class Message extends MessageModel {
 
   constructor({ recipientId, senderId, message }) {
     super({ recipientId, senderId, message });
+  }
+
+  static async getDialogs(userId, page) {
+    const pipeline = dialogs(userId, page);
+    const data = await this.aggregate(pipeline).toArray();
+    return data;
   }
 
   static async getDialog({ userId, interlocutorId, page }) {

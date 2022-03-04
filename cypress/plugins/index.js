@@ -51,6 +51,7 @@ const dialog = require('../data/messages/dialog');
 const appointmentsOnScroll = require('../data/appointments/appointments-on-scroll');
 const masterBeginner = require('../data/masters/master-beginner');
 const masterWithFavorites = require('../data/masters/master-with-favorites');
+const dialogsOnScroll = require('../data/messages/dialogs-on-scroll');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -70,6 +71,10 @@ module.exports = (on, config) => {
     // add data
     'db:addMaster': async () => {
       await User.save(master);
+      return null;
+    },
+    'db:addDialogsOnScroll': async () => {
+      await Message.insertMany(dialogsOnScroll);
       return null;
     },
     'db:addMasterWithFavorites': async () => {

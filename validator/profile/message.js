@@ -17,4 +17,5 @@ const page = query('page')
 exports.getMessages = [profileId];
 exports.addMessage = [profileId, recipientId, message];
 exports.getDialog = [profileId, interlocutorId, page];
+exports.getDialogs = [profileId, page];
 exports.setMessagesViewed = [profileId, interlocutorId];
