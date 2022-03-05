@@ -25,7 +25,6 @@ const request = new ExtendedSupertest(app, config);
 
 before(async () => {
   await User.save(master);
-  await Work.insertMany(works);
 });
 
 describe(`POST ${template}`, () => {

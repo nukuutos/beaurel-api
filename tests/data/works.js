@@ -18,4 +18,64 @@ module.exports = [
     masterId: master._id,
     title: 'супер нупуер',
   },
+  {
+    masterId: master._id,
+    title: 'название уже существует',
+  },
+  {
+    masterId: master._id,
+    title: 'кул е',
+  },
+  {
+    masterId: master._id,
+    title: 'супер нупуер',
+  },
+  {
+    masterId: master._id,
+    title: 'название уже существует',
+  },
+  {
+    masterId: master._id,
+    title: 'кул е',
+  },
+  {
+    masterId: master._id,
+    title: 'супер нупуер',
+  },
+  {
+    masterId: master._id,
+    title: 'название уже существует',
+  },
+  {
+    masterId: master._id,
+    title: 'кул е',
+  },
+  {
+    masterId: master._id,
+    title: 'супер нупуер',
+  },
+  {
+    masterId: master._id,
+    title: 'название уже существует',
+  },
+  {
+    masterId: master._id,
+    title: 'кул е',
+  },
+  {
+    masterId: master._id,
+    title: 'супер нупуер',
+  },
+  {
+    masterId: master._id,
+    title: 'название уже существует',
+  },
+  {
+    masterId: master._id,
+    title: 'кул е',
+  },
+  {
+    masterId: master._id,
+    title: 'супер нупуер',
+  },
 ];

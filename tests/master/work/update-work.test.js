@@ -24,8 +24,9 @@ const config = {
 const request = new ExtendedSupertest(app, config);
 
 before(async () => {
+  const worksForDb = works.slice(0, 3);
   await User.save(master);
-  await Work.insertMany(works);
+  await Work.insertMany(worksForDb);
 });
 
 describe(`PUT ${template}`, () => {

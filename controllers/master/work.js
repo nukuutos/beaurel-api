@@ -21,8 +21,8 @@ exports.addWork = asyncHandler(async (req, res) => {
 
   const work = new AddWork(masterId, title);
 
-  await work.isExisted();
-  await work.save();
+  await work.getData();
+  await work.isLimit().isExisted().save();
   await work.saveFile(buffer);
 
   return res.status(201).json({ _id: work._id, message: 'Работа успешно добавлена!' });

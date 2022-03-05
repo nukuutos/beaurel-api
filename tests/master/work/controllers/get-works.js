@@ -12,7 +12,7 @@ module.exports = function () {
 
     const { works } = body;
 
-    expect(works.length).toBe(3);
+    expect(works).toHaveLength(18);
 
     expect(works[0]).toHaveProperty('_id');
     expect(works[0]).toHaveProperty('title');
