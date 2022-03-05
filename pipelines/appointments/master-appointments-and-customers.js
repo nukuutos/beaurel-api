@@ -2,7 +2,7 @@ const limit = 10;
 
 module.exports = (findQuery, page) => [
   { $match: findQuery },
-  { $sort: { date: 1, time: 1 } },
+  { $sort: { date: -1, time: 1 } },
   { $skip: page * limit },
   { $limit: limit },
   {
