@@ -3,10 +3,12 @@ const {
   TITLE_EXISTS,
   INCORRECT_DURATION,
   NO_UPDATE_DURATION,
+  SERVICE_LIMIT,
 } = require('../../../../config/errors/service');
 const Service = require('../../../../models/service');
 const Timetable = require('../../../../models/timetable');
 const User = require('../../../../models/user');
+const servicesLimit = require('../../../data/services/services-limit');
 const autoTimetableWithUpdate = require('../../../data/timetables/auto-timetable-with-update');
 
 const {
@@ -22,7 +24,7 @@ const data = {
 };
 
 module.exports = function () {
-  afterEach(async () => {
+  beforeEach(async () => {
     await Service.deleteMany({});
   });
 
@@ -49,6 +51,20 @@ module.exports = function () {
     const user = await User.findOne({}, { 'tools.isServices': 1 });
 
     expect(user.tools.isServices).toBeTruthy();
+  });
+
+  it('should fail, services limit', async () => {
+    await Service.insertMany(servicesLimit);
+
+    const response = await this.request().send(data);
+
+    const { statusCode, body } = response;
+
+    expect(statusCode).toBe(400);
+
+    const { message } = body;
+
+    expect(message).toBe(SERVICE_LIMIT);
   });
 
   it('should fail, title already existed', async () => {
@@ -92,8 +108,8 @@ module.exports = function () {
   });
 
   it('should successfully add service with update', async () => {
-    Timetable.deleteMany({});
-    Timetable.save(autoTimetableWithUpdate);
+    await Timetable.deleteMany({});
+    await Timetable.save(autoTimetableWithUpdate);
 
     const dataWithUpdate = { ...data, updateDuration: 90 };
 

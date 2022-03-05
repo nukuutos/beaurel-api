@@ -1,12 +1,15 @@
+const cloneDeep = require('lodash.clonedeep');
 const { ObjectId } = require('mongodb');
 const {
   TITLE_EXISTS,
   INCORRECT_DURATION,
   NO_UPDATE_DURATION,
+  SERVICE_LIMIT,
 } = require('../../../../config/errors/service');
 const Service = require('../../../../models/service');
 const Timetable = require('../../../../models/timetable');
 const User = require('../../../../models/user');
+const servicesLimit = require('../../../data/services/services-limit');
 const autoTimetableWithUpdate = require('../../../data/timetables/auto-timetable-with-update');
 const { getServices, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
@@ -19,7 +22,7 @@ const data = {
 };
 
 module.exports = function () {
-  afterEach(async () => {
+  beforeEach(async () => {
     await Service.deleteMany({});
   });
 
@@ -67,6 +70,37 @@ module.exports = function () {
     expect(message).toBe(TITLE_EXISTS);
   });
 
+  it('should fail, services limit', async () => {
+    await Service.insertMany(servicesLimit);
+    const response = await this.request().send(data);
+
+    const { statusCode, body } = response;
+
+    expect(statusCode).toBe(400);
+
+    const { message } = body;
+
+    expect(message).toBe(SERVICE_LIMIT);
+  });
+
+  it('should fail, sub services limit', async () => {
+    const clonedData = cloneDeep(data);
+
+    for (let i = 2; i <= 10; i++) {
+      clonedData.subServices.push({ parameter: 'супер 21см', duration: 240, price: 1234 });
+    }
+
+    const response = await this.request().send(clonedData);
+
+    const { statusCode, body } = response;
+
+    expect(statusCode).toBe(400);
+
+    const { message } = body;
+
+    expect(message).toBe(SERVICE_LIMIT);
+  });
+
   it('should fail, invalid duration', async () => {
     const response = await this.request().send({
       ...data,
@@ -99,8 +133,8 @@ module.exports = function () {
   });
 
   it('should successfully add service with update', async () => {
-    Timetable.deleteMany({});
-    Timetable.save(autoTimetableWithUpdate);
+    await Timetable.deleteMany({});
+    await Timetable.save(autoTimetableWithUpdate);
 
     const subServiceWithUpdate = data.subServices.map((subService) => ({
       ...subService,

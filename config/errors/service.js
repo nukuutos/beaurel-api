@@ -18,3 +18,4 @@ exports.ORDER_NUMBER = `Порядковый номер должен быть ч
 exports.SUBORDER_NUMBER = `Порядковый номер параметра отсутствует!`;
 exports.SERVICES_ORDER_LENGTH = 'Количество услуг не совпадает!';
 exports.NO_UPDATE_DURATION = 'Обновлённая длительность отсутствует!';
+exports.SERVICE_LIMIT = 'Вы достигли лимита количества услуг!';

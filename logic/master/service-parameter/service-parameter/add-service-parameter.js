@@ -1,8 +1,12 @@
 const { SERVICE } = require('../../../../config/collection-names');
+const { SERVICE_LIMIT } = require('../../../../config/errors/service');
 const Service = require('../../../../models/service');
 const Timetable = require('../../../../models/timetable');
+const HttpError = require('../../../../models/utils/http-error');
 const AddService = require('../../service/add-service');
 const SubService = require('../sub-service');
+
+const SUB_SERVICES_LIMIT = 10;
 
 class AddServiceParameter extends AddService {
   static name = SERVICE;
@@ -31,6 +35,12 @@ class AddServiceParameter extends AddService {
       return subService;
     });
 
+    return this;
+  }
+
+  checkSubServicesLimit() {
+    const isLimit = this.subServices.length > SUB_SERVICES_LIMIT;
+    if (isLimit) throw new HttpError(SERVICE_LIMIT, 400);
     return this;
   }
 

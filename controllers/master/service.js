@@ -21,16 +21,12 @@ exports.addService = asyncHandler(async (req, res) => {
 
   const service = new AddService({ masterId, title, duration, price, updateDuration });
 
-  // get services data
-  // check title
-  // set order
-  const servicesCount = await service.checkTitleAndSetOrder();
-
-  await service.isUpdateDuration().checkDuration();
+  await service.getData();
+  await service.checkLimit().checkTitle().setOrder().isUpdateDuration().checkDuration();
 
   const { insertedId: id } = await service.save();
 
-  AddService.updateMasterTools(masterId, servicesCount);
+  service.updateMasterTools();
 
   return res.status(201).json({ id, message: 'Услуга успешно добавлена!' });
 });
