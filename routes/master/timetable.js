@@ -13,7 +13,7 @@ const getCleanCache = require('../../middleware/get-clean-cache');
 const {
   MASTER_ID,
   UNSUITABLE_SERVICES,
-  TIMETABLE_AND_APPOINTMENTS,
+  BOOKED_APPOINTMENTS,
   SERVICES_AND_TIMETABLE,
 } = require('../../config/cache');
 
@@ -21,7 +21,7 @@ const router = express.Router({ mergeParams: true });
 
 const cleanCacheServicesAndTimetable = getCleanCache(MASTER_ID, SERVICES_AND_TIMETABLE);
 const cleanCacheUnsuitableServices = getCleanCache(MASTER_ID, UNSUITABLE_SERVICES);
-const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, TIMETABLE_AND_APPOINTMENTS);
+const cleanCacheAppointmentsAndTimetable = getCleanCache(MASTER_ID, BOOKED_APPOINTMENTS);
 
 // @route     Post /api/master/:masterId/timetable/:timetableId/update
 // @desc      Create Timetable Update
@@ -69,7 +69,7 @@ router.delete(
 );
 
 // @route     Get /api/master/:masterId/timetable/booking
-// @desc      Get timetable and appointmetns for booking time
+// @desc      Get timetable and appointments for booking time
 // @access    Public
 router.get(
   '/booking',

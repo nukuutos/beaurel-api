@@ -41,3 +41,7 @@ const userIdfavorites = { // post, delete /favorite
   2: value,
   "...": value
 }
+
+const masterIdBookedAppointments = { // change appointment status, put delete timetable update, book appointment
+  date // ttl
+}

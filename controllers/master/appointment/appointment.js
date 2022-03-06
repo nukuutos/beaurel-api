@@ -6,6 +6,7 @@ const BookingManually = require('../../../logic/master/appointment/appointment/b
 const BookAppointment = require('../../../logic/master/appointment/appointment/book-appointment');
 const UpdateUnsuitableAppointment = require('../../../logic/master/appointment/appointment/update-unsuitable-appointment');
 const UpdateViewedState = require('../../../logic/master/appointment/appointment/update-viewed-state');
+const GetBookedAppointments = require('../../../logic/master/appointment/appointment/get-booked-appointments');
 
 exports.bookAppointment = asyncHandler(async (req, res) => {
   const { masterId } = req.params;
@@ -43,6 +44,15 @@ exports.bookAppointment = asyncHandler(async (req, res) => {
   booking.sendAppointmentToClient();
 
   return res.status(201).json({ message: 'Запись забронирована!' });
+});
+
+exports.getBookedAppointments = asyncHandler(async (req, res) => {
+  const { masterId } = req.params;
+  const { date } = req.query;
+
+  const bookedAppointments = await GetBookedAppointments.getData(masterId, date);
+
+  return res.json(bookedAppointments);
 });
 
 exports.updateViewedState = asyncHandler(async (req, res) => {

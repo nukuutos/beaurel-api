@@ -1,5 +1,5 @@
 const dayjs = require('dayjs');
-const { body, fieldId, paramId } = require('express-validator');
+const { body, fieldId, paramId, query } = require('express-validator');
 
 const { MASTER_ID, SERVICE_ID, APPOINTMENT_ID } = require('../../../config/id-names');
 
@@ -35,7 +35,7 @@ const timeEndAt = body('time.endAt')
   .withMessage(INVALID_APPOINTMENT_END)
   .customSanitizer((time) => +time);
 
-const date = body('date')
+const dateBody = body('date')
   .exists({ checkFalsy: true })
   .withMessage(DATE_REQUIRED)
   .trim()
@@ -50,6 +50,16 @@ const date = body('date')
   })
   .withMessage(INVALID_DATE);
 
+const dateQuery = query('date')
+  .exists({ checkFalsy: true })
+  .withMessage(DATE_REQUIRED)
+  .trim()
+  .isISO8601()
+  .withMessage(INVALID_DATE)
+  .customSanitizer((date) => dayjs(date).utc())
+  .custom((date) => date.isTimeReseted())
+  .withMessage(INVALID_DATE);
+
 const role = body('role')
   .exists({ checkFalsy: true })
   .withMessage(ROLE_REQUIRED)
@@ -57,12 +67,13 @@ const role = body('role')
   .withMessage(INVALID_ROLE);
 
 exports.updateViewedState = [masterId, appointmentId, role];
-exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, date];
+exports.bookAppointment = [masterId, serviceId, timeStartAt, timeEndAt, dateBody];
+exports.getBookedAppointments = [masterId, dateQuery];
 exports.updateUnsuitableAppointment = [
   masterId,
   appointmentId,
   duration,
   timeStartAt,
   timeEndAt,
-  date,
+  dateBody,
 ];

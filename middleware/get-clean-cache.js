@@ -7,7 +7,26 @@ const {
   SEARCH_MASTERS,
   FAVORITES,
   getFavoritesCacheName,
+  BOOKED_APPOINTMENTS,
+  getBookedAppointmentsCacheName,
 } = require('../config/cache');
+
+const handleFirstKey = (keys, req) => {
+  const firstKey = keys[0];
+  const userId = req.params[firstKey];
+  const stringUserId = userId.toString();
+  const userIdCacheKey = `id-${stringUserId}`;
+
+  if (keys[1] === FAVORITES) {
+    return getFavoritesCacheName(stringUserId);
+  }
+
+  if (keys[1] === BOOKED_APPOINTMENTS) {
+    return getBookedAppointmentsCacheName(stringUserId);
+  }
+
+  return userIdCacheKey;
+};
 
 const handleKeys = (keys, req) => {
   const firstKey = keys[0];
@@ -15,10 +34,8 @@ const handleKeys = (keys, req) => {
   switch (firstKey) {
     case PROFILE_ID:
     case MASTER_ID: {
-      const userId = req.params[firstKey];
-      const stringUserId = `id-${userId.toString()}`;
-      if (keys[1] !== FAVORITES) return [stringUserId, keys[1]];
-      return [getFavoritesCacheName(userId.toString()), keys[1]];
+      const firstCacheKey = handleFirstKey(keys, req);
+      return [firstCacheKey, keys[1]];
     }
 
     case SEARCH_TIMEZONE: {
@@ -46,8 +63,10 @@ const getCleanCache =
 
     const client = getRedisClient();
 
-    if (keys[1] !== FAVORITES) client.hdel(...keys);
-    else client.del(keys[0]);
+    const isKeyDeletion = [FAVORITES, BOOKED_APPOINTMENTS].includes(keys[1]);
+
+    if (isKeyDeletion) client.del(keys[0]);
+    else client.hdel(...keys);
   };
 
 module.exports = getCleanCache;
