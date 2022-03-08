@@ -118,8 +118,8 @@ module.exports = function () {
   });
 
   it('should detect that request must have updateDuration field', async () => {
-    Timetable.deleteMany({});
-    Timetable.save(autoTimetableWithUpdate);
+    await Timetable.deleteMany({});
+    await Timetable.save(autoTimetableWithUpdate);
 
     const response = await this.request().send(data);
 

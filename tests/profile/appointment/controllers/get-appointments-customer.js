@@ -26,7 +26,7 @@ module.exports = function () {
       const prevDate = appointmentsDates[index - 1];
       const difference = currentDate.diff(prevDate);
 
-      if (difference > 0) return true;
+      if (difference < 0) return true;
       return false;
     });
 

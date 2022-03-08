@@ -1,8 +1,9 @@
+const dayjs = require('dayjs');
 const { CHANGE_STATUS } = require('../../../../../config/errors/appointment');
 const { NO_APPOINTMENT } = require('../../../../../config/errors/review');
 const Appointment = require('../../../../../models/appointment');
 const appointments = require('../../../../data/appointments/appointments');
-const { getBookingData, checkIsCache, checkIsCacheDeleted } = require('./utils');
+const { getBookedAppointments, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 const data = {
   status: 'confirmed',
@@ -36,7 +37,10 @@ module.exports = function () {
   });
 
   it('should successfully change status', async () => {
-    await getBookingData.request();
+    await getBookedAppointments
+      .request()
+      .query({ date: dayjs().startOf('day').utc(true).format() });
+
     await checkIsCache();
 
     const appointmentId = { appointmentId: appointments[1]._id };

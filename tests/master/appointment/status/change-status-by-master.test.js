@@ -11,6 +11,8 @@ const master = require('../../../data/masters/master');
 const appointments = require('../../../data/appointments/appointments');
 const Appointment = require('../../../../models/appointment');
 const { before, after } = require('../../../utils/endpoint-test-preparation');
+const Timetable = require('../../../../models/timetable');
+const autoTimetable = require('../../../data/timetables/auto-timetable');
 
 const template = '/api/v1/master/:masterId/appointment/:appointmentId/status/master';
 
@@ -25,6 +27,7 @@ const request = new ExtendedSupertest(app, config);
 
 before(async () => {
   await User.save(master);
+  await Timetable.save(autoTimetable);
   await Appointment.insertMany(appointments);
 });
 

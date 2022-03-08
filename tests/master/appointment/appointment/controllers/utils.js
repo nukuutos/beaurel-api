@@ -1,5 +1,6 @@
+const dayjs = require('dayjs');
 const app = require('../../../../../app');
-const { TIMETABLE_AND_APPOINTMENTS } = require('../../../../../config/cache');
+const { getBookedAppointmentsCacheName } = require('../../../../../config/cache');
 const { getCachedData } = require('../../../../../utils/redis');
 const master = require('../../../../data/masters/master');
 const ExtendedSupertest = require('../../../../extended-supertest');
@@ -15,7 +16,9 @@ const config = {
 
 const getBookingData = new ExtendedSupertest(app, config);
 
-const cacheKeys = [`id-${master._id.toString()}`, TIMETABLE_AND_APPOINTMENTS];
+const secondCacheKey = dayjs().startOf('week').utc(true).format();
+
+const cacheKeys = [getBookedAppointmentsCacheName(master._id.toString()), secondCacheKey];
 
 const getCache = async () => await getCachedData(...cacheKeys);
 
