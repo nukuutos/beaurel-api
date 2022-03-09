@@ -52,6 +52,8 @@ const appointmentsOnScroll = require('../data/appointments/appointments-on-scrol
 const masterBeginner = require('../data/masters/master-beginner');
 const masterWithFavorites = require('../data/masters/master-with-favorites');
 const dialogsOnScroll = require('../data/messages/dialogs-on-scroll');
+const bookedAppointments = require('../data/appointments/booked-appointments');
+const { dropRedis, connectRedis } = require('../../utils/redis');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -79,6 +81,10 @@ module.exports = (on, config) => {
     // add data
     'db:addMaster': async () => {
       await User.save(master);
+      return null;
+    },
+    'db:addBookedAppointments': async () => {
+      await Appointment.insertMany(bookedAppointments);
       return null;
     },
     'db:addDialogsOnScroll': async () => {
