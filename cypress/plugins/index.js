@@ -64,8 +64,16 @@ module.exports = (on, config) => {
       await connectDB();
       return null;
     },
+    'redis:connect': async () => {
+      await connectRedis();
+      return null;
+    },
     'db:drop': async () => {
       await dropDatabase();
+      return null;
+    },
+    'redis:drop': () => {
+      dropRedis();
       return null;
     },
     // add data

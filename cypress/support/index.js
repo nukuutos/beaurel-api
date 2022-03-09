@@ -20,5 +20,8 @@ require('./commands');
 
 beforeEach(() => {
   cy.task('db:connect');
+  cy.task('redis:connect');
+
   cy.task('db:drop');
+  cy.task('redis:drop');
 });
