@@ -27,7 +27,7 @@ class AddWork extends Work {
 
   isLimit() {
     const { existedWorks } = this;
-    const isWorksLimit = existedWorks.length > WORKS_LIMIT_COUNT;
+    const isWorksLimit = existedWorks.length >= WORKS_LIMIT_COUNT;
     if (isWorksLimit) throw new HttpError(WORKS_LIMIT, 400);
     return this;
   }
