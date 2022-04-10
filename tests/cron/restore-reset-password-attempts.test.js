@@ -9,11 +9,10 @@ describe(`Cron restore attempts to confirm account`, () => {
   it('should successfully restore attempts', async () => {
     await User.insertMany(cronRestoreAttempts);
 
-    await Profile.restoreAttempts();
+    await Profile.restoreResetPasswordAttempts();
 
     const users = await User.find({
-      'confirmation.attemptsCountLeft': 5,
-      'confirmation.resendCountLeft': 5,
+      'resetPassword.attemptsCountLeft': 5,
     });
 
     expect(users).toHaveLength(2);
