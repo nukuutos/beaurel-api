@@ -10,7 +10,7 @@
     "test": "concurrently \"npm:redis:start\" \"npm:server:test\" \"npm:cypress:open\"",
     "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
     "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
-    "jest:test": "jest --runInBand --bail --testTimeout 30000",
+    "jest:test": "jest --runInBand --testTimeout 30000",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "redis:start": "redis-server"
@@ -25,7 +25,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "cron": "^1.8.2",
-    "dayjs": "^1.10.5",
+    "dayjs": "^1.11.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
@@ -40,10 +40,12 @@
     "redis": "^3.1.2",
     "sharp": "^0.26.3",
     "socket.io": "^4.4.1",
+    "twilio": "^3.76.0",
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.0",
+    "axios": "^0.26.1",
     "concurrently": "^6.4.0",
     "cypress": "^9.2.1",
     "cypress-file-upload": "^5.0.8",
