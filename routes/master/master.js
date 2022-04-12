@@ -23,17 +23,15 @@ router.use('/:masterId/timetable', timetableRouter);
 router.use('/:masterId/work', workRouter);
 router.use('/:masterId/appointment', appointmentRouter);
 
-// @route     Get /api/v1/master/:masterId/timezone
-// @desc      Get master timezone
-// @access    Private(master)
-router.get(
-  '/:masterId/timezone',
+router.put(
+  '/:masterId/place-of-work',
   auth,
   master,
-  validator.getMasterTimezone,
+  validator.updatePlaceOfWork,
   validate,
   isYourself,
-  controller.getMasterTimezone
+  cleanCache,
+  controller.updatePlaceOfWork
 );
 
 // @route     Get /api/v1/master

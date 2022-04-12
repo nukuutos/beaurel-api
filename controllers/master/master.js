@@ -1,5 +1,5 @@
-const GetMasterTimezone = require('../../logic/master/master/get-master-timezone');
 const GetMasters = require('../../logic/master/master/get-masters');
+const UpdatePlaceOfWork = require('../../logic/master/master/update-place-of-work');
 const asyncHandler = require('../../middleware/async-handler');
 
 exports.getMasters = asyncHandler(async (req, res) => {
@@ -16,14 +16,10 @@ exports.getMasters = asyncHandler(async (req, res) => {
   return res.json({ masters });
 });
 
-exports.getMasterTimezone = asyncHandler(async (req, res) => {
-  const { id: masterId } = req.user;
-
-  const master = new GetMasterTimezone(masterId);
-
-  await master.getCity();
-
-  const { city, timezone } = master.getTimezone();
-
-  return res.json({ city, timezone });
+exports.updatePlaceOfWork = asyncHandler(async (req, res) => {
+  const { masterId } = req.params;
+  const { city, ...placeOfWork } = req.body;
+  const master = new UpdatePlaceOfWork(masterId);
+  await master.update(city, placeOfWork);
+  return res.end();
 });
