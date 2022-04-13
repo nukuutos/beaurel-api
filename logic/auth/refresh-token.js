@@ -23,7 +23,7 @@ class RefreshToken extends User {
     }
   }
 
-  async isExists() {
+  async getData() {
     const { _id } = this;
 
     const userData = await User.findOne({ _id }, { _id: 0, role: 1, username: 1 });

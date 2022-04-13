@@ -12,7 +12,6 @@ class SignIn extends User {
 
   static async getUser(identificatorQuery) {
     const userData = await User.findOne(identificatorQuery, {
-      email: 1,
       password: 1,
       role: 1,
       username: 1,

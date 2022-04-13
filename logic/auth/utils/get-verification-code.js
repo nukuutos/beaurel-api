@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 const symbols = [
   '0',
   '1',
@@ -37,13 +39,11 @@ const symbols = [
   'Z',
 ];
 
-const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
-
 const getVerificationCode = () => {
   let code = '';
 
   for (let i = 0; i < 4; i++) {
-    const index = getRandomInt(symbols.length);
+    const index = crypto.randomInt(symbols.length);
     code += symbols[index];
   }
 

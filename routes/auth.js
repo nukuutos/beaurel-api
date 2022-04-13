@@ -38,4 +38,19 @@ router.post('/sign-in', validator.signIn, validate, controller.signIn);
 // @access    Public
 router.post('/refresh-token', validator.refreshToken, validate, controller.refreshToken);
 
+// @route     Post /api/v1/auth/sign-up/password/code
+// @desc      Send verification code for update password
+// @access    Public
+router.post(
+  '/password/code',
+  validator.sendVerificationCode,
+  validate,
+  controller.sendVerificationCode
+);
+
+// @route     Post /api/v1/auth/sign-up/password
+// @desc      Update password
+// @access    Public
+router.put('/password', validator.updatePassword, validate, controller.updatePassword);
+
 module.exports = router;

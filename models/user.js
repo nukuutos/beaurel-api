@@ -7,7 +7,10 @@ class User extends Collection {
   constructor({
     phone,
     password,
+    city,
     role = 'customer',
+    username = null,
+    resetPassword = null,
     confirmation = null,
     firstName = null,
     lastName = null,
@@ -19,8 +22,7 @@ class User extends Collection {
     this.firstName = firstName;
     this.lastName = lastName;
     this.masters = [];
-    this.username = null;
-    this.email = null;
+    this.username = username;
     this.avatar = null;
     this.confirmation = confirmation || {
       lastSendAt: null,
@@ -29,7 +31,14 @@ class User extends Collection {
       attemptsCountLeft: 5,
       resendCountLeft: 5,
     };
+    this.resetPassword = resetPassword || {
+      lastSendAt: null,
+      verificationCode: null,
+      attemptsCountLeft: 5,
+      resendCountLeft: 5,
+    };
     this.role = role;
+    this.city = city;
     this.createdAt = new Date();
   }
 }

@@ -5,6 +5,7 @@ const {
 } = require('../../config/errors/auth');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
+const sendWhatsappMessage = require('../utils/send-whatsapp-message');
 const getVerificationCode = require('./utils/get-verification-code');
 
 class ResendVerificationCode extends User {
@@ -74,6 +75,13 @@ class ResendVerificationCode extends User {
         $inc: { 'confirmation.resendCountLeft': -1 },
       }
     );
+  }
+
+  async sendVerificationCode() {
+    const { phone, confirmation } = this;
+    const { verificationCode } = confirmation;
+    const message = `*Beaurel*❤️\nВаш код подтверждения: *${verificationCode}*`;
+    await sendWhatsappMessage(phone, message);
   }
 }
 

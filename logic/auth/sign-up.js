@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs');
-
 const { USER_EXISTS } = require('../../config/errors/auth');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
+const sendWhatsappMessage = require('../utils/send-whatsapp-message');
 const getVerificationCode = require('./utils/get-verification-code');
 
 class SignUp extends User {
@@ -34,11 +34,12 @@ class SignUp extends User {
     return this;
   }
 
-  isMaster(specialization) {
+  isMaster(specialization, placeOfWork) {
     if (!specialization) return this;
 
     this.role = 'master';
     this.specialization = specialization;
+    this.placeOfWork = placeOfWork;
     this.tools = { isServices: false, isTimetable: false };
 
     return this;
@@ -55,6 +56,13 @@ class SignUp extends User {
     const { _id, ...userData } = this;
     const { insertedId: id } = await User.save(userData);
     this._id = id;
+  }
+
+  async sendVerificationCode() {
+    const { phone, confirmation } = this;
+    const { verificationCode } = confirmation;
+    const message = `*Beaurel*❤️\nВаш код подтверждения: *${verificationCode}*`;
+    await sendWhatsappMessage(phone, message);
   }
 }
 
