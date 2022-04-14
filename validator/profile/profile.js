@@ -54,9 +54,24 @@ const username = body('username')
   .isIn(['profile', 'appointments', 'services', 'search', 'timetable', 'masters', 'settings'])
   .withMessage(INVALID_USERNAME);
 
+
+const newPasswordUpdate = body('newPassword')
+  .exists({ checkFalsy: true })
+  .withMessage(PASSWORD_REQUIRED)
+  .isLength({ min: 6 })
+  .withMessage(MIN_PASSWORD_LENGTH)
+  .custom((newPassword, { req }) => {
+    const { newConfirmedPassword } = req.body;
+    return newPassword === newConfirmedPassword;
+  })
+  .withMessage(PASSWORDS_DISMATCHED);
+
+const passwordUpdate = body('password').exists({ checkFalsy: true }).withMessage(PASSWORD_REQUIRED);
+
 exports.updateAvatar = [profileId];
 exports.getCustomerProfile = [profileId];
 exports.getOnlineStatus = [profileId];
 exports.updateOnlineStatus = [profileId];
 exports.updateProfile = [profileId, updateFields, aboutText, firstName, lastName];
 exports.updateUsername = [profileId, username];
+exports.updatePassword = [profileId, newPasswordUpdate, passwordUpdate];

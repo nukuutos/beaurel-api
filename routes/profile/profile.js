@@ -86,4 +86,15 @@ router.get(
   controller.getOnlineStatus
 );
 
+// @route     Put /api/v1/profile/:profileId/password
+// @desc      Update user's password
+// @access    Private
+router.put(
+  '/:profileId/password',
+  auth,
+  validator.updatePassword,
+  validate,
+  isYourself,
+  controller.updatePassword
+);
 module.exports = router;

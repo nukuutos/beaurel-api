@@ -1,5 +1,6 @@
 const asyncHandler = require('../../middleware/async-handler');
 const Profile = require('../../logic/profile/profile');
+const UpdatePassword = require('../../logic/profile/update-password');
 
 exports.updateOnlineStatus = asyncHandler((req, res) => {
   const { id: profileId } = req.user;
@@ -51,4 +52,15 @@ exports.updateAvatar = asyncHandler(async (req, res) => {
   const shortUrl = await Profile.updateAvatar(id, buffer);
 
   return res.json({ avatar: shortUrl, message: 'Фото профиля успешно обновлено!' });
+});
+
+exports.updatePassword = asyncHandler(async (req, res) => {
+  const { profileId } = req.params;
+  const { password, newPassword } = req.body;
+
+  const user = await UpdatePassword.getUser(profileId);
+
+  await user.isExisted().checkCurrentPassword(password).hashNewPassword(newPassword).update();
+
+  return res.end();
 });
