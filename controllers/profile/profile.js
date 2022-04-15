@@ -1,5 +1,6 @@
 const asyncHandler = require('../../middleware/async-handler');
 const Profile = require('../../logic/profile/profile');
+const GetCityAndTimezone = require('../../logic/profile/get-city-and-timezone');
 const UpdatePassword = require('../../logic/profile/update-password');
 
 exports.updateOnlineStatus = asyncHandler((req, res) => {
@@ -52,6 +53,18 @@ exports.updateAvatar = asyncHandler(async (req, res) => {
   const shortUrl = await Profile.updateAvatar(id, buffer);
 
   return res.json({ avatar: shortUrl, message: 'Фото профиля успешно обновлено!' });
+});
+
+exports.getCityAndTimezone = asyncHandler(async (req, res) => {
+  const { id: userId } = req.user;
+
+  const user = new GetCityAndTimezone(userId);
+
+  await user.getCity();
+
+  const { city, timezone } = user.getTimezone();
+
+  return res.json({ city, timezone });
 });
 
 exports.updatePassword = asyncHandler(async (req, res) => {

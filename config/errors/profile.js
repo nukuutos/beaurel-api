@@ -10,3 +10,6 @@ exports.USERNAME_EXISTS = 'Пользователь с данным username у�
 exports.USERNAME_LENGTH = 'Неверная длина username!';
 exports.USERNAME_REQUIRED = 'Username отсутствует!';
 exports.INVALID_USERNAME = 'Неверный username!';
+
+exports.NO_USER = 'Пользователя не существует!';
+exports.NO_CITY = 'Города не существует!';

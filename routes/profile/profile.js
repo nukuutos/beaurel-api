@@ -13,8 +13,12 @@ const auth = require('../../middleware/auth');
 const isYourself = require('../../middleware/is-yourself');
 const image = require('../../middleware/image');
 const isFile = require('../../middleware/is-file');
+const getCleanCache = require('../../middleware/get-clean-cache');
+const { PROFILE_ID, CITY } = require('../../config/cache');
 
 const router = express.Router();
+
+const cleanCache = getCleanCache(PROFILE_ID, CITY);
 
 router.use('/:profileId/favorite', favoriteRouter);
 router.use('/:profileId/appointment', appointmentRouter);
@@ -34,6 +38,7 @@ router.patch(
   validator.updateProfile,
   validate,
   isYourself,
+  cleanCache,
   controller.updateProfile
 );
 
@@ -86,6 +91,18 @@ router.get(
   controller.getOnlineStatus
 );
 
+// @route     Get /api/v1/profile/:profileId/city
+// @desc      Get user's city and timezone
+// @access    Private
+router.get(
+  '/:profileId/city',
+  auth,
+  validator.getCityAndTimezone,
+  validate,
+  isYourself,
+  controller.getCityAndTimezone
+);
+
 // @route     Put /api/v1/profile/:profileId/password
 // @desc      Update user's password
 // @access    Private
@@ -97,4 +114,5 @@ router.put(
   isYourself,
   controller.updatePassword
 );
+
 module.exports = router;

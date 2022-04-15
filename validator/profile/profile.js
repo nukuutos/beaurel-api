@@ -1,4 +1,11 @@
 const { body, paramId } = require('express-validator');
+const cities = require('../../config/cities');
+const {
+  INVALID_CITY,
+  PASSWORD_REQUIRED,
+  MIN_PASSWORD_LENGTH,
+  PASSWORDS_DISMATCHED,
+} = require('../../config/errors/auth');
 
 const {
   ABOUT_TEXT_LENGTH,
@@ -15,7 +22,7 @@ const { PROFILE_ID } = require('../../config/id-names');
 
 const profileId = paramId('profileId', PROFILE_ID);
 
-const updateFields = body('*').expectedFields(['aboutText', 'firstName', 'lastName']);
+const updateFields = body('*').expectedFields(['aboutText', 'firstName', 'lastName', 'city']);
 
 const aboutText = body('aboutText')
   .optional()
@@ -51,9 +58,19 @@ const username = body('username')
   .matches(/[a-z]/i)
   .withMessage(INVALID_USERNAME)
   .not()
-  .isIn(['profile', 'appointments', 'services', 'search', 'timetable', 'masters', 'settings'])
+  .isIn([
+    'profile',
+    'appointments',
+    'services',
+    'search',
+    'timetable',
+    'masters',
+    'settings',
+    'not-found',
+  ])
   .withMessage(INVALID_USERNAME);
 
+const city = body('city').optional().isIn(cities).withMessage(INVALID_CITY);
 
 const newPasswordUpdate = body('newPassword')
   .exists({ checkFalsy: true })
@@ -72,6 +89,7 @@ exports.updateAvatar = [profileId];
 exports.getCustomerProfile = [profileId];
 exports.getOnlineStatus = [profileId];
 exports.updateOnlineStatus = [profileId];
-exports.updateProfile = [profileId, updateFields, aboutText, firstName, lastName];
+exports.getCityAndTimezone = [profileId];
+exports.updateProfile = [profileId, updateFields, aboutText, firstName, lastName, city];
 exports.updateUsername = [profileId, username];
 exports.updatePassword = [profileId, newPasswordUpdate, passwordUpdate];
