@@ -71,7 +71,7 @@ exports.updateTimetable = asyncHandler(async (req, res) => {
 
   await timetable.makeUpdate(dateTz);
 
-  const defaultParams = { masterId, date: date.toDate(), changes: difference };
+  const defaultParams = { masterId, date: dateTz.toDate(), changes: difference };
 
   const { unsuitableServices } = await TimetableUpdate.toUnsuitable(
     defaultParams,

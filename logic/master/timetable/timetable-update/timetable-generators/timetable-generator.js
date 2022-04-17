@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const lodash = require('lodash');
 const { UPDATE_EXISTS, SAME_TIMETABLES } = require('../../../../../config/errors/timetable');
 const {
@@ -111,6 +112,8 @@ class TimetableGenerator extends Timetable {
       if (stringMasterId === stringCustomerId) continue;
 
       const status = { status: 'unsuitable', user: 'server' };
+
+      appointment.date = dayjs(appointment.date).add(1, 'day');
 
       const appointmentToClient = { ...appointment, user: master, status, isSocket: true };
 

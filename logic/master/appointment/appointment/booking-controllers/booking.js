@@ -17,7 +17,7 @@ class Booking extends Collection {
   static name = APPOINTMENT;
 
   constructor(
-    { customerId, timetable, service, date, time, bookedAppointments, formattedDate } = {
+    { customerId, timetable, service, date, time, bookedAppointments, formattedDate, timezone } = {
       customerId: null,
     }
   ) {
@@ -33,6 +33,7 @@ class Booking extends Collection {
     this.status = 'onConfirmation';
     this.history = [{ user: 'customer', status: 'onConfirmation', date: dayjs().utc().toDate() }];
     this.createdAt = dayjs().toDate();
+    this.timezone = timezone;
   }
 
   isService() {
