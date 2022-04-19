@@ -107,7 +107,9 @@ class UpdateUnsuitableAppointment extends Booking {
 
     const io = getIO();
 
-    const status = { status: 'confirmed', user: 'master' };
+    const status = { status: 'unsuitable', user: 'master' };
+
+    appointment.date = dayjs(appointment.date).add(1, 'day');
 
     const appointmentToClient = { ...appointment, status, user, isSocket: true };
 

@@ -58,9 +58,11 @@ class ChangeStatusByMaster extends ChangeStatus {
 
     const io = getIO();
 
-    const { masterId: something, id, history, ...appointmentData } = this;
+    const { masterId: something, id, history, status: prevStatus, ...appointmentData } = this;
 
-    const status = { status: nextStatus, user: 'master' };
+    const status = { status: prevStatus, user: 'master' };
+
+    appointmentData.date = dayjs(appointmentData.date).add(1, 'day');
 
     const appointment = { ...appointmentData, _id: id, user, status, isSocket: true };
 
