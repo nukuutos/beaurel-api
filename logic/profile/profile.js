@@ -85,6 +85,18 @@ class Profile {
       { 'confirmation.attemptsCountLeft': 5, 'confirmation.resendCountLeft': 5 }
     );
   }
+
+  static async restoreResetPasswordAttempts() {
+    const date = dayjs().subtract(2, 'h').toDate();
+
+    await User.updateMany(
+      {
+        'resetPassword.lastSendAt': { $lte: date },
+        'resetPassword.attemptsCountLeft': { $lt: 5 },
+      },
+      { 'resetPassword.attemptsCountLeft': 5 }
+    );
+  }
 }
 
 module.exports = Profile;

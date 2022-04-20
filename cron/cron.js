@@ -1,6 +1,7 @@
 const appointmentToHistoryJob = require('./appointment-to-history-job');
 const deleteUnconfirmedAccountsJob = require('./delete-unconfirmed-accounts-job');
 const restoreAuthAttemptsJob = require('./restore-auth-attempts-job');
+const restoreResetPasswordAttempts = require('./restore-reset-password-attempts-job');
 const serviceUpdateJob = require('./service-update-job');
 const timetableUpdateJob = require('./timetable-update-job');
 
@@ -13,6 +14,7 @@ const runCronJobs = () => {
     restoreAuthAttemptsJob,
     deleteUnconfirmedAccountsJob,
     appointmentToHistoryJob,
+    restoreResetPasswordAttempts,
   ];
 
   for (const job of jobsToExecute) {
