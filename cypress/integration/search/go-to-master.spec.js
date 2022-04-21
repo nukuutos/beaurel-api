@@ -2,10 +2,11 @@ describe('Go to master in search', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addMasters');
+    // set city
+    localStorage.setItem('city', 'Владивосток');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/search' });
     // go to search
-    cy.get(':nth-child(2) > a').click();
     cy.get('.search__heading', { timeout: 60000 }).should('be.visible');
   });
 
@@ -13,7 +14,7 @@ describe('Go to master in search', () => {
     // click first master in search
     cy.get('.content > :nth-child(3)').click();
     // check for profile visibility
-    cy.get('.profile__header').should('be.visible');
+    cy.get('.profile__header', { timeout: 10000 }).should('be.visible');
   });
 
   it('Phone', () => {
@@ -21,6 +22,6 @@ describe('Go to master in search', () => {
     // click first master in search
     cy.get('.content > :nth-child(3)').click();
     // check for profile visibility
-    cy.get('.profile__header').should('be.visible');
+    cy.get('.profile__header', { timeout: 10000 }).should('be.visible');
   });
 });

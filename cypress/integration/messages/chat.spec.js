@@ -5,10 +5,8 @@ describe('Chat', () => {
   beforeEach(() => {
     cy.task('db:addCustomer');
     cy.task('db:addMaster');
-    cy.auth('test1@test.com', '123456');
-    cy.getCookie('refreshToken').then((data) => {
-      cy.visit('/messages', { headers: { cookie: `refreshToken=${data.value}` } });
-    });
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/messages' });
+    cy.get('.content').contains('Сообщения');
   });
 
   it('Desktop', () => {

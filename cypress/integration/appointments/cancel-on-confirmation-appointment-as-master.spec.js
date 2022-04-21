@@ -5,9 +5,7 @@ describe('Reject appointment as master', () => {
     cy.task('db:addMaster');
     cy.task('db:addOnConfirmationAppointmentMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
   });
 

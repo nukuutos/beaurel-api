@@ -1,17 +1,29 @@
 require('cypress-file-upload');
 
-Cypress.Commands.add('auth', (email, password) => {
-  cy.visit('/sign-in');
+Cypress.Commands.add('authVisit', ({ identificator, password, page }) => {
+  cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
+    identificator,
+    password,
+  }).then(() => {
+    cy.getCookie('refreshToken').then((data) => {
+      cy.visit(page, { headers: { cookie: `refreshToken=${data.value}` } });
+    });
+  });
 
-  cy.intercept('/api/v1/auth/**').as('signIn');
+  // cy.auth(email, '123456');
+  // cy.getCookie('refreshToken').then((data) => {
+  //   cy.visit('/messages', { headers: { cookie: `refreshToken=${data.value}` } });
+  // });
 
-  cy.get('form', { timeout: 60000 }).should('be.visible');
+  //   cy.visit('/sign-in');
 
-  cy.get('#identificator').type(email);
-  cy.get('#password').type(password);
+  //   cy.intercept('/api/v1/auth/**').as('signIn');
 
-  cy.get('.btn--primary').click();
-  cy.wait('@signIn');
+  //   cy.get('#identificator', { timeout: 60000 }).should('be.visible').type(email);
+  //   cy.get('#password').type(password);
 
-  cy.get('.profile__header', { timeout: 60000 }).should('be.visible');
+  //   cy.get('.btn--primary').click();
+  //   cy.wait('@signIn');
+
+  //   cy.get('.profile__header', { timeout: 60000 }).should('be.visible');
 });

@@ -2,16 +2,11 @@ describe('Chat with favorite', () => {
   beforeEach(() => {
     cy.task('db:addCustomer');
     cy.task('db:addMaster');
-    cy.auth('test1@test.com', '123456');
-    cy.getCookie('refreshToken').then((data) => {
-      cy.visit('/search', { headers: { cookie: `refreshToken=${data.value}` } });
-    });
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/search' });
     cy.intercept('POST', '/api/v1/profile/**').as('starMaster');
     cy.get('.profile__star-profile').click();
     cy.wait('@starMaster');
-    cy.getCookie('refreshToken').then((data) => {
-      cy.visit('/messages', { headers: { cookie: `refreshToken=${data.value}` } });
-    });
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/messages' });
   });
 
   it('Desktop', () => {

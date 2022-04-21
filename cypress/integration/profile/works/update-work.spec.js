@@ -5,7 +5,8 @@ describe('Update Work', () => {
     cy.task('db:addMaster');
     cy.task('db:addWork');
     cy.task('fs:addWork');
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__cards', { timeout: 60000 }).should('be.visible');
   });
 
   afterEach(() => {
@@ -16,7 +17,7 @@ describe('Update Work', () => {
     // click on works
     cy.get('.profile__cards > :nth-child(3) > img').click();
 
-    cy.intercept('/api/v1/master/**').as('updateWork');
+    cy.intercept('PUT', '/api/v1/master/**').as('updateWork');
 
     // update work
     cy.get('.master-work__title').then(($element) => {
@@ -46,9 +47,9 @@ describe('Update Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > img').click({ force: true });
 
-    cy.intercept('/api/v1/master/**').as('updateWork');
+    cy.intercept('PUT', '/api/v1/master/**').as('updateWork');
 
     // update work
     cy.get('.master-work__title').then(($element) => {

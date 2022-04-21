@@ -7,9 +7,7 @@ describe('Change appointment status socket', () => {
     cy.task('db:addCustomer');
     cy.task('db:addOnConfirmationAppointmentCustomer');
     // go to auth
-    cy.auth('test1@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/appointments' });
     cy.get('.appointments__appointment-types', { timeout: 60000 }).should('be.visible');
   });
 
@@ -17,7 +15,7 @@ describe('Change appointment status socket', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
 
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({
@@ -47,7 +45,7 @@ describe('Change appointment status socket', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
 
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({

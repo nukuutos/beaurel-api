@@ -22,10 +22,11 @@ require('dotenv').config({ path: path.join(process.cwd(), 'config', 'envs', '.en
 // console.log(require('dotenv').config());
 
 const fs = require('fs');
+const axios = require('axios');
 const User = require('../../models/user');
 const master = require('../data/masters/master');
 const dropDatabase = require('../utils/drop-database');
-const { connectDB } = require('../../utils/database');
+const { connectDB, closeDB } = require('../../utils/database');
 const Timetable = require('../../models/timetable');
 const autoTimetable = require('../data/timetables/auto-timetable');
 const Service = require('../../models/service');
@@ -38,13 +39,15 @@ const work = require('../data/work');
 const Appointment = require('../../models/appointment');
 const onConfirmationAppointmentCustomer = require('../data/appointments/on-confirmation-appointment-customer');
 const onConfirmationAppointmentMaster = require('../data/appointments/on-confirmation-appointment-master');
-const confirmedAppointment = require('../data/appointments/confirmed-appointment');
+const confirmedAppointmentCustomer = require('../data/appointments/confirmed-appointment-customer');
+const confirmedAppointmentMaster = require('../data/appointments/confirmed-appointment-master');
 const historyAppointment = require('../data/appointments/history-appointment');
 const customer = require('../data/masters/customer');
 const review = require('../data/review');
 const Review = require('../../models/review');
 const autoTimetableWithUpdate = require('../data/timetables/auto-timetable-with-update');
-const unsuitableAppointment = require('../data/appointments/unsuitable-appointment');
+const unsuitableAppointmentMaster = require('../data/appointments/unsuitable-appointment-master');
+const unsuitableAppointmentCustomer = require('../data/appointments/unsuitable-appointment-customer');
 const Message = require('../../models/message');
 const dialogsLastMessages = require('../data/messages/dialogs-last-messages');
 const dialog = require('../data/messages/dialog');
@@ -53,7 +56,17 @@ const masterBeginner = require('../data/masters/master-beginner');
 const masterWithFavorites = require('../data/masters/master-with-favorites');
 const dialogsOnScroll = require('../data/messages/dialogs-on-scroll');
 const bookedAppointments = require('../data/appointments/booked-appointments');
-const { dropRedis, connectRedis } = require('../../utils/redis');
+const { dropRedis, connectRedis, closeRedis } = require('../../utils/redis');
+const addDataForBookWithUnsuitableService = require('../data/tests/book-timetable/book-with-unsuitable-service');
+const addDataForBookWithExpiredUnsuitableService = require('../data/tests/book-timetable/book-with-expired-unsuitable-service');
+const addDataForBookWithUpdatedService = require('../data/tests/book-timetable/book-with-updated-service');
+const appointmentsToUnsuitable = require('../data/tests/appointments/appointments-to-unsuitable-socket');
+const bookAppointmentSocket = require('../data/tests/appointments/book-appointment-socket');
+const cancelledConfirmedAppointmentAsCustomer = require('../data/tests/appointments/cancelled-confirmed-appointment-as-customer');
+const cancelledConfirmedAppointmentAsMaster = require('../data/tests/appointments/cancelled-confirmed-appointment-as-master');
+const addMasterWithoutServices = require('../data/tests/navigation/master-without-services');
+const unreadMessageForMaster = require('../data/messages/unread-message-for-master');
+const unreadMessageForCustomer = require('../data/messages/unread-message-for-customer');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -66,8 +79,16 @@ module.exports = (on, config) => {
       await connectDB();
       return null;
     },
+    'db:close': async () => {
+      await closeDB();
+      return null;
+    },
     'redis:connect': async () => {
       await connectRedis();
+      return null;
+    },
+    'redis:close': async () => {
+      await closeRedis();
       return null;
     },
     'db:drop': async () => {
@@ -83,6 +104,23 @@ module.exports = (on, config) => {
       await User.save(master);
       return null;
     },
+    'db:addUnreadMessageForMaster': async () => {
+      await Message.save(unreadMessageForMaster);
+      return null;
+    },
+    'db:addUnreadMessageForCustomer': async () => {
+      await Message.save(unreadMessageForCustomer);
+      return null;
+    },
+    'db:addDataForBookWithUnsuitableService': addDataForBookWithUnsuitableService,
+    'db:addDataForBookWithExpiredUnsuitableService': addDataForBookWithExpiredUnsuitableService,
+    'db:addDataForBookWithUpdatedService': addDataForBookWithUpdatedService,
+    'db:appointmentsToUnsuitable': appointmentsToUnsuitable,
+    'db:bookAppointmentSocket': bookAppointmentSocket,
+    'db:cancelledConfirmedAppointmentAsCustomer': cancelledConfirmedAppointmentAsCustomer,
+    'db:cancelledConfirmedAppointmentAsMaster': cancelledConfirmedAppointmentAsMaster,
+    'db:addMasterWithoutServices': addMasterWithoutServices,
+
     'db:addBookedAppointments': async () => {
       await Appointment.insertMany(bookedAppointments);
       return null;
@@ -102,6 +140,10 @@ module.exports = (on, config) => {
     'db:getVerificationCode': async () => {
       const data = await User.findOne({}, { _id: 0, 'confirmation.verificationCode': 1 });
       return data.confirmation.verificationCode;
+    },
+    'db:getResetPasswordVerificationCode': async () => {
+      const data = await User.findOne({}, { _id: 0, 'resetPassword.verificationCode': 1 });
+      return data.resetPassword.verificationCode;
     },
     'db:getViewedMessages': async () => {
       const data = await Message.find({ isUnread: false });
@@ -155,22 +197,49 @@ module.exports = (on, config) => {
       await Appointment.insertMany(appointmentsOnScroll);
       return null;
     },
-    'db:addConfirmedAppointment': async () => {
-      await Appointment.save(confirmedAppointment);
+    'db:addConfirmedAppointmentMaster': async () => {
+      await Appointment.save(confirmedAppointmentMaster);
+      return null;
+    },
+    'db:addConfirmedAppointmentCustomer': async () => {
+      await Appointment.save(confirmedAppointmentCustomer);
       return null;
     },
     'db:addHistoryAppointment': async () => {
       await Appointment.save(historyAppointment);
       return null;
     },
-    'db:addUnsuitableAppointment': async () => {
-      await Appointment.save(unsuitableAppointment);
+    'db:addUnsuitableAppointmentMaster': async () => {
+      await Appointment.save(unsuitableAppointmentMaster);
+      return null;
+    },
+    'db:addUnsuitableAppointmentCustomer': async () => {
+      await Appointment.save(unsuitableAppointmentCustomer);
       return null;
     },
     'db:addReview': async () => {
       await Review.save(review);
       return null;
     },
+    'request:bookAppointment': async ({ user, appointment }) => {
+      const data = await axios({
+        method: 'post',
+        url: 'http://localhost:5000/api/v1/auth/sign-in',
+        data: user,
+      });
+
+      await axios({
+        method: 'post',
+        url: `http://localhost:5000/api/v1/master/${master._id}/appointment`,
+        data: appointment,
+        headers: {
+          Authorization: `Bearer ${data.data.accessToken}`,
+        },
+      });
+
+      return null;
+    },
+
     // delete files
     'fs:deleteAvatar': async () => {
       const { avatar } = await User.findOne({ email: master.email });

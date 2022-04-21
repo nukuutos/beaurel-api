@@ -23,19 +23,18 @@ const timetableUpdate = {
     possibleAppointmentsTime: [480, 570, 660, 750, 840, 940, 1030],
     exceptions: { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
   },
-  date: '2022-02-21T00:00:00.000Z',
+  date: '2024-02-21T00:00:00.000Z',
 };
 
-describe('Update unsuitable appointment as master', () => {
+describe('Appointments to unsuitable socket', () => {
   beforeEach(() => {
-    cy.task('db:addMaster');
-    cy.task('db:addCustomer');
-    cy.task('db:addTimetable');
-    cy.task('db:addConfirmedAppointment');
+    cy.task('db:appointmentsToUnsuitable');
+    // cy.task('db:addMaster');
+    // cy.task('db:addCustomer');
+    // cy.task('db:addTimetable');
+    // cy.task('db:addConfirmedAppointmentCustomer');
     // go to auth
-    cy.auth('test1@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/appointments' });
     cy.get('.appointment-types__type', { timeout: 60000 }).should('be.visible');
   });
 
@@ -46,7 +45,7 @@ describe('Update unsuitable appointment as master', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({
@@ -61,7 +60,7 @@ describe('Update unsuitable appointment as master', () => {
         cy.intercept('GET', '/api/v1/profile/**').as('getUnsuitableAppointments');
         cy.get('.appointment-types__type--notification').click();
         cy.wait('@getUnsuitableAppointments');
-        cy.get('.appointments__appointment-card').should('be.visible');
+        cy.get('.appointments__appointment-card', { timeout: 5000 }).should('be.visible');
       });
     });
   });
@@ -75,7 +74,7 @@ describe('Update unsuitable appointment as master', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({

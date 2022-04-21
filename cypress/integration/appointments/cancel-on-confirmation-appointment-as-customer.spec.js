@@ -5,17 +5,20 @@ describe('Cancel on confirmation appointment as customer', () => {
     cy.task('db:addMaster');
     cy.task('db:addOnConfirmationAppointmentMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
     // check appointment as customer
     cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
-    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)').click();
+
+    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)')
+      .should('be.visible')
+      .click();
+
     cy.wait('@getAppointmentsAsCustomer');
+
     cy.get('.appointments__appointment-card').should('be.visible');
     // cancel appointment
     cy.intercept('PUT', '/api/v1/master/**').as('cancelAppointment');
@@ -28,8 +31,13 @@ describe('Cancel on confirmation appointment as customer', () => {
     cy.viewport(330, 500);
     // check appointment as customer
     cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
-    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)').click();
+
+    cy.get('.appointment-controller__item:not(.appointment-controller__item--active)')
+      .should('be.visible')
+      .click();
+
     cy.wait('@getAppointmentsAsCustomer');
+
     cy.get('.appointments__appointment-card').should('be.visible');
     // cancel appointment
     cy.intercept('PUT', '/api/v1/master/**').as('cancelAppointment');

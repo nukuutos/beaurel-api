@@ -8,9 +8,7 @@ describe('Add service with update', () => {
     cy.task('db:addMaster');
     cy.task('db:addTimetableWithUpdate');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to services
-    cy.get(':nth-child(5) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/services' });
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
@@ -26,7 +24,7 @@ describe('Add service with update', () => {
   it('Phone', () => {
     cy.viewport(330, 500);
 
-    cy.get('.service--add').click();
+    cy.get('.btn-text').click();
     cy.get('#title').type(title);
     cy.get('.add-service__duration > .input--icon > .input').select(1);
     cy.get('.add-service__price > .input--icon > .input').type(price);

@@ -4,7 +4,7 @@ describe('Create auto timetable', () => {
   beforeEach(() => {
     cy.task('db:addMasterBeginner');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
     // go to timetable
     cy.get('.no-master-tools__link').click();
     cy.get('.timetable-card__tip', { timeout: 60000 }).should('be.visible');
@@ -38,7 +38,7 @@ describe('Create auto timetable', () => {
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
-  it.only('Phone', () => {
+  it('Phone', () => {
     cy.viewport(330, 500);
 
     // select session time

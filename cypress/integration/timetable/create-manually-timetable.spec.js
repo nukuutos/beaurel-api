@@ -4,7 +4,7 @@ describe('Create manually timetable', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
     // go to timetable
     cy.get(':nth-child(6) > a').click();
     cy.get('.timetable-card__tip', { timeout: 60000 }).should('be.visible');

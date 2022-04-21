@@ -7,9 +7,7 @@ describe('Update auto timetable', () => {
     cy.task('db:addTimetable');
     cy.task('db:addService', title);
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to timetable
-    cy.get(':nth-child(6) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/timetable' });
     cy.get('.timetable__timetable-card', { timeout: 60000 }).should('be.visible');
   });
 
@@ -26,7 +24,7 @@ describe('Update auto timetable', () => {
 
     // select working day start at 11:00
     cy.get('.timetable-card__btn-edit--bottom').click();
-    cy.get('.mr-1').select(10);
+    cy.get('.mr-1').select(3);
     cy.get('.timetable-card__btn-edit--primary').click();
 
     // disable first monday appointment
@@ -107,7 +105,7 @@ describe('Update auto timetable', () => {
 
     // select working day start at 11:00
     cy.get('.timetable__form > :nth-child(3) > :nth-child(7)').click();
-    cy.get('.mr-1').select(10);
+    cy.get('.mr-1').select(3);
     cy.get('.timetable-phone-edit-modal__button').click();
 
     // disable first monday appointment

@@ -29,7 +29,7 @@ module.exports = {
     type: 'auto',
     auto: {
       workingDay: { startAt: 480, endAt: 1080 },
-      weekends: [6],
+      weekends: [],
       possibleAppointmentsTime: [480, 570, 660, 750, 840, 930],
       exceptions: { 0: [], 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] },
     },

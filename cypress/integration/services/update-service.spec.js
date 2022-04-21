@@ -10,9 +10,7 @@ describe('Update service', () => {
     cy.task('db:addTimetable');
     cy.task('db:addService', currentTitle);
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to services
-    cy.get(':nth-child(5) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/services' });
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 

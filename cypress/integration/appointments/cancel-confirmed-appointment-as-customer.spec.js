@@ -2,12 +2,11 @@
 // Your appointments must be clean
 describe('Cancel on confirmation appointment as customer', () => {
   beforeEach(() => {
-    cy.task('db:addMaster');
-    cy.task('db:addConfirmedAppointment');
+    cy.task('db:cancelledConfirmedAppointmentAsCustomer');
+    // cy.task('db:addMaster');
+    // cy.task('db:addConfirmedAppointmentMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
   });
 
@@ -45,7 +44,7 @@ describe('Cancel on confirmation appointment as customer', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // cancel appointment
     cy.intercept('PUT', '/api/v1/master/**').as('cancelAppointment');
-    cy.get('.btn--fail').click();
+    cy.get('.btn--fail').click({ force: true });
     cy.wait('@cancelAppointment');
     cy.get('.appointments__appointment-card').should('not.exist');
   });

@@ -6,9 +6,7 @@ describe('Review appointment', () => {
     cy.task('db:addCustomer');
     cy.task('db:addHistoryAppointment');
     // go to auth
-    cy.auth('test1@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/appointments' });
     cy.get('.appointments__appointment-types', { timeout: 60000 }).should('be.visible');
   });
 
@@ -22,7 +20,7 @@ describe('Review appointment', () => {
     cy.get('.stars > :nth-child(2) > path').click();
     cy.get('.edit-review__textarea').type('Интересный коммент');
     cy.intercept('POST', '/api/v1/master/**').as('saveReview');
-    cy.get('.edit-review__button > .btn').click();
+    cy.get('.edit-review__form > .btn').click();
     cy.wait('@saveReview').then((xhr) => {
       expect(xhr.response.statusCode).to.equal(201);
     });
@@ -44,7 +42,7 @@ describe('Review appointment', () => {
     cy.get('.stars > :nth-child(2) > path').click({ force: true });
     cy.get('.edit-review__textarea').type('Интересный коммент');
     cy.intercept('POST', '/api/v1/master/**').as('saveReview');
-    cy.get('.edit-review__button > .btn').click();
+    cy.get('.edit-review__form > .btn').click();
     cy.wait('@saveReview').then((xhr) => {
       expect(xhr.response.statusCode).to.equal(201);
     });

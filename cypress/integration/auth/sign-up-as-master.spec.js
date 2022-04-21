@@ -5,6 +5,15 @@ describe('Sign up as master', () => {
   });
 
   it('Desktop', () => {
+    const name = 'Тест';
+    const surname = 'Тестов';
+    const city = 'Абакан';
+    const street = 'Тургенево';
+    const house = '8';
+    const building = '8.2';
+    const floor = '3';
+    const apartment = '364';
+
     // master-case
     cy.get('.sign-up__choice-cards > :nth-child(2)').click();
     cy.get('.btn').click();
@@ -12,12 +21,26 @@ describe('Sign up as master', () => {
     cy.get('.input').select(1);
     cy.get('.sign-up__btn').click();
     // names
-    cy.get('#firstName').type('Тест');
-    cy.get('#lastName').type('Тестов');
+    cy.get('#firstName').type(name);
+    cy.get('#lastName').type(surname);
     cy.get('.btn').click();
     // passwords
     cy.get('#password').type('123456');
     cy.get('#confirmedPassword').type('123456');
+    cy.get('.btn').click();
+    // city
+    cy.get('.sign-up__input--city').click();
+    cy.get('.city-search > :nth-child(5)').click();
+    cy.get('.current-city__value').contains(city);
+    cy.get('.fa-times').click();
+    // place of work
+    cy.get('#placeOfWork\\.street').type(street);
+    cy.get('#placeOfWork\\.house').type(house);
+    cy.get('#placeOfWork\\.building').type(building);
+    cy.get('#placeOfWork\\.floor').type(floor);
+    // choose apartment
+    cy.get('.switch > :nth-child(3)').click();
+    cy.get('#placeOfWork\\.room\\.value').type(apartment);
     cy.get('.btn').click();
     //  phone
     cy.get('#phone').type('9999999999');
@@ -37,12 +60,24 @@ describe('Sign up as master', () => {
       cy.wait('@confirmAccount');
     });
 
-    cy.get('.profile__identify', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__identity', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__geolocation').contains(
+      `ул. ${street} ${house}, к. ${building}, ${floor} этаж, кв. ${apartment}`
+    );
+    cy.get('.profile__name').contains(`${name} ${surname[0].toUpperCase()}.`);
+    cy.get('.no-master-tools').should('be.visible');
   });
 
   it('Phone', () => {
     cy.viewport(330, 500);
-
+    const name = 'Тест';
+    const surname = 'Тестов';
+    const city = 'Абакан';
+    const street = 'Тургенево';
+    const house = '8';
+    const building = '8.2';
+    const floor = '3';
+    const apartment = '364';
     // master-case
     cy.get('.sign-up__choice-cards > :nth-child(2)').click();
     cy.get('.btn').click();
@@ -50,12 +85,26 @@ describe('Sign up as master', () => {
     cy.get('.input').select(1);
     cy.get('.sign-up__btn').click();
     // names
-    cy.get('#firstName').type('Тест');
-    cy.get('#lastName').type('Тестов');
+    cy.get('#firstName').type(name);
+    cy.get('#lastName').type(surname);
     cy.get('.btn').click();
     // passwords
     cy.get('#password').type('123456');
     cy.get('#confirmedPassword').type('123456');
+    cy.get('.btn').click();
+    // city
+    cy.get('.sign-up__input--city').click();
+    cy.get('.city-search > :nth-child(5)').click();
+    cy.get('.current-city__value').contains(city);
+    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    // place of work
+    cy.get('#placeOfWork\\.street').type(street);
+    cy.get('#placeOfWork\\.house').type(house);
+    cy.get('#placeOfWork\\.building').type(building);
+    cy.get('#placeOfWork\\.floor').type(floor);
+    // choose apartment
+    cy.get('.switch > :nth-child(3)').click();
+    cy.get('#placeOfWork\\.room\\.value').type(apartment);
     cy.get('.btn').click();
     //  phone
     cy.get('#phone').type('9999999999');
@@ -71,6 +120,11 @@ describe('Sign up as master', () => {
       cy.wait('@confirmAccount');
     });
 
-    cy.get('.profile__identify', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__identity', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__geolocation').contains(
+      `ул. ${street} ${house}, к. ${building}, ${floor} этаж, кв. ${apartment}`
+    );
+    cy.get('.profile__name').contains(`${name} ${surname[0].toUpperCase()}.`);
+    cy.get('.no-master-tools').should('be.visible');
   });
 });

@@ -3,12 +3,10 @@
 describe('Update unsuitable appointment as master', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
-    cy.task('db:addTimetable');
-    cy.task('db:addUnsuitableAppointment');
+    cy.task('db:addTimetableWithUpdate');
+    cy.task('db:addUnsuitableAppointmentMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
   });
 
@@ -32,7 +30,7 @@ describe('Update unsuitable appointment as master', () => {
       cy.get('.booking-timetable__appointment').contains(time).first().click();
 
       cy.intercept('PUT', '/api/v1/master/**').as('changeUnsuitableAppointment');
-      cy.get('.booking-result__buttons > .btn--primary').click();
+      cy.get('.booking-result__button').click();
       cy.wait('@changeUnsuitableAppointment');
     });
 
@@ -67,7 +65,7 @@ describe('Update unsuitable appointment as master', () => {
       cy.get('.booking-timetable__appointment').contains(time).first().click();
 
       cy.intercept('PUT', '/api/v1/master/**').as('changeUnsuitableAppointment');
-      cy.get('.booking-result__buttons > .btn--primary').click();
+      cy.get('.booking-result__button').click();
       cy.wait('@changeUnsuitableAppointment');
     });
 

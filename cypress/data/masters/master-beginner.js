@@ -6,6 +6,7 @@ module.exports = {
   password: '$2a$10$XcAJi.gMUnDN7LQTlxonOuHYnxdPvXa9YhWTFwrpuxk.TtvV48jBW',
   firstName: 'Никита',
   lastName: 'Волошин',
+  username: 'test',
   avatar: null,
   confirmation: {
     lastSendAt: null,

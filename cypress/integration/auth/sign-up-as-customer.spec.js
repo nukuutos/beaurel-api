@@ -1,20 +1,31 @@
-describe('Sign up as master', () => {
+describe('Sign up as customer', () => {
   beforeEach(() => {
     cy.visit('/sign-up');
     cy.get('.sign-up', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
+    const name = 'Тест';
+    const surname = 'Тестов';
+    const city = 'Абакан';
+
     // customer-case
     cy.get('.btn').click();
     // names
-    cy.get('#firstName').type('Тест');
-    cy.get('#lastName').type('Тестов');
+    cy.get('#firstName').type(name);
+    cy.get('#lastName').type(surname);
     cy.get('.btn').click();
     // passwords
     cy.get('#password').type('123456');
     cy.get('#confirmedPassword').type('123456');
     cy.get('.btn').click();
+    // city
+    cy.get('.sign-up__input--city').click();
+    cy.get('.city-search > :nth-child(5)').click();
+    cy.get('.current-city__value').contains(city);
+    cy.get('.fa-times > path').click();
+    cy.get('.btn').click();
+
     //  phone
     cy.get('#phone').type('9999999999');
     cy.intercept('POST', '/api/v1/auth/**').as('sendUserData');
@@ -33,11 +44,17 @@ describe('Sign up as master', () => {
       cy.wait('@confirmAccount');
     });
 
-    cy.get('.profile__identify', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__identity', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__geolocation').contains(city);
+    cy.get('.profile__name').contains(`${name} ${surname[0].toUpperCase()}.`);
   });
 
   it('Phone', () => {
     cy.viewport(330, 500);
+
+    const name = 'Тест';
+    const surname = 'Тестов';
+    const city = 'Абакан';
 
     // customer-case
     cy.get('.btn').click();
@@ -49,6 +66,13 @@ describe('Sign up as master', () => {
     cy.get('#password').type('123456');
     cy.get('#confirmedPassword').type('123456');
     cy.get('.btn').click();
+    // city
+    cy.get('.sign-up__input--city').click();
+    cy.get('.city-search > :nth-child(5)').click();
+    cy.get('.current-city__value').contains(city);
+    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.btn').click();
+
     //  phone
     cy.get('#phone').type('9999999999');
     cy.intercept('POST', '/api/v1/auth/**').as('sendUserData');
@@ -63,6 +87,8 @@ describe('Sign up as master', () => {
       cy.wait('@confirmAccount');
     });
 
-    cy.get('.profile__identify', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__identity', { timeout: 60000 }).should('be.visible');
+    cy.get('.profile__geolocation').contains(city);
+    cy.get('.profile__name').contains(`${name} ${surname[0].toUpperCase()}.`);
   });
 });

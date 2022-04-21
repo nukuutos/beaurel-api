@@ -7,7 +7,8 @@ describe('Update about text', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__cards', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {

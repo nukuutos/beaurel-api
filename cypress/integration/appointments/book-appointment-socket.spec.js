@@ -3,53 +3,36 @@ const masterId = '5eb849b81c2ccc21306ced34';
 
 describe('Book appointment socket', () => {
   beforeEach(() => {
-    cy.task('db:addMaster');
-    cy.task('db:addTimetable');
-    cy.task('db:addService', 'service');
-    cy.task('db:addCustomer');
+    cy.task('db:bookAppointmentSocket');
+    // cy.task('db:addMaster');
+    // cy.task('db:addTimetable');
+    // cy.task('db:addService', 'service');
+    // cy.task('db:addCustomer');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__header', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
-    cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test1@test.com',
-      password: '123456',
-    }).then((authData) => {
-      cy.request({
-        method: 'POST',
-        url: `http://localhost:5000/api/v1/master/${masterId}/appointment`,
-        body: {
-          serviceId,
-          time: { startAt: 600, endAt: 720 },
-          date: '2023-12-25T00:00:00.000Z',
-        },
-        headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
-        },
-      }).then(() => {
-        cy.get('.navbar__link--notification').should('be.visible').click();
-        cy.get('.appointments__appointment-card', { timeout: 60000 }).should('be.visible');
-      });
-    });
+    cy.task('request:bookAppointment', {
+      user: { identificator: 'test1', password: '123456' },
+      appointment: {
+        serviceId,
+        time: { startAt: 600, endAt: 720 },
+        date: '2023-12-25T00:00:00.000Z',
+      },
+    }).then(() => {
+      cy.getCookie('refreshToken');
+      cy.get('.navbar__link--notification', { timeout: 60000 }).should('be.visible').click();
+      cy.get('.appointments__appointment-card', { timeout: 60000 }).should('be.visible');
 
-    cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test1@test.com',
-      password: '123456',
-    }).then((authData) => {
-      cy.request({
-        method: 'POST',
-        url: `http://localhost:5000/api/v1/master/${masterId}/appointment`,
-        body: {
+      cy.task('request:bookAppointment', {
+        user: { identificator: 'test1', password: '123456' },
+        appointment: {
           serviceId,
           time: { startAt: 720, endAt: 840 },
           date: '2023-12-25T00:00:00.000Z',
         },
-        headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
-        },
-      }).then(() => {
-        cy.get('.appointments__appointment-card').should('have.length', 2);
       });
     });
   });
@@ -57,44 +40,24 @@ describe('Book appointment socket', () => {
   it('Phone', () => {
     cy.viewport(330, 500);
     // check appointment as customer
-    cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test1@test.com',
-      password: '123456',
-    }).then((authData) => {
-      cy.request({
-        method: 'POST',
-        url: `http://localhost:5000/api/v1/master/${masterId}/appointment`,
-        body: {
-          serviceId,
-          time: { startAt: 600, endAt: 720 },
-          date: '2023-12-25T00:00:00.000Z',
-        },
-        headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
-        },
-      }).then(() => {
-        cy.get('.mobile-navbar__item--notification').should('be.visible').click();
-        cy.get('.appointments__appointment-card', { timeout: 60000 }).should('be.visible');
-      });
-    });
+    cy.task('request:bookAppointment', {
+      user: { identificator: 'test1', password: '123456' },
+      appointment: {
+        serviceId,
+        time: { startAt: 600, endAt: 720 },
+        date: '2023-12-25T00:00:00.000Z',
+      },
+    }).then(() => {
+      cy.get('.mobile-navbar__item--notification', { timeout: 60000 }).should('be.visible').click();
+      cy.get('.appointments__appointment-card', { timeout: 60000 }).should('be.visible');
 
-    cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test1@test.com',
-      password: '123456',
-    }).then((authData) => {
-      cy.request({
-        method: 'POST',
-        url: `http://localhost:5000/api/v1/master/${masterId}/appointment`,
-        body: {
+      cy.task('request:bookAppointment', {
+        user: { identificator: 'test1', password: '123456' },
+        appointment: {
           serviceId,
           time: { startAt: 720, endAt: 840 },
           date: '2023-12-25T00:00:00.000Z',
         },
-        headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
-        },
-      }).then(() => {
-        cy.get('.appointments__appointment-card').should('have.length', 2);
       });
     });
   });

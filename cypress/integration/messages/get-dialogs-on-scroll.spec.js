@@ -4,9 +4,8 @@ describe('Get dialogs on scroll', () => {
     cy.task('db:addMasters');
     cy.task('db:addDialogsOnScroll');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to messages
-    cy.get(':nth-child(4) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/messages' });
+
     cy.get('.messages__dialogs', { timeout: 60000 }).should('be.visible');
   });
 

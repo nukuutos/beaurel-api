@@ -7,9 +7,7 @@ describe('Update unsuitable services', () => {
     cy.task('db:addTimetable');
     cy.task('db:addService', title);
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to timetable
-    cy.get(':nth-child(6) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/timetable' });
     cy.get('.timetable__timetable-card', { timeout: 60000 }).should('be.visible');
   });
 

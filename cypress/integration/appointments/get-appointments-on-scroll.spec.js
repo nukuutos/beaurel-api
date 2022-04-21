@@ -3,9 +3,7 @@ describe('Get appointments on scroll', () => {
     cy.task('db:addMaster');
     cy.task('db:addAppointmentsOnScroll');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__appointment-types', { timeout: 60000 }).should('be.visible');
   });
 

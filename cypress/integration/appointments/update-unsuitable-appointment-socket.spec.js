@@ -6,11 +6,9 @@ describe('Update unsuitable appointment socket', () => {
     cy.task('db:addMaster');
     cy.task('db:addCustomer');
     cy.task('db:addTimetable');
-    cy.task('db:addUnsuitableAppointment');
+    cy.task('db:addUnsuitableAppointmentCustomer');
     // go to auth
-    cy.auth('test1@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test1', password: '123456', page: '/appointments' });
     cy.get('.appointment-types__type', { timeout: 60000 }).should('be.visible');
   });
 
@@ -21,7 +19,7 @@ describe('Update unsuitable appointment socket', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({
@@ -54,7 +52,7 @@ describe('Update unsuitable appointment socket', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
-      identificator: 'test@test.com',
+      identificator: 'test',
       password: '123456',
     }).then((authData) => {
       cy.request({

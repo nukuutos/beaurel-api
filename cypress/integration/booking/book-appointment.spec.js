@@ -1,5 +1,3 @@
-const auth = require('../../utils/auth');
-
 // You must have 08:00 appointment
 // Your appointments must be clean
 describe('Book appointment', () => {
@@ -8,7 +6,8 @@ describe('Book appointment', () => {
     cy.task('db:addTimetable');
     cy.task('db:addService', 'услуга');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__identity', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
@@ -22,7 +21,7 @@ describe('Book appointment', () => {
       // if it is no appointments => click get next week
       if ($layout.find(`:contains('${time}')`).length < 2) {
         isNextWeek = true;
-        cy.get('.booking-timetable__arrow').last().click();
+        cy.get('.booking-timetable__arrow').should('be.visible').last().click();
       }
 
       cy.get('.booking-timetable__appointment')
@@ -51,19 +50,28 @@ describe('Book appointment', () => {
               if (isNextWeek) {
                 cy.get('.booking-timetable__arrow').last().click();
               }
-              cy.get('.booking-timetable__appointment')
-                .contains(time)
-                .first()
-                .then(($appointment) => {
-                  cy.wrap($appointment)
-                    .parent()
-                    .prev()
-                    .children(':first')
-                    .then(($dayOfWeek) => {
-                      const dayOfWeek = $dayOfWeek.text();
-                      expect(bookingAppointmentDay).to.not.equal(dayOfWeek);
-                    });
-                });
+
+              const date = new Date();
+              const weekdayIndex = date.getDay();
+              const isFriday = weekdayIndex === 5;
+
+              if (isFriday) {
+                cy.get('.booking-timetable__appointment:contains("08:00")').should('not.exist');
+              } else {
+                cy.get('.booking-timetable__appointment')
+                  .contains(time)
+                  .first()
+                  .then(($appointment) => {
+                    cy.wrap($appointment)
+                      .parent()
+                      .prev()
+                      .children(':first')
+                      .then(($dayOfWeek) => {
+                        const dayOfWeek = $dayOfWeek.text();
+                        expect(bookingAppointmentDay).to.not.equal(dayOfWeek);
+                      });
+                  });
+              }
             });
         });
       // go to appointments
@@ -90,7 +98,7 @@ describe('Book appointment', () => {
 
     cy.get('.booking-timetable').then(($layout) => {
       if ($layout.find(`.btn-text`).length) {
-        cy.get('.btn-text').click();
+        cy.get('.btn-text').should('be.visible').click();
       }
 
       const time = '08:00';
@@ -108,7 +116,7 @@ describe('Book appointment', () => {
       // check
       cy.get('.booking-timetable').then(($layout) => {
         if ($layout.find(`.btn-text`).length) {
-          cy.get('.btn-text').click();
+          cy.get('.btn-text').should('be.visible').click();
         }
 
         cy.get('.booking-timetable__appointment').contains(time).should('not.exist');

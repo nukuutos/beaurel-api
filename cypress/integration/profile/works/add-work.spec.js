@@ -4,7 +4,8 @@ describe('Add Work', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__cards', { timeout: 60000 }).should('be.visible');
   });
 
   afterEach(() => {
@@ -40,7 +41,8 @@ describe('Add Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > img', { timeout: 40000 }).click({ force: true });
+
     cy.get('.master-works').then(($element) => {
       // get current length of works(including add-button)
       const initialChildrenLength = $element.children().length;

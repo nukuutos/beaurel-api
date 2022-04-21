@@ -3,14 +3,15 @@ describe('Delete Work', () => {
     cy.task('db:addMaster');
     cy.task('db:addWork');
     cy.task('fs:addWork');
-    cy.auth('test@test.com', '123456');
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
+    cy.get('.profile__cards', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
     // click on works
     cy.get('.profile__cards > :nth-child(3) > img').click();
 
-    cy.intercept('/api/v1/master/**').as('deleteWork');
+    cy.intercept('DELETE', '/api/v1/master/**').as('deleteWork');
 
     // delete work
     cy.get('.master-work__title').then(($element) => {
@@ -20,6 +21,7 @@ describe('Delete Work', () => {
     });
 
     cy.wait('@deleteWork').then((xhr) => {
+      console.log(xhr.response.statusCode);
       expect(xhr.response.statusCode).to.equal(200);
       // close carousel view
       cy.get('.fa-times').click();
@@ -32,9 +34,9 @@ describe('Delete Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > img').click({ force: true });
 
-    cy.intercept('/api/v1/master/**').as('deleteWork');
+    cy.intercept('DELETE', '/api/v1/master/**').as('deleteWork');
 
     // delete work
     cy.get('.master-work__title').then(($element) => {

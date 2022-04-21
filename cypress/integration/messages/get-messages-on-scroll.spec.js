@@ -5,10 +5,8 @@ describe('Get messages on scroll', () => {
     cy.task('db:addMasters');
     cy.task('db:addDialog');
 
-    cy.auth('test@test.com', '123456');
-    cy.getCookie('refreshToken').then((data) => {
-      cy.visit('/messages', { headers: { cookie: `refreshToken=${data.value}` } });
-    });
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/messages' });
+    cy.get('.content').contains('Сообщения');
   });
 
   it('Desktop', () => {

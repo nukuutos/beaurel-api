@@ -8,22 +8,20 @@ describe('Delete service', () => {
     cy.task('db:addTimetable');
     cy.task('db:addService', title);
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to services
-    cy.get(':nth-child(5) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/services' });
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
   it('Desktop', () => {
-    cy.get('.service').contains(title).should('be.visible');
+    cy.get('.service').should('be.visible');
     deleteServiceDesktop(title);
-    cy.get('.service').contains(title).should('not.exist');
+    cy.get('.service').should('not.exist');
   });
 
   it('Phone', () => {
     cy.viewport(330, 500);
 
-    cy.get('.service').contains(title).should('be.visible');
+    cy.get('.service').should('be.visible');
     // click delete button
     findService(title, () => {
       cy.intercept('/api/v1/master/**').as('deleteService');
@@ -33,6 +31,6 @@ describe('Delete service', () => {
       });
     });
 
-    cy.get('.service').contains(title).should('not.exist');
+    cy.get('.service').should('not.exist');
   });
 });

@@ -1,5 +1,5 @@
 const addServiceDesktop = ({ title, price = 2132, durationSelect = 1 }) => {
-  cy.get('.service--add').click();
+  cy.get('.btn-text').click();
   cy.get('#title').type(title);
   cy.get('.add-service__duration > .input--icon > .input').select(durationSelect);
   cy.get('.add-service__price > .input--icon > .input').type(price);
@@ -11,7 +11,7 @@ const addServiceDesktop = ({ title, price = 2132, durationSelect = 1 }) => {
 };
 
 const addServiceParameter = ({ title, subServices }) => {
-  cy.get('.service--add').click();
+  cy.get('.btn-text').click();
   cy.get('[for="service-parameter"]').click();
   cy.get('#title').type(title);
 

@@ -1,13 +1,11 @@
 // Your appointments must be clean
-describe('Cancel unsuitable appointment as master', () => {
+describe('Cancel unsuitable appointment as customer', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addTimetable');
-    cy.task('db:addUnsuitableAppointment');
+    cy.task('db:addUnsuitableAppointmentMaster');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to appointments
-    cy.get(':nth-child(3) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
   });
 

@@ -30,9 +30,7 @@ describe('Add service-parameter with update', () => {
     cy.task('db:addMaster');
     cy.task('db:addTimetableWithUpdate');
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to services
-    cy.get(':nth-child(5) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/services' });
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 

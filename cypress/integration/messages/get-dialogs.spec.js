@@ -5,10 +5,7 @@ describe('Get dialogs', () => {
     cy.task('db:addMasters');
     cy.task('db:addDialogsLastMessages');
 
-    cy.auth('test@test.com', '123456');
-    cy.getCookie('refreshToken').then((data) => {
-      cy.visit('/messages', { headers: { cookie: `refreshToken=${data.value}` } });
-    });
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/messages' });
   });
 
   it('Desktop', () => {

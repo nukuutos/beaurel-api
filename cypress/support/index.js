@@ -25,3 +25,8 @@ beforeEach(() => {
   cy.task('db:drop');
   cy.task('redis:drop');
 });
+
+afterEach(() => {
+  cy.task('db:close');
+  cy.task('redis:close');
+});

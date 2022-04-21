@@ -9,9 +9,7 @@ describe('Delete sub-service', () => {
     cy.task('db:addTimetable');
     cy.task('db:addServiceParameter', { title, parameter });
     // go to auth
-    cy.auth('test@test.com', '123456');
-    // go to services
-    cy.get(':nth-child(5) > a').click();
+    cy.authVisit({ identificator: 'test', password: '123456', page: '/services' });
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
   });
 
@@ -21,7 +19,7 @@ describe('Delete sub-service', () => {
 
     deleteServiceDesktop(parameter);
 
-    cy.get('.service').contains(parameter).should('not.exist');
+    cy.get(`.service:contains('${parameter}')`).should('not.exist');
   });
 
   it('Phone', () => {
@@ -40,6 +38,6 @@ describe('Delete sub-service', () => {
       expect(xhr.response.statusCode).to.equal(200);
     });
 
-    cy.get('.service').contains(parameter).should('not.exist');
+    cy.get(`.service:contains('${parameter}')`).should('not.exist');
   });
 });
