@@ -50,11 +50,10 @@ class Collection {
   }
 
   static async updateOne(query, update, options) {
-    const stringUpdate = JSON.stringify(update);
-    const isQuerySign = stringUpdate.includes('$');
+    const queryKeys = Object.keys(update).join('');
+    const isQuerySign = queryKeys.includes('$');
 
     update = isQuerySign ? update : { $set: update };
-
     return await this.collection().updateOne(query, update, options);
   }
 
@@ -65,8 +64,9 @@ class Collection {
       return await this.collection().updateMany(query, update);
     }
 
-    const stringUpdate = JSON.stringify(update);
-    const isQuerySign = stringUpdate.includes('$');
+    const queryKeys = Object.keys(update).join('');
+    const isQuerySign = queryKeys.includes('$');
+
     update = isQuerySign ? update : { $set: update };
     return await this.collection().updateMany(query, update);
   }
