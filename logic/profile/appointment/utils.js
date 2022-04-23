@@ -1,9 +1,11 @@
 const dayjs = require('dayjs');
 
+// e.x
+
 const getFormattedAppointments = (daysWithAppointments = []) => {
   daysWithAppointments = daysWithAppointments.map(({ date, appointments }) => {
     const data = {
-      date: dayjs(date).utc().add(1, 'day'), // prevent utc +0.:00
+      date: dayjs(date).utc().add(1, 'day').startOf('day'), // prevent utc +0.:00
       appointments,
     };
 
@@ -11,7 +13,7 @@ const getFormattedAppointments = (daysWithAppointments = []) => {
 
     if (isDateInAppointment) {
       appointments = appointments.map(({ date, ...rest }) => {
-        date = dayjs(date).utc().add(1, 'day').toDate();
+        date = dayjs(date).utc().add(1, 'day').startOf('day').toDate();
         return { ...rest, date };
       });
 

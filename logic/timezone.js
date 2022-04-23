@@ -15,7 +15,7 @@ class Timezone extends Collection {
     const cities = await Timezone.cache(SEARCH_TIMEZONE, pageCacheKey).find(
       { city: regexCity },
       { _id: 0 },
-      { page, limit: 10 }
+      { page, limit: 10, sort: { city: 1 } }
     );
 
     return cities;
