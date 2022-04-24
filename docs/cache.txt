@@ -1,0 +1,77 @@
++ means tested
+- means not tested
+
+GET /work (key: WORKS) +
+	POST /work +
+	PUT  /work/:workId +
+	DELETE /work/:workId +
+
+GET /service  (key: SERVICES_AND_TIMETABLE) +
+	POST /service +
+	PUT /service/:serviceId +
+	DELETE /service/:serviceId +
+  PATCH /service/order +
+	PUT /service/update +
+	POST /service-parameter +
+	DELETE /service-parameter/:serviceTitle +
+	PUT /service-parameter/:serviceTitle +
+	DELETE /service-parameter/:serviceTitle/sub-service/:subServiceId +
+	PUT /service-parameter/:serviceTitle/sub-service/:subServiceId +
+	POST /timetable/:timetableId/update +
+	DELETE /timetable/:timetableId/update +
+
+GET /service/update (key: UNSUITABLE_SERVICES) +
+	PUT /service/update +
+	POST /timetable/:timetableId/update +
+	DELETE /timetable/:timetableId/update +
+
+GET /booking (key: BOOKED_APPOINTMENTS) +
+	POST /timetable/:timetableId/update +
+	DELETE /timetable/:timetableId/update +
+	POST /:masterId/appointment +
+	PUT /:appointmentId/unsuitable +
+	PUT /:appointmentId/status/customer +
+	PUT /:appointmentId/status/master +
+	TTL(one week) for key 'date' +
+
+GET profile/:userId/city (key: CITY) +
+	PATCH /profile/:profileId +
+	PUT /master/:masterId/place-of-work +
+
+GET /timezone/city (key: SEARCH_TIMEZONE) +
+	delete cache manually +
+
+GET /master (key: SEARCH_MASTERS) +
+	TTL 5 minutes +
+
+GET /:profileId/favorite (key: FAVORITES) +
+	POST /favorite/:masterId +
+	DELETE /favorite/:masterId +
+
+SCHEMA
+
+userId: {
+	works
+	servicesAndTimetable
+	unsuitableServices
+	city
+}
+
+searchTimezone: {
+	0: []	--- page
+	1: []
+}
+
+searchMasters: {
+	citySpecialization0: []
+	citySpecialization1: []
+}
+
+userIdFavorites: {
+	0: []	--- page
+	1: []
+}
+	
+masterIdBookedAppointments: {
+	date: []
+}

@@ -19,7 +19,7 @@ const master = {
   lastName: ['one alphabetic word on russian'],
   avatar: null || 'path to file',
   isConfirmed: { email: [false || true], phone: [false || true] },
-  placeOfwork: ['city, address'],
+  placeOfWork: ['city, address'],
   role: ['master', 'user'],
   aboutText: [],
   createdAt: 'date in utc',
