@@ -21,7 +21,7 @@ const predictableFields = ({ phone, specialization, firstName, lastName, city, p
   lastName,
   specialization,
   username: null,
-  avatar: null,
+  isAvatar: false,
   city,
   masters: [],
   placeOfWork,

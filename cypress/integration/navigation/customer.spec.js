@@ -51,7 +51,7 @@ describe('Navigate as customer', () => {
     cy.get('.settings__heading', { timeout: 30000 }).should('be.visible');
   });
 
-  it.only('Desktop, server side notifications', () => {
+  it('Desktop, server side notifications', () => {
     cy.task('db:addMaster');
     cy.task('db:addConfirmedAppointmentCustomer');
     cy.task('db:addUnreadMessageForCustomer');
@@ -88,27 +88,27 @@ describe('Navigate as customer', () => {
     cy.url().should('include', '/test1');
     // search
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(2) > a').click();
+    cy.get('.navbar__list > :nth-child(2) > a').click();
     cy.get('.search__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/search');
     // appointments
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(3) > a').click();
+    cy.get('.navbar__list > :nth-child(3) > a').click();
     cy.get('.appointments__appointment-types', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/appointments');
     // messages
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(4) > a').click();
+    cy.get('.navbar__list > :nth-child(4) > a').click();
     cy.get('.messages__header', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/messages');
     // masters
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(5) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.masters__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/masters');
     // settings
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(6) > a').click();
+    cy.get('.navbar__list > :nth-child(6) > a').click();
     cy.get('.settings__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/settings');
   });

@@ -111,37 +111,37 @@ describe('Navigate as regular master', () => {
     cy.url().should('include', '/test');
     // search
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(2) > a').click();
+    cy.get('.navbar__list > :nth-child(2) > a').click();
     cy.get('.search__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/search');
     // appointments
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(3) > a').click();
+    cy.get('.navbar__list > :nth-child(3) > a').click();
     cy.get('.appointments__controller', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/appointments');
     // messages
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(4) > a').click();
+    cy.get('.navbar__list > :nth-child(4) > a').click();
     cy.get('.messages__header', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/messages');
     // services
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(5) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/services');
     // timetable
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(6) > a').click();
+    cy.get('.navbar__list > :nth-child(6) > a').click();
     cy.get('.timetable__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/timetable');
     // masters
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(7) > a').click();
+    cy.get('.navbar__list > :nth-child(7) > a').click();
     cy.get('.masters__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/masters');
     // settings
     cy.get('.mobile-navbar__item--menu').click();
-    cy.get('.navbar > :nth-child(8) > a').click();
+    cy.get('.navbar__list > :nth-child(8) > a').click();
     cy.get('.settings__heading', { timeout: 30000 }).should('be.visible');
     cy.url().should('include', '/settings');
   });

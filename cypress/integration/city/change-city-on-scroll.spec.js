@@ -25,7 +25,7 @@ describe('Change city on scroll', () => {
     cy.get('.city-search > :nth-child(12)').click();
 
     cy.get('.current-city__value').contains(city);
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     cy.viewport(1210, 500);
     cy.get('.city').contains(city);
   });
@@ -52,7 +52,7 @@ describe('Change city on scroll', () => {
     cy.get('.city-search > :nth-child(12)').click();
 
     cy.get('.current-city__value').contains(city);
-    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.back-bar__icon').click();
     cy.viewport(1210, 500);
     cy.get('.city').contains(city);
   });

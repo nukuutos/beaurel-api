@@ -32,7 +32,7 @@ describe('Sign up as master', () => {
     cy.get('.sign-up__input--city').click();
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
-    cy.get('.fa-times').click();
+    cy.get('.modal__close').click();
     // place of work
     cy.get('#placeOfWork\\.street').type(street);
     cy.get('#placeOfWork\\.house').type(house);
@@ -96,7 +96,7 @@ describe('Sign up as master', () => {
     cy.get('.sign-up__input--city').click();
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
-    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.back-bar__icon').click();
     // place of work
     cy.get('#placeOfWork\\.street').type(street);
     cy.get('#placeOfWork\\.house').type(house);

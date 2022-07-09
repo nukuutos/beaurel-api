@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongodb');
-const historyAppointment = require('./appointments/history-appointment');
-const customer = require('./masters/customer');
-const master = require('./masters/master');
+const historyAppointment = require('../appointments/history-appointment');
+const customer = require('../masters/customer');
+const master = require('../masters/master');
 
 module.exports = {
   _id: new ObjectId('61b81091002a6288aa8650bb'),

@@ -1,21 +1,19 @@
-const fs = require('fs');
 const path = require('path');
 const { ObjectId } = require('mongodb');
 
 const works = require('../data/works');
-const Image = require('../../../../../models/utils/image');
 
-const { TITLE_EXISTS, WORKS_LIMIT } = require('../../../../../config/errors/work');
+const { WORKS_LIMIT } = require('../../../../../config/errors/work');
 const { NO_IMAGE } = require('../../../../../config/errors/image');
 const { getWorks, checkIsCache, checkIsCacheDeleted } = require('./utils');
 const Work = require('../../../../../models/work');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
+const s3 = require('../../../../../utils/s3');
+const cleanUpBucket = require('../../../../utils/clean-up-bucket');
 
 const pathUploadImage = path.rootJoin('tests', 'data', 'files', 'images', 'work.jpg');
 const pathInvalidFile = path.rootJoin('tests', 'data', 'files', 'pdf', 'test.pdf');
-
-const getPathToSavedWork = (_id) => path.rootJoin('images', 'works', `${_id}.png`);
 
 module.exports = function () {
   beforeAll(async () => {
@@ -24,6 +22,7 @@ module.exports = function () {
 
   beforeEach(async () => {
     await Work.deleteMany({});
+    await cleanUpBucket();
   });
 
   it('should successfully add work', async () => {
@@ -44,30 +43,9 @@ module.exports = function () {
 
     expect(ObjectId.isValid(_id)).toBeTruthy();
 
-    const pathToWork = getPathToSavedWork(_id);
-    // clean up
-    Image.deleteFS(pathToWork);
+    const bucket = await s3.GetList(master._id.toString());
 
-    const isExist = fs.existsSync(pathToWork);
-
-    expect(isExist).toBe(false);
-  });
-
-  it('should detect work with same title', async () => {
-    const worksForDb = works.slice(0, 3);
-    await Work.insertMany(worksForDb);
-
-    const { title } = works[0];
-
-    const response = await this.request().field('title', title).attach('image', pathUploadImage);
-
-    const { statusCode, body } = response;
-
-    expect(statusCode).toBe(400);
-
-    const { message } = body;
-
-    expect(message).toBe(TITLE_EXISTS);
+    expect(bucket.Contents).toHaveLength(1);
   });
 
   it('should fail, master works limit', async () => {

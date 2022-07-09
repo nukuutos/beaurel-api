@@ -5,7 +5,9 @@ const User = require('../../../../../../models/user');
 const { createAccessToken } = require('../../../../../../modules/express/send-token/create-token');
 const master = require('../../../../../data/users/master');
 const master1 = require('../../../../../data/users/master-1');
+const reviewsData = require('../../../data/reviews-data');
 const appointments = require('../../data/appointments');
+const { getReviewsData, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 const data = {
   value: '4',
@@ -62,7 +64,13 @@ module.exports = function () {
   });
 
   it('should successfully, add review', async () => {
+    await Review.insertMany(reviewsData);
+    await getReviewsData.request().query({ page: 0 });
+    await checkIsCache();
+
     const response = await this.request().send(data);
+
+    await checkIsCacheDeleted();
 
     const { statusCode } = response;
 

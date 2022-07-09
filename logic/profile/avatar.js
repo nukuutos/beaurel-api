@@ -15,12 +15,12 @@ class Avatar extends Image {
 
   static createName(id) {
     const date = new Date().toISOString().replace(/:/g, '-');
-    const imageName = `${date}-${id}.png`;
+    const imageName = `${date}-${id}.webp`;
     return imageName;
   }
 
   static async deletePreviousFS(id) {
-    const { avatar: shortUrl } = await User.findOne({ _id: id }, { _id: 0, avatar: 1 });
+    const { avatar: shortUrl } = await User.findOne({ _id: id }, { _id: 0, isAvatar: 1 });
 
     if (shortUrl) {
       const avatar = new Avatar({ shortUrl });

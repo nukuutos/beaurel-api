@@ -58,7 +58,7 @@ describe('Create auto timetable', () => {
     cy.get('.btn').click();
     // check
     cy.get('.no-master-tools').should('be.visible');
-    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.back-bar__icon').click();
 
     cy.get('.timetable-card__value').contains('сб');
     cy.get('.content').contains('60 мин');

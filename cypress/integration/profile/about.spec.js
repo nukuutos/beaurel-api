@@ -49,7 +49,7 @@ describe('Update about text', () => {
     const aboutText = basicAboutText.slice(start, end).trim();
 
     // click on change about text
-    cy.get('.profile__about > .svg-inline--fa').click({ force: true });
+    cy.get('.profile__about > .profile__edit').click({ force: true });
 
     // new about text
     cy.get('.edit-about__textarea').clear().type(aboutText);

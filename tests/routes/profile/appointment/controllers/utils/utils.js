@@ -19,7 +19,7 @@ const getIsSorted = (appointments) =>
     const prevDate = appointments[index - 1];
     const difference = currentDate.diff(prevDate);
 
-    if (difference < 0) return true;
+    if (difference > 0) return true;
     return false;
   });
 

@@ -7,24 +7,24 @@ describe('Navigate as master without tools', () => {
 
   it("Desktop, check master's cards", () => {
     cy.get('.no-master-tools').should('be.visible');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // open booking
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.get('.btn-text:contains("Создать расписание")').should('be.visible');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // open services
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.get('.btn-text:contains("Создать расписание")').should('be.visible');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // open masters
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > span > img').click();
     cy.get('.master-works__add-work').should('be.visible');
   });
 
   it('Desktop, client side', () => {
     cy.get('.profile__identity').should('be.visible');
     cy.get('.no-master-tools').should('be.visible');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // search
     cy.get(':nth-child(2) > a').click();
     cy.get('.search__heading').should('be.visible');

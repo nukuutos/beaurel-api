@@ -11,7 +11,7 @@ describe('Update city as customer', () => {
 
     // city
     cy.intercept('/api/v1/**').as('getCities');
-    cy.get('.profile__geolocation > .fa-pen').click();
+    cy.get('.profile__geolocation .profile__edit').click();
     cy.wait('@getCities');
     cy.get('.city-search > :nth-child(5):contains("Абакан")').click();
     cy.get('.current-city__value').contains(city);
@@ -32,7 +32,7 @@ describe('Update city as customer', () => {
 
     // city
     cy.intercept('/api/v1/**').as('getCities');
-    cy.get('.profile__geolocation > .fa-pen').click();
+    cy.get('.profile__geolocation .profile__edit').click();
     cy.wait('@getCities');
     cy.get('.city-search > :nth-child(5):contains("Абакан")').click();
     cy.get('.current-city__value').contains(city);

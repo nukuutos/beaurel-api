@@ -22,7 +22,7 @@ describe('View customer data', () => {
     cy.get('.review-card__customer-photo').click();
     cy.wait('@getCustomerProfile');
     cy.get('.customer-card__city').should('be.visible');
-    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.back-bar__icon').click();
     cy.get('.profile__about').should('be.visible');
   });
 });

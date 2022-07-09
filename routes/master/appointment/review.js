@@ -8,10 +8,10 @@ const auth = require('../../../middleware/auth');
 const validate = require('../../../middleware/validate');
 const getCleanCache = require('../../../middleware/get-clean-cache');
 
-const { BOOKED_APPOINTMENTS, MASTER_ID } = require('../../../config/cache');
+const { MASTER_ID, REVIEWS } = require('../../../config/cache');
 
 const router = express.Router({ mergeParams: true });
-const cleanCache = getCleanCache(MASTER_ID, BOOKED_APPOINTMENTS);
+const cleanCache = getCleanCache(MASTER_ID, REVIEWS);
 
 // @route     Post /api/master/:masterId/appointment/:appointmentId/review
 // @desc      Add review to appointment

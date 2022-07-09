@@ -13,7 +13,7 @@ describe('Book with expired unsuitable service', () => {
 
   it('Desktop, services first', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.booking-service--disabled').should('be.visible');
@@ -21,14 +21,14 @@ describe('Book with expired unsuitable service', () => {
 
   it('Desktop, timetable first, book appointment with expired service', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 7 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
-    if (weekdayToday === 1) {
-      cy.get('.booking-timetable__arrow').click();
+    if (weekdayToday === 0) {
+      cy.get('.booking-timetable__arrow').last().click();
     }
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -42,7 +42,7 @@ describe('Book with expired unsuitable service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.booking-service--disabled').should('be.visible');
@@ -52,7 +52,7 @@ describe('Book with expired unsuitable service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     // must disable appointments or vise versa

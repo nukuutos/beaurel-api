@@ -7,7 +7,7 @@ describe('Update first name', () => {
   });
 
   it('Desktop', () => {
-    cy.get(':nth-child(2) > :nth-child(5) > .svg-inline--fa > path').click();
+    cy.get('.content > :nth-child(2) > :nth-child(5)').click();
     cy.get('.input').clear().type('Тест');
     cy.intercept('PATCH', '/api/v1/profile/**').as('updateFirstName');
     cy.get('.setting-card__success-button').click();
@@ -20,7 +20,7 @@ describe('Update first name', () => {
   it('Phone', () => {
     cy.viewport(330, 500);
 
-    cy.get(':nth-child(2) > :nth-child(5) > .svg-inline--fa > path').click();
+    cy.get('.content > :nth-child(2) > :nth-child(5)').click();
     cy.get('.input').clear().type('Тест');
     cy.intercept('PATCH', '/api/v1/profile/**').as('updateFirstName');
     cy.get('.setting-card__success-button').click();

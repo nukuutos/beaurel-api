@@ -127,7 +127,7 @@ class Booking extends Collection {
     this.isViewed = { customer: true, master: false };
 
     if (stringMasterId === stringCustomerId) {
-      this.isViewed.master = false;
+      this.isViewed.master = true;
     }
 
     return this;
@@ -174,7 +174,7 @@ class Booking extends Collection {
     // get customer
     const user = await User.findOne(
       { _id: customerId },
-      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+      { role: 1, username: 1, firstName: 1, lastName: 1, isAvatar: 1 }
     );
 
     const io = getIO();

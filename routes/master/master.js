@@ -32,8 +32,13 @@ router.use('/:masterId/appointment', appointmentRouter);
 // @access    Public
 router.get('/', validator.getMastersByQuery, validate, controller.getMasters);
 
+// @route     Get /api/v1/master/:masterId/review
+// @desc      Get master's reviews
+// @access    Public
+router.get('/:masterId/review', validator.getReviews, validate, controller.getReviews);
+
 // @route     Get /api/v1/master/:masterId/place-of-work
-// @desc      Get masters by query
+// @desc      Update master's place of work
 // @access    private
 router.put(
   '/:masterId/place-of-work',

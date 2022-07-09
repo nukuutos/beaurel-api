@@ -20,7 +20,7 @@ const predictableFields = ({ phone, firstName, lastName, city }) => ({
   firstName,
   lastName,
   username: null,
-  avatar: null,
+  isAvatar: false,
   city,
   masters: [],
   confirmation: {

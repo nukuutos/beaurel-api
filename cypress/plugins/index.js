@@ -23,6 +23,7 @@ require('dotenv').config({ path: path.join(process.cwd(), 'config', 'envs', '.en
 
 const fs = require('fs');
 const axios = require('axios');
+const sharp = require('sharp');
 const User = require('../../models/user');
 const master = require('../data/masters/master');
 const dropDatabase = require('../utils/drop-database');
@@ -43,7 +44,7 @@ const confirmedAppointmentCustomer = require('../data/appointments/confirmed-app
 const confirmedAppointmentMaster = require('../data/appointments/confirmed-appointment-master');
 const historyAppointment = require('../data/appointments/history-appointment');
 const customer = require('../data/masters/customer');
-const review = require('../data/review');
+const review = require('../data/reviews/review');
 const Review = require('../../models/review');
 const autoTimetableWithUpdate = require('../data/timetables/auto-timetable-with-update');
 const unsuitableAppointmentMaster = require('../data/appointments/unsuitable-appointment-master');
@@ -67,6 +68,10 @@ const cancelledConfirmedAppointmentAsMaster = require('../data/tests/appointment
 const addMasterWithoutServices = require('../data/tests/navigation/master-without-services');
 const unreadMessageForMaster = require('../data/messages/unread-message-for-master');
 const unreadMessageForCustomer = require('../data/messages/unread-message-for-customer');
+const cleanUpBucket = require('../../tests/utils/clean-up-bucket');
+const s3 = require('../../utils/s3');
+const reviewsOnScroll = require('../data/reviews/reviews-on-scroll');
+const addDataForUpdateUnsuitableAppointmentBeforeUpdate = require('../data/tests/appointments/update-unsuitable-appointment-before-update');
 
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
@@ -104,6 +109,10 @@ module.exports = (on, config) => {
       await User.save(master);
       return null;
     },
+    'db:addReviewsOnScroll': async () => {
+      await Review.insertMany(reviewsOnScroll);
+      return null;
+    },
     'db:addUnreadMessageForMaster': async () => {
       await Message.save(unreadMessageForMaster);
       return null;
@@ -120,6 +129,7 @@ module.exports = (on, config) => {
     'db:cancelledConfirmedAppointmentAsCustomer': cancelledConfirmedAppointmentAsCustomer,
     'db:cancelledConfirmedAppointmentAsMaster': cancelledConfirmedAppointmentAsMaster,
     'db:addMasterWithoutServices': addMasterWithoutServices,
+    'db:updateUnsuitableAppointmentBeforeUpdate': addDataForUpdateUnsuitableAppointmentBeforeUpdate,
 
     'db:addBookedAppointments': async () => {
       await Appointment.insertMany(bookedAppointments);
@@ -242,42 +252,13 @@ module.exports = (on, config) => {
 
     // delete files
     'fs:deleteAvatar': async () => {
-      const { avatar } = await User.findOne({ email: master.email });
-
-      if (!avatar) throw new Error('No avatar in db!');
-
-      const pathSavedAvatar = path.join(process.cwd(), avatar);
-
-      let isExist = fs.existsSync(pathSavedAvatar);
-
-      if (!isExist) throw new Error('File is not existed!');
-
-      Image.deleteFS(pathSavedAvatar);
-
-      isExist = fs.existsSync(pathSavedAvatar);
-
-      if (isExist) throw new Error('File is existed after deletion!');
+      await cleanUpBucket();
 
       return null;
     },
 
     'fs:deleteWork': async () => {
-      const work = await Work.findOne({});
-
-      if (!work) throw new Error('No work in db!');
-
-      const workPath = path.join(process.cwd(), 'images', 'works', `${work._id}.png`);
-
-      let isExist = fs.existsSync(workPath);
-
-      if (!isExist) throw new Error('File is not existed!');
-
-      Image.deleteFS(workPath);
-
-      isExist = fs.existsSync(workPath);
-
-      if (isExist) throw new Error('File is existed after deletion!');
-
+      await cleanUpBucket();
       return null;
     },
 
@@ -290,15 +271,9 @@ module.exports = (on, config) => {
 
       const buffer = fs.readFileSync(fixturePath);
 
-      if (!buffer) throw new Error('No fixture!');
+      // const formattedBuffer = await sharp.decreaseSize(buffer);
 
-      const workPath = path.join(process.cwd(), 'images', 'works', `${work._id}.png`);
-
-      fs.writeFileSync(workPath, buffer);
-
-      const isExist = fs.existsSync(workPath);
-
-      if (!isExist) throw new Error('File is not existed!');
+      await s3.Upload({ buffer, name: `${work._id}.png` }, master._id.toString());
 
       return null;
     },

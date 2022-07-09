@@ -20,7 +20,7 @@ describe('Book with updated service', () => {
 
   it('Desktop, services first, before update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.services__switch').should('be.visible');
@@ -30,7 +30,7 @@ describe('Book with updated service', () => {
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 6 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
     if (weekdayToday === 6) {
       cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
@@ -39,7 +39,7 @@ describe('Book with updated service', () => {
         .click();
 
       cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
-    } else if (weekdayToday === 1) {
+    } else if (weekdayToday === 0) {
       cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
         .should('be.visible')
         .click();
@@ -61,7 +61,7 @@ describe('Book with updated service', () => {
 
   it('Desktop, services first, after update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.services__switch').should('be.visible');
@@ -86,13 +86,7 @@ describe('Book with updated service', () => {
       .should('be.visible')
       .click();
 
-    if (weekdayIndexBeforeUpdate === 5) {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 6);
-    } else if (weekdayIndexBeforeUpdate === 6) {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 5);
-    } else {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 7);
-    }
+    cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 7);
 
     cy.get(`.booking-timetable__appointment:contains('${time}')`).first().click();
     cy.get('.booking-result').contains('08:00 - 09:30');
@@ -106,13 +100,13 @@ describe('Book with updated service', () => {
 
   it('Desktop, timetable first, book appointment that is before update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 7 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
-    if (weekdayToday === 1) {
+    if (weekdayToday === 0) {
       cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
         .should('be.visible')
         .click();
@@ -134,13 +128,13 @@ describe('Book with updated service', () => {
 
   it('Desktop, timetable first, book appointment that is after update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 6 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
-    if (weekdayToday === 1 || weekdayToday === 6) {
+    if (weekdayToday === 0 || weekdayToday === 6 || weekdayToday === 5) {
       cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
         .should('be.visible')
         .click();
@@ -167,7 +161,7 @@ describe('Book with updated service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.services__switch').should('be.visible');
@@ -196,7 +190,7 @@ describe('Book with updated service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.get('.services__switch').should('be.visible');
@@ -224,7 +218,7 @@ describe('Book with updated service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -247,7 +241,7 @@ describe('Book with updated service', () => {
     const time = '09:30';
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     cy.get('.booking-timetable__arrow').should('have.length', 1);

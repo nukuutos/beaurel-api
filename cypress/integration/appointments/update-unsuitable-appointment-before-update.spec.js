@@ -1,10 +1,10 @@
 // You must have 08:00 appointment
 // Your appointments must be clean
-describe('Update unsuitable appointment as master', () => {
+describe('Update unsuitable appointment before timetable update date', () => {
   beforeEach(() => {
-    cy.task('db:addMaster');
-    cy.task('db:addTimetableWithUpdate');
-    cy.task('db:addUnsuitableAppointmentMaster');
+    // cy.task('db:addMaster');
+    // cy.task('db:addTimetableWithUpdate');
+    cy.task('db:updateUnsuitableAppointmentBeforeUpdate');
     // go to auth
     cy.authVisit({ identificator: 'test', password: '123456', page: '/appointments' });
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
@@ -23,6 +23,7 @@ describe('Update unsuitable appointment as master', () => {
     cy.get('.booking-timetable').then(($layout) => {
       const time = '08:00';
       // if it is no appointments => click get next week
+
       if (!$layout.find(`:contains('${time}')`).length) {
         cy.get('.booking-timetable__arrow').last().click();
       }

@@ -15,7 +15,7 @@ describe('Update Work', () => {
 
   it('Desktop', () => {
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > span > img').click();
 
     cy.intercept('PUT', '/api/v1/master/**').as('updateWork');
 
@@ -35,7 +35,7 @@ describe('Update Work', () => {
     cy.wait('@updateWork').then((xhr) => {
       expect(xhr.response.statusCode).to.equal(200);
       // close carousel view
-      cy.get('.fa-times').click();
+      cy.get('.modal__close').click();
 
       const newTitleRegex = new RegExp(`^${newWorkTitle}$`);
 
@@ -47,7 +47,7 @@ describe('Update Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click({ force: true });
+    cy.get('.profile__cards > :nth-child(3) > span > img').click({ force: true });
 
     cy.intercept('PUT', '/api/v1/master/**').as('updateWork');
 
@@ -67,7 +67,7 @@ describe('Update Work', () => {
     cy.wait('@updateWork').then((xhr) => {
       expect(xhr.response.statusCode).to.equal(200);
       // close carousel view
-      cy.get('.back-bar__main > .svg-inline--fa').click();
+      cy.get('.back-bar__icon').click();
 
       const newTitleRegex = new RegExp(`^${newWorkTitle}$`);
 

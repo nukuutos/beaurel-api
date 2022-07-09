@@ -9,6 +9,8 @@ const {
   getFavoritesCacheName,
   BOOKED_APPOINTMENTS,
   getBookedAppointmentsCacheName,
+  REVIEWS,
+  getReviewsCacheName,
 } = require('../config/cache');
 
 const handleFirstKey = (keys, req) => {
@@ -23,6 +25,10 @@ const handleFirstKey = (keys, req) => {
 
   if (keys[1] === BOOKED_APPOINTMENTS) {
     return getBookedAppointmentsCacheName(stringUserId);
+  }
+
+  if (keys[1] === REVIEWS) {
+    return getReviewsCacheName(stringUserId);
   }
 
   return userIdCacheKey;
@@ -63,7 +69,7 @@ const getCleanCache =
 
     const client = getRedisClient();
 
-    const isKeyDeletion = [FAVORITES, BOOKED_APPOINTMENTS].includes(keys[1]);
+    const isKeyDeletion = [FAVORITES, BOOKED_APPOINTMENTS, REVIEWS].includes(keys[1]);
 
     if (isKeyDeletion) client.del(keys[0]);
     else client.hdel(...keys);

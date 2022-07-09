@@ -95,7 +95,9 @@ module.exports = function () {
     const requestToMoscowMaster = cloneDeep(this);
     requestToMoscowMaster.routeParams = { masterId: moscowMaster._id.toString() };
 
-    const response = await requestToMoscowMaster.request().query(queryData);
+    const response = await requestToMoscowMaster
+      .request()
+      .query({ date: dayjs().utc().startOf('day').format() });
 
     const { statusCode, body } = response;
 

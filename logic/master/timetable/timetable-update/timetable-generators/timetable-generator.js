@@ -100,7 +100,7 @@ class TimetableGenerator extends Timetable {
 
     const master = await User.findOne(
       { _id: masterId },
-      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+      { role: 1, username: 1, firstName: 1, lastName: 1, isAvatar: 1 }
     );
 
     for (const appointment of appointments) {

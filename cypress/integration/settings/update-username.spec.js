@@ -7,7 +7,7 @@ describe('Update username', () => {
   });
 
   it('Desktop', () => {
-    cy.get(':nth-child(2) > :nth-child(3) > .svg-inline--fa > path').click();
+    cy.get('.content > :nth-child(2) > :nth-child(3)').click();
     cy.get('.input').clear().type('testik');
     cy.intercept('PUT', '/api/v1/profile/**').as('updateUsername');
     cy.get('.setting-card__success-button').click();
@@ -20,7 +20,7 @@ describe('Update username', () => {
   it('Phone', () => {
     cy.viewport(330, 500);
 
-    cy.get(':nth-child(2) > :nth-child(3) > .svg-inline--fa > path').click();
+    cy.get('.content > :nth-child(2) > :nth-child(3)').click();
     cy.get('.input').clear().type('testik');
     cy.intercept('PUT', '/api/v1/profile/**').as('updateUsername');
     cy.get('.setting-card__success-button').click();

@@ -23,7 +23,7 @@ describe('Sign up as customer', () => {
     cy.get('.sign-up__input--city').click();
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     cy.get('.btn').click();
 
     //  phone
@@ -70,7 +70,7 @@ describe('Sign up as customer', () => {
     cy.get('.sign-up__input--city').click();
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
-    cy.get('.back-bar__main > .svg-inline--fa > path').click();
+    cy.get('.back-bar__icon').click();
     cy.get('.btn').click();
 
     //  phone

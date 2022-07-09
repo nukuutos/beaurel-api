@@ -14,10 +14,8 @@ describe('Add Work', () => {
 
   it('Desktop', () => {
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > span > img').click();
     cy.get('.master-works').then(($element) => {
-      // get current length of works(including add-button)
-      const initialChildrenLength = $element.children().length;
       // click on add work
       cy.get('.master-works__add-work').click();
       // click on upload image
@@ -41,11 +39,11 @@ describe('Add Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img', { timeout: 40000 }).click({ force: true });
+    cy.get('.profile__cards > :nth-child(3) > span > img', { timeout: 40000 }).click({
+      force: true,
+    });
 
     cy.get('.master-works').then(($element) => {
-      // get current length of works(including add-button)
-      const initialChildrenLength = $element.children().length;
       // click on add work
       cy.get('.master-works__add-work').click();
       // click on upload image

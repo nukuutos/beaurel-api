@@ -8,15 +8,15 @@ describe('Visit a master without tools', () => {
 
   it("Desktop, check master's cards", () => {
     // open booking
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.get('.no-master-tools__text').contains('Невозможно записаться к мастеру');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // open services
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.get('.no-master-tools__text').contains('Невозможно записаться к мастеру');
-    cy.get('.fa-times > path').click();
+    cy.get('.modal__close').click();
     // open masters
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > span > img').click();
     cy.get('.no-master-tools__text').contains('Работы мастера отсутствуют');
   });
 });

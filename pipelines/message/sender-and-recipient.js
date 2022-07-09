@@ -8,7 +8,7 @@ module.exports = (senderId, recipientId) => [
           },
         },
         {
-          $project: { firstName: 1, lastName: 1, avatar: 1, username: 1 },
+          $project: { firstName: 1, lastName: 1, isAvatar: 1, username: 1 },
         },
       ],
       recipient: [

@@ -11,7 +11,7 @@ class WorkImage extends Image {
   static createName(id) {
     const isObjectId = ObjectId.isValid(id);
     if (isObjectId) id = id.toString();
-    return `${id}.png`;
+    return `${id}.webp`;
   }
 }
 

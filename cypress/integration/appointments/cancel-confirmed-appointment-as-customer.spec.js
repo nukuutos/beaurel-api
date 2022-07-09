@@ -1,6 +1,6 @@
 // You must have 08:00 appointment
 // Your appointments must be clean
-describe('Cancel on confirmation appointment as customer', () => {
+describe('Cancel confirmed appointment as customer', () => {
   beforeEach(() => {
     cy.task('db:cancelledConfirmedAppointmentAsCustomer');
     // cy.task('db:addMaster');

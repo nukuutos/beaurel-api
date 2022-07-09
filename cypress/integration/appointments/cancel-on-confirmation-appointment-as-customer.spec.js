@@ -11,6 +11,8 @@ describe('Cancel on confirmation appointment as customer', () => {
 
   it('Desktop', () => {
     // check appointment as customer
+    cy.get('.appointments__appointment-card', { timeout: 10000 }).should('be.visible');
+
     cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
 
     cy.get('.appointment-controller__item:not(.appointment-controller__item--active)')
@@ -29,6 +31,9 @@ describe('Cancel on confirmation appointment as customer', () => {
 
   it('Phone', () => {
     cy.viewport(330, 500);
+
+    cy.get('.appointments__appointment-card', { timeout: 10000 }).should('be.visible');
+
     // check appointment as customer
     cy.intercept('GET', '/api/v1/profile/**').as('getAppointmentsAsCustomer');
 

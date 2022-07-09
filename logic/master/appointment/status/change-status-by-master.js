@@ -53,7 +53,7 @@ class ChangeStatusByMaster extends ChangeStatus {
 
     const user = await User.findOne(
       { _id: masterId },
-      { role: 1, username: 1, firstName: 1, lastName: 1, avatar: 1 }
+      { role: 1, username: 1, firstName: 1, lastName: 1, isAvatar: 1 }
     );
 
     const io = getIO();

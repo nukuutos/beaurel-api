@@ -260,6 +260,8 @@ module.exports = function () {
     expect(appointmentDB).toHaveProperty('history');
     expect(appointmentDB).toHaveProperty('status');
     expect(appointmentDB).toHaveProperty('createdAt');
+    expect(appointmentDB.isViewed.master).toBe(false);
+    expect(appointmentDB.isViewed.customer).toBe(true);
   });
 
   it('should successfully book appointment for moscow timezone', async () => {
@@ -313,6 +315,25 @@ module.exports = function () {
     const appointmentDB = await Appointment.findOne({});
 
     expect(appointmentDB.service.duration).toBe(90);
+  });
+
+  it('should successfully book your own appointment', async () => {
+    await Timetable.save(manuallyTimetable);
+    await Service.insertMany(services);
+
+    const bookingRequestByMaster = cloneDeep(this);
+    bookingRequestByMaster.user = master;
+
+    const response = await bookingRequestByMaster.request().send(data);
+
+    const { statusCode } = response;
+
+    expect(statusCode).toBe(201);
+
+    const appointmentDB = await Appointment.findOne({});
+
+    expect(appointmentDB.isViewed.master).toBe(true);
+    expect(appointmentDB.isViewed.customer).toBe(true);
   });
 
   it('should detect unauthorized action', async () => {

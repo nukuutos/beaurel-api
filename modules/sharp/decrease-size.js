@@ -1,7 +1,7 @@
-const Sharp = require("sharp/lib/constructor");
+const Sharp = require('sharp/lib/constructor');
 
-const decreaseSize = async (buffer) => {
-  return await Sharp(buffer)
+const decreaseSize = async (buffer) =>
+  await Sharp(buffer)
     .metadata()
     .then(({ width, height }) => {
       const maxSize = 600;
@@ -9,16 +9,15 @@ const decreaseSize = async (buffer) => {
       const isWidthGreater = width > maxSize && width >= height;
       const isHeightGreater = height > maxSize && height >= width;
 
+      buffer = Sharp(buffer);
+
       if (isWidthGreater) {
-        return Sharp(buffer).resize(maxSize).toBuffer();
+        buffer = buffer.resize(maxSize);
+      } else if (isHeightGreater) {
+        buffer = buffer.resize(null, maxSize);
       }
 
-      if (isHeightGreater) {
-        return Sharp(buffer).resize(null, maxSize).toBuffer();
-      }
-
-      return buffer;
+      return buffer.webp({ quality: 86 }).toBuffer();
     });
-};
 
 Sharp.decreaseSize = decreaseSize;

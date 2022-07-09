@@ -1,7 +1,8 @@
-const { TITLE_EXISTS } = require('../../../config/errors/work');
+const sharp = require('sharp');
+const { TITLE_EXISTS, FAIL_WORK_UPDATE } = require('../../../config/errors/work');
 const HttpError = require('../../../models/utils/http-error');
 const Work = require('../../../models/work');
-const WorkImage = require('./work-image');
+const s3 = require('../../../utils/s3');
 
 class UpdateWork extends Work {
   constructor(workId, masterId, title) {
@@ -9,21 +10,36 @@ class UpdateWork extends Work {
     this.id = workId;
   }
 
-  async checkTitle() {
-    const { id, masterId, title } = this;
-    const isTitle = await Work.findOne({ _id: { $ne: id }, masterId, title }, { _id: 1 });
-    if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
-  }
-
-  async updateFile(buffer) {
-    const { id } = this;
-    const image = new WorkImage(id, buffer);
-    await image.save();
+  async isExisted() {
+    const { id, masterId } = this;
+    const isExisted = await Work.findOne({ _id: id, masterId }, { _id: 1 });
+    if (!isExisted) throw new HttpError(TITLE_EXISTS, 400);
   }
 
   async updateTitle() {
     const { id, title } = this;
     await Work.updateOne({ _id: id }, { title });
+  }
+
+  async updateFile(buffer) {
+    const { id, masterId } = this;
+
+    buffer = await sharp.decreaseSize(buffer);
+
+    const filename = `${id}.webp`;
+    const folder = `${masterId}`;
+
+    const isUpdated = await s3.Upload(
+      {
+        buffer,
+        name: filename,
+      },
+      folder
+    );
+
+    if (!isUpdated) {
+      throw new HttpError(FAIL_WORK_UPDATE, 500);
+    }
   }
 }
 

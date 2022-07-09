@@ -84,13 +84,13 @@ describe('Navigate as guest', () => {
     cy.visit('/test');
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const weekday = getWeekdayRU();
 
     if (weekday >= 5) {
-      cy.get('.booking-timetable__arrow').click();
+      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)').click();
     }
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');

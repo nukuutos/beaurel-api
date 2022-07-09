@@ -9,7 +9,7 @@ describe('Delete Work', () => {
 
   it('Desktop', () => {
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click();
+    cy.get('.profile__cards > :nth-child(3) > span > img').click();
 
     cy.intercept('DELETE', '/api/v1/master/**').as('deleteWork');
 
@@ -24,7 +24,7 @@ describe('Delete Work', () => {
       console.log(xhr.response.statusCode);
       expect(xhr.response.statusCode).to.equal(200);
       // close carousel view
-      cy.get('.fa-times').click();
+      cy.get('.modal__close').click();
 
       cy.get('.master-work__title').should('not.exist');
     });
@@ -34,7 +34,7 @@ describe('Delete Work', () => {
     cy.viewport(330, 500);
 
     // click on works
-    cy.get('.profile__cards > :nth-child(3) > img').click({ force: true });
+    cy.get('.profile__cards > :nth-child(3) > span > img').click({ force: true });
 
     cy.intercept('DELETE', '/api/v1/master/**').as('deleteWork');
 
@@ -48,7 +48,7 @@ describe('Delete Work', () => {
     cy.wait('@deleteWork').then((xhr) => {
       expect(xhr.response.statusCode).to.equal(200);
       // close carousel view
-      cy.get('.back-bar__main > .svg-inline--fa').click();
+      cy.get('.back-bar__icon').click();
 
       cy.get('.master-work__title').should('not.exist');
     });

@@ -50,9 +50,9 @@ exports.updateAvatar = asyncHandler(async (req, res) => {
   const { buffer } = file;
   const { id } = user;
 
-  const shortUrl = await Profile.updateAvatar(id, buffer);
+  await Profile.updateAvatar(id, buffer);
 
-  return res.json({ avatar: shortUrl, message: 'Фото профиля успешно обновлено!' });
+  return res.json({ message: 'Фото профиля успешно обновлено!' });
 });
 
 exports.getCityAndTimezone = asyncHandler(async (req, res) => {

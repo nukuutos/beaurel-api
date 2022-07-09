@@ -30,7 +30,7 @@ describe('Get dialogs', () => {
     cy.get('.dialog-card--unread').click();
     cy.wait('@getMessages');
 
-    cy.get('.fa-arrow-left > path').click();
+    cy.get('.messages__arrow-back').click();
     cy.get('.dialog-card--unread').should('not.exist');
   });
 });

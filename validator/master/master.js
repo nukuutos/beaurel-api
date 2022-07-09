@@ -96,6 +96,7 @@ const roomValue = body('room.value')
   .isLength({ min: 1, max: 32 })
   .withMessage(INVALID_ROOM_VALUE);
 
+exports.getReviews = [masterId, page];
 exports.getMastersByQuery = [name, specialization, cityQuery, page];
 exports.updatePlaceOfWork = [
   masterId,

@@ -5,7 +5,9 @@ const User = require('../../../../../../models/user');
 const { createAccessToken } = require('../../../../../../modules/express/send-token/create-token');
 const master = require('../../../../../data/users/master');
 const master1 = require('../../../../../data/users/master-1');
+const reviewsData = require('../../../data/reviews-data');
 const appointments = require('../../data/appointments');
+const { getReviewsData, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
 const data = {
   value: '4',
@@ -36,12 +38,12 @@ module.exports = function () {
     expect(message).toBe(NO_APPOINTMENT);
   });
 
-  it('should fail, review has already existed', async () => {
+  it('should fail, review has not existed', async () => {
     const response = await this.request().send(data);
 
     const { statusCode, body } = response;
 
-    expect(statusCode).toBe(400);
+    expect(statusCode).toBe(404);
 
     const { message } = body;
 
@@ -56,21 +58,33 @@ module.exports = function () {
 
     const { statusCode } = response;
 
-    expect(statusCode).toBe(404);
+    expect(statusCode).toBe(400);
   });
 
   it('should successfully update review', async () => {
-    await this.request().send(data);
+    await Review.insertMany([
+      ...reviewsData,
+      {
+        masterId: master._id,
+        customerId: master1._id,
+        appointmentId: appointments[0]._id,
+      },
+    ]);
+
+    await getReviewsData.request().query({ page: 0 });
+    await checkIsCache();
 
     const comment = 'красота';
 
     const response = await this.request().send({ ...data, comment });
 
+    await checkIsCacheDeleted();
+
     const { statusCode } = response;
 
     expect(statusCode).toBe(200);
 
-    const review = Review.findOne({});
+    const review = await Review.findOne({ appointmentId: appointments[0]._id });
 
     expect(review.comment).toBe(comment);
   });

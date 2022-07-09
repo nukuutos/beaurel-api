@@ -22,7 +22,7 @@ describe('Chat with favorite', () => {
 
     cy.get('#message').type(message);
     cy.intercept('POST', '/api/v1/profile/**').as('sendMessage');
-    cy.get('.messages__form > .svg-inline--fa > path').click();
+    cy.get('.messages__send-icon').click();
     cy.wait('@sendMessage');
 
     cy.get('.dialog__message').should('be.visible');
@@ -43,11 +43,11 @@ describe('Chat with favorite', () => {
 
     cy.get('#message').type(message);
     cy.intercept('POST', '/api/v1/profile/**').as('sendMessage');
-    cy.get('.messages__form > .svg-inline--fa > path').click();
+    cy.get('.messages__send-icon').click();
     cy.wait('@sendMessage');
 
     cy.get('.dialog__message').should('be.visible');
-    cy.get('.fa-arrow-left > path').click();
+    cy.get('.messages__arrow-back').click();
     cy.get('.messages__dialog-card').contains(message).should('be.visible');
   });
 });

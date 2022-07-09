@@ -1,4 +1,5 @@
 const GetMasters = require('../../logic/master/master/get-masters');
+const GetReviews = require('../../logic/master/master/get-reviews');
 const UpdatePlaceOfWork = require('../../logic/master/master/update-place-of-work');
 const asyncHandler = require('../../middleware/async-handler');
 
@@ -14,6 +15,17 @@ exports.getMasters = asyncHandler(async (req, res) => {
     .exec();
 
   return res.json({ masters });
+});
+
+exports.getReviews = asyncHandler(async (req, res) => {
+  const { masterId } = req.params;
+  const { page } = req.query;
+
+  const master = new GetReviews({ masterId, page });
+
+  const reviews = await master.getReviews();
+
+  return res.json({ reviews });
 });
 
 exports.updatePlaceOfWork = asyncHandler(async (req, res) => {

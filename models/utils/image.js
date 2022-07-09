@@ -1,9 +1,9 @@
-const sharp = require("sharp");
-const fs = require("fs");
-const path = require("path");
+const sharp = require('sharp');
+const fs = require('fs');
+const path = require('path');
 
-const HttpError = require("./http-error");
-const { ERROR_ON_SAVE } = require("../../config/errors/image");
+const HttpError = require('./http-error');
+const { ERROR_ON_SAVE } = require('../../config/errors/image');
 
 class Image {
   constructor(buffer) {
@@ -11,7 +11,7 @@ class Image {
   }
 
   static createUrl(name, subfolder) {
-    const url = path.rootJoin("images", subfolder, name);
+    const url = path.rootJoin('images', subfolder, name);
     return url;
   }
 
@@ -28,7 +28,7 @@ class Image {
 
   async save() {
     const { buffer, url } = this;
-    await sharp(buffer).png({ quality: 86 }).toFile(url);
+    await sharp(buffer).webp({ quality: 86 }).toFile(url);
   }
 
   async formatBuffer() {

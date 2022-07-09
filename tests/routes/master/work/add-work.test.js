@@ -1,6 +1,4 @@
 const app = require('../../../../app');
-const User = require('../../../../models/user');
-const Work = require('../../../../models/work');
 
 const ExtendedSupertest = require('../../../extended-supertest');
 
@@ -9,8 +7,8 @@ const routeParams = require('./route-params/add-work');
 const controller = require('./controllers/add-work');
 
 const master = require('../../../data/users/master');
-const works = require('./data/works');
 const { before, after } = require('../../../utils/endpoint-test-preparation');
+const cleanUpBucket = require('../../../utils/clean-up-bucket');
 
 const template = `/api/v1/master/:masterId/work`;
 
@@ -23,10 +21,10 @@ const config = {
 
 const request = new ExtendedSupertest(app, config);
 
-before();
+before(async () => await cleanUpBucket());
 
 describe(`POST ${template}`, () => {
   request.testRouteParams(routeParams).testBodyFields(bodyFields).testController(controller);
 });
 
-after();
+after(async () => await cleanUpBucket());

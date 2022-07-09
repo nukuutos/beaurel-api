@@ -24,7 +24,7 @@ const getFormattedAppointments = (daysWithAppointments = []) => {
   });
 
   const sortedDaysWithAppointments = daysWithAppointments.sort((a, b) =>
-    a.date.isBefore(b.date) ? 1 : -1
+    a.date.isBefore(b.date) ? -1 : 1
   );
 
   const formattedAppointments = {};

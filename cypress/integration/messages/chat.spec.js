@@ -27,7 +27,7 @@ describe('Chat', () => {
         cy.get('.messages__dialog-card').click();
         cy.get('#message').type('Some message!');
         cy.intercept('POST', '/api/v1/profile/**').as('sendMessage');
-        cy.get('.messages__form > .svg-inline--fa > path').click();
+        cy.get('.messages__send-icon').click();
         cy.wait('@sendMessage');
         cy.intercept('PUT', '/api/v1/profile/**').as('setMessageToViewed');
         cy.request({
@@ -82,7 +82,7 @@ describe('Chat', () => {
         cy.get('.messages__dialog-card').click();
         cy.get('#message').type('Some message!');
         cy.intercept('POST', '/api/v1/profile/**').as('sendMessage');
-        cy.get('.messages__form > .svg-inline--fa > path').click();
+        cy.get('.messages__send-icon').click();
         cy.wait('@sendMessage');
         cy.intercept('PUT', '/api/v1/profile/**').as('setMessageToViewed');
         cy.request({
@@ -109,7 +109,7 @@ describe('Chat', () => {
             cy.get("[data-icon='check-double']").should('be.visible');
             cy.get("[data-icon='check']").should('not.exist');
 
-            cy.get('.fa-arrow-left > path').click();
+            cy.get('.messages__arrow-back').click();
             cy.get('.messages__dialog-card').contains('last message').should('be.visible');
             cy.task('db:getViewedMessages').then((count) => {
               expect(count).to.equal(3);

@@ -12,7 +12,7 @@ describe('Book appointment', () => {
 
   it('Desktop', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getDataForBooking');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getDataForBooking');
 
     cy.get('.booking-timetable').then(($layout) => {
@@ -46,7 +46,7 @@ describe('Book appointment', () => {
               // success
               cy.get('.booking-success__button').click();
               // check if appointment was booked
-              cy.get('.profile__cards > :nth-child(1) > img').click();
+              cy.get('.profile__cards > :nth-child(1) > span > img').click();
               if (isNextWeek) {
                 cy.get('.booking-timetable__arrow').last().click();
               }
@@ -75,7 +75,7 @@ describe('Book appointment', () => {
             });
         });
       // go to appointments
-      cy.get('.fa-times > path').click();
+      cy.get('.modal__close').click();
       cy.get(':nth-child(3) > a').click();
       cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
       // go to confirmed appointments
@@ -93,7 +93,7 @@ describe('Book appointment', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getDataForBooking');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getDataForBooking');
 
     cy.get('.booking-timetable').then(($layout) => {
@@ -112,7 +112,7 @@ describe('Book appointment', () => {
       // success
       cy.get('.booking-success__button').click();
       // check if appointment was booked
-      cy.get('.profile__cards > :nth-child(1) > img').click();
+      cy.get('.profile__cards > :nth-child(1) > span > img').click();
       // check
       cy.get('.booking-timetable').then(($layout) => {
         if ($layout.find(`.btn-text`).length) {
@@ -123,9 +123,9 @@ describe('Book appointment', () => {
       });
     });
 
-    cy.get('.back-bar__main > .svg-inline--fa').click();
+    cy.get('.back-bar__icon').click();
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get('.navbar > :nth-child(3) > a').click();
+    cy.get('.navbar__list > :nth-child(3) > a').click();
     cy.get('.appointments__controller', { timeout: 60000 }).should('be.visible');
     // go to confirmed appointments
     cy.intercept('GET', '/api/v1/profile/**').as('getConfirmedAppointments');

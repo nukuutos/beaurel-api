@@ -13,7 +13,7 @@ describe('Book with unsuitable service', () => {
 
   it('Desktop, services first', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
@@ -21,7 +21,7 @@ describe('Book with unsuitable service', () => {
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 6 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
     if (weekdayToday === 6) {
       cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
@@ -30,7 +30,7 @@ describe('Book with unsuitable service', () => {
         .click();
 
       cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
-    } else if (weekdayToday === 1) {
+    } else if (weekdayToday === 0) {
       cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
         .should('be.visible')
         .click();
@@ -52,14 +52,14 @@ describe('Book with unsuitable service', () => {
 
   it('Desktop, timetable first, book appointment that is before update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 7 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
-    if (weekdayToday === 1) {
-      cy.get('.booking-timetable__arrow').click();
+    if (weekdayToday === 0) {
+      cy.get('.booking-timetable__arrow').last().click();
     }
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -78,13 +78,13 @@ describe('Book with unsuitable service', () => {
 
   it('Desktop, timetable first, book appointment that is after update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     const date = new Date();
-    const weekdayToday = date.getDay(); // 1 - sunday, ..., 7 - saturday
+    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
 
-    if (weekdayToday === 1 || weekdayToday >= 5) {
+    if (weekdayToday === 0 || weekdayToday >= 5) {
       cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
         .should('be.visible')
         .click();
@@ -103,7 +103,7 @@ describe('Book with unsuitable service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
-    cy.get('.profile__cards > :nth-child(2) > img').click();
+    cy.get(':nth-child(2) > span > img').click();
     cy.wait('@getServices');
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
@@ -130,7 +130,7 @@ describe('Book with unsuitable service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -151,7 +151,7 @@ describe('Book with unsuitable service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
     cy.get('.booking-timetable__side--right > .booking-timetable__arrow').click();

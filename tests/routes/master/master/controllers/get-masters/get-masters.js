@@ -19,6 +19,7 @@ module.exports = function () {
     const { masters } = body;
 
     expect(masters).toHaveLength(1);
+    expect(masters[0]).toHaveProperty('isAvatar');
   });
 
   it('should cache result', async () => {

@@ -23,7 +23,7 @@ describe('Update unsuitable services', () => {
     cy.get('.date-picker__button').click();
     cy.wait('@updateTimetable');
 
-    cy.get('.modal > .svg-inline--fa').click();
+    cy.get('.modal__close').click();
 
     // go to services
     cy.get(':nth-child(5) > a').click();
@@ -61,10 +61,10 @@ describe('Update unsuitable services', () => {
     cy.get('.date-picker__button').click();
     cy.wait('@updateTimetable');
     // click back button
-    cy.get('.back-bar__main > .svg-inline--fa').click();
+    cy.get('.back-bar__icon').click();
     // go to services
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get('.navbar > :nth-child(5) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();

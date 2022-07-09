@@ -1,13 +1,19 @@
-const fs = require('fs');
-const path = require('path');
+const User = require('../../../../../models/user');
 
 const Work = require('../../../../../models/work');
+const s3 = require('../../../../../utils/s3');
+const master = require('../../../../data/users/master');
 const works = require('../data/works');
+const { addImageForTest } = require('../utils');
 const { getWorks, checkIsCache, checkIsCacheDeleted } = require('./utils');
 
-const getPathToSavedWork = (_id) => path.rootJoin('images', 'works', `${_id}.png`);
-
 module.exports = function () {
+  beforeAll(async () => {
+    await User.save(master);
+    await Work.insertMany(works);
+    await addImageForTest(works[0]._id);
+  });
+
   it('should successfully delete work', async () => {
     await getWorks.request();
     await checkIsCache();
@@ -20,11 +26,9 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const pathToWork = getPathToSavedWork(_id);
+    const bucket = await s3.GetList(master._id.toString());
 
-    const isFileExist = fs.existsSync(pathToWork);
-
-    expect(isFileExist).toBeFalsy();
+    expect(bucket.Contents).toHaveLength(0);
 
     const dbData = await Work.findOne({ _id });
 

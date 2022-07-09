@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const sharp = require('sharp');
 const Avatar = require('./avatar');
 const User = require('../../models/user');
 const HttpError = require('../../models/utils/http-error');
@@ -6,6 +7,8 @@ const { USERNAME_EXISTS } = require('../../config/errors/profile');
 const customerProfile = require('../../pipelines/user/customer-profile');
 const { getIO } = require('../../utils/socket');
 const { SET_ONLINE_STATUS } = require('../../config/socket-io/types');
+const s3 = require('../../utils/s3');
+const { ERROR_ON_SAVE } = require('../../config/errors/image');
 
 const { IS_SOCKET_IO } = process.env;
 
@@ -34,15 +37,22 @@ class Profile {
   }
 
   static async updateAvatar(id, buffer) {
-    const avatar = new Avatar({ id, buffer });
+    buffer = await sharp.decreaseSize(buffer);
 
-    await avatar.saveFS();
+    const filename = `avatar.webp`;
+    const folder = `${id}`;
 
-    await Avatar.deletePreviousFS(id);
+    const isUploaded = await s3.Upload(
+      {
+        buffer,
+        name: filename,
+      },
+      folder
+    );
 
-    const { shortUrl } = await avatar.getShortUrl().updateUrlDB(id);
+    if (!isUploaded) throw new HttpError(ERROR_ON_SAVE, 500);
 
-    return shortUrl;
+    await User.updateOne({ _id: id }, { isAvatar: true });
   }
 
   static updateOnlineStatus(profileId) {

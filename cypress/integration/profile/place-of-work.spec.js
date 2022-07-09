@@ -14,7 +14,7 @@ describe('Update place of work', () => {
     const floor = '3';
     const salon = 'Ухуху красота';
 
-    cy.get('.profile__geolocation > .fa-pen').click();
+    cy.get('.profile__geolocation > .profile__edit').click();
     // city
     cy.intercept('/api/v1/**').as('getCities');
     cy.get('.sign-up__input--city').click();
@@ -58,7 +58,7 @@ describe('Update place of work', () => {
     const floor = '3';
     const salon = 'Ухуху красота';
 
-    cy.get('.profile__geolocation > .fa-pen').click();
+    cy.get('.profile__geolocation > .profile__edit').click();
     // city
     cy.intercept('/api/v1/**').as('getCities');
     cy.get('.sign-up__input--city').click();

@@ -1,7 +1,8 @@
-const { TITLE_EXISTS, WORKS_LIMIT } = require('../../../config/errors/work');
+const sharp = require('sharp');
+const { WORKS_LIMIT, FAIL_WORK_UPLOAD } = require('../../../config/errors/work');
 const HttpError = require('../../../models/utils/http-error');
 const Work = require('../../../models/work');
-const WorkImage = require('./work-image');
+const s3 = require('../../../utils/s3');
 
 const onError = (_id) => async () => await Work.deleteOne({ _id });
 
@@ -18,13 +19,6 @@ class AddWork extends Work {
     this.existedWorks = works;
   }
 
-  isExisted() {
-    const { existedWorks, title } = this;
-    const isTitle = existedWorks.some(({ title: existedTitle }) => existedTitle === title);
-    if (isTitle) throw new HttpError(TITLE_EXISTS, 400);
-    return this;
-  }
-
   isLimit() {
     const { existedWorks } = this;
     const isWorksLimit = existedWorks.length >= WORKS_LIMIT_COUNT;
@@ -35,13 +29,29 @@ class AddWork extends Work {
   async save() {
     const { existedWorks, ...work } = this;
     const { insertedId: id } = await Work.save(work);
-    this._id = id;
+    this.id = id;
   }
 
   async saveFile(buffer) {
-    const { _id } = this;
-    const image = new WorkImage(_id, buffer);
-    await image.saveFS(onError(_id));
+    const { id, masterId } = this;
+
+    buffer = await sharp.decreaseSize(buffer);
+
+    const filename = `${id}.webp`;
+    const folder = `${masterId}`;
+
+    const isUploaded = await s3.Upload(
+      {
+        buffer,
+        name: filename,
+      },
+      folder
+    );
+
+    if (!isUploaded) {
+      onError(id);
+      throw new HttpError(FAIL_WORK_UPLOAD, 500);
+    }
   }
 }
 

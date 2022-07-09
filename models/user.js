@@ -23,7 +23,7 @@ class User extends Collection {
     this.lastName = lastName;
     this.masters = [];
     this.username = username;
-    this.avatar = null;
+    this.isAvatar = false;
     this.confirmation = confirmation || {
       lastSendAt: null,
       isConfirmed: false,

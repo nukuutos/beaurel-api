@@ -24,7 +24,7 @@ module.exports = (findQuery, page) => [
             username: 1,
             firstName: 1,
             lastName: 1,
-            avatar: 1,
+            isAvatar: 1,
           },
         },
       ],

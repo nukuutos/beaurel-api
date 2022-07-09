@@ -48,7 +48,11 @@ GET /:profileId/favorite (key: FAVORITES) +
 	POST /favorite/:masterId +
 	DELETE /favorite/:masterId +
 
-SCHEMA
+GET /:masterId/review (key: REVIEWS) +
+	POST /:appointmentId/:review +
+	PUT /:appointmentId/:review +
+
+SCHEMAS
 
 userId: {
 	works
@@ -74,4 +78,8 @@ userIdFavorites: {
 	
 masterIdBookedAppointments: {
 	date: []
+}
+
+masterIdReviews: {
+	0: []
 }

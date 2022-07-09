@@ -161,7 +161,7 @@ describe('Update auto timetable', () => {
 
     // go to services
     cy.get('.mobile-navbar__main > :nth-child(5)').click();
-    cy.get('.navbar > :nth-child(5) > a').click();
+    cy.get(':nth-child(5) > a').click();
     cy.get('.services__heading', { timeout: 60000 }).should('be.visible');
     // click alert
     cy.get('.update-alert__button').click();

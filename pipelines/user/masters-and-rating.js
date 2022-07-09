@@ -7,7 +7,7 @@ module.exports = (matchQuery, page) => [
     $project: {
       firstName: 1,
       lastName: 1,
-      avatar: 1,
+      isAvatar: 1,
       placeOfWork: 1,
       specialization: 1,
     },

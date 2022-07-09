@@ -10,7 +10,7 @@
     "test": "concurrently \"npm:redis:start\" \"npm:server:test\" \"npm:cypress:open\"",
     "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
     "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
-    "jest:test": "jest --runInBand --testTimeout 30000",
+    "jest:test": "jest --runInBand --testTimeout 45000",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "redis:start": "redis-server"
@@ -27,6 +27,7 @@
     "cron": "^1.8.2",
     "dayjs": "^1.11.1",
     "dotenv": "^10.0.0",
+    "easy-yandex-s3": "^1.1.6",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
     "express-validator": "^6.3.1",

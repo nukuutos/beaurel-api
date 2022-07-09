@@ -2,9 +2,9 @@ const app = require('../../../../../app');
 
 const ExtendedSupertest = require('../../../../extended-supertest');
 
-const routeParams = require('./route-params/add-review');
-const bodyFields = require('./body-fields/add-review');
-const controller = require('./controllers/add-review');
+const routeParams = require('./route-params/update-review');
+const bodyFields = require('./body-fields/update-review');
+const controller = require('./controllers/update-review');
 
 const master = require('../../../../data/users/master');
 const appointments = require('../data/appointments');
@@ -16,7 +16,7 @@ const template = '/api/v1/master/:masterId/appointment/:appointmentId/review';
 const config = {
   routeParams: { masterId: master._id.toString(), appointmentId: appointments[0]._id.toString() },
   template,
-  method: 'post',
+  method: 'put',
   user: master1,
 };
 

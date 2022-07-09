@@ -444,9 +444,11 @@ module.exports = function () {
     const timetable = await Timetable.findOne({});
 
     expect(timetable.update.date.getTime()).toBe(new Date('2022-09-27T14:00:00.000Z').getTime());
+
+    await Service.deleteMany({});
   });
 
-  it.only('should successfully change services to unsuitable(Moscow timezone)', async () => {
+  it('should successfully change services to unsuitable(Moscow timezone)', async () => {
     await Timetable.save(moscowAutoTimetable);
     await Service.insertMany(moscowServices);
 

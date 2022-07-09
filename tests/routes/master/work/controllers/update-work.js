@@ -1,14 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
+const cloneDeep = require('lodash.clonedeep');
 const works = require('../data/works');
 const Work = require('../../../../../models/work');
 const Image = require('../../../../../models/utils/image');
 
-const { TITLE_EXISTS } = require('../../../../../config/errors/work');
+const { TITLE_EXISTS, FAIL_WORK_UPDATE } = require('../../../../../config/errors/work');
 const { getWorks, checkIsCache, checkIsCacheDeleted } = require('./utils');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
+const cleanUpBucket = require('../../../../utils/clean-up-bucket');
+const s3 = require('../../../../../utils/s3');
 
 const pathUploadImage = path.rootJoin('tests', 'data', 'files', 'images', 'work.jpg');
 const pathInvalidFile = path.rootJoin('tests', 'data', 'files', 'pdf', 'test.pdf');
@@ -21,13 +24,20 @@ module.exports = function () {
     await Work.insertMany(worksForDb);
   });
 
-  it('should detect work with title that already existed', async () => {
+  beforeEach(async () => await cleanUpBucket());
+
+  it("should detect that work doesn't exist", async () => {
     await getWorks.request();
     await checkIsCache();
 
-    const { title } = works[1];
+    const requestIncorrectWorkId = cloneDeep(this);
 
-    const response = await this.request().field('title', title).attach('image', pathUploadImage);
+    requestIncorrectWorkId.routeParams.workId = '24367bed08e9f612d4080333';
+
+    const response = await requestIncorrectWorkId
+      .request()
+      .field('title', 'somename')
+      .attach('image', pathUploadImage);
 
     await checkIsCacheDeleted();
 
@@ -79,17 +89,9 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const pathToWork = getPathToSavedWork(works[0]._id);
+    const bucket = await s3.GetList(master._id.toString());
 
-    let isExist = fs.existsSync(pathToWork);
-
-    expect(isExist).toBeTruthy();
-
-    Image.deleteFS(pathToWork);
-
-    isExist = fs.existsSync(pathToWork);
-
-    expect(isExist).toBe(false);
+    expect(bucket.Contents).toHaveLength(1);
   });
 
   it('should detect unauthorized action', async () => {

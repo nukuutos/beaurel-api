@@ -14,26 +14,27 @@ exports.getWorks = asyncHandler(async (req, res) => {
 });
 
 exports.addWork = asyncHandler(async (req, res) => {
-  const { file, params, body } = req;
+  const { file, user, body } = req;
+  const { id: masterId } = user;
   const { buffer } = file;
-  const { masterId } = params;
   const { title } = body;
 
   const work = new AddWork(masterId, title);
 
   await work.getData();
-  await work.isLimit().isExisted().save();
+  await work.isLimit().save();
   await work.saveFile(buffer);
 
-  return res.status(201).json({ _id: work._id, message: 'Работа успешно добавлена!' });
+  return res.status(201).json({ _id: work.id, message: 'Работа успешно добавлена!' });
 });
 
 exports.updateWork = asyncHandler(async (req, res) => {
   const { title } = req.body;
-  const { masterId, workId } = req.params;
+  const { workId } = req.params;
+  const { id: masterId } = req.user;
 
   const work = new UpdateWork(workId, masterId, title);
-  await work.checkTitle();
+  await work.isExisted();
   await work.updateTitle();
 
   if (!req.file) return res.json({ message: 'Работа успешно обновлена!' });
@@ -47,10 +48,11 @@ exports.updateWork = asyncHandler(async (req, res) => {
 
 exports.deleteWork = asyncHandler(async (req, res) => {
   const { workId } = req.params;
+  const { id: masterId } = req.user;
 
-  const work = new DeleteWork(workId);
+  const work = new DeleteWork(workId, masterId);
 
-  work.delete();
+  await work.delete();
 
   return res.json({ message: 'Работа удалена!' });
 });
