@@ -1,4 +1,5 @@
 exports.UNAVAILABLE_TIME = 'Данное время недоступно!';
+exports.UNAVAILABLE_TIME_CONFIRMED_APPOINTMENTS = 'На данное время уже есть подтверждённая запись!';
 exports.INCORRECT_TIME = 'Некорректное время записи!';
 exports.INCORRECT_TIMETABLE = 'Неверное расписание!';
 exports.INCORRECT_SERVICE = 'Неверная услуга!';

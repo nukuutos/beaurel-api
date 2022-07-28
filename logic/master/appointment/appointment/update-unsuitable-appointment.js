@@ -68,18 +68,20 @@ class UpdateUnsuitableAppointment extends Booking {
     return this;
   }
 
-  async update() {
+  async update(timezone) {
     const { appointment, masterId, duration, date, time, isViewed } = this;
 
     const recordDate = dayjs().utc().toDate();
     const historyRecord = { user: 'master', status: 'confirmed', date: recordDate };
+
+    const formattedDate = date.toLocalTimeInUTC(timezone);
 
     await UpdateUnsuitableAppointment.updateOne(
       { _id: appointment._id, masterId },
       {
         $set: {
           'service.duration': duration,
-          date: date.toDate(),
+          date: formattedDate.toDate(),
           isViewed,
           time,
           status: 'confirmed',

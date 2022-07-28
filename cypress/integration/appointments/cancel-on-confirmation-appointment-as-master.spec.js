@@ -1,6 +1,6 @@
 // You must have 08:00 appointment
 // Your appointments must be clean
-describe('Reject appointment as master', () => {
+describe('Cancel on confirmation appointment as master', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addOnConfirmationAppointmentMaster');

@@ -43,6 +43,7 @@ describe('Appointments to unsuitable socket', () => {
     cy.get('.appointment-types__type').contains('подтверждены').click({ force: true });
     cy.wait('@getConfirmedAppointments');
     cy.get('.appointments__appointment-card').should('be.visible');
+    cy.get('.appointments__date').contains('19-04-2024');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
       identificator: 'test',
@@ -61,6 +62,7 @@ describe('Appointments to unsuitable socket', () => {
         cy.get('.appointment-types__type--notification').click();
         cy.wait('@getUnsuitableAppointments');
         cy.get('.appointments__appointment-card', { timeout: 5000 }).should('be.visible');
+        cy.get('.appointments__date').contains('19-04-2024');
       });
     });
   });
@@ -72,6 +74,7 @@ describe('Appointments to unsuitable socket', () => {
     cy.get('.appointment-types__type').contains('подтверждены').click({ force: true });
     cy.wait('@getConfirmedAppointments');
     cy.get('.appointments__appointment-card').should('be.visible');
+    cy.get('.appointments__date').contains('19-04-2024');
     // change appointment
     cy.request('POST', 'http://localhost:5000/api/v1/auth/sign-in', {
       identificator: 'test',
@@ -90,6 +93,7 @@ describe('Appointments to unsuitable socket', () => {
         cy.get('.appointment-types__type--notification').click();
         cy.wait('@getUnsuitableAppointments');
         cy.get('.appointments__appointment-card').should('be.visible');
+        cy.get('.appointments__date').contains('19-04-2024');
       });
     });
   });

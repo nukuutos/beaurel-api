@@ -18,6 +18,6 @@ module.exports = {
   time: { startAt: 480, endAt: 600 },
   status: 'onConfirmation',
   isViewed: { master: false, customer: false },
-  date: new Date('2021-04-18T00:00:00Z'),
+  date: new Date('2022-07-17T14:00:00.000+00:00'),
   createdAt: new Date('2021-04-11T13:16:23.744Z'),
 };

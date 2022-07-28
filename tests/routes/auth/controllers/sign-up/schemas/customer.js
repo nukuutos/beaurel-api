@@ -21,6 +21,7 @@ const predictableFields = ({ phone, firstName, lastName, city }) => ({
   lastName,
   username: null,
   isAvatar: false,
+  aboutText: '',
   city,
   masters: [],
   confirmation: {

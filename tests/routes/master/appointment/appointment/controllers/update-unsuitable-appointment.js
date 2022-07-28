@@ -189,7 +189,7 @@ module.exports = function () {
     await Timetable.save(manuallyTimetable);
     await Appointment.save(unsuitableAppointment);
 
-    const response = await this.request().send({ ...data, time: { startAt: 600, endAt: 720 } });
+    const response = await this.request().send({ ...data, time: { startAt: 480, endAt: 600 } });
 
     const { statusCode, body } = response;
 
@@ -223,7 +223,7 @@ module.exports = function () {
     await Appointment.deleteMany({});
   });
 
-  it('should successfully book appointment', async () => {
+  it('should successfully update appointment', async () => {
     await Timetable.save(manuallyTimetable);
     await Appointment.save(unsuitableAppointment);
 
@@ -243,7 +243,7 @@ module.exports = function () {
     expect(appointmentDB.time).toMatchObject(data.time);
     expect(appointmentDB.service.duration).toBe(data.duration);
     expect(appointmentDB.status).toBe('confirmed');
-    expect(appointmentDB.date).toMatchObject(data.date);
+    expect(appointmentDB.date).toMatchObject(new Date('2023-12-21T14:00:00.000Z'));
     expect(appointmentDB.history[2].status).toBe('confirmed');
     expect(appointmentDB.history[2].user).toBe('master');
   });

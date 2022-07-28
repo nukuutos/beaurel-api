@@ -7,15 +7,17 @@ const hpp = require('hpp');
 
 require('./modules');
 
-const errorHandler = require('./middleware/error-handler');
 const cors = require('./middleware/cors');
+const errorHandler = require('./middleware/error-handler');
 const staticFolder = require('./middleware/static-folder');
+const rateLimiter = require('./middleware/rate-limiter');
+const logRequest = require('./middleware/log-request');
 
 const timezoneRoutes = require('./routes/timezone');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile/profile');
 const masterRoutes = require('./routes/master/master');
-const logRequest = require('./middleware/log-request');
+
 const { runCronJobs } = require('./cron/cron');
 
 const app = express();
@@ -28,6 +30,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(helmet());
+app.use(rateLimiter);
 app.use(xss());
 app.use(hpp());
 

@@ -17,23 +17,23 @@ describe('Update unsuitable appointment before timetable update date', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.get('.btn--primary').click();
-    cy.get('.input--error > .input').select(1);
+    cy.get('select').select(1);
     cy.get('.add-service__button').click();
 
-    cy.get('.booking-timetable').then(($layout) => {
-      const time = '08:00';
-      // if it is no appointments => click get next week
+    const today = new Date().getDay(); // sun - 0, sat - 6
 
-      if (!$layout.find(`:contains('${time}')`).length) {
-        cy.get('.booking-timetable__arrow').last().click();
-      }
+    const time = '08:00';
+    // if it is no appointments => click get next week
 
-      cy.get('.booking-timetable__appointment').contains(time).first().click();
+    if (today >= 3) {
+      cy.get('.booking-timetable__arrow').last().click();
+    }
 
-      cy.intercept('PUT', '/api/v1/master/**').as('changeUnsuitableAppointment');
-      cy.get('.booking-result__button').click();
-      cy.wait('@changeUnsuitableAppointment');
-    });
+    cy.get('.booking-timetable__appointment').contains(time).first().click();
+
+    cy.intercept('PUT', '/api/v1/master/**').as('changeUnsuitableAppointment');
+    cy.get('.booking-result__button').click();
+    cy.wait('@changeUnsuitableAppointment');
 
     cy.get('.appointments__appointment-card').should('not.exist');
 
@@ -53,14 +53,15 @@ describe('Update unsuitable appointment before timetable update date', () => {
     cy.get('.appointments__appointment-card').should('be.visible');
     // change appointment
     cy.get('.btn--primary').click();
-    cy.get('.input--error > .input').select(1);
+    cy.get('select').select(1);
     cy.get('.add-service__button').click();
 
     cy.get('.booking-timetable').then(($layout) => {
       const time = '08:00';
       // if it is no appointments => click get next week
       if (!$layout.find(`:contains('${time}')`).length) {
-        cy.get('.booking-timetable__arrow').last().click();
+        // cy.get('.booking-timetable__arrow').last().click();
+        cy.get('.btn-text').click();
       }
 
       cy.get('.booking-timetable__appointment').contains(time).first().click();

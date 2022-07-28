@@ -1,5 +1,5 @@
 const { TITLE_EXISTS } = require('../../../../../config/errors/service');
-const ServiceParameter = require('../../../../../models/service-parameter');
+const Service = require('../../../../../models/service');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
 const serviceParameter = require('../data/service-parameter');
@@ -10,7 +10,7 @@ const data = { title: 'Супер услуга' };
 module.exports = function () {
   beforeAll(async () => {
     await User.save(master);
-    await ServiceParameter.insertMany(serviceParameter);
+    await Service.insertMany(serviceParameter);
   });
 
   it('should fail, title already existed', async () => {
@@ -37,7 +37,7 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const subServices = await ServiceParameter.find({ title: data.title });
+    const subServices = await Service.find({ title: data.title });
 
     expect(subServices).toHaveLength(4);
   });

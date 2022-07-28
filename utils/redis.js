@@ -2,10 +2,12 @@ const redis = require('redis');
 const util = require('util');
 const HttpError = require('../models/utils/http-error');
 
+const { REDIS_HOST, REDIS_PORT } = process.env;
+
 let client;
 
 const connectRedis = () => {
-  client = redis.createClient();
+  client = redis.createClient(REDIS_PORT, REDIS_HOST);
   client.hget = util.promisify(client.hget);
 };
 

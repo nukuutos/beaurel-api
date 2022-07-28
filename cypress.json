@@ -1,6 +1,6 @@
 {
   "baseUrl": "http://localhost:3000",
-  "numTestsKeptInMemory": 1,
+  "numTestsKeptInMemory": 5,
   "retries": {
     "runMode": 7,
     "openMode": 0

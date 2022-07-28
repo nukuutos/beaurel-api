@@ -33,7 +33,7 @@ const endAt = {
     },
     {
       message: 'should fail, invalid field',
-      data: { endAt: 1441 },
+      data: { endAt: 1921 },
       error: INVALID_APPOINTMENT_END,
     },
   ],

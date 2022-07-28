@@ -103,7 +103,7 @@ exports.updateUnsuitableAppointment = asyncHandler(async (req, res) => {
     checkAppointment.isTimeExist().checkAvailability();
   }
 
-  await updateAppointment.setIsViewed().update();
+  await updateAppointment.setIsViewed().update(timetable.timezone);
 
   updateAppointment.sendUpdatedAppointmentToClient();
 

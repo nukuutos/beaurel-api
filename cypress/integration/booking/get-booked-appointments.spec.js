@@ -16,9 +16,17 @@ describe('Get booked appointments', () => {
     cy.wait('@getBookedAppointments0');
     cy.get('.booking-timetable__arrow').should('be.visible').last().click();
     cy.get('.booking-timetable__arrow').should('be.visible').last().click();
-    cy.get('.booking-timetable__arrow').should('be.visible').last().click();
-    cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments1');
-    cy.get('.booking-timetable__arrow').should('be.visible').last().click();
-    cy.wait('@getBookedAppointments1');
+
+    const weekdayIndex = new Date().getDay(); // 0 - sunday
+    if (weekdayIndex === 0) {
+      cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments1');
+      cy.get('.booking-timetable__arrow').should('be.visible').last().click();
+      cy.wait('@getBookedAppointments1');
+    } else {
+      cy.get('.booking-timetable__arrow').should('be.visible').last().click();
+      cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments1');
+      cy.get('.booking-timetable__arrow').should('be.visible').last().click();
+      cy.wait('@getBookedAppointments1');
+    }
   });
 });

@@ -39,6 +39,7 @@ describe('Update unsuitable appointment socket', () => {
         cy.get('.appointments__appointment-types > :nth-child(2)').click();
         cy.wait('@getConfirmedAppointments');
         cy.get('.appointments__appointment-card').should('be.visible');
+        cy.get('.appointments__date').contains('25-12-2023');
       });
     });
   });
@@ -72,6 +73,7 @@ describe('Update unsuitable appointment socket', () => {
         cy.get('.appointments__appointment-types > :nth-child(2)').click();
         cy.wait('@getConfirmedAppointments');
         cy.get('.appointments__appointment-card').should('be.visible');
+        cy.get('.appointments__date').contains('25-12-2023');
       });
     });
   });

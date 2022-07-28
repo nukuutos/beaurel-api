@@ -1,5 +1,9 @@
 const dayjs = require('dayjs');
-const { CHANGE_STATUS } = require('../../../../../../config/errors/appointment');
+const cloneDeep = require('lodash.clonedeep');
+const {
+  CHANGE_STATUS,
+  UNAVAILABLE_TIME_CONFIRMED_APPOINTMENTS,
+} = require('../../../../../../config/errors/appointment');
 const { NO_APPOINTMENT } = require('../../../../../../config/errors/review');
 const Appointment = require('../../../../../../models/appointment');
 const Timetable = require('../../../../../../models/timetable');
@@ -17,7 +21,14 @@ module.exports = function () {
   beforeAll(async () => {
     await User.save(master);
     await Timetable.save(autoTimetable);
+  });
+
+  beforeEach(async () => {
     await Appointment.insertMany(appointments);
+  });
+
+  afterEach(async () => {
+    await Appointment.deleteMany({});
   });
 
   it('should fail, appointment does not exist', async () => {
@@ -44,6 +55,43 @@ module.exports = function () {
     const { message } = body;
 
     expect(message).toBe(CHANGE_STATUS);
+  });
+
+  it('should fail, confirmed appointment on this time has already existed #1', async () => {
+    const existedAppointment = cloneDeep(appointments[1]);
+    existedAppointment._id = 'random';
+    existedAppointment.status = 'confirmed';
+    Appointment.save(existedAppointment);
+
+    const appointmentId = { appointmentId: appointments[1]._id };
+    const response = await this.request(appointmentId).send(data);
+
+    const { statusCode, body } = response;
+
+    expect(statusCode).toBe(400);
+
+    const { message } = body;
+
+    expect(message).toBe(UNAVAILABLE_TIME_CONFIRMED_APPOINTMENTS);
+  });
+
+  it('should fail, confirmed appointment on this time has already existed #2', async () => {
+    const existedAppointment = cloneDeep(appointments[1]);
+    existedAppointment._id = 'random';
+    existedAppointment.status = 'confirmed';
+    existedAppointment.time = { startAt: 840, endAt: 960 };
+    Appointment.save(existedAppointment);
+
+    const appointmentId = { appointmentId: appointments[1]._id };
+    const response = await this.request(appointmentId).send(data);
+
+    const { statusCode, body } = response;
+
+    expect(statusCode).toBe(400);
+
+    const { message } = body;
+
+    expect(message).toBe(UNAVAILABLE_TIME_CONFIRMED_APPOINTMENTS);
   });
 
   it('should successfully change status', async () => {

@@ -208,7 +208,7 @@ module.exports = function () {
     await Timetable.save(manuallyTimetable);
     await Service.insertMany(services);
 
-    const response = await this.request().send({ ...data, time: { startAt: 600, endAt: 720 } });
+    const response = await this.request().send({ ...data, time: { startAt: 480, endAt: 600 } });
 
     const { statusCode, body } = response;
 
@@ -235,7 +235,7 @@ module.exports = function () {
     expect(message).toBe(UNAVAILABLE_TIME);
   });
 
-  it('should successfully book appointment', async () => {
+  it('should successfully book appointment(manually)', async () => {
     await Timetable.save(manuallyTimetable);
     await Service.insertMany(services);
 
@@ -262,6 +262,28 @@ module.exports = function () {
     expect(appointmentDB).toHaveProperty('createdAt');
     expect(appointmentDB.isViewed.master).toBe(false);
     expect(appointmentDB.isViewed.customer).toBe(true);
+  });
+
+  it('should successfully book appointment(manually) with existing appointments on this day', async () => {
+    await Timetable.save(manuallyTimetable);
+    await Service.insertMany(services);
+
+    await getBookingData.request();
+    await checkIsCache();
+
+    await this.request().send({ ...data, time: { startAt: 840, endAt: 960 } });
+    await this.request().send({ ...data, time: { startAt: 600, endAt: 720 } });
+
+    const response = await this.request().send(data);
+
+    await checkIsCacheDeleted();
+
+    const { statusCode } = response;
+
+    expect(statusCode).toBe(201);
+
+    const appointmentsDB = await Appointment.find();
+    expect(appointmentsDB).toHaveLength(3);
   });
 
   it('should successfully book appointment for moscow timezone', async () => {

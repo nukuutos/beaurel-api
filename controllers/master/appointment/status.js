@@ -9,7 +9,11 @@ exports.updateStatusByMaster = asyncHandler(async (req, res) => {
 
   const appointment = await ChangeStatusByMaster.getAppointment(appointmentId, masterId);
 
-  await appointment.isExisted().checkImmutableStatuses().setIsViewed().update(status);
+  await appointment
+    .isExisted()
+    .checkImmutableStatuses()
+    .setIsViewed()
+    .update(status, masterId, appointment);
 
   appointment.sendUpdatedAppointmentToClient(status);
 

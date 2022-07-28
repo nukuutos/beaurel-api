@@ -1,4 +1,4 @@
-const ServiceParameter = require('../../../../../models/service-parameter');
+const Service = require('../../../../../models/service');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
 const serviceParameter = require('../data/service-parameter');
@@ -7,7 +7,7 @@ const { getServices, checkIsCache, checkIsCacheDeleted } = require('./utils');
 module.exports = function () {
   beforeAll(async () => {
     await User.save(master);
-    await ServiceParameter.insertMany(serviceParameter);
+    await Service.insertMany(serviceParameter);
   });
 
   it('should successfully delete service parameter', async () => {
@@ -22,13 +22,13 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const subServicesWithDeletedParameter = await ServiceParameter.find({
+    const subServicesWithDeletedParameter = await Service.find({
       title: serviceParameter[0].title,
     });
 
     expect(subServicesWithDeletedParameter).toHaveLength(0);
 
-    const services = await ServiceParameter.find({});
+    const services = await Service.find({});
 
     expect(services).toHaveLength(1);
   });

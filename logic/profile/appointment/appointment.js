@@ -117,8 +117,6 @@ class Appointment extends AppointmentModel {
       });
     });
 
-    console.log('Appointments to history!');
-
     await bulkOp.execute();
   }
 }

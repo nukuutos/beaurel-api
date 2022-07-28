@@ -15,7 +15,6 @@ describe('Sign up as master', () => {
     const apartment = '364';
 
     // master-case
-    cy.get('.sign-up__choice-cards > :nth-child(2)').click();
     cy.get('.btn').click();
     // specialization
     cy.get('.input').select(1);
@@ -29,7 +28,9 @@ describe('Sign up as master', () => {
     cy.get('#confirmedPassword').type('123456');
     cy.get('.btn').click();
     // city
+    cy.intercept('GET', '/api/v1/timezone/**').as('getCities');
     cy.get('.sign-up__input--city').click();
+    cy.wait('@getCities');
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
     cy.get('.modal__close').click();
@@ -79,7 +80,6 @@ describe('Sign up as master', () => {
     const floor = '3';
     const apartment = '364';
     // master-case
-    cy.get('.sign-up__choice-cards > :nth-child(2)').click();
     cy.get('.btn').click();
     // specialization
     cy.get('.input').select(1);
@@ -93,7 +93,9 @@ describe('Sign up as master', () => {
     cy.get('#confirmedPassword').type('123456');
     cy.get('.btn').click();
     // city
+    cy.intercept('GET', '/api/v1/timezone/**').as('getCities');
     cy.get('.sign-up__input--city').click();
+    cy.wait('@getCities');
     cy.get('.city-search > :nth-child(5)').click();
     cy.get('.current-city__value').contains(city);
     cy.get('.back-bar__icon').click();

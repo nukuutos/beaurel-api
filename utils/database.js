@@ -1,9 +1,10 @@
 const { MongoClient } = require('mongodb');
 const HttpError = require('../models/utils/http-error');
 
-const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME, NODE_ENV } = process.env;
+const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME, NODE_ENV, DB_AUTH_SOURCE, DB_REPLICA_SET } =
+  process.env;
 
-const uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?retryWrites=true&w=majority`;
+const uri = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?authSource=${DB_AUTH_SOURCE}&replicaSet=${DB_REPLICA_SET}`;
 
 let client;
 

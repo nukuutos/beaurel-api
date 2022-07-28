@@ -6,14 +6,15 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "concurrently \"npm:redis:start\" \"npm:server:dev\"",
-    "test": "concurrently \"npm:redis:start\" \"npm:server:test\" \"npm:cypress:open\"",
+    "dev": "concurrently \"npm:redis:start\" \"npm:db:start\" \"npm:server:dev\"",
+    "test": "concurrently \"npm:redis:start\" \"npm:db:start\" \"npm:server:test\" \"npm:cypress:run\"",
     "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
     "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
     "jest:test": "jest --runInBand --testTimeout 45000",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "redis:start": "redis-server"
+    "redis:start": "redis-server",
+    "db:start": "mongod -f ./config/database/mongod.cfg"
   },
   "author": "nukuutos",
   "license": "ISC",
@@ -30,6 +31,7 @@
     "easy-yandex-s3": "^1.1.6",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.1.0",
+    "express-rate-limit": "^6.4.0",
     "express-validator": "^6.3.1",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",

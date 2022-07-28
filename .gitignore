@@ -1,6 +1,7 @@
 node_modules
 
 config/envs
+config/database/replica-set.pem
 
 images
 !images/avatars/default.svg

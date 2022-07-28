@@ -34,10 +34,10 @@ class BookingManually extends Booking {
       // is Current Appointment Before Booked Appointment
       const isBefore = startAt < bookedAppointment.startAt && endAt <= bookedAppointment.startAt;
       // is Current Appointment After Booked Appointment
-      const isAfter = startAt >= bookedAppointment.endAt && endAt < bookedAppointment.endAt;
+      const isAfter = startAt >= bookedAppointment.endAt;
 
       // if current appointment is crossing booked appointment => error
-      if (!isBefore || !isAfter) throw new HttpError(UNAVAILABLE_TIME, 400);
+      if (!isBefore && !isAfter) throw new HttpError(UNAVAILABLE_TIME, 400);
     }
 
     return this;

@@ -1,5 +1,5 @@
 const { INCORRECT_DURATION } = require('../../../../../config/errors/service');
-const ServiceParameter = require('../../../../../models/service-parameter');
+const Service = require('../../../../../models/service');
 const Timetable = require('../../../../../models/timetable');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
@@ -12,7 +12,7 @@ const data = { parameter: 'супер 21см', duration: 240, price: 12 };
 module.exports = function () {
   beforeAll(async () => {
     await User.save(master);
-    await ServiceParameter.insertMany(serviceParameter);
+    await Service.insertMany(serviceParameter);
     await Timetable.save(autoTimetable);
   });
 
@@ -40,7 +40,7 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const { duration, price, parameter } = await ServiceParameter.findOne(
+    const { duration, price, parameter } = await Service.findOne(
       { parameter: data.parameter },
       { duration: 1, price: 1, parameter: 1 }
     );

@@ -1,4 +1,4 @@
-const ServiceParameter = require('../../../../../models/service-parameter');
+const Service = require('../../../../../models/service');
 const Timetable = require('../../../../../models/timetable');
 const User = require('../../../../../models/user');
 const master = require('../../../../data/users/master');
@@ -9,7 +9,7 @@ const { checkIsCacheDeleted, getServices, checkIsCache } = require('./utils');
 module.exports = function () {
   beforeAll(async () => {
     await User.save(master);
-    await ServiceParameter.insertMany(serviceParameter);
+    await Service.insertMany(serviceParameter);
     await Timetable.save(autoTimetable);
   });
 
@@ -25,7 +25,7 @@ module.exports = function () {
 
     expect(statusCode).toBe(200);
 
-    const dbData = await ServiceParameter.findOne({ _id: serviceParameter[0]._id });
+    const dbData = await Service.findOne({ _id: serviceParameter[0]._id });
 
     expect(dbData).toBeNull();
   });

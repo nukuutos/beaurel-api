@@ -29,26 +29,6 @@ describe('Book with updated service', () => {
     cy.get('.service').click();
     cy.wait('@getBookedAppointments');
 
-    const date = new Date();
-    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
-
-    if (weekdayToday === 6) {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
-      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
-        .should('be.visible')
-        .click();
-
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 1);
-    } else if (weekdayToday === 0) {
-      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
-        .should('be.visible')
-        .click();
-
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 2);
-    } else {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 2);
-    }
-
     cy.get(`.booking-timetable__appointment:contains('${time}')`).first().click();
     cy.get('.booking-result').contains('08:00 - 10:00');
 
@@ -71,23 +51,6 @@ describe('Book with updated service', () => {
     cy.get('.service').click();
     cy.wait('@getBookedAppointments');
 
-    const date = new Date();
-    const updateIn = 2; // days;
-    const weekdayIndexBeforeUpdate = (getWeekdayRU(date) + updateIn) % 7; // 0 - mon, ..., 6 - sun
-
-    if (weekdayIndexBeforeUpdate < 5) {
-      const length = 6 - weekdayIndexBeforeUpdate;
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', length);
-    } else {
-      cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 0);
-    }
-
-    cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
-      .should('be.visible')
-      .click();
-
-    cy.get(`.booking-timetable__appointment:contains('${time}')`).should('have.length', 7);
-
     cy.get(`.booking-timetable__appointment:contains('${time}')`).first().click();
     cy.get('.booking-result').contains('08:00 - 09:30');
 
@@ -102,15 +65,6 @@ describe('Book with updated service', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
     cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
-
-    const date = new Date();
-    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
-
-    if (weekdayToday === 0) {
-      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
-        .should('be.visible')
-        .click();
-    }
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
     cy.get(`.booking-timetable__appointment:contains('${time}')`).first().click();
@@ -130,15 +84,6 @@ describe('Book with updated service', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
     cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
-
-    const date = new Date();
-    const weekdayToday = date.getDay(); // 0 - sunday, ..., 6 - saturday
-
-    if (weekdayToday === 0 || weekdayToday === 6 || weekdayToday === 5) {
-      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)')
-        .should('be.visible')
-        .click();
-    }
 
     const time = '09:30';
 

@@ -87,12 +87,6 @@ describe('Navigate as guest', () => {
     cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
-    const weekday = getWeekdayRU();
-
-    if (weekday >= 5) {
-      cy.get('.booking-timetable__arrow:not(.booking-timetable__arrow--disabled)').click();
-    }
-
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
     cy.get('.booking-timetable__appointment').first().click();
     cy.wait('@getServices');

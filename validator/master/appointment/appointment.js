@@ -21,17 +21,20 @@ const serviceId = fieldId('serviceId', SERVICE_ID);
 
 const duration = durationValidation('duration');
 
+const minsInDay = 1440;
+const firstAppointmentStartAt = 480;
+
 const timeStartAt = body('time.startAt')
   .exists({ checkFalsy: true })
   .withMessage(APPOINTMENT_START_REQUIRED)
-  .isInt({ min: 0, max: 1440 })
+  .isInt({ min: firstAppointmentStartAt, max: minsInDay })
   .withMessage(INVALID_APPOINTMENT_START)
   .customSanitizer((time) => +time);
 
 const timeEndAt = body('time.endAt')
   .exists({ checkFalsy: true })
   .withMessage(APPOINTMENT_END_REQUIRED)
-  .isInt({ min: 0, max: 1440 })
+  .isInt({ min: 0, max: minsInDay + firstAppointmentStartAt })
   .withMessage(INVALID_APPOINTMENT_END)
   .customSanitizer((time) => +time);
 
