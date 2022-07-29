@@ -1,4 +1,4 @@
-const { connectDB, closeDB, dropCollection, getDb } = require('../../utils/database');
+const { connectDB, closeDB, dropCollection, getDb } = require('../../utils/database/database');
 const { connectRedis, closeRedis, dropRedis } = require('../../utils/redis');
 
 const { TIMEZONE } = require('../../config/collection-names');

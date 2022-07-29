@@ -1,5 +1,5 @@
 const { TIMEZONE } = require('../../config/collection-names');
-const { getDb, dropCollection } = require('../../utils/database');
+const { getDb, dropCollection } = require('../../utils/database/database');
 
 const dropDatabase = async () => {
   const db = getDb();

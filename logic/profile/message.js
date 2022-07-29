@@ -8,7 +8,7 @@ const {
   SET_MESSAGES_VIEWED_BY_RECIPIENT,
 } = require('../../config/socket-io/types');
 const senderAndRecipient = require('../../pipelines/message/sender-and-recipient');
-const { getAggregate } = require('../../utils/database');
+const { getAggregate } = require('../../utils/database/database');
 const dialogs = require('../../pipelines/message/dialogs');
 
 const { IS_SOCKET_IO } = process.env;

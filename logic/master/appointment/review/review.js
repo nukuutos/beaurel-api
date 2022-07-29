@@ -4,7 +4,7 @@ const { ADD_REVIEW_TO_YOURSELF, NO_APPOINTMENT } = require('../../../../config/e
 const ReviewModel = require('../../../../models/review');
 const HttpError = require('../../../../models/utils/http-error');
 const appointmentWithReview = require('../../../../pipelines/review/appointment-with-review');
-const { getAggregate } = require('../../../../utils/database');
+const { getAggregate } = require('../../../../utils/database/database');
 
 const { NODE_ENV } = process.env;
 

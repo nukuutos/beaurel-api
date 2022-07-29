@@ -1,4 +1,4 @@
-const { getCollection } = require('../../../utils/database');
+const { getCollection } = require('../../../utils/database/database');
 const { checkClass, getCollectionName } = require('./utils');
 
 require('./bulk');

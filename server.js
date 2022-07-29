@@ -1,6 +1,6 @@
 const app = require('./app');
 
-const { connectDB } = require('./utils/database');
+const { connectDB } = require('./utils/database/database');
 const { connectRedis } = require('./utils/redis');
 const { initIO } = require('./utils/socket');
 

@@ -4,7 +4,7 @@ const Appointment = require('../../../../models/appointment');
 const Timetable = require('../../../../models/timetable');
 const HttpError = require('../../../../models/utils/http-error');
 const bookingData = require('../../../../pipelines/appointments/booking-data');
-const { getAggregate } = require('../../../../utils/database');
+const { getAggregate } = require('../../../../utils/database/database');
 
 class BookAppointment extends Appointment {
   static name = APPOINTMENT;

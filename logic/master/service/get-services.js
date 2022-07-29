@@ -1,7 +1,7 @@
 const { SERVICES_AND_TIMETABLE } = require('../../../config/cache');
 const { TIMETABLE, SERVICE } = require('../../../config/collection-names');
 const servicesAndTimetable = require('../../../pipelines/service/services-and-timetable');
-const { getAggregate } = require('../../../utils/database');
+const { getAggregate } = require('../../../utils/database/database');
 const Service = require('./service');
 
 class GetServices extends Service {

@@ -6,15 +6,15 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "dev": "concurrently \"npm:redis:start\" \"npm:db:start\" \"npm:server:dev\"",
-    "test": "concurrently \"npm:redis:start\" \"npm:db:start\" \"npm:server:test\" \"npm:cypress:run\"",
+    "dev": "concurrently \"npm:redis:start\" \"npm:localdb:start\" \"npm:server:dev\"",
+    "test": "concurrently \"npm:redis:start\" \"npm:localdb:start\" \"npm:server:test\" \"npm:cypress:run\"",
     "server:dev": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.dev",
     "server:test": "nodemon -r dotenv/config server.js dotenv_config_path=./config/envs/.env.test",
     "jest:test": "jest --runInBand --testTimeout 45000",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "redis:start": "redis-server",
-    "db:start": "mongod -f ./config/database/mongod.cfg"
+    "localdb:start": "mongod -f ./config/database/mongod.cfg"
   },
   "author": "nukuutos",
   "license": "ISC",

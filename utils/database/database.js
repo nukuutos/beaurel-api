@@ -1,10 +1,10 @@
 const { MongoClient } = require('mongodb');
-const HttpError = require('../models/utils/http-error');
+const HttpError = require('../../models/utils/http-error');
+const getURI = require('./get-uri');
 
-const { DB_USER, DB_PASSWORD, DB_CLUSTER, DB_NAME, NODE_ENV, DB_AUTH_SOURCE, DB_REPLICA_SET } =
-  process.env;
+const { NODE_ENV } = process.env;
 
-const uri = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}/${DB_NAME}?authSource=${DB_AUTH_SOURCE}&replicaSet=${DB_REPLICA_SET}`;
+const uri = getURI();
 
 let client;
 
@@ -15,7 +15,9 @@ const connectDB = async () => {
 
   try {
     await client.connect();
-    if (NODE_ENV !== 'test') console.log('Connected!');
+    if (NODE_ENV !== 'test') {
+      console.log('Connected!');
+    }
   } catch (err) {
     console.log(err);
     client.close();

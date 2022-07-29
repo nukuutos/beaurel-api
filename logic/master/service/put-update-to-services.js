@@ -7,7 +7,7 @@ const {
 const Collection = require('../../../models/utils/collection/collection');
 const HttpError = require('../../../models/utils/http-error');
 const sessionTimeAndServicesIds = require('../../../pipelines/service/session-time-and-services-ids');
-const { getAggregate } = require('../../../utils/database');
+const { getAggregate } = require('../../../utils/database/database');
 
 class PutUpdateToServices extends Collection {
   static name = SERVICE;
