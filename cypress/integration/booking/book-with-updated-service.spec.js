@@ -85,6 +85,11 @@ describe('Book with updated service', () => {
     cy.get('.profile__cards > :nth-child(1) > span > img').click();
     cy.wait('@getBookedAppointments');
 
+    const weekdayIndex = new Date().getDay();
+    if (weekdayIndex >= 5) {
+      cy.get('.booking-timetable__arrow').last().click();
+    }
+
     const time = '09:30';
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
