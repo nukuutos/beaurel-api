@@ -3,6 +3,8 @@ const { ObjectId } = require('mongodb');
 const master = require('../../data/users/master');
 const master1 = require('../../data/users/master-1');
 
+const minutesNow = dayjs().minute() + dayjs().hour() * 60;
+
 const appointmentsCron = [
   {
     _id: new ObjectId('6072f6a7ce01a00418b97a19'),
@@ -20,7 +22,7 @@ const appointmentsCron = [
     history: [
       { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
     ],
-    time: { startAt: 720, endAt: 1080 },
+    time: { startAt: 720, endAt: minutesNow },
     status: 'onConfirmation',
     date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -41,7 +43,7 @@ const appointmentsCron = [
     history: [
       { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
     ],
-    time: { startAt: 720, endAt: 1080 },
+    time: { startAt: 720, endAt: minutesNow },
     status: 'confirmed',
     date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -62,7 +64,7 @@ const appointmentsCron = [
     history: [
       { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
     ],
-    time: { startAt: 720, endAt: 1080 },
+    time: { startAt: 720, endAt: minutesNow },
     status: 'unsuitable',
     date: dayjs().subtract(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
@@ -83,7 +85,7 @@ const appointmentsCron = [
     history: [
       { status: 'onConfirmation', user: 'customer', date: new Date('2021-04-18T00:00:00Z') },
     ],
-    time: { startAt: 360, endAt: 720 },
+    time: { startAt: 360, endAt: minutesNow },
     status: 'onConfirmation',
     date: dayjs().add(1, 'd').utc().toDate(),
     createdAt: new Date('2021-04-11T13:16:23.744Z'),
