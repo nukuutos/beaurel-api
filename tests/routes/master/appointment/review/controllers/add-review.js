@@ -56,7 +56,7 @@ module.exports = function () {
     const getAuthString = (user) => `Bearer ${createAccessToken(user)}`;
     const authString = getAuthString(master1);
 
-    const response = await this.request().set('Authorization', authString);
+    const response = await this.request().set(`${process.env.AUTH_HEADER}`, authString);
 
     const { statusCode } = response;
 
@@ -82,7 +82,7 @@ module.exports = function () {
   });
 
   it('should detect unauthorized action', async () => {
-    const response = await this.request().set('Authorization', 'hacky');
+    const response = await this.request().set(`${process.env.AUTH_HEADER}`, 'hacky');
 
     const { statusCode } = response;
 

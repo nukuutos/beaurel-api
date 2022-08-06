@@ -243,7 +243,7 @@ module.exports = (on, config) => {
         url: `http://localhost:5000/api/v1/master/${master._id}/appointment`,
         data: appointment,
         headers: {
-          Authorization: `Bearer ${data.data.accessToken}`,
+          [process.env.AUTH_HEADER]: `Bearer ${data.data.accessToken}`,
         },
       });
 

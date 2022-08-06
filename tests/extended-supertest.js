@@ -40,7 +40,7 @@ class ExtendedSupertest {
     const authString = this.getAuthString(user);
     const url = this.getUrl(customRouteParams);
 
-    return agent[method](url).set('Authorization', authString);
+    return agent[method](url).set(`${process.env.AUTH_HEADER}`, authString);
   }
 
   testController(controller) {

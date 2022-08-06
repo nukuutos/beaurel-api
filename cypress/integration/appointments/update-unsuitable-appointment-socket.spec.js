@@ -31,7 +31,7 @@ describe('Update unsuitable appointment socket', () => {
           date: '2023-12-25T00:00:00.000Z',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.appointments__appointment-card').should('not.exist');
@@ -65,7 +65,7 @@ describe('Update unsuitable appointment socket', () => {
           date: '2023-12-25T00:00:00.000Z',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.appointments__appointment-card').should('not.exist');

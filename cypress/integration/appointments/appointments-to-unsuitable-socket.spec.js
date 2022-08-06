@@ -54,7 +54,7 @@ describe('Appointments to unsuitable socket', () => {
         url: `http://localhost:5000/api/v1/master/${masterId}/timetable/${timetableId}/update`,
         body: timetableUpdate,
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.appointments__appointment-card', { timeout: 60000 }).should('not.exist');
@@ -85,7 +85,7 @@ describe('Appointments to unsuitable socket', () => {
         url: `http://localhost:5000/api/v1/master/${masterId}/timetable/${timetableId}/update`,
         body: timetableUpdate,
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.appointments__appointment-card', { timeout: 60000 }).should('not.exist');

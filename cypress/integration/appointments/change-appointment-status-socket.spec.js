@@ -25,7 +25,7 @@ describe('Change appointment status socket', () => {
           status: 'confirmed',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       });
     });
@@ -55,7 +55,7 @@ describe('Change appointment status socket', () => {
           status: 'confirmed',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       });
     });

@@ -31,7 +31,7 @@ describe('Chat', () => {
         method: 'PUT',
         url: `http://localhost:5000/api/v1/profile/${masterId}/online`,
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.contains('В сети').should('be.visible');
@@ -59,7 +59,7 @@ describe('Chat', () => {
         method: 'PUT',
         url: `http://localhost:5000/api/v1/profile/${masterId}/online`,
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.contains('В сети').should('be.visible');

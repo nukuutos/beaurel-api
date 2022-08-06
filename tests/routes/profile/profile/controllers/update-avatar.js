@@ -42,7 +42,7 @@ module.exports = function () {
   });
 
   it('should detect unauthorized action', async () => {
-    const response = await this.request().set('Authorization', 'hacky');
+    const response = await this.request().set(`${process.env.AUTH_HEADER}`, 'hacky');
 
     const { statusCode } = response;
 

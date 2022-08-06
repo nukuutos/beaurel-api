@@ -36,7 +36,7 @@ describe('Chat', () => {
           message: 'hi',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.contains('В сети').should('be.visible');
@@ -67,7 +67,7 @@ describe('Chat', () => {
           message: 'hi',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.contains('В сети').should('be.visible');

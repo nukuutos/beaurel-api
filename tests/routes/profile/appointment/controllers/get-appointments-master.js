@@ -43,7 +43,7 @@ module.exports = function () {
   it('should detect unauthorized action', async () => {
     const response = await this.request()
       .query({ category: 'history', page: 0 })
-      .set('Authorization', 'hacky');
+      .set(`${process.env.AUTH_HEADER}`, 'hacky');
 
     const { statusCode } = response;
 

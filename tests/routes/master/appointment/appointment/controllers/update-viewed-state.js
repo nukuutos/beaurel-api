@@ -34,7 +34,7 @@ module.exports = function () {
     const data = { role: 'customer' };
     const authString = `Bearer ${createAccessToken(master1)}`;
 
-    const response = await this.request().set('Authorization', authString).send(data);
+    const response = await this.request().set(`${process.env.AUTH_HEADER}`, authString).send(data);
 
     const { statusCode } = response;
 
@@ -46,7 +46,7 @@ module.exports = function () {
   });
 
   it('should detect unauthorized action', async () => {
-    const response = await this.request().set('Authorization', 'hacky');
+    const response = await this.request().set(`${process.env.AUTH_HEADER}`, 'hacky');
 
     const { statusCode } = response;
 

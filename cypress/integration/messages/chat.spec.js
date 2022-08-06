@@ -21,7 +21,7 @@ describe('Chat', () => {
           message: 'hi',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.messages__dialog-card').click();
@@ -37,7 +37,7 @@ describe('Chat', () => {
             message: 'last message',
           },
           headers: {
-            Authorization: `Bearer ${authData.body.accessToken}`,
+            [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
           },
         }).then(() => {
           cy.wait('@setMessageToViewed');
@@ -52,7 +52,7 @@ describe('Chat', () => {
             method: 'PUT',
             url: `http://localhost:5000/api/v1/profile/${masterId}/message/${customerId}`,
             headers: {
-              Authorization: `Bearer ${authData.body.accessToken}`,
+              [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
             },
           }).then(() => {
             cy.get("[data-icon='check-double']").should('be.visible');
@@ -76,7 +76,7 @@ describe('Chat', () => {
           message: 'hi',
         },
         headers: {
-          Authorization: `Bearer ${authData.body.accessToken}`,
+          [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
         },
       }).then(() => {
         cy.get('.messages__dialog-card').click();
@@ -92,7 +92,7 @@ describe('Chat', () => {
             message: 'last message',
           },
           headers: {
-            Authorization: `Bearer ${authData.body.accessToken}`,
+            [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
           },
         }).then(() => {
           cy.wait('@setMessageToViewed');
@@ -103,7 +103,7 @@ describe('Chat', () => {
             method: 'PUT',
             url: `http://localhost:5000/api/v1/profile/${masterId}/message/${customerId}`,
             headers: {
-              Authorization: `Bearer ${authData.body.accessToken}`,
+              [Cypress.env('AUTH_HEADER')]: `Bearer ${authData.body.accessToken}`,
             },
           }).then(() => {
             cy.get("[data-icon='check-double']").should('be.visible');
