@@ -20,7 +20,7 @@ exports.signUp = asyncHandler(async (req, res) => {
     .generateVerificationCode()
     .save();
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'not-working') {
     await user.sendVerificationCode();
   }
 
@@ -61,7 +61,7 @@ exports.resendVerificationCode = asyncHandler(async (req, res) => {
     .generateVerificationCode()
     .updateConfirmationField();
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'not-working') {
     await user.sendVerificationCode();
   }
 
@@ -78,7 +78,7 @@ exports.sendVerificationCode = asyncHandler(async (req, res) => {
 
   await user.checkAttemptsCount().generateVerificationCode().updateResetPasswordField();
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'not-working') {
     await user.sendVerificationCode();
   }
 
