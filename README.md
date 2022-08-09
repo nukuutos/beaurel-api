@@ -1,0 +1,13 @@
+# Beaurel API
+
+<img src="./beaurel.png" alt="beaurel" align="right" />
+
+It’s a server side of beaurel project. Beaurel is a platform for beauty-masters and their customers. For beauty-masters it allows to create a flexible timetable and services, show to customer their works. Customers can book an appointments and review masters. Beaurel has some elements of social network like messenger, favorite masters (friends), etc.
+
+## 💻 To see what it’s
+
+For demo purposes this project runs on [beaurel.com](https://bbaqnjr604s7kt90p7se.containers.yandexcloud.net) (there's a trick) with help of serverless containers(cheap). So if you want to try it you need to expect some latency. You can’t sign up but you can use fake accounts. Fake accounts in progress.
+
+## 📜 License
+
+This repo is public and without license because I can’t run this project to commercial/society because of bureaucracy (needs money for documents) and in right moment I will run it. It’s exposed because I want to show my potential employ what I’m capable of and what kind of fruit am I :)
