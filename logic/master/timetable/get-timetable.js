@@ -16,9 +16,9 @@ class GetTimetable extends Timetable {
     const timetablePipeline = timetableDataForBooking(masterId);
 
     const timetableData = await Timetable.aggregate(timetablePipeline).next();
-    if (!timetableData) throw new HttpError(NO_TIMETABLE, 404);
-    const { timezone } = timetableData;
+    if (!timetableData) return { timetable: null, appointments: [], isServices: false };
 
+    const { timezone } = timetableData;
     const date = dayjs().startOf('week').utc(true).toLocalTimeInUTC(timezone);
     const startDate = date.toDate();
     const endDate = date.add(4, 'week').toDate();

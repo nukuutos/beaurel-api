@@ -18,18 +18,16 @@ module.exports = function () {
     await User.deleteMany({});
   });
 
-  it('should fail, no timetable', async () => {
+  it('should get booking data without timetable', async () => {
     await User.save(master);
 
     const response = await this.request();
 
     const { statusCode, body } = response;
 
-    expect(statusCode).toBe(404);
+    expect(statusCode).toBe(200);
 
-    const { message } = body;
-
-    expect(message).toBe(NO_TIMETABLE);
+    expect(body).toStrictEqual({ timetable: null, appointments: [], isServices: false });
 
     dropRedis();
   });
