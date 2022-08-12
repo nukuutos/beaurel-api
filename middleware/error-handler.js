@@ -1,3 +1,5 @@
+const { PRODUCTION, TEST } = require('../config/environments');
+
 const { NODE_ENV } = process.env;
 
 module.exports = (error, req, res, next) => {
@@ -5,7 +7,7 @@ module.exports = (error, req, res, next) => {
 
   const { message, statusCode } = error;
 
-  if (NODE_ENV !== 'test' && NODE_ENV !== 'production') {
+  if (NODE_ENV !== TEST && NODE_ENV !== PRODUCTION) {
     console.error(message, '\n', error);
   }
 

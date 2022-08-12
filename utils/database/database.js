@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const { TEST } = require('../../config/environments');
 const HttpError = require('../../models/utils/http-error');
 const getURI = require('./get-uri');
 
@@ -15,7 +16,7 @@ const connectDB = async () => {
 
   try {
     await client.connect();
-    if (NODE_ENV !== 'test') {
+    if (NODE_ENV !== TEST) {
       console.log('Connected!');
     }
   } catch (err) {

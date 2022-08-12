@@ -1,4 +1,5 @@
 const res = require('express/lib/response');
+const { DEVELOPMENT } = require('../../../config/environments');
 
 const { createAccessToken, createRefreshToken } = require('./create-token');
 
@@ -12,7 +13,7 @@ res.sendToken = function (user) {
 
   const options = {
     httpOnly: true,
-    secure: NODE_ENV !== 'development',
+    secure: NODE_ENV !== DEVELOPMENT,
     maxAge: JWT_KEY_REFRESH_TIME, // 7 days env
     path: '/',
     sameSite: true,

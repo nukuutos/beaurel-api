@@ -1,5 +1,6 @@
 const isEqual = require('lodash.isequal');
 const { APPOINTMENT } = require('../../../../config/collection-names');
+const { DEVELOPMENT } = require('../../../../config/environments');
 const { ADD_REVIEW_TO_YOURSELF, NO_APPOINTMENT } = require('../../../../config/errors/review');
 const ReviewModel = require('../../../../models/review');
 const HttpError = require('../../../../models/utils/http-error');
@@ -37,7 +38,7 @@ class Review extends ReviewModel {
   checkMasterAndCustomer() {
     const { customerId, masterId } = this;
 
-    if (NODE_ENV !== 'development' && isEqual(customerId, masterId)) {
+    if (NODE_ENV !== DEVELOPMENT && isEqual(customerId, masterId)) {
       throw new HttpError(ADD_REVIEW_TO_YOURSELF, 400);
     }
 
