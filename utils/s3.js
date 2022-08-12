@@ -1,17 +1,27 @@
 const EasyYandexS3 = require('easy-yandex-s3');
+const HttpError = require('../models/utils/http-error');
+const { INVALID_S3_BUCKET } = require('../config/errors/s3');
+const {
+  BUCKET_PRODUCTION,
+  BUCKET_DEMO,
+  BUCKET_TEST,
+  BUCKET_DEVELOPMENT,
+} = require('../config/s3-buckets');
 
 const { S3_KEY_ID, S3_ACCESS_KEY, NODE_ENV } = process.env;
 
 const getBucketName = () => {
   switch (NODE_ENV) {
-    case 'development':
-      return 'beaurel-dev';
-    case 'test':
-      return 'beaurel-test';
     case 'production':
-      return 'beaurel';
+      return BUCKET_PRODUCTION;
+    case 'demo':
+      return BUCKET_DEMO;
+    case 'test':
+      return BUCKET_TEST;
+    case 'development':
+      return BUCKET_DEVELOPMENT;
     default:
-      return 'invalid-bucket-name';
+      throw new HttpError(INVALID_S3_BUCKET, 500);
   }
 };
 
