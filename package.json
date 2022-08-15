@@ -1,5 +1,5 @@
 {
-  "name": "beautify-server",
+  "name": "beaurel-api",
   "version": "1.0.0",
   "private": true,
   "description": "API version 1.0 for beautify",
@@ -17,7 +17,6 @@
     "localdb:start": "mongod -f ./config/database/mongod.cfg"
   },
   "author": "nukuutos",
-  "license": "ISC",
   "engines": {
     "node": "14.17.6"
   },
