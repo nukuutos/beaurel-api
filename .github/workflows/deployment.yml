@@ -102,24 +102,24 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/beaurel-api
-          build-args:
-            - PORT: 5000
-            - NODE_ENV: production
-            - DB_USER: ${{ secrets.DB_USER }}
-            - DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-            - DB_CLUSTER: ${{ secrets.DB_CLUSTER }}
-            - DB_NAME: ${{ secrets.DB_NAME }}
-            - REDIS_HOST: beaurel-redis
-            - REDIS_PORT: 6379
-            - CLIENT_URL: http://localhost
-            - AUTH_HEADER: Authorization
-            - JWT_KEY_ACCESS: dfghjkpiuytrfvbnmloiuytfdvbnju
-            - JWT_KEY_REFRESH: dfgytresxcbiugoigiogoun
-            - JWT_KEY_ACCESS_TIME: 15h
-            - JWT_KEY_REFRESH_TIME: 604800000
-            - IS_SOCKET_IO: true
-            - TWILIO_SID: ACsomething
-            - TWILIO_AUTH_TOKEN: something
-            - S3_KEY_ID: ${{ secrets.S3_KEY_ID }}
-            - S3_ACCESS_KEY: ${{ secrets.S3_ACCESS_KEY }}
-            - S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME_DEMO }}
+          build-args: |
+            PORT=5000
+            NODE_ENV=production
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_CLUSTER=${{ secrets.DB_CLUSTER }}
+            DB_NAME=${{ secrets.DB_NAME }}
+            REDIS_HOST=beaurel-redis
+            REDIS_PORT=6379
+            CLIENT_URL=http://localhost
+            AUTH_HEADER=Authorization
+            JWT_KEY_ACCESS=dfghjkpiuytrfvbnmloiuytfdvbnju
+            JWT_KEY_REFRESH=dfgytresxcbiugoigiogoun
+            JWT_KEY_ACCESS_TIME=15h
+            JWT_KEY_REFRESH_TIME=604800000
+            IS_SOCKET_IO=true
+            TWILIO_SID=ACsomething
+            TWILIO_AUTH_TOKEN=something
+            S3_KEY_ID=${{ secrets.S3_KEY_ID }}
+            S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}
+            S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME_DEMO }}
