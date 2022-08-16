@@ -41,9 +41,9 @@ jobs:
         uses: supercharge/mongodb-github-action@1.7.0
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
-          mongodb-username: $DB_USER
-          mongodb-password: $DB_PASSWORD
-          mongodb-db: $DB_NAME
+          mongodb-username: ${{ env.DB_USER }}
+          mongodb-password: ${{ env.DB_PASSWORD }}
+          mongodb-db: ${{ env.DB_NAME }}
 
       - name: Mongoimport timezones
         run: mongoimport --jsonArray -p $DB_USER -u $DB_PASSWORD --collection timezones --db test --file ./data/database/timezones.json --authenticationDatabase $DB_AUTH_SOURCE
