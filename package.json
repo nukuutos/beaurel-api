@@ -40,7 +40,7 @@
     "mongodb": "^4.4.0",
     "multer": "^1.4.2",
     "redis": "^3.1.2",
-    "sharp": "^0.26.3",
+    "sharp": "^0.30.7",
     "socket.io": "^4.4.1",
     "twilio": "^3.76.0",
     "xss-clean": "^0.1.1"
@@ -61,7 +61,7 @@
     "image-size": "^1.0.0",
     "jest": "^27.2.5",
     "jest-json-schema": "^6.0.0",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.19",
     "prettier": "^2.4.1",
     "supertest": "^6.1.6"
   },
