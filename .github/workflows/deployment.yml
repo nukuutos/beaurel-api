@@ -71,4 +71,4 @@ jobs:
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
 
       - name: Run jest tests
-        run: npm run jest:tests
+        run: npm run jest:test
