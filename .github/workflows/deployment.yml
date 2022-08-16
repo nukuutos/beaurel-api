@@ -46,7 +46,7 @@ jobs:
           mongodb-db: ${{ env.DB_NAME }}
 
       - name: Mongoimport timezones
-        run: mongoimport --jsonArray -p $DB_USER -u $DB_PASSWORD --collection timezones --db test --file ./data/database/timezones.json --authenticationDatabase $DB_AUTH_SOURCE
+        run: mongoimport -u $DB_USER -p $DB_PASSWORD --collection timezones --db test --file ./data/database/timezones.json --authenticationDatabase $DB_AUTH_SOURCE --jsonArray
 
       - name: Install dependencies
         run: npm ci
