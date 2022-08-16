@@ -19,8 +19,6 @@ const getBookedAppointments = new ExtendedSupertest(app, config);
 const firstCacheKey = getBookedAppointmentsCacheName(master._id.toString());
 const secondCacheKey = dayjs().startOf('day').utc(true).format();
 
-console.log('date as cache key:', secondCacheKey);
-
 const cacheKeys = [firstCacheKey, secondCacheKey];
 
 const getCache = async () => await getCachedData(...cacheKeys);

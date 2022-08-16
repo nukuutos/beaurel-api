@@ -20,7 +20,7 @@ class GetBookedAppointments extends Appointment {
     const endDate = date.toLocalTimeInUTC(timezone).add(4, 'week').toDate();
 
     const firstCacheKey = getBookedAppointmentsCacheName(masterId);
-    const secondCacheKey = dayjs(startDate).utc(true).format();
+    const secondCacheKey = date.format();
     const weekTTL = 60 * 60 * 24 * 7;
 
     const pipeline = bookedAppointments({ masterId, startDate, endDate });

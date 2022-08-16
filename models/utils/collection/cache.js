@@ -10,8 +10,6 @@ const handleCache = (fn) =>
   async function () {
     const { cacheKeys } = this;
 
-    console.log('cache keys', cacheKeys);
-
     if (!cacheKeys) return await fn.apply(this, arguments);
 
     const client = getRedisClient();
@@ -21,9 +19,6 @@ const handleCache = (fn) =>
     if (cachedData) return JSON.parse(cachedData);
 
     const data = await fn.apply(this, arguments);
-
-    console.log('Data to stringify', data);
-    console.log('Result', JSON.stringify(data));
 
     client.hset(cacheKeys[0], cacheKeys[1], JSON.stringify(data));
 
