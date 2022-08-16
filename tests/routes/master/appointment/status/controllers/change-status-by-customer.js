@@ -46,10 +46,12 @@ module.exports = function () {
     expect(message).toBe(CHANGE_STATUS);
   });
 
-  it('should successfully change status', async () => {
-    await getBookedAppointments
-      .request()
-      .query({ date: dayjs().startOf('day').utc(true).format() });
+  it.only('should successfully change status', async () => {
+    const dateForCache = dayjs().startOf('day').utc(true).format();
+
+    await getBookedAppointments.request().query({ date: dateForCache });
+
+    console.log('date for cache in query:', dateForCache);
 
     await checkIsCache();
 
