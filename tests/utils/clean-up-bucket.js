@@ -1,26 +1,31 @@
 const s3 = require('../../utils/s3');
 
 const cleanUpBucket = async () => {
-  const { S3_BUCKET_NAME } = process.env;
-  console.log(S3_BUCKET_NAME);
-
   const list = await s3.GetList();
   const { CommonPrefixes } = list;
   const folders = CommonPrefixes.map(({ Prefix }) => Prefix);
 
-  const paths = [];
+  let fileLists = [];
 
   for (const folder of folders) {
-    // eslint-disable-next-line no-await-in-loop
-    const directory = await s3.GetList(folder);
-    const { Contents } = directory;
+    const promise = s3.GetList(folder);
+    fileLists.push(promise);
+  }
+
+  fileLists = await Promise.all(fileLists);
+
+  const filesToDelete = [];
+
+  for (const fileList of fileLists) {
+    const { Contents } = fileList;
 
     for (const file of Contents) {
-      s3.Remove(file.Key);
+      const promise = s3.Remove(file.Key);
+      filesToDelete.push(promise);
     }
   }
 
-  await Promise.all(paths);
+  await Promise.all(filesToDelete);
 };
 
 module.exports = cleanUpBucket;
