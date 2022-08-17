@@ -1,6 +1,9 @@
 const s3 = require('../../utils/s3');
 
 const cleanUpBucket = async () => {
+  const { S3_BUCKET_NAME } = process.env;
+  console.log(S3_BUCKET_NAME);
+
   const list = await s3.GetList();
   const { CommonPrefixes } = list;
   const folders = CommonPrefixes.map(({ Prefix }) => Prefix);
