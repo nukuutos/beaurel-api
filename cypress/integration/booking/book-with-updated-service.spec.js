@@ -34,7 +34,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
@@ -56,14 +58,16 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
 
   it('Desktop, timetable first, book appointment that is before update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > span > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').should('be.visible').click();
     cy.wait('@getBookedAppointments');
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -75,14 +79,16 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
 
   it('Desktop, timetable first, book appointment that is after update', () => {
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > span > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').should('be.visible').click();
     cy.wait('@getBookedAppointments');
 
     const weekdayIndex = new Date().getDay();
@@ -102,7 +108,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
@@ -131,7 +139,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
@@ -159,7 +169,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
@@ -168,7 +180,7 @@ describe('Book with updated service', () => {
     cy.viewport(330, 500);
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > span > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').should('be.visible').click();
     cy.wait('@getBookedAppointments');
 
     cy.intercept('GET', '/api/v1/master/**').as('getServices');
@@ -180,7 +192,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
@@ -191,7 +205,7 @@ describe('Book with updated service', () => {
     const time = '09:30';
 
     cy.intercept('GET', '/api/v1/master/**').as('getBookedAppointments');
-    cy.get('.profile__cards > :nth-child(1) > span > img').click();
+    cy.get('.profile__cards > :nth-child(1) > span > img').should('be.visible').click();
     cy.wait('@getBookedAppointments');
 
     cy.get('.booking-timetable__arrow').should('have.length', 1);
@@ -208,7 +222,9 @@ describe('Book with updated service', () => {
 
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
-    cy.wait('@bookAppointment');
+    cy.wait('@bookAppointment').then((xhr) => {
+      expect(xhr.response.statusCode).to.equal(201);
+    });
 
     cy.get('.booking-success__button').click();
   });
