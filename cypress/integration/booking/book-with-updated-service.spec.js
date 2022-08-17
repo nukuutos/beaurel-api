@@ -59,6 +59,7 @@ describe('Book with updated service', () => {
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
     cy.wait('@bookAppointment').then((xhr) => {
+      console.log(xhr.response.body);
       expect(xhr.response.statusCode).to.equal(201);
     });
 
@@ -109,6 +110,7 @@ describe('Book with updated service', () => {
     cy.intercept('POST', '/api/v1/master/**').as('bookAppointment');
     cy.get('.booking-result__button').click();
     cy.wait('@bookAppointment').then((xhr) => {
+      console.log(xhr.response.body);
       expect(xhr.response.statusCode).to.equal(201);
     });
 
