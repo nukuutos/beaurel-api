@@ -8,6 +8,10 @@ It’s a server side of beaurel project. Beaurel is a platform for beauty-master
 
 You can go to this [repo](https://github.com/nukuutos/beaurel-demo) and by using docker run local version of this project.
 
+## 📈 Code statistic
+
+To show the size of this project, I want to note the statistics of the number of lines of code. Lines of JavaScript code on <ins>**API**</ins> without data for database or data for providing tests on commit [ece0713](https://github.com/nukuutos/beaurel-client/tree/ece0713cbaba69ea24e9247908f42e2ec7d2b102) is 20422.
+
 ## 📜 License
 
 There's no license 🤗. According to **github**:
