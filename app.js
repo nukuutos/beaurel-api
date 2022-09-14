@@ -10,7 +10,6 @@ require('./modules');
 const cors = require('./middleware/cors');
 const errorHandler = require('./middleware/error-handler');
 const staticFolder = require('./middleware/static-folder');
-const rateLimiter = require('./middleware/rate-limiter');
 const logRequest = require('./middleware/log-request');
 
 const timezoneRoutes = require('./routes/timezone');
@@ -30,7 +29,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(mongoSanitize());
 app.use(helmet());
-app.use(rateLimiter);
 app.use(xss());
 app.use(hpp());
 
