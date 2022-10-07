@@ -52,7 +52,7 @@ jobs:
         run: npm ci
 
       - name: Run jest tests
-        run: npm run jest:test
+        run: npm run test:test
         env:
           PORT: 5000
           NODE_ENV: test
