@@ -6,7 +6,7 @@ describe('Chat', () => {
     cy.task('db:addCustomer');
     cy.task('db:addMaster');
     cy.authVisit({ identificator: 'test1', password: '123456', page: '/messages' });
-    cy.get('.content').contains('Сообщения');
+    cy.get('.content').contains('Сообщения').should('be.visible');
   });
 
   it('Desktop', () => {
@@ -47,7 +47,6 @@ describe('Chat', () => {
           cy.task('db:getViewedMessages').then((count) => {
             expect(count).to.equal(2);
           });
-
           cy.request({
             method: 'PUT',
             url: `http://localhost:5000/api/v1/profile/${masterId}/message/${customerId}`,

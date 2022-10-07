@@ -1,10 +1,11 @@
-describe('Get appointments on scroll', () => {
+describe('Get reviews on scroll', () => {
   beforeEach(() => {
     cy.task('db:addMaster');
     cy.task('db:addReviewsOnScroll');
     // go to profile
     cy.authVisit({ identificator: 'test', password: '123456', page: '/test' });
     cy.get('.review-card', { timeout: 30000 }).should('have.length', 10);
+    cy.get('.overall-review').should('be.visible');
   });
 
   it('Desktop', () => {

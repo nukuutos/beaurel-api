@@ -1,5 +1,3 @@
-const auth = require('../../utils/auth');
-
 describe('Update avatar', () => {
   beforeEach(() => {
     cy.task('db:addMaster');

@@ -1,6 +1,6 @@
 const masterId = '5eb849b81c2ccc21306ced34';
 
-describe('Chat', () => {
+describe('Update online status by visiting page', () => {
   beforeEach(() => {
     cy.task('db:addCustomer');
     cy.task('db:addMaster');
@@ -9,7 +9,7 @@ describe('Chat', () => {
     cy.get('.profile__star-profile').click();
     cy.wait('@starMaster');
     cy.authVisit({ identificator: 'test1', password: '123456', page: '/messages' });
-    cy.get('.content').contains('Сообщения');
+    cy.get('.content').contains('Сообщения').should('be.visible');
   });
 
   it('Desktop', () => {
