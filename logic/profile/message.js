@@ -80,7 +80,9 @@ class Message extends MessageModel {
 
     const { data, ...message } = this;
 
-    io.emit(this.recipientId, {
+    const stringRecipientId = this.recipientId.toString();
+
+    io.emit(stringRecipientId, {
       type: GET_MESSAGE_FROM_INTERLOCUTOR,
       payload: { message },
     });
@@ -91,7 +93,10 @@ class Message extends MessageModel {
   static setMessagesViewed({ userId, interlocutorId }) {
     if (IS_SOCKET_IO) {
       const io = getIO();
-      io.emit(interlocutorId, {
+
+      const stringInterlocutorId = interlocutorId.toString();
+
+      io.emit(stringInterlocutorId, {
         type: SET_MESSAGES_VIEWED_BY_RECIPIENT,
         payload: { recipientId: userId },
       });
