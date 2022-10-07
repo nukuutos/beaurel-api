@@ -2,7 +2,7 @@
   "baseUrl": "http://localhost:3000",
   "numTestsKeptInMemory": 5,
   "retries": {
-    "runMode": 7,
+    "runMode": 3,
     "openMode": 0
   },
   "requestTimeout": 10000,
